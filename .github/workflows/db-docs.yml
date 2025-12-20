@@ -1,0 +1,37 @@
+name: Update Database Documentation
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - "scripts/**"
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+        working-directory: scripts
+
+      - run: node generate-complete-docs.js
+        working-directory: scripts
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "📚 Auto-update DB docs"
+          git push
