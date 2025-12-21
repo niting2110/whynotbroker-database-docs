@@ -1,5 +1,5 @@
 ﻿require('dotenv').config();
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
@@ -102,7 +102,9 @@ class CompleteDocumenter {
             console.log("📁 Location: " + this.outputDir);
             
         } catch (error) {
-            console.error("❌ Error:", error.message);
+    console.error("❌ Error:", error);
+    process.exit(1);   // ← ADD THIS LINE
+}
         } finally {
             client.release();
             await this.pool.end();
