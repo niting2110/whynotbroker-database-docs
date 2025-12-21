@@ -18,7 +18,7 @@ jobs:
       contents: write
 
     env:
-      CI: true                # This will trigger the SSL fix in the script
+      CI: true  # This will trigger the SSL fix in the script
       NODE_ENV: production
 
     steps:
@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: true   # ensure subsequent git push is authenticated
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,7 +34,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: scripts
-        run: npm ci
+        shell: bash  # Explicitly set bash shell
+        run: |
+          npm ci || npm install
+          # Install required packages that might not be in package.json
+          npm install pg-format --no-save --no-audit --no-fund
 
       - name: Generate database documentation
         working-directory: scripts
@@ -44,19 +47,14 @@ jobs:
           DB_SSL: true  # Force SSL for Supabase
         run: node generate-complete-docs.js
 
-      - name: Commit and push generated docs
-        # only add the expected output files to avoid accidental commits
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Stage only docs that the script writes (adjust paths if your script writes elsewhere)
-          git add README.md FULL-SCHEMA.md QUICK-START.md COMMON-ERRORS.md schema.json examples.json constraints.json relationships.json changelog.json ai-prompt-template.md cheatsheets || true
-          # Also add cheatsheets directory content (if present)
-          git add cheatsheets/ || true
-          # If there are no staged changes, do nothing
-          if git diff --staged --quiet; then
+          git add .
+          if git diff --quiet && git diff --staged --quiet; then
             echo "No changes to commit"
-            exit 0
+          else
+            git commit -m "📚 Auto-update database docs"
+            git push
           fi
-          git commit -m "📚 Auto-update database docs"
-          git push
