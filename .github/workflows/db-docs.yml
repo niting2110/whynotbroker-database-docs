@@ -44,6 +44,7 @@ jobs:
       pull-requests: write
       issues: write
 
+    # job-level env: safe to use GitHub expressions here
     env:
       CI: true
       NODE_ENV: production
@@ -83,7 +84,7 @@ jobs:
         id: configure-db
         continue-on-error: false
         run: |
-          TARGET_ENV="${{ github.event.inputs.environment || 'production' }}"
+          TARGET_ENV="${DB_ENVIRONMENT}"
           echo "Selected environment: $TARGET_ENV"
 
           case "$TARGET_ENV" in
@@ -138,14 +139,14 @@ jobs:
         id: generate-docs
         working-directory: scripts
         continue-on-error: false
+        # Move all GitHub expressions into step env (avoid using ${{ ... }} inside run heredocs)
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'production' }}
+          TRIGGER: ${{ github.event_name }}
+          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
-          # Set local shell variables from GitHub expressions (avoid embedding ${{ ... }} in heredoc)
-          ENVIRONMENT="${{ github.event.inputs.environment || 'production' }}"
-          TRIGGER="${{ github.event_name }}"
-          FORCE_UPDATE="${{ github.event.inputs.force_update || 'false' }}"
-          GITHUB_RUN_ID="${{ github.run_id }}"
-          GITHUB_RUN_NUMBER="${{ github.run_number }}"
-
           TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
           LOG_FILE="generation-$TIMESTAMP.log"
           REPORT_FILE="generation-report-$TIMESTAMP.json"
@@ -174,6 +175,7 @@ jobs:
           echo "Duration: ${DURATION}s"
           echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
+          # Use shell variables only inside heredoc
           cat > "$REPORT_FILE" <<EOF
 {
   "run_id": "${GITHUB_RUN_ID}",
@@ -187,6 +189,7 @@ jobs:
 }
 EOF
 
+          # Export outputs
           echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
           echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           echo "duration=$DURATION" >> $GITHUB_OUTPUT
@@ -209,7 +212,7 @@ EOF
 
             mkdir -p changes
             git status --porcelain > changes/modified-files.txt
-            git add -A "${{ env.OUTPUT_DIR }}" || true
+            git add -A "${OUTPUT_DIR}" || true
             git diff --cached --numstat > changes/numstat.txt || true
 
             ADDED=$(awk '{sum+=$1} END {print sum+0}' changes/numstat.txt || echo "0")
@@ -245,30 +248,30 @@ EOF
       - name: 📊 Generate metrics
         if: ${{ success() }}
         id: metrics
+        env:
+          RUN_ID: ${{ github.run_id }}
+          GENERATED_AT: ${{ github.event.created_at || format('{0}', github.event.head_commit.timestamp || '') }}
+          ENVIRONMENT: ${{ env.DB_ENVIRONMENT }}
+          DURATION_OUT: ${{ steps.generate-docs.outputs.duration || '0' }}
+          HAS_CHANGES: ${{ steps.check-changes.outputs.has_changes || 'false' }}
+          CHANGES_FILES: ${{ steps.check-changes.outputs.changes_files || '0' }}
+          CHANGES_ADDED: ${{ steps.check-changes.outputs.changes_added || '0' }}
+          CHANGES_REMOVED: ${{ steps.check-changes.outputs.changes_removed || '0' }}
         run: |
-          METRICS_FILE="metrics-${{ github.run_id }}.json"
+          METRICS_FILE="metrics-${RUN_ID}.json"
 
-          DOCS_SIZE=$(du -sk "${{ env.OUTPUT_DIR }}" 2>/dev/null | cut -f1 || echo "0")
-          CHEATSHEETS_COUNT=$(find "${{ env.OUTPUT_DIR }}/cheatsheets" -name "*.md" 2>/dev/null | wc -l || echo "0")
-          EXPORTS_COUNT=$(find "${{ env.OUTPUT_DIR }}/exports" -type f 2>/dev/null | wc -l || echo "0")
-          SCHEMA_HASH=$(cat "${{ env.OUTPUT_DIR }}/.schema-hash" 2>/dev/null | head -1 || echo "unknown")
+          DOCS_SIZE=$(du -sk "${OUTPUT_DIR}" 2>/dev/null | cut -f1 || echo "0")
+          CHEATSHEETS_COUNT=$(find "${OUTPUT_DIR}/cheatsheets" -name "*.md" 2>/dev/null | wc -l || echo "0")
+          EXPORTS_COUNT=$(find "${OUTPUT_DIR}/exports" -type f 2>/dev/null | wc -l || echo "0")
+          SCHEMA_HASH=$(cat "${OUTPUT_DIR}/.schema-hash" 2>/dev/null | head -1 || echo "unknown")
 
-          # Capture GitHub expression values into shell variables to avoid ${ { } } in heredoc
-          RUN_ID="${{ github.run_id }}"
-          GENERATED_AT="$(date -u -Iseconds)"
-          ENVIRONMENT="${{ env.DB_ENVIRONMENT }}"
-          DURATION="${{ steps.generate-docs.outputs.duration || 0 }}"
-          HAS_CHANGES="${{ steps.check-changes.outputs.has_changes || 'false' }}"
-          CHANGES_FILES="${{ steps.check-changes.outputs.changes_files || 0 }}"
-          CHANGES_ADDED="${{ steps.check-changes.outputs.changes_added || 0 }}"
-          CHANGES_REMOVED="${{ steps.check-changes.outputs.changes_removed || 0 }}"
-
+          # All values in heredoc are shell variables (no ${{ ... }} inside heredoc)
           cat > "$METRICS_FILE" <<EOF
 {
   "run_id": "${RUN_ID}",
-  "generated_at": "${GENERATED_AT}",
+  "generated_at": "$(date -u -Iseconds)",
   "environment": "${ENVIRONMENT}",
-  "duration_seconds": ${DURATION},
+  "duration_seconds": ${DURATION_OUT},
   "has_changes": ${HAS_CHANGES},
   "changes": {
     "files": ${CHANGES_FILES},
@@ -292,32 +295,40 @@ EOF
         if: ${{ steps.check-changes.outputs.has_changes == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_ENV: ${{ env.DB_ENVIRONMENT }}
+          CHANGES_FILES: ${{ steps.check-changes.outputs.changes_files || '0' }}
+          CHANGES_ADDED: ${{ steps.check-changes.outputs.changes_added || '0' }}
+          CHANGES_REMOVED: ${{ steps.check-changes.outputs.changes_removed || '0' }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global pull.rebase true
 
-          COMMIT_MSG="📚 db: auto-update documentation
+          # Build commit message using only shell variables (no ${{ ... }} inside the heredoc)
+          COMMIT_MSG_FILE=$(mktemp)
+          cat > "$COMMIT_MSG_FILE" <<MSG
+📚 db: auto-update documentation
 
-• Environment: ${{ env.DB_ENVIRONMENT }}
-• Files changed: ${{ steps.check-changes.outputs.changes_files || 0 }}
-• Lines: +${{ steps.check-changes.outputs.changes_added || 0 }}/-${{ steps.check-changes.outputs.changes_removed || 0 }}
+• Environment: ${COMMIT_ENV}
+• Files changed: ${CHANGES_FILES}
+• Lines: +${CHANGES_ADDED}/-${CHANGES_REMOVED}
 
 Generated by GitHub Actions:
 • Run: #${{ github.run_number }}
 • ID: ${{ github.run_id }}
 • Trigger: ${{ github.event_name }}
 
-Schema Hash: $(cat "${{ env.OUTPUT_DIR }}/.schema-hash" 2>/dev/null || echo 'unknown')
+Schema Hash: $(cat "${OUTPUT_DIR}/.schema-hash" 2>/dev/null || echo 'unknown')
 
-Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+MSG
 
-          git add -A "${{ env.OUTPUT_DIR }}" || true
+          git add -A "${OUTPUT_DIR}" || true
           git add changes/ || true
 
           if ! git diff --cached --quiet; then
             echo "Committing changes..."
-            git commit -m "$COMMIT_MSG"
+            git commit -F "$COMMIT_MSG_FILE"
 
             MAX_RETRIES=3
             for i in $(seq 1 $MAX_RETRIES); do
@@ -375,7 +386,7 @@ Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com
           PUSHED=${{ steps.commit.outputs.pushed || 'false' }}
 
           {
-            echo "# 📚 Database Documentation - ${{ env.DB_ENVIRONMENT }}"
+            echo "# 📚 Database Documentation - ${DB_ENVIRONMENT}"
             echo ""
             echo "**Status:** $STATUS"
 
@@ -414,7 +425,7 @@ Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com
             if [ "$EXIT_CODE" == "0" ] && [ -f "scripts/${{ steps.generate-docs.outputs.report_file }}" ]; then
               echo ""
               echo "## 📈 Generated Reports"
-              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} )"
+              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
               echo "- [Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)"
             fi
 
