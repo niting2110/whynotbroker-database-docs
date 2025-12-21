@@ -186,8 +186,8 @@ jobs:
             echo "Duration: ${DURATION}s"
             echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             
-            # Create report
-            cat > "$REPORT_FILE" << EOF
+            # Create report - Use proper EOF with no leading spaces
+            cat > "$REPORT_FILE" << 'EOF'
 {
   "run_id": "${{ github.run_id }}",
   "environment": "${{ env.DB_ENVIRONMENT }}",
@@ -286,7 +286,7 @@ EOF
           # Get latest schema hash
           SCHEMA_HASH=$(cat docs/database/.schema-hash 2>/dev/null | head -1 || echo "unknown")
           
-          cat > "$METRICS_FILE" << EOF
+          cat > "$METRICS_FILE" << 'EOF'
 {
   "run_id": "${{ github.run_id }}",
   "generated_at": "$(date -u -Iseconds)",
