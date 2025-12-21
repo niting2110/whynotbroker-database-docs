@@ -56,14 +56,19 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'scripts/package-lock.json'
 
-      - name: Force IPv4 for database connections
+      - name: Configure DNS and IPv4
         run: |
-          echo "Forcing IPv4 for PostgreSQL connections..."
-          echo '127.0.0.1 localhost' | sudo tee -a /etc/hosts
-          # Disable IPv6 to force IPv4 connections
+          echo "Configuring network for Supabase connectivity..."
+          
+          # Add Google DNS for better resolution
+          echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
+          echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
+          
+          # Disable IPv6 to force IPv4
           sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
           sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
-          echo "✅ IPv4 enforced"
+          
+          echo "✅ Network configured for IPv4"
 
       - name: Determine environment
         id: env
@@ -109,27 +114,58 @@ jobs:
           echo "Testing database connection..."
           node -e "
           const { Client } = require('pg');
-          const client = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: { rejectUnauthorized: false },
-            connectionTimeoutMillis: 10000,
-            // Force IPv4
-            host: process.env.DATABASE_URL.match(/\/\/([^:]+)/)?.[1]
-          });
+          const dns = require('dns');
           
-          client.connect()
-            .then(() => {
-              console.log('✅ Database connection successful');
-              return client.query('SELECT version()');
-            })
-            .then(res => {
-              console.log('Database version:', res.rows[0].version);
-              return client.end();
-            })
-            .catch(err => {
-              console.error('❌ Connection failed:', err.message);
+          // Set DNS to IPv4 only
+          dns.setDefaultResultOrder('ipv4first');
+          
+          async function testConnection() {
+            const connectionString = process.env.DATABASE_URL;
+            
+            if (!connectionString) {
+              console.error('❌ DATABASE_URL is not set');
               process.exit(1);
+            }
+            
+            // Extract hostname for DNS test
+            const hostMatch = connectionString.match(/\/\/([^:@]+@)?([^:\/]+)/);
+            const hostname = hostMatch ? hostMatch[2] : null;
+            
+            if (hostname) {
+              console.log('Testing DNS resolution for:', hostname);
+              try {
+                const addresses = await dns.promises.resolve4(hostname);
+                console.log('✅ DNS resolved to:', addresses[0]);
+              } catch (err) {
+                console.error('❌ DNS resolution failed:', err.message);
+                process.exit(1);
+              }
+            }
+            
+            const client = new Client({
+              connectionString: connectionString,
+              ssl: { rejectUnauthorized: false },
+              connectionTimeoutMillis: 15000
             });
+            
+            try {
+              await client.connect();
+              console.log('✅ Database connection successful');
+              
+              const res = await client.query('SELECT version()');
+              console.log('✅ Database query successful');
+              console.log('PostgreSQL version:', res.rows[0].version.substring(0, 50) + '...');
+              
+              await client.end();
+              console.log('✅ Connection test completed');
+            } catch (err) {
+              console.error('❌ Connection failed:', err.message);
+              console.error('Error code:', err.code);
+              process.exit(1);
+            }
+          }
+          
+          testConnection();
           "
 
       - name: Generate documentation
@@ -144,7 +180,6 @@ jobs:
           TZ: Asia/Kolkata
           DB_SSL: true
           OUTPUT_DIR: '../docs/database'
-          # Force Node.js to prefer IPv4
           NODE_OPTIONS: '--dns-result-order=ipv4first'
         run: |
           echo "Starting documentation generation..."
