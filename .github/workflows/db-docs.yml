@@ -31,7 +31,7 @@ jobs:
       - name: Generate database documentation
         working-directory: scripts
         env:
-          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: node generate-complete-docs.js
 
       - name: Commit and push changes
