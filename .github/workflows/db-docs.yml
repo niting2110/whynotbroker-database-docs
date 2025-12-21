@@ -1,7 +1,5 @@
 name: "📚 Generate Database Documentation"
-set local shell variables from GitHub expressions (avoid embedding ${{ ... }} inside heredoc)
-ENVIRONMENT="${{ github.event.inputs.environment || 'production' }}"
-TRIGGER="${{ github.event_name }}"
+
 on:
   schedule:
     - cron: '0 6 * * *'   # Daily at 6 AM UTC (11:30 AM IST)
@@ -94,12 +92,10 @@ jobs:
               echo "Using production database"
               ;;
             "staging")
-              # Change the secret name below if you store a different secret for staging
               echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
               echo "Using staging database (fallback to production if not configured)"
               ;;
             "development")
-              # Change the secret name below if you store a different secret for development
               echo "DATABASE_URL=${{ secrets.DEVELOPMENT_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
               echo "Using development database (fallback to production if not configured)"
               ;;
@@ -115,7 +111,6 @@ jobs:
           fi
 
           echo "DB environment set to: $TARGET_ENV"
-          echo "Configured database URL (redacted) for runner"
 
       - name: 📦 Install dependencies (lightweight / resilient)
         working-directory: scripts
@@ -123,20 +118,15 @@ jobs:
         continue-on-error: false
         run: |
           echo "Installing dependencies (lightweight CI mode)..."
-          # If package.json exists prefer reproducible install
           if [ -f "package.json" ]; then
             npm ci --prefer-offline --no-audit --no-fund --no-progress
           else
             echo "package.json not found — performing minimal runtime installs"
-            # Create a temporary package.json so npm can install modules into node_modules
             npm init -y >/dev/null 2>&1
-            # Install minimal runtime deps the generator uses (adjust list if your script requires more)
             npm install pg dotenv pg-format --no-save --no-audit --no-fund --no-progress
-            # Remove the temp package files to avoid accidental commits
             rm -f package.json package-lock.json
           fi
 
-          # Defensive: ensure pg-format can be required
           if ! node -e "require('pg-format'); process.exit(0)" 2>/dev/null; then
             echo "pg-format missing — installing..."
             npm install pg-format --no-save --no-audit --no-fund --no-progress
@@ -147,31 +137,31 @@ jobs:
       - name: 📝 Generate documentation
         id: generate-docs
         working-directory: scripts
-        env:
-          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
         continue-on-error: false
         run: |
+          # Set local shell variables from GitHub expressions
+          ENVIRONMENT="${{ github.event.inputs.environment || 'production' }}"
+          TRIGGER="${{ github.event_name }}"
+          FORCE_UPDATE="${{ github.event.inputs.force_update || 'false' }}"
+          GITHUB_RUN_ID="${{ github.run_id }}"
+          GITHUB_RUN_NUMBER="${{ github.run_number }}"
+
           TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
           LOG_FILE="generation-$TIMESTAMP.log"
           REPORT_FILE="generation-report-$TIMESTAMP.json"
 
           echo "🚀 Starting database documentation generation..."
-          echo "Environment: ${{ github.event.inputs.environment || 'production' }}"
-          echo "Force update: ${FORCE_UPDATE}"
-          echo "Run ID: ${GITHUB_RUN_ID}"
-          echo "Timestamp: ${TIMESTAMP} UTC"
+          echo "Environment: $ENVIRONMENT"
+          echo "Force update: $FORCE_UPDATE"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Timestamp: $TIMESTAMP UTC"
           echo "Node: $(node --version)"
 
           START_TIME=$(date +%s)
 
-          # Run generator with timeout and capture output to log file.
-          # Use conditional to capture exit code without exiting this script immediately.
           if timeout 600 node generate-complete-docs.js 2>&1 | tee "$LOG_FILE"; then
             EXIT_CODE=0
           else
-            # PIPESTATUS[0] gives exit code of the first command (timeout/node)
             EXIT_CODE=${PIPESTATUS[0]:-1}
           fi
 
@@ -184,7 +174,6 @@ jobs:
           echo "Duration: ${DURATION}s"
           echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
-          # Write report with expansions (unquoted EOF)
           cat > "$REPORT_FILE" <<EOF
 {
   "run_id": "${GITHUB_RUN_ID}",
@@ -198,13 +187,11 @@ jobs:
 }
 EOF
 
-          # Export outputs for downstream steps
           echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
           echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           echo "duration=$DURATION" >> $GITHUB_OUTPUT
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
-          # Fail the step if the generator failed
           if [ "$EXIT_CODE" -ne 0 ]; then
             echo "::error::Documentation generation failed with exit code $EXIT_CODE"
             exit "$EXIT_CODE"
@@ -214,7 +201,6 @@ EOF
         id: check-changes
         if: ${{ success() }}
         run: |
-          # Make sure we are at repo root
           git status --porcelain > /tmp/git-status.txt || true
 
           if grep -q '.' /tmp/git-status.txt; then
@@ -222,14 +208,8 @@ EOF
             echo "has_changes=true" >> $GITHUB_OUTPUT
 
             mkdir -p changes
-
-            # Save modified files list (includes staged & unstaged)
             git status --porcelain > changes/modified-files.txt
-
-            # Stage everything under OUTPUT_DIR so we can get accurate numstat
             git add -A "${{ env.OUTPUT_DIR }}" || true
-
-            # Generate numstat for staged changes
             git diff --cached --numstat > changes/numstat.txt || true
 
             ADDED=$(awk '{sum+=$1} END {print sum+0}' changes/numstat.txt || echo "0")
@@ -240,7 +220,6 @@ EOF
             echo "changes_removed=$REMOVED" >> $GITHUB_OUTPUT
             echo "changes_files=$FILES" >> $GITHUB_OUTPUT
 
-            # Create a human-readable summary
             {
               echo "## 📊 Change Summary"
               echo ""
@@ -254,7 +233,6 @@ EOF
               echo '```'
             } > changes/summary.md
 
-            # Print short status for logs
             git status --short
           else
             echo "ℹ️ No changes detected"
@@ -324,7 +302,6 @@ Schema Hash: $(cat "${{ env.OUTPUT_DIR }}/.schema-hash" 2>/dev/null || echo 'unk
 
 Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
 
-          # Stage only the output dir to avoid accidental commits
           git add -A "${{ env.OUTPUT_DIR }}" || true
           git add changes/ || true
 
