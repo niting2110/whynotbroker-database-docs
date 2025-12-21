@@ -974,7 +974,7 @@ This document details the live schema of the production Supabase database. All A
     if (duplicates.length > 0) {
       content += `### ⚠️ Potential Duplicate Indexes\n\n`;
       duplicates.forEach(group => {
-        content += `**Table: \`${group[0].table}\`, Columns: ${parsePgArray(group[0].columns).join(', ')}**\n`;
+        content += `**Table: \`${group[0].table}\`, Columns: ${group[0].columns.join(', ')}**\n`;
         group.forEach(idx => {
           content += `- \`${idx.index_name}\` (${idx.index_type}${idx.is_unique ? ', unique' : ''})\n`;
         });

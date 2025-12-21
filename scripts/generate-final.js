@@ -1,43 +1,5 @@
 ﻿'use strict';
 
-// Helper to convert PostgreSQL array strings to JavaScript arrays
-function parsePgArray(pgArray) {
-  if (!pgArray) return [];
-  if (Array.isArray(pgArray)) return pgArray;
-  if (typeof pgArray === "string") {
-    // PostgreSQL array format: {col1,col2,col3}
-    if (pgArray.startsWith("{") && pgArray.endsWith("}")) {
-      return pgArray.slice(1, -1).split(",").map(s => s.trim()).filter(s => s);
-    }
-    // Comma-separated string
-    if (pgArray.includes(",")) {
-      return pgArray.split(",").map(s => s.trim()).filter(s => s);
-    }
-    // Single value
-    return [pgArray];
-  }
-  return [pgArray];
-}
-
-// Helper to convert PostgreSQL array strings to JavaScript arrays
-function parsePgArray(pgArray) {
-  if (!pgArray) return [];
-  if (Array.isArray(pgArray)) return pgArray;
-  if (typeof pgArray === 'string') {
-    // PostgreSQL array format: {col1,col2,col3}
-    if (pgArray.startsWith('{') && pgArray.endsWith('}')) {
-      return pgArray.slice(1, -1).split(',').map(s => s.trim()).filter(s => s);
-    }
-    // Comma-separated string
-    if (pgArray.includes(',')) {
-      return pgArray.split(',').map(s => s.trim()).filter(s => s);
-    }
-    // Single value
-    return [pgArray];
-  }
-  // Try to convert to array
-  return [pgArray];
-}
 /**
  * CompleteDocumenter - Enhanced Version
  * 
@@ -858,7 +820,7 @@ This document details the live schema of the production Supabase database. All A
         content += `| Name | Type | Columns | Unique | Primary | Definition |\n`;
         content += `|------|------|---------|--------|---------|------------|\n`;
         details.indexes.forEach(idx => {
-          content += `| \`${idx.index_name}\` | ${idx.index_type} | ${parsePgArray(idx.columns).join(", ")} | ${idx.is_unique ? '✓' : '—'} | ${idx.is_primary ? '✓' : '—'} | \`${idx.index_definition}\` |\n`;
+          content += `| \`${idx.index_name}\` | ${idx.index_type} | ${idx.columns.join(', ')} | ${idx.is_unique ? '✓' : '—'} | ${idx.is_primary ? '✓' : '—'} | \`${idx.index_definition}\` |\n`;
         });
         content += '\n';
       }
@@ -869,7 +831,7 @@ This document details the live schema of the production Supabase database. All A
         details.foreign_keys.forEach(fk => {
           const comment = fk.comment ? ` // ${fk.comment}` : '';
           content += `- \`${fk.constraint_name}\`${comment}:\n`;
-          content += `  - Columns: \`${parsePgArray(fk.columns).join(", ")}\` → \`${fk.foreign_table_name}(${parsePgArray(fk.foreign_columns).join(", ")})\`\n`;
+          content += `  - Columns: \`${fk.columns.join(', ')}\` → \`${fk.foreign_table_name}(${fk.foreign_columns.join(', ')})\`\n`;
           content += `  - ON UPDATE: ${fk.update_rule}\n`;
           content += `  - ON DELETE: ${fk.delete_rule}\n`;
         });
@@ -956,7 +918,7 @@ This document details the live schema of the production Supabase database. All A
     content += `|-------|-------|------|---------|--------|------------|\n`;
     
     indexes.forEach(idx => {
-      content += `| \`${idx.table}\` | \`${idx.index_name}\` | ${idx.index_type} | ${parsePgArray(idx.columns).join(", ")} | ${idx.is_unique ? '✓' : '—'} | \`${idx.index_definition}\` |\n`;
+      content += `| \`${idx.table}\` | \`${idx.index_name}\` | ${idx.index_type} | ${idx.columns.join(', ')} | ${idx.is_unique ? '✓' : '—'} | \`${idx.index_definition}\` |\n`;
     });
     
     // Performance recommendations
@@ -965,7 +927,7 @@ This document details the live schema of the production Supabase database. All A
     // Check for duplicate indexes
     const indexGroups = {};
     indexes.forEach(idx => {
-      const key = `${idx.table}:${parsePgArray(idx.columns).sort().join(",")}`;
+      const key = `${idx.table}:${idx.columns.sort().join(',')}`;
       if (!indexGroups[key]) indexGroups[key] = [];
       indexGroups[key].push(idx);
     });
@@ -974,7 +936,7 @@ This document details the live schema of the production Supabase database. All A
     if (duplicates.length > 0) {
       content += `### ⚠️ Potential Duplicate Indexes\n\n`;
       duplicates.forEach(group => {
-        content += `**Table: \`${group[0].table}\`, Columns: ${parsePgArray(group[0].columns).join(', ')}**\n`;
+        content += `**Table: \`${group[0].table}\`, Columns: ${group[0].columns.join(', ')}**\n`;
         group.forEach(idx => {
           content += `- \`${idx.index_name}\` (${idx.index_type}${idx.is_unique ? ', unique' : ''})\n`;
         });
@@ -1241,7 +1203,7 @@ WHERE id = 'property-uuid';
 \`\`\`
 
 ## Indexes Available
-${properties.indexes.map(idx => `- \`${idx.index_name}\`: ${parsePgArray(idx.columns).join(", ")}`).join('\n')}
+${properties.indexes.map(idx => `- \`${idx.index_name}\`: ${idx.columns.join(', ')}`).join('\n')}
 `;
       await this.safeWrite('cheatsheets/properties.md', content);
     }

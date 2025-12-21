@@ -1,0 +1,17 @@
+[
+  {
+    "timestamp": "2025-12-21T19:41:41.759Z",
+    "schema_hash": "a6d2304176b8629e41ff9e32ba827948",
+    "statistics": {
+      "tables": 17,
+      "views": 6,
+      "materialized_views": 0,
+      "columns": 290,
+      "constraints": 178,
+      "indexes": 78,
+      "relationships": 33,
+      "functions": 24,
+      "extensions": 9
+    }
+  }
+]
