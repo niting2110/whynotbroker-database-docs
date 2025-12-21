@@ -1,516 +1,463 @@
-'use strict';
+name: 📚 Generate Database Documentation
 
-require('dotenv').config();
-const { Pool } = require('pg');
-const fs = require('fs');
-const fsp = fs.promises;
-const path = require('path');
-const format = require('pg-format');
+on:
+  schedule:
+    - cron: '0 6 * * *'   # Daily at 6 AM UTC (11:30 AM IST)
+  workflow_dispatch:      # Manual trigger
+    inputs:
+      force_update:
+        description: 'Force update even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+      environment:
+        description: 'Environment to document'
+        required: false
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+        default: 'production'
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'scripts/**'
+      - 'supabase/**'
+      - '.github/workflows/db-docs.yml'
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'supabase/**'
 
-const REDACT_RE = /password=[^&]*/i;
+# Prevent concurrent runs
+concurrency:
+  group: db-docs-${{ github.ref }}
+  cancel-in-progress: true
 
-function redactConnectionString(connStr = '') {
-  return connStr.replace(REDACT_RE, 'password=***');
-}
-
-class CompleteDocumenter {
-  constructor() {
-    const connectionString = process.env.DATABASE_URL;
+jobs:
+  generate-db-docs:
+    name: Generate Documentation - ${{ inputs.environment || 'production' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     
-    if (!connectionString) {
-      console.error('❌ Error: DATABASE_URL environment variable is not set!');
-      console.error('   This usually means:');
-      console.error('   1. The GitHub secret is not configured');
-      console.error('   2. The workflow is not passing the environment variable');
-      console.error('   3. Running locally without a .env file');
-      console.error('');
-      console.error('   To fix:');
-      console.error('   - Check GitHub repository secrets');
-      console.error('   - Verify workflow sets DATABASE_URL');
-      console.error('   - For local testing, create a .env file with DATABASE_URL=...');
-      throw new Error('DATABASE_URL environment variable is not set');
-    }
-    
-    // For GitHub Actions/Supabase, we need to allow self-signed certificates
-    // This is a controlled environment, so it's acceptable
-    if (process.env.CI === 'true' || process.env.NODE_ENV === 'production') {
-      console.warn('⚠️ Running in CI/Production - Accepting self-signed certificates for Supabase');
-      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    }
-    
-    console.log('🚀 Generating COMPLETE database documentation...');
-    console.log('Database URL present:', !!connectionString);
-    console.log('Node version:', process.version);
-    console.log('Redacted connection string:', redactConnectionString(connectionString));
-    console.log('Environment:', process.env.DB_ENVIRONMENT || 'production');
-    console.log('SSL:', process.env.DB_SSL === 'true');
-    
-    // For Supabase, we need to explicitly set SSL configuration
-    let sslConfig = null;
-    
-    // Check if SSL is needed
-    const needsSSL = connectionString.includes('sslmode=require') || 
-                    process.env.DB_SSL === 'true' ||
-                    process.env.CI === 'true';
-    
-    if (needsSSL) {
-      console.log('🔐 Using SSL connection for Supabase');
-      sslConfig = { 
-        rejectUnauthorized: false,
-        require: true
-      };
-    }
-    
-    this.pool = new Pool({
-      connectionString,
-      connectionTimeoutMillis: 30000,
-      query_timeout: 60000,
-      ...(sslConfig ? { ssl: sslConfig } : {})
-    });
-    
-    this.outputDir = path.resolve(process.env.OUTPUT_DIR || path.join(__dirname, '..'));
-    this.ensureDirectories();
-  }
-  
-  ensureDirectories() {
-    const dirs = ['', 'cheatsheets'];
-    for (const dir of dirs) {
-      const fullPath = path.join(this.outputDir, dir);
-      if (!fs.existsSync(fullPath)) {
-        fs.mkdirSync(fullPath, { recursive: true });
-      }
-    }
-  }
-  
-  async generateAll() {
-    let client;
-    try {
-      console.log('Attempting to connect to database...');
-      client = await this.pool.connect();
-      console.log('✅ Connected to database');
-      
-      const testQuery = await client.query('SELECT NOW() as current_time');
-      console.log('Database time:', testQuery.rows[0].current_time);
-      
-      // Get tables in public schema
-      console.log('📊 Fetching complete schema...');
-      const tablesQuery = await client.query(`
-        SELECT t.table_name,
-               (SELECT COUNT(*)::int FROM information_schema.columns c 
-                WHERE c.table_schema = 'public' 
-                  AND c.table_name = t.table_name) as column_count
-        FROM information_schema.tables t
-        WHERE t.table_schema = 'public'
-          AND t.table_type = 'BASE TABLE'
-        ORDER BY t.table_name;
-      `);
-      
-      const tables = tablesQuery.rows;
-      console.log(`📋 Found ${tables.length} tables`);
-      
-      if (tables.length === 0) {
-        console.warn('⚠️ No tables found in public schema');
-      }
-      
-      const tableDetails = {};
-      
-      for (const t of tables) {
-        const tableName = t.table_name;
-        console.log(`   📝 Processing: ${tableName}`);
-        
-        // Get columns
-        const columnsQ = await client.query(
-          `SELECT column_name, data_type, is_nullable, column_default, ordinal_position
-           FROM information_schema.columns
-           WHERE table_schema = 'public' AND table_name = $1
-           ORDER BY ordinal_position;`,
-          [tableName]
-        );
-        
-        // Get constraints
-        const constraintsQ = await client.query(
-          `
-          SELECT
-            tc.constraint_name,
-            tc.constraint_type,
-            kcu.column_name,
-            pg_get_constraintdef(pc.oid) AS definition
-          FROM information_schema.table_constraints tc
-          LEFT JOIN information_schema.key_column_usage kcu
-            ON tc.constraint_name = kcu.constraint_name AND tc.table_name = kcu.table_name AND tc.table_schema = kcu.table_schema
-          LEFT JOIN pg_catalog.pg_constraint pc
-            ON pc.conname = tc.constraint_name
-          WHERE tc.table_schema = 'public' AND tc.table_name = $1;
-          `,
-          [tableName]
-        );
-        
-        // Get row count safely using pg-format for identifier interpolation
-        let rowCount = 0;
-        try {
-          const countSql = format('SELECT COUNT(*)::int AS cnt FROM %I.%I', 'public', tableName);
-          const countRes = await client.query(countSql);
-          rowCount = parseInt(countRes.rows[0].cnt, 10);
-        } catch (err) {
-          console.warn(`Could not get row count for ${tableName}: ${err.message}`);
-          rowCount = 0;
-        }
-        
-        tableDetails[tableName] = {
-          columns: columnsQ.rows,
-          constraints: constraintsQ.rows,
-          row_count: rowCount,
-          column_count: parseInt(t.column_count, 10)
-        };
-      }
-      
-      // Generate files
-      await this.generateReadme(tables, tableDetails);
-      await this.generateFullSchema(tables, tableDetails);
-      await this.generateSchemaJson(tables, tableDetails);
-      await this.generateQuickStart();
-      await this.generateCheatsheets(tableDetails.properties || tableDetails['properties']);
-      await this.generateAiPromptTemplate(tables, tableDetails);
-      
-      console.log('\n🎉 COMPLETE documentation generated!');
-      console.log('📁 Location: ' + this.outputDir);
-      
-    } catch (error) {
-      console.error('❌ Error:', error.message);
-      console.error('Error stack:', error.stack);
-      if (error.code) console.error('Error code:', error.code);
-      throw error;
-    } finally {
-      try {
-        if (client) {
-          client.release();
-        }
-      } catch (e) {
-        console.warn('Error releasing client:', e.message);
-      }
-      
-      try {
-        await this.pool.end();
-      } catch (e) {
-        console.warn('Error closing pool:', e.message);
-      }
-    }
-  }
-  
-  async safeWrite(filename, content) {
-    const filePath = path.join(this.outputDir, filename);
-    try {
-      await fsp.writeFile(filePath, content, 'utf8');
-      console.log(`✅ Created ${filename}`);
-    } catch (err) {
-      console.error(`Failed to write ${filename}:`, err.message);
-      throw err;
-    }
-  }
-  
-  async generateReadme(tables, tableDetails) {
-    const totalColumns = tables.reduce((sum, t) => sum + (Number(t.column_count) || 0), 0);
-    const props = tableDetails.properties || {};
-    const tableRows = tables.map(t => {
-      const rows = (tableDetails[t.table_name] && typeof tableDetails[t.table_name].row_count === 'number')
-        ? `~${tableDetails[t.table_name].row_count.toLocaleString()}`
-        : '~0';
-      return `| \`${t.table_name}\` | ${t.column_count} | ${rows} |`;
-    }).join('\n');
-    
-    const content = `# 🏠 WHYNOTBROKER Database Documentation
-> **Live, auto-updated database reference**  
-> Generated: ${new Date().toISOString()}
-> Environment: ${process.env.DB_ENVIRONMENT || 'production'}
+    env:
+      CI: true
+      NODE_ENV: production
+      TZ: Asia/Kolkata  # Set timezone for consistent timestamps
+      DB_SSL: true
+      OUTPUT_DIR: './docs/database'  # Structured output directory
+      DB_ENVIRONMENT: ${{ inputs.environment || 'production' }}
 
-## 📊 Quick Stats
-- **Total Tables:** ${tables.length}
-- **Total Columns:** ${totalColumns}
-- **Main Table:** \`properties\` (${props.column_count || 0} columns, ${props.row_count || 0} rows)
+    steps:
+      # ===================================================================
+      # STEP 1: Setup and Preparation
+      # ===================================================================
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
 
-## 🚀 Getting Started
-1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
-2. **Need Full Details?** → Read [FULL-SCHEMA.md](./FULL-SCHEMA.md)
-3. **Stuck with Errors?** → Check [COMMON-ERRORS.md](./COMMON-ERRORS.md)
-4. **Working with AI?** → Use [ai-prompt-template.md](./ai-prompt-template.md)
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'scripts/package-lock.json'
 
-## 📁 Documentation Structure
-\`\`\`
-/whynotbroker-database-docs/
-├── 📄 README.md
-├── 📄 FULL-SCHEMA.md
-├── 📄 QUICK-START.md
-├── 📄 COMMON-ERRORS.md
-├── 📄 schema.json
-├── 📄 examples.json
-├── 📄 constraints.json
-├── 📄 relationships.json
-├── 📄 changelog.json
-├── 📄 ai-prompt-template.md
-├── 📊 schema-diagram.svg
-└── 📁 cheatsheets/
-    ├── insert-property.md
-    ├── query-properties.md
-    └── update-property.md
-\`\`\`
+      - name: 📦 Cache dependencies
+        uses: actions/cache@v4
+        id: cache-deps
+        with:
+          path: |
+            scripts/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('scripts/package-lock.json') }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ hashFiles('scripts/package-lock.json') }}
+            ${{ runner.os }}-node-
 
-## 🔄 Auto-Update Schedule
-This documentation updates:
-- **Daily** at 6:00 AM UTC via GitHub Actions
-- **On-demand** via manual trigger
-- **After schema changes** via webhook
+      - name: 🔐 Configure Database Credentials
+        id: configure-db
+        continue-on-error: false
+        run: |
+          # Select database URL based on environment
+          case "${{ inputs.environment || 'production' }}" in
+            "production")
+              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
+              echo "Using production database"
+              ;;
+            "staging")
+              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
+              echo "Using production database (staging not configured)"
+              ;;
+            "development")
+              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
+              echo "Using production database (dev not configured)"
+              ;;
+            *)
+              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
+              echo "Using production database (default)"
+              ;;
+          esac
+          
+          # Verify database URL is set
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "❌ ERROR: DATABASE_URL is not set for environment: ${{ inputs.environment || 'production' }}"
+            echo "::error::Database URL not configured for this environment"
+            exit 1
+          fi
 
-## 📋 Table Summary
-| Table | Columns | Rows |
-|-------|---------|------|
-${tableRows}
+          echo "Database URL configured successfully"
+          echo "DB environment: ${{ inputs.environment || 'production' }}"
 
----
-*This documentation is auto-generated. Manual edits will be overwritten.*`;
-    
-    await this.safeWrite('README.md', content);
-  }
-  
-  async generateFullSchema(tables, tableDetails) {
-    let content = `# WHYNOTBROKER - Full Database Schema
-> Auto-generated on: ${new Date().toISOString()}
-> **Total Tables:** ${tables.length}
-> **Environment:** ${process.env.DB_ENVIRONMENT || 'production'}
+      - name: 📦 Install dependencies
+        working-directory: scripts
+        id: install-deps
+        continue-on-error: false
+        run: |
+          # Clean install
+          echo "Installing dependencies..."
+          
+          # Check if package.json exists
+          if [ ! -f "package.json" ]; then
+            echo "❌ package.json not found in scripts directory!"
+            echo "::error::package.json not found"
+            exit 1
+          fi
+          
+          # Install dependencies
+          npm ci --prefer-offline --no-audit --no-fund --no-progress
+          
+          # Verify pg-format is installed
+          if ! npm list pg-format; then
+            echo "Installing pg-format..."
+            npm install pg-format --no-save --no-audit --no-fund
+          fi
+          
+          echo "✅ Dependencies installed successfully"
 
-## Overview
-This document details the live schema of the production Supabase database. All API backend code must align with the structures and rules defined here.
-
----
-
-## Core Tables
-
-`;
-    
-    for (const t of tables) {
-      const name = t.table_name;
-      const details = tableDetails[name] || { columns: [], constraints: [], row_count: 0, column_count: 0 };
-      
-      content += `### \`${name}\`\n`;
-      content += `**Rows:** ~${(details.row_count || 0).toLocaleString()}  \n`;
-      content += `**Columns:** ${details.column_count}\n\n`;
-      
-      if (details.columns && details.columns.length > 0) {
-        content += `| Column | Type | Nullable | Default |\n`;
-        content += `|--------|------|----------|---------|\n`;
-        
-        details.columns.forEach(col => {
-          content += `| \`${col.column_name}\` | \`${col.data_type}\` | ${col.is_nullable} | \`${col.column_default || '—'}\` |\n`;
-        });
-      }
-      
-      if (details.constraints && details.constraints.length > 0) {
-        content += `\n**Constraints:**\n`;
-        details.constraints.forEach(con => {
-          if (con.definition) {
-            content += `- \`${con.constraint_name}\`: ${con.definition}\n`;
-          }
-        });
-      }
-      
-      content += '\n---\n\n';
-    }
-    
-    await this.safeWrite('FULL-SCHEMA.md', content);
-  }
-  
-  async generateSchemaJson(tables, tableDetails) {
-    const schema = {
-      generated_at: new Date().toISOString(),
-      database: 'WHYNOTBROKER',
-      environment: process.env.DB_ENVIRONMENT || 'production',
-      tables: tables.map(t => ({
-        name: t.table_name,
-        columns: Number(t.column_count) || 0,
-        rows: tableDetails[t.table_name]?.row_count || 0,
-        details: tableDetails[t.table_name] || {}
-      }))
-    };
-    
-    await this.safeWrite('schema.json', JSON.stringify(schema, null, 2));
-  }
-  
-  async generateQuickStart() {
-    const content = `# 🚀 Quick Start Guide - WHYNOTBROKER Database
-> Time: 5 minutes | For: New developers
-> Generated: ${new Date().toISOString()}
-> Environment: ${process.env.DB_ENVIRONMENT || 'production'}
-
-## 1. Database Connection
-\`\`\`javascript
-// Using Supabase JavaScript client
-const { createClient } = require('@supabase/supabase-js');
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
-
-// Or direct PostgreSQL connection
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // required for Supabase
-});
-\`\`\`
-
-## 2. Common Queries
-
-### Get all published properties
-\`\`\`sql
-SELECT * FROM properties 
-WHERE status = 'published' 
-  AND is_active = true
-ORDER BY created_at DESC
-LIMIT 20;
-\`\`\`
-
-### Get properties by city
-\`\`\`sql
-SELECT id, pid, title, price, city, bedrooms, property_type
-FROM properties
-WHERE city = 'Bangalore'
-  AND status = 'published'
-ORDER BY price DESC;
-\`\`\`
-
-## 3. Important Rules
-- **bhk_type** must be lowercase: \`'3bhk'\` NOT \`'3 BHK'\`
-- **status** must be: draft/pending/published/sold/rented
-- **price** is in INR (Indian Rupees)
-- **contact_phone** must be 10-digit Indian number
-
-## 4. Next Steps
-1. Review \`FULL-SCHEMA.md\` for complete table structures
-2. Check \`cheatsheets/\` for common operations
-3. Use \`ai-prompt-template.md\` when working with AI
-
----
-*Last updated: ${new Date().toISOString()}*`;
-    
-    await this.safeWrite('QUICK-START.md', content);
-  }
-  
-  async generateCheatsheets(propertiesTable) {
-    const cheatsheetsDir = path.join(this.outputDir, 'cheatsheets');
-    
-    // Insert Property Cheatsheet
-    const insertContent = `# Insert Property - Cheatsheet
-> Generated: ${new Date().toISOString()}
-
-## Basic Insert
-\`\`\`sql
-INSERT INTO properties (
-    pid, title, price, city, property_type,
-    listing_type, bhk_type, contact_phone,
-    user_id, status
-) VALUES (
-    'PROP' || LPAD(nextval('property_seq')::text, 6, '0'),
-    '3 BHK Luxury Apartment in Bangalore',
-    10900000,
-    'Bangalore',
-    'apartment',
-    'sale',
-    '3bhk',  -- MUST be lowercase
-    '9876543210',
-    '11111111-1111-1111-1111-111111111111', -- user_id from auth.users
-    'draft'
-);
-\`\`\`
-
-## Required Fields
-- \`pid\`: Auto-generated format 'PROP000001'
-- \`title\`: Property title (max 200 chars)
-- \`price\`: Numeric, in INR
-- \`city\`: Text
-- \`property_type\`: apartment/house/villa/commercial/land
-- \`listing_type\`: sale/rent/lease
-- \`contact_phone\`: 10-digit Indian number
-- \`user_id\`: Must exist in auth.users
-
-## Common Mistakes
-❌ \`bhk_type='3 BHK'\` → ✅ \`bhk_type='3bhk'\`
-❌ \`price='1 crore'\` → ✅ \`price=10000000\`
-❌ Missing \`user_id\` → Must link to auth.users
-`;
-    
-    await this.safeWrite(path.join('cheatsheets', 'insert-property.md'), insertContent);
-  }
-  
-  async generateAiPromptTemplate(tables, tableDetails) {
-    const content = `# AI Prompt Template - WHYNOTBROKER Database
-> Use this template when asking AI (ChatGPT, Claude, etc.) about the database
-> Generated: ${new Date().toISOString()}
-> Environment: ${process.env.DB_ENVIRONMENT || 'production'}
-
-## 📋 Copy & Paste This Template
-\`\`\`
-I need help with the WHYNOTBROKER real estate database. Here's the schema:
-
-## Database Overview
-- Total tables: ${tables.length}
-- Main table: \`properties\` (${tableDetails.properties?.columns?.length || 0} columns)
-- Technology: Supabase (PostgreSQL) + Next.js
-- Environment: ${process.env.DB_ENVIRONMENT || 'production'}
-
-## Key Tables
-${tables.map(t => `- \`${t.table_name}\`: ${t.column_count} columns, ~${tableDetails[t.table_name]?.row_count || 0} rows`).join('\n')}
-
-## Important Constraints
-1. \`bhk_type\` MUST be lowercase: '1bhk', '2bhk', '3bhk' (NOT '3 BHK')
-2. \`property_type\`: apartment/house/villa/commercial/land
-3. \`listing_type\`: sale/rent/lease
-4. \`status\`: draft/pending/published/sold/rented
-5. Prices are in INR (Indian Rupees)
-
-## Sample Data Structure
-\`\`\`json
+      # ===================================================================
+      # STEP 2: Generate Documentation
+      # ===================================================================
+      - name: 📝 Generate documentation
+        id: generate-docs
+        working-directory: scripts
+        env:
+          FORCE_UPDATE: ${{ inputs.force_update }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+        continue-on-error: true
+        run: |
+          set -e
+          
+          # Create timestamp for this run
+          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+          LOG_FILE="generation-$TIMESTAMP.log"
+          REPORT_FILE="generation-report-$TIMESTAMP.json"
+          
+          echo "🚀 Starting database documentation generation..."
+          echo "Environment: ${{ env.DB_ENVIRONMENT }}"
+          echo "Force update: ${{ inputs.force_update }}"
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Timestamp: $TIMESTAMP UTC"
+          echo "Node: $(node --version)"
+          
+          # Start timing
+          START_TIME=$(date +%s)
+          
+          # Run with timeout and capture output
+          {
+            timeout 600 node generate-complete-docs.js 2>&1
+            EXIT_CODE=$?
+            
+            END_TIME=$(date +%s)
+            DURATION=$((END_TIME - START_TIME))
+            
+            echo ""
+            echo "=== Generation Summary ==="
+            echo "Exit Code: $EXIT_CODE"
+            echo "Duration: ${DURATION}s"
+            echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            # Create report
+            cat > "$REPORT_FILE" << EOF
 {
-  "pid": "PROP000001",
-  "title": "3 BHK Luxury Apartment",
-  "price": 10900000,
-  "city": "Bangalore",
-  "property_type": "apartment",
-  "bhk_type": "3bhk",
-  "status": "published"
+  "run_id": "${{ github.run_id }}",
+  "environment": "${{ env.DB_ENVIRONMENT }}",
+  "timestamp": "$(date -u -Iseconds)",
+  "duration_seconds": $DURATION,
+  "exit_code": $EXIT_CODE,
+  "force_update": ${{ inputs.force_update }},
+  "node_version": "$(node --version)",
+  "trigger": "${{ github.event_name }}"
 }
-\`\`\`
+EOF
+            
+            # Exit with original code
+            exit $EXIT_CODE
+          } | tee "$LOG_FILE"
+          
+          # Capture exit code
+          EXIT_CODE=${PIPESTATUS[0]}
+          
+          # Set outputs
+          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
+          echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          
+          # Fail if non-zero exit
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "::error::Documentation generation failed with exit code $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
 
-Now, help me with: [YOUR QUESTION HERE]
-\`\`\`
+      # ===================================================================
+      # STEP 3: Process Results
+      # ===================================================================
+      - name: 🔍 Analyze changes
+        id: check-changes
+        if: steps.generate-docs.outputs.exit_code == '0'
+        run: |
+          # Create changes directory for better organization
+          mkdir -p changes
+          
+          # Check for changes
+          if git status --porcelain | grep -q "."; then
+            echo "✅ Changes detected"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            
+            # Get detailed changes
+            git status --porcelain > changes/modified-files.txt
+            git diff --cached --numstat > changes/numstat.txt
+            
+            # Calculate statistics
+            ADDED=$(awk '{sum+=$1} END {print sum}' changes/numstat.txt || echo "0")
+            REMOVED=$(awk '{sum+=$2} END {print sum}' changes/numstat.txt || echo "0")
+            FILES=$(wc -l < changes/modified-files.txt || echo "0")
+            
+            echo "changes_added=$ADDED" >> $GITHUB_OUTPUT
+            echo "changes_removed=$REMOVED" >> $GITHUB_OUTPUT
+            echo "changes_files=$FILES" >> $GITHUB_OUTPUT
+            
+            # Generate change summary
+            {
+              echo "## 📊 Change Summary"
+              echo ""
+              echo "**Total Files:** $FILES"
+              echo "**Lines Added:** +$ADDED"
+              echo "**Lines Removed:** -$REMOVED"
+              echo ""
+              echo "### Modified Files:"
+              echo '```'
+              cat changes/modified-files.txt
+              echo '```'
+            } > changes/summary.md
+            
+            # Show what changed in logs
+            echo "=== Change Details ==="
+            git status --short
+            
+          else
+            echo "ℹ️ No changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No modifications to database documentation"
+          fi
 
-## 🎯 How to Use
-1. Copy the entire template above
-2. Paste into your AI chat
-3. Replace "[YOUR QUESTION HERE]" with your actual question
-4. The AI now understands your database structure and rules
-
-## 💡 Example Questions
-- "Write a SQL query to find all properties in Bangalore priced under ₹1 crore"
-- "Create a Next.js API endpoint to fetch featured properties"
-- "How do I properly insert a new property with all constraints?"
-- "Write a migration to add a new column to the properties table"
-
----
-*Template version: ${new Date().toISOString()}*`;
-    
-    await this.safeWrite('ai-prompt-template.md', content);
+      - name: 📊 Generate metrics
+        if: steps.generate-docs.outputs.exit_code == '0'
+        id: metrics
+        run: |
+          # Create metrics file
+          METRICS_FILE="metrics-${{ github.run_id }}.json"
+          
+          # Calculate folder sizes
+          DOCS_SIZE=$(du -sk docs/database 2>/dev/null | cut -f1 || echo "0")
+          CHEATSHEETS_COUNT=$(find docs/database/cheatsheets -name "*.md" 2>/dev/null | wc -l || echo "0")
+          EXPORTS_COUNT=$(find docs/database/exports -type f 2>/dev/null | wc -l || echo "0")
+          
+          # Get latest schema hash
+          SCHEMA_HASH=$(cat docs/database/.schema-hash 2>/dev/null | head -1 || echo "unknown")
+          
+          cat > "$METRICS_FILE" << EOF
+{
+  "run_id": "${{ github.run_id }}",
+  "generated_at": "$(date -u -Iseconds)",
+  "environment": "${{ env.DB_ENVIRONMENT }}",
+  "duration_seconds": ${{ steps.generate-docs.outputs.duration || 0 }},
+  "has_changes": ${{ steps.check-changes.outputs.has_changes == 'true' }},
+  "changes": {
+    "files": ${{ steps.check-changes.outputs.changes_files || 0 }},
+    "lines_added": ${{ steps.check-changes.outputs.changes_added || 0 }},
+    "lines_removed": ${{ steps.check-changes.outputs.changes_removed || 0 }}
+  },
+  "output": {
+    "docs_size_kb": $DOCS_SIZE,
+    "cheatsheets_count": $CHEATSHEETS_COUNT,
+    "exports_count": $EXPORTS_COUNT,
+    "schema_hash": "$SCHEMA_HASH"
   }
 }
+EOF
+          
+          echo "metrics_file=$METRICS_FILE" >> $GITHUB_OUTPUT
+          echo "Generated metrics file: $METRICS_FILE"
 
-// Only run if this script is executed directly
-if (require.main === module) {
-  (async () => {
-    try {
-      const documenter = new CompleteDocumenter();
-      await documenter.generateAll();
-    } catch (err) {
-      console.error('Fatal error:', err.message);
-      process.exit(1);
-    }
-  })();
-}
+      # ===================================================================
+      # STEP 4: Commit Changes (if any)
+      # ===================================================================
+      - name: 💾 Commit and push
+        id: commit
+        if: steps.check-changes.outputs.has_changes == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configure git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global pull.rebase true
+          
+          # Create structured commit message
+          COMMIT_MSG="📚 db: auto-update documentation
+          
+          ## Summary
+          • Environment: ${{ env.DB_ENVIRONMENT }}
+          • Files changed: ${{ steps.check-changes.outputs.changes_files || 0 }}
+          • Lines: +${{ steps.check-changes.outputs.changes_added || 0 }}/-${{ steps.check-changes.outputs.changes_removed || 0 }}
+          
+          ## Details
+          Generated by GitHub Actions workflow:
+          • Run: #${{ github.run_number }}
+          • ID: ${{ github.run_id }}
+          • Trigger: ${{ github.event_name }}
+          
+          ## Schema Hash
+          $(cat docs/database/.schema-hash 2>/dev/null || echo 'unknown')
+          
+          Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          
+          # Stage changes
+          git add -A
+          
+          # Check if there are staged changes
+          if ! git diff --cached --quiet; then
+            echo "Committing changes..."
+            git commit -m "$COMMIT_MSG"
+            
+            # Push with retry
+            MAX_RETRIES=3
+            for i in $(seq 1 $MAX_RETRIES); do
+              echo "Push attempt $i/$MAX_RETRIES..."
+              if git push; then
+                echo "✅ Changes pushed successfully"
+                echo "pushed=true" >> $GITHUB_OUTPUT
+                break
+              else
+                if [ $i -eq $MAX_RETRIES ]; then
+                  echo "❌ Failed to push after $MAX_RETRIES attempts"
+                  exit 1
+                fi
+                echo "Pull latest changes and retry..."
+                sleep 2
+                git pull --rebase --autostash
+              fi
+            done
+          else
+            echo "No staged changes to commit"
+            echo "pushed=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ===================================================================
+      # STEP 5: Artifacts and Reports
+      # ===================================================================
+      - name: 📤 Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-docs-${{ github.run_id }}-${{ env.DB_ENVIRONMENT }}
+          path: |
+            scripts/${{ steps.generate-docs.outputs.log_file }}
+            scripts/${{ steps.generate-docs.outputs.report_file }}
+            scripts/${{ steps.metrics.outputs.metrics_file }}
+            changes/
+            docs/database/validation-report.md
+            docs/database/schema.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: 📊 Upload docs snapshot
+        if: steps.generate-docs.outputs.exit_code == '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-snapshot-${{ github.run_id }}
+          path: docs/database/
+          retention-days: 7
+          if-no-files-found: warn
+
+      # ===================================================================
+      # STEP 6: Create GitHub Summary
+      # ===================================================================
+      - name: 📋 Create workflow summary
+        if: always()
+        run: |
+          STATUS=${{ job.status }}
+          EXIT_CODE=${{ steps.generate-docs.outputs.exit_code || 'N/A' }}
+          DURATION=${{ steps.generate-docs.outputs.duration || 'N/A' }}
+          HAS_CHANGES=${{ steps.check-changes.outputs.has_changes || 'false' }}
+          PUSHED=${{ steps.commit.outputs.pushed || 'false' }}
+          
+          {
+            echo "# 📚 Database Documentation - ${{ env.DB_ENVIRONMENT }}"
+            echo ""
+            echo "**Status:** $STATUS"
+            
+            if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "N/A" ]; then
+              echo "❌ **Exit Code:** $EXIT_CODE"
+            else
+              echo "✅ **Exit Code:** $EXIT_CODE"
+            fi
+            
+            echo ""
+            echo "## 📊 Execution Details"
+            echo "- **Trigger:** \`${{ github.event_name }}\`"
+            echo "- **Environment:** \`${{ env.DB_ENVIRONMENT }}\`"
+            echo "- **Duration:** ${DURATION}s"
+            echo "- **Run:** [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo "- **Branch:** \`${{ github.ref_name }}\`"
+            
+            if [ "$HAS_CHANGES" == "true" ]; then
+              echo ""
+              echo "## 🔄 Changes Detected"
+              echo "- **Files changed:** ${{ steps.check-changes.outputs.changes_files || 0 }}"
+              echo "- **Lines added:** +${{ steps.check-changes.outputs.changes_added || 0 }}"
+              echo "- **Lines removed:** -${{ steps.check-changes.outputs.changes_removed || 0 }}"
+              
+              if [ "$PUSHED" == "true" ]; then
+                echo "- **✅ Changes committed and pushed**"
+              else
+                echo "- **⚠️ Changes detected but not pushed**"
+              fi
+            else
+              echo ""
+              echo "## ✅ No Schema Changes"
+              echo "Database schema is unchanged since last documentation generation."
+            fi
+            
+            if [ "$EXIT_CODE" == "0" ] && [ -f "scripts/${{ steps.generate-docs.outputs.report_file }}" ]; then
+              echo ""
+              echo "## 📈 Generated Reports"
+              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+              echo "- [Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)"
+            fi
+            
+            echo ""
+            echo "---"
+            echo "*Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')*"
+          } >> $GITHUB_STEP_SUMMARY
