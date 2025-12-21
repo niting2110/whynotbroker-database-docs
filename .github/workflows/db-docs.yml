@@ -1,5 +1,7 @@
 name: "📚 Generate Database Documentation"
-
+set local shell variables from GitHub expressions (avoid embedding ${{ ... }} inside heredoc)
+ENVIRONMENT="${{ github.event.inputs.environment || 'production' }}"
+TRIGGER="${{ github.event_name }}"
 on:
   schedule:
     - cron: '0 6 * * *'   # Daily at 6 AM UTC (11:30 AM IST)
@@ -186,13 +188,13 @@ jobs:
           cat > "$REPORT_FILE" <<EOF
 {
   "run_id": "${GITHUB_RUN_ID}",
-  "environment": "${{ github.event.inputs.environment || 'production' }}",
+  "environment": "${ENVIRONMENT}",
   "timestamp": "$(date -u -Iseconds)",
   "duration_seconds": ${DURATION},
   "exit_code": ${EXIT_CODE},
   "force_update": ${FORCE_UPDATE},
   "node_version": "$(node --version)",
-  "trigger": "${{ github.event_name }}"
+  "trigger": "${TRIGGER}"
 }
 EOF
 
