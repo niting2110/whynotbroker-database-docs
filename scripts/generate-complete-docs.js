@@ -1,18 +1,30 @@
 ﻿require('dotenv').config();
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
 console.log("🚀 Generating COMPLETE database documentation...");
+console.log("Database URL present:", !!process.env.DATABASE_URL);
+console.log("Node version:", process.version);
 
 class CompleteDocumenter {
     constructor() {
+        const connectionString = process.env.DATABASE_URL;
+        
+        if (!connectionString) {
+            throw new Error("DATABASE_URL environment variable is not set");
+        }
+        
+        console.log("Connecting to database...");
+        
         this.pool = new Pool({
-            connectionString: process.env.DATABASE_URL,
-            ssl: { rejectUnauthorized: false },
-            connectionTimeoutMillis: 15000,
-            query_timeout: 45000
+            connectionString: connectionString,
+            ssl: {
+                rejectUnauthorized: false,
+                requestCert: true
+            },
+            connectionTimeoutMillis: 30000,
+            query_timeout: 60000
         });
         
         this.outputDir = path.join(__dirname, '..');
@@ -30,10 +42,16 @@ class CompleteDocumenter {
     }
     
     async generateAll() {
-        const client = await this.pool.connect();
+        let client;
         
         try {
+            console.log("Attempting to connect to database...");
+            client = await this.pool.connect();
             console.log("✅ Connected to database");
+            
+            // Test connection with a simple query
+            const testQuery = await client.query('SELECT NOW() as current_time');
+            console.log("Database time:", testQuery.rows[0].current_time);
             
             // 1. Get ALL tables with detailed info
             console.log("📊 Fetching complete schema...");
@@ -53,6 +71,10 @@ class CompleteDocumenter {
             
             const tables = tablesQuery.rows;
             console.log(`📋 Found ${tables.length} tables`);
+            
+            if (tables.length === 0) {
+                console.log("⚠️ No tables found in public schema");
+            }
             
             // 2. Get detailed info for each table
             const tableDetails = {};
@@ -102,10 +124,16 @@ class CompleteDocumenter {
             console.log("📁 Location: " + this.outputDir);
             
         } catch (error) {
-            console.error("❌ Error:", error);
+            console.error("❌ Error:", error.message);
+            console.error("Error stack:", error.stack);
+            if (error.code) console.error("Error code:", error.code);
+            if (error.host) console.error("Host:", error.host);
+            if (error.port) console.error("Port:", error.port);
             process.exit(1);
         } finally {
-            client.release();
+            if (client) {
+                client.release();
+            }
             await this.pool.end();
         }
     }
@@ -398,4 +426,7 @@ Now, help me with: [YOUR QUESTION HERE]
 
 // Run the generator
 const documenter = new CompleteDocumenter();
-documenter.generateAll().catch(console.error);
+documenter.generateAll().catch(error => {
+    console.error("Fatal error:", error);
+    process.exit(1);
+});
