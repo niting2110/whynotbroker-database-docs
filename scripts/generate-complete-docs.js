@@ -3,9 +3,13 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
+// Set Node.js to ignore SSL certificate errors globally
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 console.log("🚀 Generating COMPLETE database documentation...");
 console.log("Database URL present:", !!process.env.DATABASE_URL);
 console.log("Node version:", process.version);
+console.log("NODE_TLS_REJECT_UNAUTHORIZED:", process.env.NODE_TLS_REJECT_UNAUTHORIZED);
 
 class CompleteDocumenter {
     constructor() {
@@ -17,14 +21,29 @@ class CompleteDocumenter {
         
         console.log("Connecting to database...");
         
+        // Parse the connection string to handle SSL properly
+        const parsedUrl = new URL(connectionString.replace(/^postgresql:/, 'http:'));
+        
+        // For Supabase, we need to append SSL parameters to the connection string
+        let modifiedConnectionString = connectionString;
+        
+        // Check if SSL parameters are already in the connection string
+        if (!connectionString.includes('sslmode=')) {
+            modifiedConnectionString += '?sslmode=require&ssl=1';
+        }
+        
+        console.log("Modified connection string (without password):", 
+            modifiedConnectionString.replace(/password=[^&]*/, 'password=***'));
+        
         this.pool = new Pool({
-            connectionString: connectionString,
+            connectionString: modifiedConnectionString,
+            connectionTimeoutMillis: 30000,
+            query_timeout: 60000,
+            // Force SSL mode for Supabase
             ssl: {
                 rejectUnauthorized: false,
-                requestCert: true
-            },
-            connectionTimeoutMillis: 30000,
-            query_timeout: 60000
+                require: true
+            }
         });
         
         this.outputDir = path.join(__dirname, '..');
