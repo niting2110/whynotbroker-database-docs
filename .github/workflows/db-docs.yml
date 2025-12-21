@@ -1,22 +1,49 @@
-name: "📚 Generate Database Documentation (minimal safe)"
+name: "📚 Generate Database Documentation"
 
 on:
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+      environment:
+        description: 'Environment to document'
+        required: false
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+        default: 'production'
   push:
-    branches: [ main, master ]
+    branches: [main, master]
+    paths:
+      - 'scripts/**'
+      - 'supabase/**'
+      - '.github/workflows/db-docs.yml'
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'supabase/**'
+
+concurrency:
+  group: db-docs-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   generate-db-docs:
+    name: Generate Documentation
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: write
 
-    env:
-      OUTPUT_DIR: './docs/database'
-
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -26,101 +53,158 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'scripts/package-lock.json'
 
-      - name: Configure DATABASE_URL
-        id: configure-db
-        env:
-          INPUT_ENV: ${{ github.event.inputs.environment || 'production' }}
+      - name: Determine environment
+        id: env
         run: |
-          set -euo pipefail
-          TARGET="${INPUT_ENV}"
-          echo "Selected environment: ${TARGET}"
-
-          case "${TARGET}" in
-            production)
-              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              ;;
-            staging)
-              echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              ;;
-            development)
-              echo "DATABASE_URL=${{ secrets.DEVELOPMENT_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              ;;
-            *)
-              echo "::error::Unknown environment: ${TARGET}"
-              exit 1
-              ;;
-          esac
-
-          if [ -z "${DATABASE_URL:-}" ]; then
-            echo "::error::DATABASE_URL secret not configured for environment ${TARGET}"
-            exit 1
+          ENV="${{ github.event.inputs.environment }}"
+          if [ -z "$ENV" ]; then
+            ENV="production"
           fi
+          echo "environment=$ENV" >> $GITHUB_OUTPUT
+          echo "Using environment: $ENV"
 
-          echo "DATABASE_URL configured (redacted)."
-
-      - name: Install lightweight deps (CI-only)
+      - name: Install dependencies
         working-directory: scripts
         run: |
-          set -euo pipefail
           if [ -f package.json ]; then
-            npm ci --no-audit --no-fund --no-progress
+            echo "Found package.json, running npm ci..."
+            npm ci --prefer-offline --no-audit --no-fund
           else
-            npm init -y >/dev/null 2>&1
-            npm install pg dotenv pg-format --no-save --no-audit --no-fund --no-progress
-            rm -f package.json package-lock.json
+            echo "No package.json found, installing required packages..."
+            npm install pg dotenv pg-format --no-save --no-audit --no-fund
           fi
+          echo "✅ Dependencies installed"
 
-      - name: Run generator
+      - name: Verify dependencies
+        working-directory: scripts
+        run: |
+          echo "Verifying required packages..."
+          node -e "require('pg')" || { echo "❌ pg not found"; exit 1; }
+          node -e "require('dotenv')" || { echo "❌ dotenv not found"; exit 1; }
+          node -e "require('pg-format')" || { echo "❌ pg-format not found"; exit 1; }
+          echo "✅ All dependencies verified"
+
+      - name: Create output directory
+        run: |
+          mkdir -p docs/database
+          echo "✅ Output directory created"
+
+      - name: Generate documentation
         id: generate
         working-directory: scripts
         env:
-          RUN_ID: ${{ github.run_id }}
-          INPUT_FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          ENVIRONMENT: ${{ steps.env.outputs.environment }}
+          FORCE_UPDATE: ${{ github.event.inputs.force_update }}
+          CI: true
+          NODE_ENV: production
+          TZ: Asia/Kolkata
+          DB_SSL: true
+          OUTPUT_DIR: '../docs/database'
         run: |
-          set -euo pipefail
-          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
-          LOG="generation-${TIMESTAMP}.log"
-          REPORT="generation-report-${TIMESTAMP}.json"
-
-          echo "RUN_ID=${RUN_ID}"
-          echo "FORCE_UPDATE=${INPUT_FORCE_UPDATE}"
-          START=$(date +%s)
-
-          if timeout 600 node generate-complete-docs.js 2>&1 | tee "${LOG}"; then
-            EXIT=0
+          echo "Starting documentation generation..."
+          echo "Environment: $ENVIRONMENT"
+          echo "Force update: $FORCE_UPDATE"
+          echo "Node version: $(node --version)"
+          
+          START_TIME=$(date +%s)
+          
+          if [ ! -f generate-complete-docs.js ]; then
+            echo "❌ Error: generate-complete-docs.js not found"
+            ls -la
+            exit 1
+          fi
+          
+          # Run with timeout and capture output
+          if timeout 600 node generate-complete-docs.js; then
+            EXIT_CODE=0
+            echo "✅ Documentation generated successfully"
           else
-            EXIT=${PIPESTATUS[0]:-1}
+            EXIT_CODE=$?
+            echo "❌ Documentation generation failed with exit code: $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
+          
+          END_TIME=$(date +%s)
+          DURATION=$((END_TIME - START_TIME))
+          
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "Generation completed in ${DURATION}s"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add -A docs/database/ 2>/dev/null || true
+          
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            FILES=$(git diff --cached --name-only | wc -l)
+            echo "changes_count=$FILES" >> $GITHUB_OUTPUT
+            echo "Changes detected in $FILES files"
+            
+            echo "Changed files:"
+            git diff --cached --name-only
           fi
 
-          END=$(date +%s)
-          DURATION=$((END - START))
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git commit -m "📚 Update database documentation [skip ci]
 
-          cat > "${REPORT}" <<EOF
-{
-  "run_id": "${RUN_ID}",
-  "duration_seconds": ${DURATION},
-  "exit_code": ${EXIT}
-}
-EOF
+          - Environment: ${{ steps.env.outputs.environment }}
+          - Files changed: ${{ steps.changes.outputs.changes_count }}
+          - Run: ${{ github.run_number }}
+          - Duration: ${{ steps.generate.outputs.duration }}s"
+          
+          # Push with retry logic
+          for i in 1 2 3; do
+            if git push; then
+              echo "✅ Changes pushed successfully"
+              exit 0
+            else
+              echo "Push attempt $i failed, retrying..."
+              git pull --rebase --autostash
+              sleep 2
+            fi
+          done
+          
+          echo "❌ Failed to push after 3 attempts"
+          exit 1
 
-          echo "log_file=${LOG}" >> "$GITHUB_OUTPUT"
-          echo "report_file=${REPORT}" >> "$GITHUB_OUTPUT"
-          echo "duration=${DURATION}" >> "$GITHUB_OUTPUT"
-          echo "exit_code=${EXIT}" >> "$GITHUB_OUTPUT"
-
-          if [ "${EXIT}" -ne 0 ]; then
-            echo "::error::Generator exited with code ${EXIT}"
-            exit "${EXIT}"
-          fi
-
-      - name: Upload artifacts
+      - name: Create summary
         if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 📚 Database Documentation Generation
+          
+          **Status:** ${{ steps.generate.outputs.exit_code == '0' && '✅ Success' || '❌ Failed' }}
+          
+          | Item | Value |
+          |------|-------|
+          | Environment | ${{ steps.env.outputs.environment }} |
+          | Duration | ${{ steps.generate.outputs.duration }}s |
+          | Changes | ${{ steps.changes.outputs.has_changes == 'true' && steps.changes.outputs.changes_count || '0' }} files |
+          | Run Number | ${{ github.run_number }} |
+          | Commit | `${{ github.sha }}` |
+          EOF
+
+      - name: Upload logs on failure
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: db-docs-${{ github.run_id }}
+          name: failure-logs-${{ github.run_number }}
           path: |
-            scripts/${{ steps.generate.outputs.log_file }}
-            scripts/${{ steps.generate.outputs.report_file }}
+            scripts/*.log
+            scripts/*.json
           retention-days: 7
-          if-no-files-found: warn
+          if-no-files-found: ignore
