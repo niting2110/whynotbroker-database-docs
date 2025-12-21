@@ -102,9 +102,8 @@ class CompleteDocumenter {
             console.log("📁 Location: " + this.outputDir);
             
         } catch (error) {
-    console.error("❌ Error:", error);
-    process.exit(1);   // ← ADD THIS LINE
-}
+            console.error("❌ Error:", error);
+            process.exit(1);
         } finally {
             client.release();
             await this.pool.end();
