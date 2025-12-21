@@ -2,8 +2,8 @@ name: "📚 Generate Database Documentation"
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # Daily at 6 AM UTC (11:30 AM IST)
-  workflow_dispatch:      # Manual trigger
+    - cron: '0 6 * * *'   # Daily at 6 AM UTC
+  workflow_dispatch:
     inputs:
       force_update:
         description: 'Force update even if no changes detected'
@@ -36,400 +36,149 @@ concurrency:
 
 jobs:
   generate-db-docs:
-    name: Generate Documentation - ${{ github.event.inputs.environment || 'production' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: write
-      pull-requests: write
-      issues: write
 
-    # job-level env: safe to use GitHub expressions here
     env:
       CI: true
       NODE_ENV: production
       TZ: Asia/Kolkata
-      DB_SSL: true
       OUTPUT_DIR: './docs/database'
-      DB_ENVIRONMENT: ${{ github.event.inputs.environment || 'production' }}
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref }}
 
-      - name: 🟢 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: 'scripts/package-lock.json'
 
-      - name: 📦 Cache dependencies
-        uses: actions/cache@v4
-        id: cache-deps
-        with:
-          path: |
-            scripts/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('scripts/package-lock.json') }}-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ hashFiles('scripts/package-lock.json') }}
-            ${{ runner.os }}-node-
-
-      - name: 🔐 Configure Database Credentials
-        id: configure-db
-        continue-on-error: false
-        run: |
-          TARGET_ENV="${DB_ENVIRONMENT}"
-          echo "Selected environment: $TARGET_ENV"
-
-          case "$TARGET_ENV" in
-            "production")
-              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              echo "Using production database"
-              ;;
-            "staging")
-              echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              echo "Using staging database (fallback to production if not configured)"
-              ;;
-            "development")
-              echo "DATABASE_URL=${{ secrets.DEVELOPMENT_DATABASE_URL || secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              echo "Using development database (fallback to production if not configured)"
-              ;;
-            *)
-              echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> $GITHUB_ENV
-              echo "Using production database (default)"
-              ;;
-          esac
-
-          if [ -z "${DATABASE_URL:-}" ]; then
-            echo "::error::DATABASE_URL is not configured for environment: $TARGET_ENV"
-            exit 1
-          fi
-
-          echo "DB environment set to: $TARGET_ENV"
-
-      - name: 📦 Install dependencies (lightweight / resilient)
+      - name: Install dependencies (lightweight)
         working-directory: scripts
-        id: install-deps
-        continue-on-error: false
         run: |
-          echo "Installing dependencies (lightweight CI mode)..."
-          if [ -f "package.json" ]; then
-            npm ci --prefer-offline --no-audit --no-fund --no-progress
+          # If the scripts directory includes a package.json, prefer reproducible install.
+          if [ -f package.json ]; then
+            npm ci --no-audit --no-fund --no-progress
           else
-            echo "package.json not found — performing minimal runtime installs"
+            # Minimal runtime installs for CI-only mode (no repo changes)
             npm init -y >/dev/null 2>&1
             npm install pg dotenv pg-format --no-save --no-audit --no-fund --no-progress
             rm -f package.json package-lock.json
           fi
 
-          if ! node -e "require('pg-format'); process.exit(0)" 2>/dev/null; then
-            echo "pg-format missing — installing..."
-            npm install pg-format --no-save --no-audit --no-fund --no-progress
-          fi
-
-          echo "✅ Dependencies installed successfully"
-
-      - name: 📝 Generate documentation
-        id: generate-docs
+      - name: Generate documentation
+        id: generate
         working-directory: scripts
-        continue-on-error: false
-        # Move all GitHub expressions into step env (avoid using ${{ ... }} inside run heredocs)
         env:
-          ENVIRONMENT: ${{ github.event.inputs.environment || 'production' }}
-          TRIGGER: ${{ github.event_name }}
-          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          # Pull workflow_dispatch inputs into environment variables (safe)
+          INPUT_ENVIRONMENT: ${{ github.event.inputs.environment }}
+          INPUT_FORCE_UPDATE: ${{ github.event.inputs.force_update }}
+          RUN_ID: ${{ github.run_id }}
         run: |
-          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
-          LOG_FILE="generation-$TIMESTAMP.log"
-          REPORT_FILE="generation-report-$TIMESTAMP.json"
+          set -euo pipefail
 
-          echo "🚀 Starting database documentation generation..."
+          # Default values if inputs were not provided
+          ENVIRONMENT="${INPUT_ENVIRONMENT:-production}"
+          FORCE_UPDATE="${INPUT_FORCE_UPDATE:-false}"
+          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+          LOG_FILE="generation-${TIMESTAMP}.log"
+          REPORT_FILE="generation-report-${TIMESTAMP}.json"
+
           echo "Environment: $ENVIRONMENT"
           echo "Force update: $FORCE_UPDATE"
-          echo "Run ID: $GITHUB_RUN_ID"
-          echo "Timestamp: $TIMESTAMP UTC"
-          echo "Node: $(node --version)"
+          echo "Run ID: ${RUN_ID}"
+          echo "Starting generator..."
 
-          START_TIME=$(date +%s)
-
+          START=$(date +%s)
           if timeout 600 node generate-complete-docs.js 2>&1 | tee "$LOG_FILE"; then
             EXIT_CODE=0
           else
             EXIT_CODE=${PIPESTATUS[0]:-1}
           fi
+          END=$(date +%s)
+          DURATION=$((END - START))
 
-          END_TIME=$(date +%s)
-          DURATION=$((END_TIME - START_TIME))
-
-          echo ""
-          echo "=== Generation Summary ==="
-          echo "Exit Code: $EXIT_CODE"
-          echo "Duration: ${DURATION}s"
-          echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-
-          # Use shell variables only inside heredoc
+          # Write a JSON report (only shell vars used here)
           cat > "$REPORT_FILE" <<EOF
 {
-  "run_id": "${GITHUB_RUN_ID}",
+  "run_id": "${RUN_ID}",
   "environment": "${ENVIRONMENT}",
   "timestamp": "$(date -u -Iseconds)",
   "duration_seconds": ${DURATION},
   "exit_code": ${EXIT_CODE},
-  "force_update": ${FORCE_UPDATE},
-  "node_version": "$(node --version)",
-  "trigger": "${TRIGGER}"
+  "force_update": "${FORCE_UPDATE}"
 }
 EOF
 
-          # Export outputs
-          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
-          echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
-          echo "duration=$DURATION" >> $GITHUB_OUTPUT
-          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # Expose outputs for later steps
+          echo "log_file=$LOG_FILE" >> "$GITHUB_OUTPUT"
+          echo "report_file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+          echo "duration=$DURATION" >> "$GITHUB_OUTPUT"
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
 
           if [ "$EXIT_CODE" -ne 0 ]; then
-            echo "::error::Documentation generation failed with exit code $EXIT_CODE"
+            echo "::error::Generator exited with code $EXIT_CODE"
             exit "$EXIT_CODE"
           fi
 
-      - name: 🔍 Analyze changes
-        id: check-changes
-        if: ${{ success() }}
+      - name: Check for changes
+        id: check
         run: |
-          git status --porcelain > /tmp/git-status.txt || true
+          # Stage generated output directory for evaluation
+          git add -A "${{ env.OUTPUT_DIR }}" || true
 
-          if grep -q '.' /tmp/git-status.txt; then
-            echo "✅ Changes detected"
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-
-            mkdir -p changes
-            git status --porcelain > changes/modified-files.txt
-            git add -A "${OUTPUT_DIR}" || true
-            git diff --cached --numstat > changes/numstat.txt || true
-
-            ADDED=$(awk '{sum+=$1} END {print sum+0}' changes/numstat.txt || echo "0")
-            REMOVED=$(awk '{sum+=$2} END {print sum+0}' changes/numstat.txt || echo "0")
-            FILES=$(wc -l < changes/modified-files.txt || echo "0")
-
-            echo "changes_added=$ADDED" >> $GITHUB_OUTPUT
-            echo "changes_removed=$REMOVED" >> $GITHUB_OUTPUT
-            echo "changes_files=$FILES" >> $GITHUB_OUTPUT
-
-            {
-              echo "## 📊 Change Summary"
-              echo ""
-              echo "**Total Files:** $FILES"
-              echo "**Lines Added:** +$ADDED"
-              echo "**Lines Removed:** -$REMOVED"
-              echo ""
-              echo "### Modified Files:"
-              echo '```'
-              cat changes/modified-files.txt
-              echo '```'
-            } > changes/summary.md
-
-            git status --short
+          # Check whether there are staged differences to commit
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "changes_files=0" >> "$GITHUB_OUTPUT"
+            echo "changes_added=0" >> "$GITHUB_OUTPUT"
+            echo "changes_removed=0" >> "$GITHUB_OUTPUT"
+            echo "No changes detected"
           else
-            echo "ℹ️ No changes detected"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "changes_added=0" >> $GITHUB_OUTPUT
-            echo "changes_removed=0" >> $GITHUB_OUTPUT
-            echo "changes_files=0" >> $GITHUB_OUTPUT
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            # produce basic stats
+            git diff --cached --numstat > /tmp/changes-numstat.txt || true
+            FILES=$(git diff --cached --name-only | wc -l || true)
+            ADDED=$(awk '{sum+=$1} END {print sum+0}' /tmp/changes-numstat.txt || echo 0)
+            REMOVED=$(awk '{sum+=$2} END {print sum+0}' /tmp/changes-numstat.txt || echo 0)
+            echo "changes_files=$FILES" >> "$GITHUB_OUTPUT"
+            echo "changes_added=$ADDED" >> "$GITHUB_OUTPUT"
+            echo "changes_removed=$REMOVED" >> "$GITHUB_OUTPUT"
+            echo "Changes detected: files=$FILES added=$ADDED removed=$REMOVED"
           fi
 
-      - name: 📊 Generate metrics
-        if: ${{ success() }}
-        id: metrics
+      - name: Commit & push changes (if any)
+        if: steps.check.outputs.has_changes == 'true'
         env:
-          RUN_ID: ${{ github.run_id }}
-          GENERATED_AT: ${{ github.event.created_at || format('{0}', github.event.head_commit.timestamp || '') }}
-          ENVIRONMENT: ${{ env.DB_ENVIRONMENT }}
-          DURATION_OUT: ${{ steps.generate-docs.outputs.duration || '0' }}
-          HAS_CHANGES: ${{ steps.check-changes.outputs.has_changes || 'false' }}
-          CHANGES_FILES: ${{ steps.check-changes.outputs.changes_files || '0' }}
-          CHANGES_ADDED: ${{ steps.check-changes.outputs.changes_added || '0' }}
-          CHANGES_REMOVED: ${{ steps.check-changes.outputs.changes_removed || '0' }}
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "github-actions[bot]@users.noreply.github.com"
         run: |
-          METRICS_FILE="metrics-${RUN_ID}.json"
+          git config user.name "${GIT_AUTHOR_NAME}"
+          git config user.email "${GIT_AUTHOR_EMAIL}"
+          git commit -m "📚 Auto-update database docs (run ${{ github.run_number }})" || true
+          git push || (git pull --rebase && git push) || true
 
-          DOCS_SIZE=$(du -sk "${OUTPUT_DIR}" 2>/dev/null | cut -f1 || echo "0")
-          CHEATSHEETS_COUNT=$(find "${OUTPUT_DIR}/cheatsheets" -name "*.md" 2>/dev/null | wc -l || echo "0")
-          EXPORTS_COUNT=$(find "${OUTPUT_DIR}/exports" -type f 2>/dev/null | wc -l || echo "0")
-          SCHEMA_HASH=$(cat "${OUTPUT_DIR}/.schema-hash" 2>/dev/null | head -1 || echo "unknown")
-
-          # All values in heredoc are shell variables (no ${{ ... }} inside heredoc)
-          cat > "$METRICS_FILE" <<EOF
-{
-  "run_id": "${RUN_ID}",
-  "generated_at": "$(date -u -Iseconds)",
-  "environment": "${ENVIRONMENT}",
-  "duration_seconds": ${DURATION_OUT},
-  "has_changes": ${HAS_CHANGES},
-  "changes": {
-    "files": ${CHANGES_FILES},
-    "lines_added": ${CHANGES_ADDED},
-    "lines_removed": ${CHANGES_REMOVED}
-  },
-  "output": {
-    "docs_size_kb": ${DOCS_SIZE},
-    "cheatsheets_count": ${CHEATSHEETS_COUNT},
-    "exports_count": ${EXPORTS_COUNT},
-    "schema_hash": "${SCHEMA_HASH}"
-  }
-}
-EOF
-
-          echo "metrics_file=$METRICS_FILE" >> $GITHUB_OUTPUT
-          echo "Generated metrics file: $METRICS_FILE"
-
-      - name: 💾 Commit and push
-        id: commit
-        if: ${{ steps.check-changes.outputs.has_changes == 'true' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_ENV: ${{ env.DB_ENVIRONMENT }}
-          CHANGES_FILES: ${{ steps.check-changes.outputs.changes_files || '0' }}
-          CHANGES_ADDED: ${{ steps.check-changes.outputs.changes_added || '0' }}
-          CHANGES_REMOVED: ${{ steps.check-changes.outputs.changes_removed || '0' }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global pull.rebase true
-
-          # Build commit message using only shell variables (no ${{ ... }} inside the heredoc)
-          COMMIT_MSG_FILE=$(mktemp)
-          cat > "$COMMIT_MSG_FILE" <<MSG
-📚 db: auto-update documentation
-
-• Environment: ${COMMIT_ENV}
-• Files changed: ${CHANGES_FILES}
-• Lines: +${CHANGES_ADDED}/-${CHANGES_REMOVED}
-
-Generated by GitHub Actions:
-• Run: #${{ github.run_number }}
-• ID: ${{ github.run_id }}
-• Trigger: ${{ github.event_name }}
-
-Schema Hash: $(cat "${OUTPUT_DIR}/.schema-hash" 2>/dev/null || echo 'unknown')
-
-Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
-MSG
-
-          git add -A "${OUTPUT_DIR}" || true
-          git add changes/ || true
-
-          if ! git diff --cached --quiet; then
-            echo "Committing changes..."
-            git commit -F "$COMMIT_MSG_FILE"
-
-            MAX_RETRIES=3
-            for i in $(seq 1 $MAX_RETRIES); do
-              echo "Push attempt $i/$MAX_RETRIES..."
-              if git push; then
-                echo "✅ Changes pushed successfully"
-                echo "pushed=true" >> $GITHUB_OUTPUT
-                break
-              else
-                if [ $i -eq $MAX_RETRIES ]; then
-                  echo "❌ Failed to push after $MAX_RETRIES attempts"
-                  exit 1
-                fi
-                echo "Pull latest changes and retry..."
-                sleep 2
-                git pull --rebase --autostash || true
-              fi
-            done
-          else
-            echo "No staged changes to commit"
-            echo "pushed=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: 📤 Upload artifacts
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: db-docs-${{ github.run_id }}-${{ env.DB_ENVIRONMENT }}
+          name: db-docs-${{ github.run_id }}
           path: |
-            scripts/${{ steps.generate-docs.outputs.log_file }}
-            scripts/${{ steps.generate-docs.outputs.report_file }}
-            ${{ steps.metrics.outputs.metrics_file || '' }}
-            changes/
-            ${{ env.OUTPUT_DIR }}/validation-report.md
-            ${{ env.OUTPUT_DIR }}/schema.json
-          retention-days: 30
-          if-no-files-found: warn
-
-      - name: 📊 Upload docs snapshot
-        if: ${{ steps.generate-docs.outputs.exit_code == '0' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs-snapshot-${{ github.run_id }}
-          path: ${{ env.OUTPUT_DIR }}/
+            scripts/${{ steps.generate.outputs.log_file }}
+            scripts/${{ steps.generate.outputs.report_file }}
           retention-days: 7
           if-no-files-found: warn
 
-      - name: 📋 Create workflow summary
+      - name: Create workflow summary
         if: always()
         run: |
-          STATUS=${{ job.status }}
-          EXIT_CODE=${{ steps.generate-docs.outputs.exit_code || 'N/A' }}
-          DURATION=${{ steps.generate-docs.outputs.duration || 'N/A' }}
-          HAS_CHANGES=${{ steps.check-changes.outputs.has_changes || 'false' }}
-          PUSHED=${{ steps.commit.outputs.pushed || 'false' }}
-
-          {
-            echo "# 📚 Database Documentation - ${DB_ENVIRONMENT}"
-            echo ""
-            echo "**Status:** $STATUS"
-
-            if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "N/A" ]; then
-              echo "❌ **Exit Code:** $EXIT_CODE"
-            else
-              echo "✅ **Exit Code:** $EXIT_CODE"
-            fi
-
-            echo ""
-            echo "## 📊 Execution Details"
-            echo "- **Trigger:** \`${{ github.event_name }}\`"
-            echo "- **Environment:** \`${{ env.DB_ENVIRONMENT }}\`"
-            echo "- **Duration:** ${DURATION}s"
-            echo "- **Run:** [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-            echo "- **Branch:** \`${{ github.ref_name }}\`"
-
-            if [ "$HAS_CHANGES" == "true" ]; then
-              echo ""
-              echo "## 🔄 Changes Detected"
-              echo "- **Files changed:** ${{ steps.check-changes.outputs.changes_files || 0 }}"
-              echo "- **Lines added:** +${{ steps.check-changes.outputs.changes_added || 0 }}"
-              echo "- **Lines removed:** -${{ steps.check-changes.outputs.changes_removed || 0 }}"
-
-              if [ "$PUSHED" == "true" ]; then
-                echo "- **✅ Changes committed and pushed**"
-              else
-                echo "- **⚠️ Changes detected but not pushed**"
-              fi
-            else
-              echo ""
-              echo "## ✅ No Schema Changes"
-              echo "Database schema is unchanged since last documentation generation."
-            fi
-
-            if [ "$EXIT_CODE" == "0" ] && [ -f "scripts/${{ steps.generate-docs.outputs.report_file }}" ]; then
-              echo ""
-              echo "## 📈 Generated Reports"
-              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-              echo "- [Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)"
-            fi
-
-            echo ""
-            echo "---"
-            echo "*Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')*"
-          } >> $GITHUB_STEP_SUMMARY
+          echo "## Database Docs Run" >> $GITHUB_STEP_SUMMARY
+          echo "- Run: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Duration: ${{ steps.generate.outputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+          echo "- Exit code: ${{ steps.generate.outputs.exit_code }}" >> $GITHUB_STEP_SUMMARY
