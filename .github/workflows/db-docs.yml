@@ -139,7 +139,7 @@ jobs:
         working-directory: scripts
         continue-on-error: false
         run: |
-          # Set local shell variables from GitHub expressions
+          # Set local shell variables from GitHub expressions (avoid embedding ${{ ... }} in heredoc)
           ENVIRONMENT="${{ github.event.inputs.environment || 'production' }}"
           TRIGGER="${{ github.event_name }}"
           FORCE_UPDATE="${{ github.event.inputs.force_update || 'false' }}"
@@ -253,23 +253,33 @@ EOF
           EXPORTS_COUNT=$(find "${{ env.OUTPUT_DIR }}/exports" -type f 2>/dev/null | wc -l || echo "0")
           SCHEMA_HASH=$(cat "${{ env.OUTPUT_DIR }}/.schema-hash" 2>/dev/null | head -1 || echo "unknown")
 
+          # Capture GitHub expression values into shell variables to avoid ${ { } } in heredoc
+          RUN_ID="${{ github.run_id }}"
+          GENERATED_AT="$(date -u -Iseconds)"
+          ENVIRONMENT="${{ env.DB_ENVIRONMENT }}"
+          DURATION="${{ steps.generate-docs.outputs.duration || 0 }}"
+          HAS_CHANGES="${{ steps.check-changes.outputs.has_changes || 'false' }}"
+          CHANGES_FILES="${{ steps.check-changes.outputs.changes_files || 0 }}"
+          CHANGES_ADDED="${{ steps.check-changes.outputs.changes_added || 0 }}"
+          CHANGES_REMOVED="${{ steps.check-changes.outputs.changes_removed || 0 }}"
+
           cat > "$METRICS_FILE" <<EOF
 {
-  "run_id": "${{ github.run_id }}",
-  "generated_at": "$(date -u -Iseconds)",
-  "environment": "${{ env.DB_ENVIRONMENT }}",
-  "duration_seconds": ${{ steps.generate-docs.outputs.duration || 0 }},
-  "has_changes": ${{ steps.check-changes.outputs.has_changes == 'true' }},
+  "run_id": "${RUN_ID}",
+  "generated_at": "${GENERATED_AT}",
+  "environment": "${ENVIRONMENT}",
+  "duration_seconds": ${DURATION},
+  "has_changes": ${HAS_CHANGES},
   "changes": {
-    "files": ${{ steps.check-changes.outputs.changes_files || 0 }},
-    "lines_added": ${{ steps.check-changes.outputs.changes_added || 0 }},
-    "lines_removed": ${{ steps.check-changes.outputs.changes_removed || 0 }}
+    "files": ${CHANGES_FILES},
+    "lines_added": ${CHANGES_ADDED},
+    "lines_removed": ${CHANGES_REMOVED}
   },
   "output": {
-    "docs_size_kb": $DOCS_SIZE,
-    "cheatsheets_count": $CHEATSHEETS_COUNT,
-    "exports_count": $EXPORTS_COUNT,
-    "schema_hash": "$SCHEMA_HASH"
+    "docs_size_kb": ${DOCS_SIZE},
+    "cheatsheets_count": ${CHEATSHEETS_COUNT},
+    "exports_count": ${EXPORTS_COUNT},
+    "schema_hash": "${SCHEMA_HASH}"
   }
 }
 EOF
@@ -404,7 +414,7 @@ Signed-off-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com
             if [ "$EXIT_CODE" == "0" ] && [ -f "scripts/${{ steps.generate-docs.outputs.report_file }}" ]; then
               echo ""
               echo "## 📈 Generated Reports"
-              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+              echo "- [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} )"
               echo "- [Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)"
             fi
 
