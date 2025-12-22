@@ -128,9 +128,7 @@ jobs:
             }
             
             // Extract hostname for DNS test
-            const hostMatch = connectionString.match(/\/\/([^:@]+@)?([^:\/]+)/);
-            const hostname = hostMatch ? hostMatch[2] : null;
-            
+            const hostname = new URL(connectionString).hostname;
             if (hostname) {
               console.log('Testing DNS resolution for:', hostname);
               try {
