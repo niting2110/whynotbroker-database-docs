@@ -1,44 +1,20 @@
-name: "📚 Generate Database Documentation"
+name: Generate Database Docs
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'   # Daily at 6 AM UTC
   workflow_dispatch:
-    inputs:
-      force_update:
-        description: 'Force update even if no changes detected'
-        required: false
-        type: boolean
-        default: false
-      environment:
-        description: 'Environment to document'
-        required: false
-        type: choice
-        options:
-          - production
-          - staging
-          - development
-        default: 'production'
   push:
-    branches: [main, master]
+    branches: [ main ]
     paths:
       - 'scripts/**'
-      - 'supabase/**'
       - '.github/workflows/db-docs.yml'
-  pull_request:
-    paths:
-      - 'scripts/**'
-      - 'supabase/**'
-
-concurrency:
-  group: db-docs-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   generate-db-docs:
-    name: Generate Documentation
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
+
     permissions:
       contents: write
 
@@ -46,34 +22,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: 'scripts/package-lock.json'
+          cache: npm
+          cache-dependency-path: scripts/package-lock.json
 
-      - name: Configure DNS and IPv4
+      - name: Configure network for Supabase connectivity
         run: |
           echo "Configuring network for Supabase connectivity..."
-          
-          # Add Google DNS for better resolution
           echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
           echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
-          
-          # Disable IPv6 to force IPv4
           sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
           sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
-          
           echo "✅ Network configured for IPv4"
 
-      - name: Determine environment
+      - name: Set environment
         id: env
         run: |
-          ENV="${{ github.event.inputs.environment }}"
+          ENV=""
           if [ -z "$ENV" ]; then
             ENV="production"
           fi
@@ -82,95 +52,62 @@ jobs:
 
       - name: Install dependencies
         working-directory: scripts
-        run: |
-          if [ -f package.json ]; then
-            echo "Found package.json, running npm ci..."
-            npm ci --prefer-offline --no-audit --no-fund
-          else
-            echo "No package.json found, installing required packages..."
-            npm install pg dotenv pg-format --no-save --no-audit --no-fund
-          fi
-          echo "✅ Dependencies installed"
+        run: npm ci --prefer-offline --no-audit --no-fund
 
-      - name: Verify dependencies
-        working-directory: scripts
-        run: |
-          echo "Verifying required packages..."
-          node -e "require('pg')" || { echo "❌ pg not found"; exit 1; }
-          node -e "require('dotenv')" || { echo "❌ dotenv not found"; exit 1; }
-          node -e "require('pg-format')" || { echo "❌ pg-format not found"; exit 1; }
-          echo "✅ All dependencies verified"
-
-      - name: Create output directory
-        run: |
-          mkdir -p docs/database
-          echo "✅ Output directory created"
-
+      # 🔥 PATCH 1 — TLS BYPASS ADDED
       - name: Test database connectivity
         working-directory: scripts
         env:
           DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          NODE_TLS_REJECT_UNAUTHORIZED: '0'
         run: |
           echo "Testing database connection..."
           node -e "
           const { Client } = require('pg');
           const dns = require('dns');
-          
-          // Set DNS to IPv4 only
+
           dns.setDefaultResultOrder('ipv4first');
-          
+
           async function testConnection() {
             const connectionString = process.env.DATABASE_URL;
-            
             if (!connectionString) {
               console.error('❌ DATABASE_URL is not set');
               process.exit(1);
             }
-            
-            // Extract hostname for DNS test
+
             const hostname = new URL(connectionString).hostname;
-            if (hostname) {
-              console.log('Testing DNS resolution for:', hostname);
-              try {
-                const addresses = await dns.promises.resolve4(hostname);
-                console.log('✅ DNS resolved to:', addresses[0]);
-              } catch (err) {
-                console.error('❌ DNS resolution failed:', err.message);
-                process.exit(1);
-              }
-            }
-            
+            console.log('Testing DNS resolution for:', hostname);
+            const addresses = await dns.promises.resolve4(hostname);
+            console.log('✅ DNS resolved to:', addresses[0]);
+
             const client = new Client({
-              connectionString: connectionString,
+              connectionString,
               ssl: { rejectUnauthorized: false },
               connectionTimeoutMillis: 15000
             });
-            
-            try {
-              await client.connect();
-              console.log('✅ Database connection successful');
-              
-              const res = await client.query('SELECT version()');
-              console.log('✅ Database query successful');
-              console.log('PostgreSQL version:', res.rows[0].version.substring(0, 50) + '...');
-              
-              await client.end();
-              console.log('✅ Connection test completed');
-            } catch (err) {
-              console.error('❌ Connection failed:', err.message);
-              console.error('Error code:', err.code);
-              process.exit(1);
-            }
+
+            await client.connect();
+            console.log('✅ Database connection successful');
+
+            const res = await client.query('SELECT version()');
+            console.log('PostgreSQL version:', res.rows[0].version.substring(0, 50) + '...');
+            await client.end();
+            console.log('✅ Connection test completed');
           }
-          
-          testConnection();
+
+          testConnection().catch(err => {
+            console.error('❌ Connection failed:', err.message);
+            process.exit(1);
+          });
           "
 
+      # 🔥 PATCH 2 — TLS BYPASS ADDED
       - name: Generate documentation
         id: generate
         working-directory: scripts
         env:
           DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          NODE_TLS_REJECT_UNAUTHORIZED: '0'
           ENVIRONMENT: ${{ steps.env.outputs.environment }}
           FORCE_UPDATE: ${{ github.event.inputs.force_update }}
           CI: true
@@ -182,104 +119,32 @@ jobs:
         run: |
           echo "Starting documentation generation..."
           echo "Environment: $ENVIRONMENT"
-          echo "Force update: $FORCE_UPDATE"
           echo "Node version: $(node --version)"
-          
+
           START_TIME=$(date +%s)
-          
-          if [ ! -f generate-complete-docs.js ]; then
-            echo "❌ Error: generate-complete-docs.js not found"
-            ls -la
-            exit 1
-          fi
-          
-          # Run with timeout and capture output
+
           if timeout 600 node generate-complete-docs.js; then
             EXIT_CODE=0
             echo "✅ Documentation generated successfully"
           else
             EXIT_CODE=$?
-            echo "❌ Documentation generation failed with exit code: $EXIT_CODE"
+            echo "❌ Documentation generation failed"
             exit $EXIT_CODE
           fi
-          
+
           END_TIME=$(date +%s)
           DURATION=$((END_TIME - START_TIME))
-          
           echo "duration=$DURATION" >> $GITHUB_OUTPUT
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
-          echo "Generation completed in ${DURATION}s"
-
-      - name: Check for changes
-        id: changes
-        run: |
-          git add -A docs/database/ 2>/dev/null || true
-          
-          if git diff --cached --quiet; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected"
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            FILES=$(git diff --cached --name-only | wc -l)
-            echo "changes_count=$FILES" >> $GITHUB_OUTPUT
-            echo "Changes detected in $FILES files"
-            
-            echo "Changed files:"
-            git diff --cached --name-only
-          fi
 
       - name: Commit and push changes
-        if: steps.changes.outputs.has_changes == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          git commit -m "📚 Update database documentation [skip ci]
-
-          - Environment: ${{ steps.env.outputs.environment }}
-          - Files changed: ${{ steps.changes.outputs.changes_count }}
-          - Run: ${{ github.run_number }}
-          - Duration: ${{ steps.generate.outputs.duration }}s"
-          
-          # Push with retry logic
-          for i in 1 2 3; do
-            if git push; then
-              echo "✅ Changes pushed successfully"
-              exit 0
-            else
-              echo "Push attempt $i failed, retrying..."
-              git pull --rebase --autostash
-              sleep 2
-            fi
-          done
-          
-          echo "❌ Failed to push after 3 attempts"
-          exit 1
-
-      - name: Create summary
-        if: always()
-        run: |
-          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
-          ## 📚 Database Documentation Generation
-          
-          **Status:** ${{ steps.generate.outputs.exit_code == '0' && '✅ Success' || '❌ Failed' }}
-          
-          | Item | Value |
-          |------|-------|
-          | Environment | ${{ steps.env.outputs.environment }} |
-          | Duration | ${{ steps.generate.outputs.duration }}s |
-          | Changes | ${{ steps.changes.outputs.has_changes == 'true' && steps.changes.outputs.changes_count || '0' }} files |
-          | Run Number | ${{ github.run_number }} |
-          | Commit | `${{ github.sha }}` |
-          EOF
-
-      - name: Upload logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failure-logs-${{ github.run_number }}
-          path: |
-            scripts/*.log
-            scripts/*.json
-          retention-days: 7
-          if-no-files-found: ignore
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "📚 Auto-update database docs"
+            git push
+          fi
