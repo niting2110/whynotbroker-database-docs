@@ -1,0 +1,152 @@
+# 🏠 WHYNOTBROKER Database Documentation
+> **Live, auto-updated database reference**  
+> Generated: 2025-12-22T06:53:32.057Z  
+> Schema Hash: `a6d2304176b8629e41ff9e32ba827948`
+
+## 📊 Quick Stats
+- **Total Tables:** 17
+- **Total Views:** 6
+- **Total Materialized Views:** 0
+- **Total Columns:** 290
+- **Total Relationships:** 33
+- **Total Size:** 23.91 MB
+- **PostgreSQL Version:** 17.6
+- **Last Updated:** 22/12/2025, 12:23:32 pm IST
+
+## 🚀 Getting Started
+1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
+2. **Need Full Details?** → Read [FULL-SCHEMA.md](./FULL-SCHEMA.md)
+3. **Working with AI?** → Use [ai-prompt-template.md](./ai-prompt-template.md)
+4. **Need Migration Template?** → Check [migrations/template.sql](./migrations/template.sql)
+5. **Schema Issues?** → Check [validation-report.md](./validation-report.md)
+
+## 📁 Documentation Structure
+```
+/docs/
+├── 📄 README.md                    # This file
+├── 📄 FULL-SCHEMA.md              # Complete schema details
+├── 📄 QUICK-START.md              # 5-minute quickstart
+├── 📄 schema.json                 # Machine-readable schema
+├── 📄 relationships.md            # ER diagram (text)
+├── 📄 indexes.md                  # Index performance report
+├── 📄 validation-report.md        # Schema validation results
+├── 📄 changelog.json              # Schema change history
+├── 📄 ai-prompt-template.md       # AI assistant template
+├── 📄 .schema-hash                # Change detection
+├── 📁 cheatsheets/
+├── 📁 exports/
+│   ├── schema.sql                # SQL DDL export
+│   ├── typescript-interfaces.ts  # TypeScript types
+│   └── graphql-schema.graphql    # GraphQL schema
+└── 📁 migrations/
+    └── template.sql               # Migration template
+```
+
+## 🔄 Auto-Update Schedule
+This documentation updates:
+- ⏰ **Daily** at 6:00 AM UTC (11:30 AM IST) via GitHub Actions
+- 🔄 **On-demand** via manual trigger
+- 📝 **After schema changes** automatically
+
+## 📋 Table Summary
+| Table | Columns | Rows | Size | Comment |
+|-------|---------|------|------|---------|
+| `admin_users` | 7 | ~2 | 0.73 MB |  |
+| `appointments` | 18 | ~0 | 0.03 MB |  |
+| `blog_posts` | 17 | ~0 | 0.03 MB |  |
+| `messages` | 18 | ~0 | 0.03 MB |  |
+| `moderation_history` | 10 | ~8,980 | 1.59 MB |  |
+| `notifications` | 10 | ~0 | 0.02 MB |  |
+| `profiles` | 31 | ~5 | 0.06 MB |  |
+| `properties` | 93 | ~9,000 | 17.64 MB |  |
+| `property_amenities` | 7 | ~0 | 0.05 MB |  |
+| `property_assignments` | 8 | ~8,980 | 3.30 MB |  |
+| `property_documents` | 12 | ~0 | 0.04 MB |  |
+| `property_images` | 13 | ~3 | 0.11 MB |  |
+| `property_price_history` | 7 | ~0 | 0.03 MB |  |
+| `property_views` | 10 | ~21 | 0.09 MB |  |
+| `search_history` | 8 | ~0 | 0.02 MB |  |
+| `user_favorites` | 4 | ~3 | 0.09 MB |  |
+| `user_ratings` | 17 | ~0 | 0.04 MB |  |
+
+## 🔌 Extensions
+- `pg_cron` (v1.6.4)
+- `pg_graphql` (v1.5.11)
+- `pg_net` (v0.19.5)
+- `pg_stat_statements` (v1.11)
+- `pgcrypto` (v1.3)
+- `plpgsql` (v1.0)
+- `supabase_vault` (v0.3.1)
+- `uuid-ossp` (v1.1)
+- `wrappers` (v0.5.6)
+
+## ⚙️ Functions
+- `assign_property_to_admin(p_property_id uuid)` → uuid
+- `auto_assign_on_pending()` → trigger
+- `bulk_moderation_decision(p_property_ids uuid[], p_action text, p_reason text, p_notes text, p_checklist jsonb)` → void
+- `calculate_price_per_unit()` → trigger
+- `format_area_display(area numeric, unit text)` → text
+- `format_price_display(amount numeric)` → text
+- `format_property_location(city text, locality text)` → text
+- `generate_pid()` → trigger
+- `generate_property_description(prop_num integer)` → text
+- `generate_property_title(prop_num integer)` → text
+- `get_pincode(city text, prop_num integer)` → text
+- `get_property_city(prop_num integer)` → text
+- `get_property_stats(p_property_pid text)` → TABLE(total_views bigint, unique_session_views bigint, total_favorites bigint, unique_user_favorites bigint, last_viewed timestamp with time zone, first_listed timestamp with time zone)
+- `get_property_type(prop_num integer)` → text
+- `handle_new_user()` → trigger
+- `increment_favorite_count(p_property_id uuid, p_user_id uuid)` → void
+- `increment_view_count(p_property_id uuid, p_session_id text DEFAULT NULL::text)` → void
+- `increment_view_count_simple(property_id uuid, session_id text)` → void
+- `is_admin()` → boolean
+- `log_price_change()` → trigger
+- `reassign_overdue_properties()` → void
+- `remove_favorite_count(p_property_id uuid, p_user_id uuid)` → void
+- `submit_moderation_decision(p_property_id uuid, p_action text, p_reason text, p_notes text, p_checklist jsonb)` → void
+- `update_updated_at_column()` → trigger
+
+
+## 👁️ Views
+- `admin_moderation_history`
+- `admin_review_queue`
+- `property_listings_view`
+- `public_featured_properties`
+- `public_property_details` - "Public view for property detail pages.
+Includes full description and all details.
+Base table RLS controls access."
+- `public_property_listings` - "Public read-only view for property listings. 
+Shows only published and active properties.
+Description trimmed to 200 chars for performance.
+Base table RLS controls access."
+
+
+
+## 🔗 Key Relationships
+- `admin_users` → `profiles` (`admin_users_id_fkey`)
+- `appointments` → `profiles` (`appointments_buyer_id_fkey`)
+- `appointments` → `profiles` (`appointments_cancelled_by_fkey`)
+- `appointments` → `properties` (`appointments_property_id_fkey`)
+- `appointments` → `profiles` (`appointments_seller_id_fkey`)
+- `blog_posts` → `profiles` (`blog_posts_author_id_fkey`)
+- `messages` → `properties` (`messages_property_id_fkey`)
+- `messages` → `profiles` (`messages_receiver_id_fkey`)
+- `messages` → `profiles` (`messages_sender_id_fkey`)
+- `moderation_history` → `profiles` (`moderation_history_admin_id_fkey`)
+
+*...and 23 more (see [relationships.md](./relationships.md))*
+
+## 📈 Performance Insights
+- **Largest Table:** `properties`
+- **Most Columns:** `properties` (93 columns)
+- **Total Indexes:** 78
+- **Total Constraints:** 178
+
+## 🛠️ Useful Links
+- [Supabase Dashboard](https://app.supabase.com)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Project Repository](https://github.com/your-org/whynotbroker)
+
+---
+*This documentation is auto-generated. Manual edits will be overwritten.*  
+*Report issues: [GitHub Issues](https://github.com/your-org/whynotbroker/issues)*
