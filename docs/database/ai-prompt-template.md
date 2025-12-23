@@ -4,7 +4,7 @@
 You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKER database. Use this schema information to answer questions and write queries.
 
 ## Database Schema Summary
-**Total Tables:** 17
+**Total Tables:** 23
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -24,7 +24,13 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - admin_users (7 columns)
 - property_amenities (7 columns)
 - property_price_history (7 columns)
+- admins (6 columns)
+- permissions (5 columns)
+- admin_audit_log (5 columns)
 - user_favorites (4 columns)
+- roles (2 columns)
+- admin_roles (2 columns)
+- role_permissions (2 columns)
 
 ## Common Query Patterns
 

@@ -1,8 +1,39 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-22T06:53:32.078Z
+// Generated: 2025-12-23T07:02:22.712Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
+  admin_audit_log: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      action: string;
+      created_at: string | Date;
+      resource?: string;
+    };
+    Insert: {
+      action: string;
+    };
+    Update: {
+      admin_id?: string;
+      action?: string;
+      resource?: string;
+    };
+  };
+
+  admin_roles: {
+    Row: {
+      admin_id: string;
+      role_id: string;
+    };
+    Insert: {
+    };
+    Update: {
+      admin_id?: string;
+      role_id?: string;
+    };
+  };
+
   admin_users: {
     Row: {
       id: string;
@@ -21,6 +52,26 @@ export interface Database {
       total_reviewed?: number;
       last_active_at?: any;
       updated_at?: any;
+    };
+  };
+
+  admins: {
+    Row: {
+      id: string;
+      user_id: string;
+      email: string;
+      is_active: boolean;
+      permissions_version: number;
+      created_at: string | Date;
+    };
+    Insert: {
+      email: string;
+    };
+    Update: {
+      user_id?: string;
+      email?: string;
+      is_active?: boolean;
+      permissions_version?: number;
     };
   };
 
@@ -212,6 +263,28 @@ export interface Database {
       is_read?: boolean;
       is_archived?: boolean;
       read_at?: any;
+    };
+  };
+
+  permissions: {
+    Row: {
+      id: string;
+      name: string;
+      domain: any;
+      action: any;
+      scope: any;
+    };
+    Insert: {
+      name: string;
+      domain: any;
+      action: any;
+      scope: any;
+    };
+    Update: {
+      name?: string;
+      domain?: any;
+      action?: any;
+      scope?: any;
     };
   };
 
@@ -649,6 +722,32 @@ export interface Database {
       view_duration?: number;
       is_phone_view?: boolean;
       viewed_at?: any;
+    };
+  };
+
+  role_permissions: {
+    Row: {
+      role_id: string;
+      permission_id: string;
+    };
+    Insert: {
+    };
+    Update: {
+      role_id?: string;
+      permission_id?: string;
+    };
+  };
+
+  roles: {
+    Row: {
+      id: string;
+      name: string;
+    };
+    Insert: {
+      name: string;
+    };
+    Update: {
+      name?: string;
     };
   };
 

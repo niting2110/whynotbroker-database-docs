@@ -13,5 +13,20 @@
       "functions": 24,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2025-12-23T07:02:22.715Z",
+    "schema_hash": "c60ce72a405a392b320fd2facafcc819",
+    "statistics": {
+      "tables": 23,
+      "views": 6,
+      "materialized_views": 0,
+      "columns": 312,
+      "constraints": 219,
+      "indexes": 89,
+      "relationships": 37,
+      "functions": 35,
+      "extensions": 9
+    }
   }
 ]

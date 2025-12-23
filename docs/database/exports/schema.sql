@@ -1,6 +1,25 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2025-12-22T06:53:32.063Z
+-- Generated: 2025-12-23T07:02:22.689Z
 -- PostgreSQL Version: 17.6
+
+-- Table: admin_audit_log
+CREATE TABLE IF NOT EXISTS admin_audit_log (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  action text NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  resource text
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_roles
+CREATE TABLE IF NOT EXISTS admin_roles (
+  admin_id uuid NOT NULL,
+  role_id uuid NOT NULL
+  ,PRIMARY KEY (admin_id)
+);
+
 
 -- Table: admin_users
 CREATE TABLE IF NOT EXISTS admin_users (
@@ -11,6 +30,18 @@ CREATE TABLE IF NOT EXISTS admin_users (
   last_active_at timestamp with time zone NOT NULL DEFAULT now(),
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admins
+CREATE TABLE IF NOT EXISTS admins (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  email text NOT NULL,
+  is_active boolean NOT NULL DEFAULT true,
+  permissions_version integer NOT NULL DEFAULT 1,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -114,6 +145,17 @@ CREATE TABLE IF NOT EXISTS notifications (
   is_archived boolean DEFAULT false,
   read_at timestamp with time zone,
   created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: permissions
+CREATE TABLE IF NOT EXISTS permissions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  domain USER-DEFINED NOT NULL,
+  action USER-DEFINED NOT NULL,
+  scope USER-DEFINED NOT NULL
   ,PRIMARY KEY (id)
 );
 
@@ -343,6 +385,22 @@ CREATE TABLE IF NOT EXISTS property_views (
   view_duration integer,
   is_phone_view boolean DEFAULT false,
   viewed_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: role_permissions
+CREATE TABLE IF NOT EXISTS role_permissions (
+  role_id uuid NOT NULL,
+  permission_id uuid NOT NULL
+  ,PRIMARY KEY (role_id)
+);
+
+
+-- Table: roles
+CREATE TABLE IF NOT EXISTS roles (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL
   ,PRIMARY KEY (id)
 );
 

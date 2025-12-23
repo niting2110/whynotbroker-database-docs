@@ -1,10 +1,111 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-22T06:53:32.059Z
-> **Total Tables:** 17
+> Auto-generated on: 2025-12-23T07:02:22.684Z
+> **Total Tables:** 23
 > **PostgreSQL Version:** 17.6
 
 ## Overview
 This document details the live schema of the production Supabase database. All API backend code must align with the structures and rules defined here.
+
+---
+
+## `admin_audit_log`
+
+**Statistics:**
+- Rows: ~3
+- Columns: 5
+- Indexes: 1
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `action` | `text` | NO | `—` | — |
+| `created_at` | `timestamp with time zone` | NO | `now()` | — |
+| `resource` | `text` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39766_1_not_null`: N/A
+- `2200_39766_3_not_null`: N/A
+- `2200_39766_4_not_null`: N/A
+
+**PRIMARY KEY:**
+- `admin_audit_log_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_audit_log_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_audit_log_pkey ON public.admin_audit_log USING btree (id)` |
+
+---
+
+## `admin_roles`
+
+**Statistics:**
+- Rows: ~2
+- Columns: 2
+- Indexes: 1
+- Foreign Keys: 2
+- Triggers: 2
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `admin_id` | `uuid` | NO | `—` | — |
+| `role_id` | `uuid` | NO | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39751_1_not_null`: N/A
+- `2200_39751_2_not_null`: N/A
+
+**FOREIGN KEY:**
+- `admin_roles_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `admin_roles_role_id_fkey`: FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `admin_roles_pkey`: PRIMARY KEY (admin_id, role_id)
+- `admin_roles_pkey`: PRIMARY KEY (admin_id, role_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_roles_pkey` | btree | admin_id, role_id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_roles_pkey ON public.admin_roles USING btree (admin_id, role_id)` |
+
+### Foreign Keys
+
+- `admin_roles_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `admin_roles_role_id_fkey`:
+  - Columns: `role_id` → `roles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `trg_audit_admin_roles`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION audit_admin_role_changes()
+```
+- `trg_audit_admin_roles`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION audit_admin_role_changes()
+```
 
 ---
 
@@ -58,6 +159,65 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `admins`
+
+**Statistics:**
+- Rows: ~2
+- Columns: 6
+- Indexes: 3
+- Foreign Keys: 0
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `email` | `text` | NO | `—` | — |
+| `is_active` | `boolean` | NO | `true` | — |
+| `permissions_version` | `integer` | NO | `1` | — |
+| `created_at` | `timestamp with time zone` | NO | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39693_1_not_null`: N/A
+- `2200_39693_2_not_null`: N/A
+- `2200_39693_3_not_null`: N/A
+- `2200_39693_4_not_null`: N/A
+- `2200_39693_5_not_null`: N/A
+- `2200_39693_6_not_null`: N/A
+
+**FOREIGN KEY:**
+- `admins_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `admins_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `admins_email_key`: UNIQUE (email)
+- `admins_user_id_key`: UNIQUE (user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admins_email_key` | btree | email | ✓ | — | `CREATE UNIQUE INDEX admins_email_key ON public.admins USING btree (email)` |
+| `admins_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admins_pkey ON public.admins USING btree (id)` |
+| `admins_user_id_key` | btree | user_id | ✓ | — | `CREATE UNIQUE INDEX admins_user_id_key ON public.admins USING btree (user_id)` |
+
+### Triggers
+
+- `trg_audit_admin_status`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION audit_admin_status_change()
+```
 
 ---
 
@@ -429,6 +589,54 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `permissions`
+
+**Statistics:**
+- Rows: ~9
+- Columns: 5
+- Indexes: 3
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `domain` | `USER-DEFINED` | NO | `—` | — |
+| `action` | `USER-DEFINED` | NO | `—` | — |
+| `scope` | `USER-DEFINED` | NO | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39723_1_not_null`: N/A
+- `2200_39723_2_not_null`: N/A
+- `2200_39723_3_not_null`: N/A
+- `2200_39723_4_not_null`: N/A
+- `2200_39723_5_not_null`: N/A
+- `permission_format`: CHECK ((name = (((((domain)::text || '.'::text) || (action)::text) || ':'::text) || (scope)::text)))
+
+**PRIMARY KEY:**
+- `permissions_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `permission_unique`: UNIQUE (domain, action, scope)
+- `permission_unique`: UNIQUE (domain, action, scope)
+- `permission_unique`: UNIQUE (domain, action, scope)
+- `permissions_name_key`: UNIQUE (name)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `permission_unique` | btree | domain, action, scope | ✓ | — | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
+| `permissions_name_key` | btree | name | ✓ | — | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
+| `permissions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
+
+---
+
 ## `profiles`
 
 **Statistics:**
@@ -708,13 +916,13 @@ This document details the live schema of the production Supabase database. All A
 ### Triggers
 
 - `calculate_property_price_per_unit`:
-  - When: BEFORE INSERT
+  - When: BEFORE UPDATE
   - Definition:
 ```sql
   EXECUTE FUNCTION calculate_price_per_unit()
 ```
 - `calculate_property_price_per_unit`:
-  - When: BEFORE UPDATE
+  - When: BEFORE INSERT
   - Definition:
 ```sql
   EXECUTE FUNCTION calculate_price_per_unit()
@@ -1126,6 +1334,92 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+
+---
+
+## `role_permissions`
+
+**Statistics:**
+- Rows: ~9
+- Columns: 2
+- Indexes: 1
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `role_id` | `uuid` | NO | `—` | — |
+| `permission_id` | `uuid` | NO | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39736_1_not_null`: N/A
+- `2200_39736_2_not_null`: N/A
+
+**FOREIGN KEY:**
+- `role_permissions_permission_id_fkey`: FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
+- `role_permissions_role_id_fkey`: FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `role_permissions_pkey`: PRIMARY KEY (role_id, permission_id)
+- `role_permissions_pkey`: PRIMARY KEY (role_id, permission_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `role_permissions_pkey` | btree | role_id, permission_id | ✓ | ✓ | `CREATE UNIQUE INDEX role_permissions_pkey ON public.role_permissions USING btree (role_id, permission_id)` |
+
+### Foreign Keys
+
+- `role_permissions_permission_id_fkey`:
+  - Columns: `permission_id` → `permissions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `role_permissions_role_id_fkey`:
+  - Columns: `role_id` → `roles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `roles`
+
+**Statistics:**
+- Rows: ~6
+- Columns: 2
+- Indexes: 2
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_39713_1_not_null`: N/A
+- `2200_39713_2_not_null`: N/A
+
+**PRIMARY KEY:**
+- `roles_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `roles_name_key`: UNIQUE (name)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `roles_name_key` | btree | name | ✓ | — | `CREATE UNIQUE INDEX roles_name_key ON public.roles USING btree (name)` |
+| `roles_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)` |
 
 ---
 

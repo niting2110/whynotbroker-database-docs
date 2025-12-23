@@ -1,13 +1,18 @@
 # Index Performance Report
 
-Generated: 2025-12-22T06:53:32.062Z
-Total Indexes: 78
+Generated: 2025-12-23T07:02:22.688Z
+Total Indexes: 89
 
 ## All Indexes
 
 | Table | Index | Type | Columns | Unique | Definition |
 |-------|-------|------|---------|--------|------------|
+| `admin_audit_log` | `admin_audit_log_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_audit_log_pkey ON public.admin_audit_log USING btree (id)` |
+| `admin_roles` | `admin_roles_pkey` | btree | admin_id, role_id | ✓ | `CREATE UNIQUE INDEX admin_roles_pkey ON public.admin_roles USING btree (admin_id, role_id)` |
 | `admin_users` | `admin_users_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_users_pkey ON public.admin_users USING btree (id)` |
+| `admins` | `admins_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX admins_email_key ON public.admins USING btree (email)` |
+| `admins` | `admins_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admins_pkey ON public.admins USING btree (id)` |
+| `admins` | `admins_user_id_key` | btree | user_id | ✓ | `CREATE UNIQUE INDEX admins_user_id_key ON public.admins USING btree (user_id)` |
 | `appointments` | `appointments_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX appointments_pkey ON public.appointments USING btree (id)` |
 | `appointments` | `idx_appointments_date_status` | btree | appointment_date, status | — | `CREATE INDEX idx_appointments_date_status ON public.appointments USING btree (appointment_date, status)` |
 | `appointments` | `idx_appointments_property` | btree | property_id | — | `CREATE INDEX idx_appointments_property ON public.appointments USING btree (property_id)` |
@@ -20,6 +25,9 @@ Total Indexes: 78
 | `moderation_history` | `moderation_history_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX moderation_history_pkey ON public.moderation_history USING btree (id)` |
 | `notifications` | `idx_notifications_user_unread` | btree | user_id, is_read | — | `CREATE INDEX idx_notifications_user_unread ON public.notifications USING btree (user_id, is_read) WHERE (is_read = false)` |
 | `notifications` | `notifications_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX notifications_pkey ON public.notifications USING btree (id)` |
+| `permissions` | `permission_unique` | btree | domain, action, scope | ✓ | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
+| `permissions` | `permissions_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
+| `permissions` | `permissions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
 | `profiles` | `profiles_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX profiles_email_key ON public.profiles USING btree (email)` |
 | `profiles` | `profiles_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)` |
 | `profiles` | `profiles_username_key` | btree | username | ✓ | `CREATE UNIQUE INDEX profiles_username_key ON public.profiles USING btree (username)` |
@@ -74,6 +82,9 @@ Total Indexes: 78
 | `property_views` | `idx_property_views_property_session` | btree | property_id, session_id | — | `CREATE INDEX idx_property_views_property_session ON public.property_views USING btree (property_id, session_id)` |
 | `property_views` | `property_views_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX property_views_pkey ON public.property_views USING btree (id)` |
 | `property_views` | `unique_property_session` | btree | property_id, session_id | ✓ | `CREATE UNIQUE INDEX unique_property_session ON public.property_views USING btree (property_id, session_id)` |
+| `role_permissions` | `role_permissions_pkey` | btree | role_id, permission_id | ✓ | `CREATE UNIQUE INDEX role_permissions_pkey ON public.role_permissions USING btree (role_id, permission_id)` |
+| `roles` | `roles_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX roles_name_key ON public.roles USING btree (name)` |
+| `roles` | `roles_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)` |
 | `search_history` | `idx_search_history_user` | btree | user_id | — | `CREATE INDEX idx_search_history_user ON public.search_history USING btree (user_id)` |
 | `search_history` | `search_history_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX search_history_pkey ON public.search_history USING btree (id)` |
 | `user_favorites` | `idx_user_favorites_property` | btree | property_id | — | `CREATE INDEX idx_user_favorites_property ON public.user_favorites USING btree (property_id)` |

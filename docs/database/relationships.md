@@ -1,9 +1,15 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 33
-Generated: 2025-12-22T06:53:32.062Z
+Total Relationships: 37
+Generated: 2025-12-23T07:02:22.687Z
 
 ```
+admin_roles:
+  └─→ admins (via: admin_roles_admin_id_fkey)
+      columns: admin_id
+  └─→ roles (via: admin_roles_role_id_fkey)
+      columns: role_id
+
 admin_users:
   └─→ profiles (via: admin_users_id_fkey)
       columns: id
@@ -83,6 +89,12 @@ property_views:
       columns: property_id
   └─→ profiles (via: property_views_user_id_fkey)
       columns: user_id
+
+role_permissions:
+  └─→ permissions (via: role_permissions_permission_id_fkey)
+      columns: permission_id
+  └─→ roles (via: role_permissions_role_id_fkey)
+      columns: role_id
 
 search_history:
   └─→ profiles (via: search_history_user_id_fkey)

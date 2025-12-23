@@ -1,14 +1,16 @@
 # Schema Validation Report
 
-Generated: 2025-12-22T06:53:32.063Z
-Total Issues: 43
-Warnings: 33
-Recommendations: 10
+Generated: 2025-12-23T07:02:22.688Z
+Total Issues: 53
+Warnings: 37
+Recommendations: 16
 
 ## ⚠️ Warnings
 
 | Severity | Table | Issue |
 |----------|-------|-------|
+| MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
+| MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_buyer_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_cancelled_by_fkey has no covering index |
@@ -36,6 +38,8 @@ Recommendations: 10
 | MEDIUM | `property_price_history` | Foreign key property_price_history_property_id_fkey has no covering index |
 | MEDIUM | `property_views` | Foreign key property_views_property_id_fkey has no covering index |
 | MEDIUM | `property_views` | Foreign key property_views_user_id_fkey has no covering index |
+| MEDIUM | `role_permissions` | Foreign key role_permissions_permission_id_fkey has no covering index |
+| MEDIUM | `role_permissions` | Foreign key role_permissions_role_id_fkey has no covering index |
 | MEDIUM | `search_history` | Foreign key search_history_user_id_fkey has no covering index |
 | MEDIUM | `user_favorites` | Foreign key user_favorites_property_id_fkey has no covering index |
 | MEDIUM | `user_favorites` | Foreign key user_favorites_user_id_fkey has no covering index |
@@ -47,13 +51,19 @@ Recommendations: 10
 
 | Table | Recommendation |
 |-------|----------------|
+| `admin_audit_log` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_roles` | Table missing timestamp columns (created_at, updated_at) |
+| `admins` | Table missing timestamp columns (created_at, updated_at) |
 | `moderation_history` | Table missing timestamp columns (created_at, updated_at) |
 | `notifications` | Table missing timestamp columns (created_at, updated_at) |
+| `permissions` | Table missing timestamp columns (created_at, updated_at) |
 | `property_amenities` | Table missing timestamp columns (created_at, updated_at) |
 | `property_assignments` | Table missing timestamp columns (created_at, updated_at) |
 | `property_documents` | Table missing timestamp columns (created_at, updated_at) |
 | `property_images` | Table missing timestamp columns (created_at, updated_at) |
 | `property_price_history` | Table missing timestamp columns (created_at, updated_at) |
 | `property_views` | Table missing timestamp columns (created_at, updated_at) |
+| `role_permissions` | Table missing timestamp columns (created_at, updated_at) |
+| `roles` | Table missing timestamp columns (created_at, updated_at) |
 | `search_history` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
