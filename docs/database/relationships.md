@@ -1,12 +1,22 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 38
-Generated: 2025-12-24T07:02:14.048Z
+Total Relationships: 41
+Generated: 2025-12-24T17:09:29.541Z
 
 ```
 admin_audit_logs:
   └─→ admins (via: admin_audit_logs_admin_id_fkey)
       columns: admin_id
+
+admin_chat:
+  └─→ admins (via: admin_chat_admin_id_fkey)
+      columns: admin_id
+
+admin_leaves:
+  └─→ admins (via: admin_leaves_admin_id_fkey)
+      columns: admin_id
+  └─→ admins (via: admin_leaves_backup_admin_id_fkey)
+      columns: backup_admin_id
 
 admin_roles:
   └─→ admins (via: admin_roles_admin_id_fkey)

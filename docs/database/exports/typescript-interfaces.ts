@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-24T07:02:14.056Z
+// Generated: 2025-12-24T17:09:29.567Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -25,6 +25,86 @@ export interface Database {
       entity_id?: string;
       details?: string;
       ip_address?: any;
+    };
+  };
+
+  admin_chat: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      message: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+      message: string;
+    };
+    Update: {
+      admin_id?: string;
+      message?: string;
+    };
+  };
+
+  admin_leaves: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      start_date: string | Date;
+      end_date: string | Date;
+      reason?: string;
+      backup_admin_id?: string;
+      status?: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+      start_date: any;
+      end_date: any;
+    };
+    Update: {
+      admin_id?: string;
+      start_date?: any;
+      end_date?: any;
+      reason?: string;
+      backup_admin_id?: string;
+      status?: string;
+    };
+  };
+
+  admin_messages: {
+    Row: {
+      id: string;
+      sender_id: string;
+      receiver_id: string;
+      content: string;
+      is_read?: boolean;
+      created_at?: string | Date;
+    };
+    Insert: {
+      content: string;
+    };
+    Update: {
+      sender_id?: string;
+      receiver_id?: string;
+      content?: string;
+      is_read?: boolean;
+    };
+  };
+
+  admin_notices: {
+    Row: {
+      id: string;
+      title: string;
+      content: string;
+      is_active?: boolean;
+      created_at?: string | Date;
+    };
+    Insert: {
+      title: string;
+      content: string;
+    };
+    Update: {
+      title?: string;
+      content?: string;
+      is_active?: boolean;
     };
   };
 

@@ -1,15 +1,18 @@
 # Schema Validation Report
 
-Generated: 2025-12-24T07:02:14.049Z
-Total Issues: 54
-Warnings: 38
-Recommendations: 16
+Generated: 2025-12-24T17:09:29.542Z
+Total Issues: 61
+Warnings: 41
+Recommendations: 20
 
 ## ⚠️ Warnings
 
 | Severity | Table | Issue |
 |----------|-------|-------|
 | MEDIUM | `admin_audit_logs` | Foreign key admin_audit_logs_admin_id_fkey has no covering index |
+| MEDIUM | `admin_chat` | Foreign key admin_chat_admin_id_fkey has no covering index |
+| MEDIUM | `admin_leaves` | Foreign key admin_leaves_admin_id_fkey has no covering index |
+| MEDIUM | `admin_leaves` | Foreign key admin_leaves_backup_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
@@ -53,6 +56,10 @@ Recommendations: 16
 | Table | Recommendation |
 |-------|----------------|
 | `admin_audit_logs` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_chat` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_leaves` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_messages` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_notices` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_roles` | Table missing timestamp columns (created_at, updated_at) |
 | `admins` | Table missing timestamp columns (created_at, updated_at) |
 | `moderation_history` | Table missing timestamp columns (created_at, updated_at) |

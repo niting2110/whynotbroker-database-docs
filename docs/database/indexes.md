@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2025-12-24T07:02:14.048Z
-Total Indexes: 91
+Generated: 2025-12-24T17:09:29.541Z
+Total Indexes: 95
 
 ## All Indexes
 
@@ -10,6 +10,10 @@ Total Indexes: 91
 | `admin_audit_logs` | `admin_audit_logs_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_audit_logs_pkey ON public.admin_audit_logs USING btree (id)` |
 | `admin_audit_logs` | `idx_audit_admin_id` | btree | admin_id | — | `CREATE INDEX idx_audit_admin_id ON public.admin_audit_logs USING btree (admin_id)` |
 | `admin_audit_logs` | `idx_audit_created_at` | btree | created_at | — | `CREATE INDEX idx_audit_created_at ON public.admin_audit_logs USING btree (created_at DESC)` |
+| `admin_chat` | `admin_chat_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_chat_pkey ON public.admin_chat USING btree (id)` |
+| `admin_leaves` | `admin_leaves_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_leaves_pkey ON public.admin_leaves USING btree (id)` |
+| `admin_messages` | `admin_messages_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)` |
+| `admin_notices` | `admin_notices_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_notices_pkey ON public.admin_notices USING btree (id)` |
 | `admin_roles` | `admin_roles_pkey` | btree | admin_id, role_id | ✓ | `CREATE UNIQUE INDEX admin_roles_pkey ON public.admin_roles USING btree (admin_id, role_id)` |
 | `admin_users` | `admin_users_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_users_pkey ON public.admin_users USING btree (id)` |
 | `admins` | `admins_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX admins_email_key ON public.admins USING btree (email)` |

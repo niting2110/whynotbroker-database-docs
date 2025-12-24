@@ -1,16 +1,16 @@
 {
-  "generated_at": "2025-12-24T07:02:14.047Z",
+  "generated_at": "2025-12-24T17:09:29.540Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 23,
+    "tables": 27,
     "views": 6,
     "materialized_views": 0,
-    "columns": 315,
-    "constraints": 221,
-    "indexes": 91,
-    "relationships": 38,
+    "columns": 338,
+    "constraints": 243,
+    "indexes": 95,
+    "relationships": 41,
     "functions": 35,
     "extensions": 9
   },
@@ -209,6 +209,570 @@
       }
     },
     {
+      "name": "admin_chat",
+      "comment": null,
+      "columns": 4,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "admin_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "message",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "timezone('utc'::text, now())",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_42133_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42133_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_chat_admin_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "admin_id",
+            "definition": "FOREIGN KEY (admin_id) REFERENCES admins(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_chat_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "admin_chat_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX admin_chat_pkey ON public.admin_chat USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "admin_chat_admin_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "admin_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 4
+      }
+    },
+    {
+      "name": "admin_leaves",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "admin_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "start_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "end_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "backup_admin_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'pending'::text",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "timezone('utc'::text, now())",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_42112_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42112_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42112_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_leaves_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'approved'::text, 'rejected'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_leaves_admin_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "admin_id",
+            "definition": "FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_leaves_backup_admin_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "backup_admin_id",
+            "definition": "FOREIGN KEY (backup_admin_id) REFERENCES admins(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_leaves_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "admin_leaves_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX admin_leaves_pkey ON public.admin_leaves USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "admin_leaves_admin_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "admin_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "admin_leaves_backup_admin_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "backup_admin_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
+      "name": "admin_messages",
+      "comment": null,
+      "columns": 6,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "sender_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "receiver_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "content",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_read",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_42151_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42151_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42151_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42151_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_messages_receiver_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "receiver_id",
+            "definition": "FOREIGN KEY (receiver_id) REFERENCES auth.users(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_messages_sender_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "sender_id",
+            "definition": "FOREIGN KEY (sender_id) REFERENCES auth.users(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_messages_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "admin_messages_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 6
+      }
+    },
+    {
+      "name": "admin_notices",
+      "comment": null,
+      "columns": 5,
+      "rows": 1,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "title",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "content",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "timezone('utc'::text, now())",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_42102_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42102_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_42102_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_notices_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "admin_notices_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX admin_notices_pkey ON public.admin_notices USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 1,
+        "column_count": 5
+      }
+    },
+    {
       "name": "admin_roles",
       "comment": null,
       "columns": 2,
@@ -326,14 +890,14 @@
         "triggers": [
           {
             "trigger_name": "trg_audit_admin_roles",
-            "event_manipulation": "DELETE",
+            "event_manipulation": "INSERT",
             "action_timing": "AFTER",
             "action_statement": "EXECUTE FUNCTION audit_admin_role_changes()",
             "trigger_comment": null
           },
           {
             "trigger_name": "trg_audit_admin_roles",
-            "event_manipulation": "INSERT",
+            "event_manipulation": "DELETE",
             "action_timing": "AFTER",
             "action_statement": "EXECUTE FUNCTION audit_admin_role_changes()",
             "trigger_comment": null
@@ -4445,14 +5009,14 @@
         "triggers": [
           {
             "trigger_name": "calculate_property_price_per_unit",
-            "event_manipulation": "UPDATE",
+            "event_manipulation": "INSERT",
             "action_timing": "BEFORE",
             "action_statement": "EXECUTE FUNCTION calculate_price_per_unit()",
             "trigger_comment": null
           },
           {
             "trigger_name": "calculate_property_price_per_unit",
-            "event_manipulation": "INSERT",
+            "event_manipulation": "UPDATE",
             "action_timing": "BEFORE",
             "action_statement": "EXECUTE FUNCTION calculate_price_per_unit()",
             "trigger_comment": null
@@ -7279,6 +7843,30 @@
       "constraint_name": "admin_audit_logs_admin_id_fkey",
       "columns": [
         "admin_id"
+      ]
+    },
+    {
+      "fromTable": "admin_chat",
+      "toTable": "admins",
+      "constraint_name": "admin_chat_admin_id_fkey",
+      "columns": [
+        "admin_id"
+      ]
+    },
+    {
+      "fromTable": "admin_leaves",
+      "toTable": "admins",
+      "constraint_name": "admin_leaves_admin_id_fkey",
+      "columns": [
+        "admin_id"
+      ]
+    },
+    {
+      "fromTable": "admin_leaves",
+      "toTable": "admins",
+      "constraint_name": "admin_leaves_backup_admin_id_fkey",
+      "columns": [
+        "backup_admin_id"
       ]
     },
     {

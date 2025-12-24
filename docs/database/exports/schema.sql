@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2025-12-24T07:02:14.049Z
+-- Generated: 2025-12-24T17:09:29.542Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -12,6 +12,53 @@ CREATE TABLE IF NOT EXISTS admin_audit_logs (
   details text,
   ip_address inet,
   created_at timestamp with time zone NOT NULL DEFAULT timezone('utc'::text, now())
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_chat
+CREATE TABLE IF NOT EXISTS admin_chat (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  message text NOT NULL,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_leaves
+CREATE TABLE IF NOT EXISTS admin_leaves (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  start_date date NOT NULL,
+  end_date date NOT NULL,
+  reason text,
+  backup_admin_id uuid,
+  status text DEFAULT 'pending'::text,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_messages
+CREATE TABLE IF NOT EXISTS admin_messages (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  sender_id uuid NOT NULL,
+  receiver_id uuid NOT NULL,
+  content text NOT NULL,
+  is_read boolean DEFAULT false,
+  created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_notices
+CREATE TABLE IF NOT EXISTS admin_notices (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  content text NOT NULL,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
   ,PRIMARY KEY (id)
 );
 

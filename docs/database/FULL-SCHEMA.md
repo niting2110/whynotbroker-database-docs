@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-24T07:02:14.044Z
-> **Total Tables:** 23
+> Auto-generated on: 2025-12-24T17:09:29.538Z
+> **Total Tables:** 27
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -61,6 +61,187 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `admin_chat`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 4
+- Indexes: 1
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `message` | `text` | NO | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `timezone('utc'::text, now())` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_42133_1_not_null`: N/A
+- `2200_42133_3_not_null`: N/A
+
+**FOREIGN KEY:**
+- `admin_chat_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id)
+
+**PRIMARY KEY:**
+- `admin_chat_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_chat_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_chat_pkey ON public.admin_chat USING btree (id)` |
+
+### Foreign Keys
+
+- `admin_chat_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `admin_leaves`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `start_date` | `date` | NO | `—` | — |
+| `end_date` | `date` | NO | `—` | — |
+| `reason` | `text` | YES | `—` | — |
+| `backup_admin_id` | `uuid` | YES | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `created_at` | `timestamp with time zone` | YES | `timezone('utc'::text, now())` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_42112_1_not_null`: N/A
+- `2200_42112_3_not_null`: N/A
+- `2200_42112_4_not_null`: N/A
+- `admin_leaves_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'approved'::text, 'rejected'::text])))
+
+**FOREIGN KEY:**
+- `admin_leaves_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `admin_leaves_backup_admin_id_fkey`: FOREIGN KEY (backup_admin_id) REFERENCES admins(id)
+
+**PRIMARY KEY:**
+- `admin_leaves_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_leaves_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_leaves_pkey ON public.admin_leaves USING btree (id)` |
+
+### Foreign Keys
+
+- `admin_leaves_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `admin_leaves_backup_admin_id_fkey`:
+  - Columns: `backup_admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `admin_messages`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 6
+- Indexes: 1
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `sender_id` | `uuid` | NO | `—` | — |
+| `receiver_id` | `uuid` | NO | `—` | — |
+| `content` | `text` | NO | `—` | — |
+| `is_read` | `boolean` | YES | `false` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_42151_1_not_null`: N/A
+- `2200_42151_2_not_null`: N/A
+- `2200_42151_3_not_null`: N/A
+- `2200_42151_4_not_null`: N/A
+
+**FOREIGN KEY:**
+- `admin_messages_receiver_id_fkey`: FOREIGN KEY (receiver_id) REFERENCES auth.users(id)
+- `admin_messages_sender_id_fkey`: FOREIGN KEY (sender_id) REFERENCES auth.users(id)
+
+**PRIMARY KEY:**
+- `admin_messages_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_messages_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)` |
+
+---
+
+## `admin_notices`
+
+**Statistics:**
+- Rows: ~1
+- Columns: 5
+- Indexes: 1
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `title` | `text` | NO | `—` | — |
+| `content` | `text` | NO | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `timezone('utc'::text, now())` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_42102_1_not_null`: N/A
+- `2200_42102_2_not_null`: N/A
+- `2200_42102_3_not_null`: N/A
+
+**PRIMARY KEY:**
+- `admin_notices_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_notices_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_notices_pkey ON public.admin_notices USING btree (id)` |
+
+---
+
 ## `admin_roles`
 
 **Statistics:**
@@ -111,13 +292,13 @@ This document details the live schema of the production Supabase database. All A
 ### Triggers
 
 - `trg_audit_admin_roles`:
-  - When: AFTER DELETE
+  - When: AFTER INSERT
   - Definition:
 ```sql
   EXECUTE FUNCTION audit_admin_role_changes()
 ```
 - `trg_audit_admin_roles`:
-  - When: AFTER INSERT
+  - When: AFTER DELETE
   - Definition:
 ```sql
   EXECUTE FUNCTION audit_admin_role_changes()
@@ -932,13 +1113,13 @@ This document details the live schema of the production Supabase database. All A
 ### Triggers
 
 - `calculate_property_price_per_unit`:
-  - When: BEFORE UPDATE
+  - When: BEFORE INSERT
   - Definition:
 ```sql
   EXECUTE FUNCTION calculate_price_per_unit()
 ```
 - `calculate_property_price_per_unit`:
-  - When: BEFORE INSERT
+  - When: BEFORE UPDATE
   - Definition:
 ```sql
   EXECUTE FUNCTION calculate_price_per_unit()
