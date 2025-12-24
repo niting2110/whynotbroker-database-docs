@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-23T07:02:22.684Z
+> Auto-generated on: 2025-12-24T07:02:14.044Z
 > **Total Tables:** 23
 > **PostgreSQL Version:** 17.6
 
@@ -8,13 +8,13 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
-## `admin_audit_log`
+## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~3
-- Columns: 5
-- Indexes: 1
-- Foreign Keys: 0
+- Rows: ~1
+- Columns: 8
+- Indexes: 3
+- Foreign Keys: 1
 - Triggers: 0
 
 ### Columns
@@ -23,25 +23,41 @@ This document details the live schema of the production Supabase database. All A
 |--------|------|----------|---------|---------|
 | `id` | `uuid` | NO | `gen_random_uuid()` | — |
 | `admin_id` | `uuid` | YES | `—` | — |
-| `action` | `text` | NO | `—` | — |
-| `created_at` | `timestamp with time zone` | NO | `now()` | — |
-| `resource` | `text` | YES | `—` | — |
+| `action` | `character varying(50)` | NO | `—` | — |
+| `entity` | `character varying(50)` | NO | `—` | — |
+| `entity_id` | `character varying(100)` | YES | `—` | — |
+| `details` | `text` | YES | `—` | — |
+| `ip_address` | `inet` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | NO | `timezone('utc'::text, now())` | — |
 
 ### Constraints
 
 **CHECK:**
-- `2200_39766_1_not_null`: N/A
-- `2200_39766_3_not_null`: N/A
-- `2200_39766_4_not_null`: N/A
+- `2200_40970_1_not_null`: N/A
+- `2200_40970_3_not_null`: N/A
+- `2200_40970_4_not_null`: N/A
+- `2200_40970_8_not_null`: N/A
+
+**FOREIGN KEY:**
+- `admin_audit_logs_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE SET NULL
 
 **PRIMARY KEY:**
-- `admin_audit_log_pkey`: PRIMARY KEY (id)
+- `admin_audit_logs_pkey`: PRIMARY KEY (id)
 
 ### Indexes
 
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
-| `admin_audit_log_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_audit_log_pkey ON public.admin_audit_log USING btree (id)` |
+| `admin_audit_logs_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_audit_logs_pkey ON public.admin_audit_logs USING btree (id)` |
+| `idx_audit_admin_id` | btree | admin_id | — | — | `CREATE INDEX idx_audit_admin_id ON public.admin_audit_logs USING btree (admin_id)` |
+| `idx_audit_created_at` | btree | created_at | — | — | `CREATE INDEX idx_audit_created_at ON public.admin_audit_logs USING btree (created_at DESC)` |
+
+### Foreign Keys
+
+- `admin_audit_logs_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ---
 
@@ -476,7 +492,7 @@ This document details the live schema of the production Supabase database. All A
 ## `moderation_history`
 
 **Statistics:**
-- Rows: ~8,980
+- Rows: ~8,982
 - Columns: 10
 - Indexes: 1
 - Foreign Keys: 2
@@ -536,7 +552,7 @@ This document details the live schema of the production Supabase database. All A
 ## `notifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~3
 - Columns: 10
 - Indexes: 2
 - Foreign Keys: 1

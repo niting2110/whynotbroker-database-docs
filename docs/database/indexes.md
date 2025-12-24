@@ -1,13 +1,15 @@
 # Index Performance Report
 
-Generated: 2025-12-23T07:02:22.688Z
-Total Indexes: 89
+Generated: 2025-12-24T07:02:14.048Z
+Total Indexes: 91
 
 ## All Indexes
 
 | Table | Index | Type | Columns | Unique | Definition |
 |-------|-------|------|---------|--------|------------|
-| `admin_audit_log` | `admin_audit_log_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_audit_log_pkey ON public.admin_audit_log USING btree (id)` |
+| `admin_audit_logs` | `admin_audit_logs_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_audit_logs_pkey ON public.admin_audit_logs USING btree (id)` |
+| `admin_audit_logs` | `idx_audit_admin_id` | btree | admin_id | — | `CREATE INDEX idx_audit_admin_id ON public.admin_audit_logs USING btree (admin_id)` |
+| `admin_audit_logs` | `idx_audit_created_at` | btree | created_at | — | `CREATE INDEX idx_audit_created_at ON public.admin_audit_logs USING btree (created_at DESC)` |
 | `admin_roles` | `admin_roles_pkey` | btree | admin_id, role_id | ✓ | `CREATE UNIQUE INDEX admin_roles_pkey ON public.admin_roles USING btree (admin_id, role_id)` |
 | `admin_users` | `admin_users_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_users_pkey ON public.admin_users USING btree (id)` |
 | `admins` | `admins_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX admins_email_key ON public.admins USING btree (email)` |

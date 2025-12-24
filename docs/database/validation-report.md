@@ -1,14 +1,15 @@
 # Schema Validation Report
 
-Generated: 2025-12-23T07:02:22.688Z
-Total Issues: 53
-Warnings: 37
+Generated: 2025-12-24T07:02:14.049Z
+Total Issues: 54
+Warnings: 38
 Recommendations: 16
 
 ## ⚠️ Warnings
 
 | Severity | Table | Issue |
 |----------|-------|-------|
+| MEDIUM | `admin_audit_logs` | Foreign key admin_audit_logs_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
@@ -51,7 +52,7 @@ Recommendations: 16
 
 | Table | Recommendation |
 |-------|----------------|
-| `admin_audit_log` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_audit_logs` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_roles` | Table missing timestamp columns (created_at, updated_at) |
 | `admins` | Table missing timestamp columns (created_at, updated_at) |
 | `moderation_history` | Table missing timestamp columns (created_at, updated_at) |

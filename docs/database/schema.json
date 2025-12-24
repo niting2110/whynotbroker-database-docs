@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-23T07:02:22.686Z",
+  "generated_at": "2025-12-24T07:02:14.047Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,20 +7,20 @@
     "tables": 23,
     "views": 6,
     "materialized_views": 0,
-    "columns": 312,
-    "constraints": 219,
-    "indexes": 89,
-    "relationships": 37,
+    "columns": 315,
+    "constraints": 221,
+    "indexes": 91,
+    "relationships": 38,
     "functions": 35,
     "extensions": 9
   },
   "tables": [
     {
-      "name": "admin_audit_log",
+      "name": "admin_audit_logs",
       "comment": null,
-      "columns": 5,
-      "rows": 3,
-      "size_bytes": 32768,
+      "columns": 8,
+      "rows": 1,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -47,10 +47,54 @@
           },
           {
             "column_name": "action",
-            "data_type": "text",
+            "data_type": "character varying",
             "is_nullable": "NO",
             "column_default": null,
             "ordinal_position": 3,
+            "character_maximum_length": 50,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": 50,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity_id",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": 100,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "details",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "ip_address",
+            "data_type": "inet",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -60,19 +104,8 @@
             "column_name": "created_at",
             "data_type": "timestamp with time zone",
             "is_nullable": "NO",
-            "column_default": "now()",
-            "ordinal_position": 4,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "resource",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 5,
+            "column_default": "timezone('utc'::text, now())",
+            "ordinal_position": 8,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -81,28 +114,42 @@
         ],
         "constraints": [
           {
-            "constraint_name": "2200_39766_1_not_null",
+            "constraint_name": "2200_40970_1_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
             "constraint_comment": null
           },
           {
-            "constraint_name": "2200_39766_3_not_null",
+            "constraint_name": "2200_40970_3_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
             "constraint_comment": null
           },
           {
-            "constraint_name": "2200_39766_4_not_null",
+            "constraint_name": "2200_40970_4_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
             "constraint_comment": null
           },
           {
-            "constraint_name": "admin_audit_log_pkey",
+            "constraint_name": "2200_40970_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_audit_logs_admin_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "admin_id",
+            "definition": "FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_audit_logs_pkey",
             "constraint_type": "PRIMARY KEY",
             "column_name": "id",
             "definition": "PRIMARY KEY (id)",
@@ -111,20 +158,54 @@
         ],
         "indexes": [
           {
-            "index_name": "admin_audit_log_pkey",
+            "index_name": "admin_audit_logs_pkey",
             "index_type": "btree",
             "is_unique": true,
             "is_primary": true,
             "is_exclusion": false,
             "is_immediate": true,
             "columns": "{id}",
-            "index_definition": "CREATE UNIQUE INDEX admin_audit_log_pkey ON public.admin_audit_log USING btree (id)"
+            "index_definition": "CREATE UNIQUE INDEX admin_audit_logs_pkey ON public.admin_audit_logs USING btree (id)"
+          },
+          {
+            "index_name": "idx_audit_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id}",
+            "index_definition": "CREATE INDEX idx_audit_admin_id ON public.admin_audit_logs USING btree (admin_id)"
+          },
+          {
+            "index_name": "idx_audit_created_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_audit_created_at ON public.admin_audit_logs USING btree (created_at DESC)"
           }
         ],
-        "foreign_keys": [],
+        "foreign_keys": [
+          {
+            "constraint_name": "admin_audit_logs_admin_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "admin_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
         "triggers": [],
-        "row_count": 3,
-        "column_count": 5
+        "row_count": 1,
+        "column_count": 8
       }
     },
     {
@@ -1734,7 +1815,7 @@
       "name": "moderation_history",
       "comment": null,
       "columns": 10,
-      "rows": 8980,
+      "rows": 8982,
       "size_bytes": 1662976,
       "details": {
         "columns": [
@@ -1955,7 +2036,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 8980,
+        "row_count": 8982,
         "column_count": 10
       }
     },
@@ -1963,8 +2044,8 @@
       "name": "notifications",
       "comment": null,
       "columns": 10,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 3,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -2174,7 +2255,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 3,
         "column_count": 10
       }
     },
@@ -7192,6 +7273,14 @@
     }
   ],
   "relationships": [
+    {
+      "fromTable": "admin_audit_logs",
+      "toTable": "admins",
+      "constraint_name": "admin_audit_logs_admin_id_fkey",
+      "columns": [
+        "admin_id"
+      ]
+    },
     {
       "fromTable": "admin_roles",
       "toTable": "admins",

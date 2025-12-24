@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2025-12-23T07:02:22.683Z  
-> Schema Hash: `c60ce72a405a392b320fd2facafcc819`
+> Generated: 2025-12-24T07:02:14.043Z  
+> Schema Hash: `b25286ee26ac9e37ccb12bb462d6e838`
 
 ## 📊 Quick Stats
 - **Total Tables:** 23
 - **Total Views:** 6
 - **Total Materialized Views:** 0
-- **Total Columns:** 312
-- **Total Relationships:** 37
-- **Total Size:** 24.16 MB
+- **Total Columns:** 315
+- **Total Relationships:** 38
+- **Total Size:** 24.21 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 23/12/2025, 12:32:22 pm IST
+- **Last Updated:** 24/12/2025, 12:32:14 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,15 +51,15 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_log` | 5 | ~3 | 0.03 MB |  |
+| `admin_audit_logs` | 8 | ~1 | 0.06 MB |  |
 | `admin_roles` | 2 | ~2 | 0.02 MB |  |
 | `admin_users` | 7 | ~2 | 0.73 MB |  |
 | `admins` | 6 | ~2 | 0.06 MB |  |
 | `appointments` | 18 | ~0 | 0.03 MB |  |
 | `blog_posts` | 17 | ~0 | 0.03 MB |  |
 | `messages` | 18 | ~0 | 0.03 MB |  |
-| `moderation_history` | 10 | ~8,980 | 1.59 MB |  |
-| `notifications` | 10 | ~0 | 0.02 MB |  |
+| `moderation_history` | 10 | ~8,982 | 1.59 MB |  |
+| `notifications` | 10 | ~3 | 0.05 MB |  |
 | `permissions` | 5 | ~9 | 0.06 MB |  |
 | `profiles` | 31 | ~5 | 0.06 MB |  |
 | `properties` | 93 | ~9,000 | 17.64 MB |  |
@@ -140,6 +140,7 @@ Base table RLS controls access."
 
 
 ## 🔗 Key Relationships
+- `admin_audit_logs` → `admins` (`admin_audit_logs_admin_id_fkey`)
 - `admin_roles` → `admins` (`admin_roles_admin_id_fkey`)
 - `admin_roles` → `roles` (`admin_roles_role_id_fkey`)
 - `admin_users` → `profiles` (`admin_users_id_fkey`)
@@ -149,15 +150,14 @@ Base table RLS controls access."
 - `appointments` → `profiles` (`appointments_seller_id_fkey`)
 - `blog_posts` → `profiles` (`blog_posts_author_id_fkey`)
 - `messages` → `properties` (`messages_property_id_fkey`)
-- `messages` → `profiles` (`messages_receiver_id_fkey`)
 
-*...and 27 more (see [relationships.md](./relationships.md))*
+*...and 28 more (see [relationships.md](./relationships.md))*
 
 ## 📈 Performance Insights
 - **Largest Table:** `properties`
 - **Most Columns:** `properties` (93 columns)
-- **Total Indexes:** 89
-- **Total Constraints:** 219
+- **Total Indexes:** 91
+- **Total Constraints:** 221
 
 ## 🛠️ Useful Links
 - [Supabase Dashboard](https://app.supabase.com)

@@ -1,23 +1,30 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-23T07:02:22.712Z
+// Generated: 2025-12-24T07:02:14.056Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
-  admin_audit_log: {
+  admin_audit_logs: {
     Row: {
       id: string;
       admin_id?: string;
       action: string;
+      entity: string;
+      entity_id?: string;
+      details?: string;
+      ip_address?: any;
       created_at: string | Date;
-      resource?: string;
     };
     Insert: {
       action: string;
+      entity: string;
     };
     Update: {
       admin_id?: string;
       action?: string;
-      resource?: string;
+      entity?: string;
+      entity_id?: string;
+      details?: string;
+      ip_address?: any;
     };
   };
 

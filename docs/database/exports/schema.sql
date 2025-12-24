@@ -1,14 +1,17 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2025-12-23T07:02:22.689Z
+-- Generated: 2025-12-24T07:02:14.049Z
 -- PostgreSQL Version: 17.6
 
--- Table: admin_audit_log
-CREATE TABLE IF NOT EXISTS admin_audit_log (
+-- Table: admin_audit_logs
+CREATE TABLE IF NOT EXISTS admin_audit_logs (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   admin_id uuid,
-  action text NOT NULL,
-  created_at timestamp with time zone NOT NULL DEFAULT now(),
-  resource text
+  action character varying(50) NOT NULL,
+  entity character varying(50) NOT NULL,
+  entity_id character varying(100),
+  details text,
+  ip_address inet,
+  created_at timestamp with time zone NOT NULL DEFAULT timezone('utc'::text, now())
   ,PRIMARY KEY (id)
 );
 
