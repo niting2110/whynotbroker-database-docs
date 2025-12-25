@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2025-12-24T17:09:29.536Z  
-> Schema Hash: `6dd60e32469015bfb0b0eabe43bf72e3`
+> Generated: 2025-12-25T07:00:22.102Z  
+> Schema Hash: `243ec6973abc34f5fd6270f282bd26f0`
 
 ## 📊 Quick Stats
 - **Total Tables:** 27
 - **Total Views:** 6
 - **Total Materialized Views:** 0
 - **Total Columns:** 338
-- **Total Relationships:** 41
+- **Total Relationships:** 42
 - **Total Size:** 24.29 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 24/12/2025, 10:39:29 pm IST
+- **Last Updated:** 25/12/2025, 12:30:22 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,21 +51,21 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~1 | 0.06 MB |  |
+| `admin_audit_logs` | 8 | ~18 | 0.06 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.02 MB |  |
 | `admin_notices` | 5 | ~1 | 0.03 MB |  |
-| `admin_roles` | 2 | ~2 | 0.02 MB |  |
+| `admin_roles` | 2 | ~7 | 0.02 MB |  |
 | `admin_users` | 7 | ~2 | 0.73 MB |  |
-| `admins` | 6 | ~2 | 0.06 MB |  |
+| `admins` | 6 | ~7 | 0.06 MB |  |
 | `appointments` | 18 | ~0 | 0.03 MB |  |
 | `blog_posts` | 17 | ~0 | 0.03 MB |  |
 | `messages` | 18 | ~0 | 0.03 MB |  |
-| `moderation_history` | 10 | ~8,982 | 1.59 MB |  |
+| `moderation_history` | 10 | ~8,984 | 1.59 MB |  |
 | `notifications` | 10 | ~3 | 0.05 MB |  |
 | `permissions` | 5 | ~9 | 0.06 MB |  |
-| `profiles` | 31 | ~5 | 0.06 MB |  |
+| `profiles` | 31 | ~17 | 0.06 MB |  |
 | `properties` | 93 | ~9,000 | 17.64 MB |  |
 | `property_amenities` | 7 | ~0 | 0.05 MB |  |
 | `property_assignments` | 8 | ~8,980 | 3.30 MB |  |
@@ -119,6 +119,8 @@ This documentation updates:
 - `increment_view_count_simple(property_id uuid, session_id text)` → void
 - `is_admin()` → boolean
 - `is_sql_editor()` → boolean
+- `log_admin_creation()` → trigger
+- `log_admin_events()` → trigger
 - `log_price_change()` → trigger
 - `reactivate_admin(p_admin_email text)` → void
 - `reassign_overdue_properties()` → void
@@ -151,11 +153,11 @@ Base table RLS controls access."
 - `admin_roles` → `admins` (`admin_roles_admin_id_fkey`)
 - `admin_roles` → `roles` (`admin_roles_role_id_fkey`)
 - `admin_users` → `profiles` (`admin_users_id_fkey`)
+- `admins` → `profiles` (`admins_user_id_fkey`)
 - `appointments` → `profiles` (`appointments_buyer_id_fkey`)
 - `appointments` → `profiles` (`appointments_cancelled_by_fkey`)
-- `appointments` → `properties` (`appointments_property_id_fkey`)
 
-*...and 31 more (see [relationships.md](./relationships.md))*
+*...and 32 more (see [relationships.md](./relationships.md))*
 
 ## 📈 Performance Insights
 - **Largest Table:** `properties`

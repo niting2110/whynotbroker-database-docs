@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-24T17:09:29.540Z",
+  "generated_at": "2025-12-25T07:00:22.105Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -10,8 +10,8 @@
     "columns": 338,
     "constraints": 243,
     "indexes": 95,
-    "relationships": 41,
-    "functions": 35,
+    "relationships": 42,
+    "functions": 37,
     "extensions": 9
   },
   "tables": [
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 1,
+      "rows": 18,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -204,7 +204,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 1,
+        "row_count": 18,
         "column_count": 8
       }
     },
@@ -776,7 +776,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 2,
-      "rows": 2,
+      "rows": 7,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -889,21 +889,14 @@
         ],
         "triggers": [
           {
-            "trigger_name": "trg_audit_admin_roles",
+            "trigger_name": "on_role_assigned_log",
             "event_manipulation": "INSERT",
             "action_timing": "AFTER",
-            "action_statement": "EXECUTE FUNCTION audit_admin_role_changes()",
-            "trigger_comment": null
-          },
-          {
-            "trigger_name": "trg_audit_admin_roles",
-            "event_manipulation": "DELETE",
-            "action_timing": "AFTER",
-            "action_statement": "EXECUTE FUNCTION audit_admin_role_changes()",
+            "action_statement": "EXECUTE FUNCTION log_admin_events()",
             "trigger_comment": null
           }
         ],
-        "row_count": 2,
+        "row_count": 7,
         "column_count": 2
       }
     },
@@ -1094,7 +1087,7 @@
       "name": "admins",
       "comment": null,
       "columns": 6,
-      "rows": 2,
+      "rows": 7,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -1212,7 +1205,7 @@
             "constraint_name": "admins_user_id_fkey",
             "constraint_type": "FOREIGN KEY",
             "column_name": "user_id",
-            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
             "constraint_comment": null
           },
           {
@@ -1269,17 +1262,31 @@
             "index_definition": "CREATE UNIQUE INDEX admins_user_id_key ON public.admins USING btree (user_id)"
           }
         ],
-        "foreign_keys": [],
+        "foreign_keys": [
+          {
+            "constraint_name": "admins_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
         "triggers": [
           {
-            "trigger_name": "trg_audit_admin_status",
-            "event_manipulation": "UPDATE",
+            "trigger_name": "on_admin_created_log",
+            "event_manipulation": "INSERT",
             "action_timing": "AFTER",
-            "action_statement": "EXECUTE FUNCTION audit_admin_status_change()",
+            "action_statement": "EXECUTE FUNCTION log_admin_events()",
             "trigger_comment": null
           }
         ],
-        "row_count": 2,
+        "row_count": 7,
         "column_count": 6
       }
     },
@@ -2379,7 +2386,7 @@
       "name": "moderation_history",
       "comment": null,
       "columns": 10,
-      "rows": 8982,
+      "rows": 8984,
       "size_bytes": 1662976,
       "details": {
         "columns": [
@@ -2600,7 +2607,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 8982,
+        "row_count": 8984,
         "column_count": 10
       }
     },
@@ -3008,7 +3015,7 @@
       "name": "profiles",
       "comment": null,
       "columns": 31,
-      "rows": 5,
+      "rows": 17,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -3373,7 +3380,7 @@
             "constraint_name": "profiles_role_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((role = ANY (ARRAY['user'::text, 'agent'::text, 'broker'::text, 'admin'::text])))",
+            "definition": "CHECK ((role = ANY (ARRAY['user'::text, 'admin'::text, 'staff'::text])))",
             "constraint_comment": null
           },
           {
@@ -3454,7 +3461,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 31
       }
     },
@@ -7794,6 +7801,18 @@
       "function_comment": null
     },
     {
+      "function_name": "log_admin_creation",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
+      "function_name": "log_admin_events",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "log_price_change",
       "arguments": "",
       "return_type": "trigger",
@@ -7891,6 +7910,14 @@
       "constraint_name": "admin_users_id_fkey",
       "columns": [
         "id"
+      ]
+    },
+    {
+      "fromTable": "admins",
+      "toTable": "profiles",
+      "constraint_name": "admins_user_id_fkey",
+      "columns": [
+        "user_id"
       ]
     },
     {

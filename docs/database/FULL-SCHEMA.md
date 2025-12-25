@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-24T17:09:29.538Z
+> Auto-generated on: 2025-12-25T07:00:22.104Z
 > **Total Tables:** 27
 > **PostgreSQL Version:** 17.6
 
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~18
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -245,11 +245,11 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~7
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
-- Triggers: 2
+- Triggers: 1
 
 ### Columns
 
@@ -291,17 +291,11 @@ This document details the live schema of the production Supabase database. All A
 
 ### Triggers
 
-- `trg_audit_admin_roles`:
+- `on_role_assigned_log`:
   - When: AFTER INSERT
   - Definition:
 ```sql
-  EXECUTE FUNCTION audit_admin_role_changes()
-```
-- `trg_audit_admin_roles`:
-  - When: AFTER DELETE
-  - Definition:
-```sql
-  EXECUTE FUNCTION audit_admin_role_changes()
+  EXECUTE FUNCTION log_admin_events()
 ```
 
 ---
@@ -362,10 +356,10 @@ This document details the live schema of the production Supabase database. All A
 ## `admins`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~7
 - Columns: 6
 - Indexes: 3
-- Foreign Keys: 0
+- Foreign Keys: 1
 - Triggers: 1
 
 ### Columns
@@ -390,7 +384,7 @@ This document details the live schema of the production Supabase database. All A
 - `2200_39693_6_not_null`: N/A
 
 **FOREIGN KEY:**
-- `admins_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+- `admins_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
 - `admins_pkey`: PRIMARY KEY (id)
@@ -407,13 +401,20 @@ This document details the live schema of the production Supabase database. All A
 | `admins_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admins_pkey ON public.admins USING btree (id)` |
 | `admins_user_id_key` | btree | user_id | ✓ | — | `CREATE UNIQUE INDEX admins_user_id_key ON public.admins USING btree (user_id)` |
 
+### Foreign Keys
+
+- `admins_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
 ### Triggers
 
-- `trg_audit_admin_status`:
-  - When: AFTER UPDATE
+- `on_admin_created_log`:
+  - When: AFTER INSERT
   - Definition:
 ```sql
-  EXECUTE FUNCTION audit_admin_status_change()
+  EXECUTE FUNCTION log_admin_events()
 ```
 
 ---
@@ -673,7 +674,7 @@ This document details the live schema of the production Supabase database. All A
 ## `moderation_history`
 
 **Statistics:**
-- Rows: ~8,982
+- Rows: ~8,984
 - Columns: 10
 - Indexes: 1
 - Foreign Keys: 2
@@ -837,7 +838,7 @@ This document details the live schema of the production Supabase database. All A
 ## `profiles`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 31
 - Indexes: 3
 - Foreign Keys: 0
@@ -884,7 +885,7 @@ This document details the live schema of the production Supabase database. All A
 **CHECK:**
 - `2200_18686_1_not_null`: N/A
 - `profiles_account_status_check`: CHECK ((account_status = ANY (ARRAY['active'::text, 'suspended'::text, 'inactive'::text])))
-- `profiles_role_check`: CHECK ((role = ANY (ARRAY['user'::text, 'agent'::text, 'broker'::text, 'admin'::text])))
+- `profiles_role_check`: CHECK ((role = ANY (ARRAY['user'::text, 'admin'::text, 'staff'::text])))
 - `profiles_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'admin'::text])))
 
 **FOREIGN KEY:**

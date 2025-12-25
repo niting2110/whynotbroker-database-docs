@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2025-12-24T17:09:29.542Z
-Total Issues: 61
-Warnings: 41
+Generated: 2025-12-25T07:00:22.108Z
+Total Issues: 62
+Warnings: 42
 Recommendations: 20
 
 ## ⚠️ Warnings
@@ -16,6 +16,7 @@ Recommendations: 20
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
+| MEDIUM | `admins` | Foreign key admins_user_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_buyer_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_cancelled_by_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_property_id_fkey has no covering index |
