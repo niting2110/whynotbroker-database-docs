@@ -73,5 +73,20 @@
       "functions": 37,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2025-12-27T06:58:58.677Z",
+    "schema_hash": "517497d6192f8a3be983b0156e2e6fed",
+    "statistics": {
+      "tables": 27,
+      "views": 6,
+      "materialized_views": 0,
+      "columns": 338,
+      "constraints": 243,
+      "indexes": 95,
+      "relationships": 44,
+      "functions": 39,
+      "extensions": 9
+    }
   }
 ]

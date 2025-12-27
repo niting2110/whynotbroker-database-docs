@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-25T07:00:22.104Z
+> Auto-generated on: 2025-12-27T06:58:58.656Z
 > **Total Tables:** 27
 > **PostgreSQL Version:** 17.6
 
@@ -165,10 +165,10 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_messages`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~16
 - Columns: 6
 - Indexes: 1
-- Foreign Keys: 0
+- Foreign Keys: 2
 - Triggers: 0
 
 ### Columns
@@ -191,8 +191,8 @@ This document details the live schema of the production Supabase database. All A
 - `2200_42151_4_not_null`: N/A
 
 **FOREIGN KEY:**
-- `admin_messages_receiver_id_fkey`: FOREIGN KEY (receiver_id) REFERENCES auth.users(id)
-- `admin_messages_sender_id_fkey`: FOREIGN KEY (sender_id) REFERENCES auth.users(id)
+- `admin_messages_receiver_id_fkey`: FOREIGN KEY (receiver_id) REFERENCES admins(id) ON DELETE CASCADE
+- `admin_messages_sender_id_fkey`: FOREIGN KEY (sender_id) REFERENCES admins(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
 - `admin_messages_pkey`: PRIMARY KEY (id)
@@ -202,6 +202,17 @@ This document details the live schema of the production Supabase database. All A
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
 | `admin_messages_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)` |
+
+### Foreign Keys
+
+- `admin_messages_receiver_id_fkey`:
+  - Columns: `receiver_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `admin_messages_sender_id_fkey`:
+  - Columns: `sender_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -790,7 +801,7 @@ This document details the live schema of the production Supabase database. All A
 ## `permissions`
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~10
 - Columns: 5
 - Indexes: 3
 - Foreign Keys: 0
@@ -1538,7 +1549,7 @@ This document details the live schema of the production Supabase database. All A
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~10
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2

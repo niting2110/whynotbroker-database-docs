@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2025-12-25T07:00:22.108Z
-Total Issues: 62
-Warnings: 42
+Generated: 2025-12-27T06:58:58.661Z
+Total Issues: 64
+Warnings: 44
 Recommendations: 20
 
 ## ⚠️ Warnings
@@ -13,6 +13,8 @@ Recommendations: 20
 | MEDIUM | `admin_chat` | Foreign key admin_chat_admin_id_fkey has no covering index |
 | MEDIUM | `admin_leaves` | Foreign key admin_leaves_admin_id_fkey has no covering index |
 | MEDIUM | `admin_leaves` | Foreign key admin_leaves_backup_admin_id_fkey has no covering index |
+| MEDIUM | `admin_messages` | Foreign key admin_messages_receiver_id_fkey has no covering index |
+| MEDIUM | `admin_messages` | Foreign key admin_messages_sender_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |

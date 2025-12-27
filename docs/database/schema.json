@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-25T07:00:22.105Z",
+  "generated_at": "2025-12-27T06:58:58.658Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -10,8 +10,8 @@
     "columns": 338,
     "constraints": 243,
     "indexes": 95,
-    "relationships": 42,
-    "functions": 37,
+    "relationships": 44,
+    "functions": 39,
     "extensions": 9
   },
   "tables": [
@@ -520,8 +520,8 @@
       "name": "admin_messages",
       "comment": null,
       "columns": 6,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 16,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -624,14 +624,14 @@
             "constraint_name": "admin_messages_receiver_id_fkey",
             "constraint_type": "FOREIGN KEY",
             "column_name": "receiver_id",
-            "definition": "FOREIGN KEY (receiver_id) REFERENCES auth.users(id)",
+            "definition": "FOREIGN KEY (receiver_id) REFERENCES admins(id) ON DELETE CASCADE",
             "constraint_comment": null
           },
           {
             "constraint_name": "admin_messages_sender_id_fkey",
             "constraint_type": "FOREIGN KEY",
             "column_name": "sender_id",
-            "definition": "FOREIGN KEY (sender_id) REFERENCES auth.users(id)",
+            "definition": "FOREIGN KEY (sender_id) REFERENCES admins(id) ON DELETE CASCADE",
             "constraint_comment": null
           },
           {
@@ -654,9 +654,36 @@
             "index_definition": "CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)"
           }
         ],
-        "foreign_keys": [],
+        "foreign_keys": [
+          {
+            "constraint_name": "admin_messages_receiver_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "receiver_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "admin_messages_sender_id_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "sender_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 16,
         "column_count": 6
       }
     },
@@ -2834,7 +2861,7 @@
       "name": "permissions",
       "comment": null,
       "columns": 5,
-      "rows": 9,
+      "rows": 10,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -3007,7 +3034,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 9,
+        "row_count": 10,
         "column_count": 5
       }
     },
@@ -6595,7 +6622,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 9,
+      "rows": 10,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -6707,7 +6734,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 9,
+        "row_count": 10,
         "column_count": 2
       }
     },
@@ -7639,6 +7666,12 @@
       "function_comment": null
     },
     {
+      "function_name": "admin_has_permission",
+      "arguments": "p_permission text, p_user_id uuid DEFAULT NULL::uuid",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
       "function_name": "assign_property_to_admin",
       "arguments": "p_property_id uuid",
       "return_type": "uuid",
@@ -7720,6 +7753,12 @@
       "function_name": "generate_property_title",
       "arguments": "prop_num integer",
       "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "get_admin_context",
+      "arguments": "p_user_id uuid",
+      "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
     },
     {
@@ -7886,6 +7925,22 @@
       "constraint_name": "admin_leaves_backup_admin_id_fkey",
       "columns": [
         "backup_admin_id"
+      ]
+    },
+    {
+      "fromTable": "admin_messages",
+      "toTable": "admins",
+      "constraint_name": "admin_messages_receiver_id_fkey",
+      "columns": [
+        "receiver_id"
+      ]
+    },
+    {
+      "fromTable": "admin_messages",
+      "toTable": "admins",
+      "constraint_name": "admin_messages_sender_id_fkey",
+      "columns": [
+        "sender_id"
       ]
     },
     {

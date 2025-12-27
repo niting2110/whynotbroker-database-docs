@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2025-12-25T07:00:22.102Z  
-> Schema Hash: `243ec6973abc34f5fd6270f282bd26f0`
+> Generated: 2025-12-27T06:58:58.654Z  
+> Schema Hash: `517497d6192f8a3be983b0156e2e6fed`
 
 ## 📊 Quick Stats
 - **Total Tables:** 27
 - **Total Views:** 6
 - **Total Materialized Views:** 0
 - **Total Columns:** 338
-- **Total Relationships:** 42
-- **Total Size:** 24.29 MB
+- **Total Relationships:** 44
+- **Total Size:** 24.30 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 25/12/2025, 12:30:22 pm IST
+- **Last Updated:** 27/12/2025, 12:28:58 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -54,7 +54,7 @@ This documentation updates:
 | `admin_audit_logs` | 8 | ~18 | 0.06 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
-| `admin_messages` | 6 | ~0 | 0.02 MB |  |
+| `admin_messages` | 6 | ~16 | 0.03 MB |  |
 | `admin_notices` | 5 | ~1 | 0.03 MB |  |
 | `admin_roles` | 2 | ~7 | 0.02 MB |  |
 | `admin_users` | 7 | ~2 | 0.73 MB |  |
@@ -64,7 +64,7 @@ This documentation updates:
 | `messages` | 18 | ~0 | 0.03 MB |  |
 | `moderation_history` | 10 | ~8,984 | 1.59 MB |  |
 | `notifications` | 10 | ~3 | 0.05 MB |  |
-| `permissions` | 5 | ~9 | 0.06 MB |  |
+| `permissions` | 5 | ~10 | 0.06 MB |  |
 | `profiles` | 31 | ~17 | 0.06 MB |  |
 | `properties` | 93 | ~9,000 | 17.64 MB |  |
 | `property_amenities` | 7 | ~0 | 0.05 MB |  |
@@ -73,7 +73,7 @@ This documentation updates:
 | `property_images` | 13 | ~3 | 0.11 MB |  |
 | `property_price_history` | 7 | ~0 | 0.03 MB |  |
 | `property_views` | 10 | ~21 | 0.09 MB |  |
-| `role_permissions` | 2 | ~9 | 0.02 MB |  |
+| `role_permissions` | 2 | ~10 | 0.02 MB |  |
 | `roles` | 2 | ~6 | 0.05 MB |  |
 | `search_history` | 8 | ~0 | 0.02 MB |  |
 | `user_favorites` | 4 | ~3 | 0.09 MB |  |
@@ -92,6 +92,7 @@ This documentation updates:
 
 ## ⚙️ Functions
 - `admin_has_permission(p_permission text)` → boolean
+- `admin_has_permission(p_permission text, p_user_id uuid DEFAULT NULL::uuid)` → boolean
 - `assign_property_to_admin(p_property_id uuid)` → uuid
 - `audit_admin_role_changes()` → trigger
 - `audit_admin_status_change()` → trigger
@@ -106,6 +107,7 @@ This documentation updates:
 - `generate_pid()` → trigger
 - `generate_property_description(prop_num integer)` → text
 - `generate_property_title(prop_num integer)` → text
+- `get_admin_context(p_user_id uuid)` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_current_admin_id()` → uuid
 - `get_pincode(city text, prop_num integer)` → text
@@ -150,14 +152,14 @@ Base table RLS controls access."
 - `admin_chat` → `admins` (`admin_chat_admin_id_fkey`)
 - `admin_leaves` → `admins` (`admin_leaves_admin_id_fkey`)
 - `admin_leaves` → `admins` (`admin_leaves_backup_admin_id_fkey`)
+- `admin_messages` → `admins` (`admin_messages_receiver_id_fkey`)
+- `admin_messages` → `admins` (`admin_messages_sender_id_fkey`)
 - `admin_roles` → `admins` (`admin_roles_admin_id_fkey`)
 - `admin_roles` → `roles` (`admin_roles_role_id_fkey`)
 - `admin_users` → `profiles` (`admin_users_id_fkey`)
 - `admins` → `profiles` (`admins_user_id_fkey`)
-- `appointments` → `profiles` (`appointments_buyer_id_fkey`)
-- `appointments` → `profiles` (`appointments_cancelled_by_fkey`)
 
-*...and 32 more (see [relationships.md](./relationships.md))*
+*...and 34 more (see [relationships.md](./relationships.md))*
 
 ## 📈 Performance Insights
 - **Largest Table:** `properties`
