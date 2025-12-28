@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2025-12-27T06:58:58.661Z
+-- Generated: 2025-12-28T06:59:12.167Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -143,6 +143,88 @@ CREATE TABLE IF NOT EXISTS blog_posts (
 );
 
 
+-- Table: campaign_participants
+CREATE TABLE IF NOT EXISTS campaign_participants (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  campaign_id uuid NOT NULL,
+  user_id uuid NOT NULL,
+  region_id uuid,
+  credits_awarded integer DEFAULT 0,
+  conditions_met jsonb DEFAULT '{}'::jsonb,
+  is_completed boolean DEFAULT false,
+  completed_at timestamp with time zone,
+  joined_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: coupon_usage
+CREATE TABLE IF NOT EXISTS coupon_usage (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  coupon_id uuid NOT NULL,
+  user_id uuid NOT NULL,
+  transaction_id uuid,
+  discount_applied numeric NOT NULL,
+  original_amount numeric NOT NULL,
+  final_amount numeric NOT NULL,
+  region_id uuid,
+  used_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: coupons
+CREATE TABLE IF NOT EXISTS coupons (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  code text NOT NULL,
+  description text,
+  discount_type text NOT NULL,
+  discount_value numeric NOT NULL,
+  max_discount_amount numeric,
+  min_purchase_amount numeric DEFAULT 0,
+  region_ids ARRAY,
+  excluded_region_ids ARRAY,
+  applicable_to ARRAY DEFAULT ARRAY['credits'::text, 'subscriptions'::text, 'services'::text],
+  user_type_restrictions ARRAY,
+  new_users_only boolean DEFAULT false,
+  usage_limit_global integer,
+  usage_limit_per_user integer DEFAULT 1,
+  usage_limit_per_region jsonb DEFAULT '{}'::jsonb,
+  times_used integer DEFAULT 0,
+  valid_from timestamp with time zone DEFAULT now(),
+  valid_until timestamp with time zone,
+  campaign_id uuid,
+  attribution_source text,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: credit_packages
+CREATE TABLE IF NOT EXISTS credit_packages (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  credits integer NOT NULL,
+  base_price numeric NOT NULL,
+  bonus_credits integer DEFAULT 0,
+  region_id uuid,
+  regional_price numeric,
+  is_popular boolean DEFAULT false,
+  user_type_restriction text,
+  validity_days integer,
+  display_order integer DEFAULT 0,
+  badge_text text,
+  description text,
+  features ARRAY,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: messages
 CREATE TABLE IF NOT EXISTS messages (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -210,6 +292,26 @@ CREATE TABLE IF NOT EXISTS permissions (
 );
 
 
+-- Table: pricing_rules
+CREATE TABLE IF NOT EXISTS pricing_rules (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  action text NOT NULL,
+  credit_cost integer NOT NULL,
+  cash_price numeric,
+  region_id uuid,
+  user_type text,
+  discount_percentage numeric DEFAULT 0,
+  surge_pricing_multiplier numeric DEFAULT 1.0,
+  effective_from timestamp with time zone DEFAULT now(),
+  effective_until timestamp with time zone,
+  description text,
+  is_active boolean DEFAULT true,
+  priority integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: profiles
 CREATE TABLE IF NOT EXISTS profiles (
   id uuid NOT NULL,
@@ -243,6 +345,31 @@ CREATE TABLE IF NOT EXISTS profiles (
   updated_at timestamp with time zone DEFAULT now(),
   last_login timestamp with time zone,
   last_active timestamp with time zone
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: promotional_campaigns
+CREATE TABLE IF NOT EXISTS promotional_campaigns (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  description text,
+  campaign_type text,
+  region_ids ARRAY,
+  language_preference ARRAY,
+  credits_reward integer,
+  discount_percentage numeric,
+  free_services ARRAY,
+  conditions jsonb DEFAULT '{}'::jsonb,
+  budget_allocated numeric,
+  budget_spent numeric DEFAULT 0,
+  participant_limit integer,
+  current_participants integer DEFAULT 0,
+  valid_from timestamp with time zone DEFAULT now(),
+  valid_until timestamp with time zone,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -439,6 +566,27 @@ CREATE TABLE IF NOT EXISTS property_views (
 );
 
 
+-- Table: regions
+CREATE TABLE IF NOT EXISTS regions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  code text NOT NULL,
+  type text NOT NULL,
+  parent_region_id uuid,
+  gst_number text,
+  gst_rate numeric DEFAULT 18.00,
+  is_active boolean DEFAULT true,
+  requires_kyc boolean DEFAULT false,
+  market_tier integer,
+  population_estimate integer,
+  currency_code text DEFAULT 'INR'::text,
+  timezone text DEFAULT 'Asia/Kolkata'::text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: role_permissions
 CREATE TABLE IF NOT EXISTS role_permissions (
   role_id uuid NOT NULL,
@@ -465,6 +613,100 @@ CREATE TABLE IF NOT EXISTS search_history (
   session_id text,
   ip_address inet,
   created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: security_flags
+CREATE TABLE IF NOT EXISTS security_flags (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_email character varying(255) NOT NULL,
+  flagged_by uuid NOT NULL,
+  reason text NOT NULL,
+  status character varying(50) NOT NULL DEFAULT 'pending'::character varying,
+  resolution_notes text,
+  resolved_by uuid,
+  created_at timestamp without time zone NOT NULL DEFAULT now(),
+  resolved_at timestamp without time zone
+  ,PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN security_flags.status IS 'Status: pending (awaiting review), reviewed (action taken), dismissed (false positive)';
+
+-- Table: subscription_enrollments
+CREATE TABLE IF NOT EXISTS subscription_enrollments (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  plan_id uuid NOT NULL,
+  status text NOT NULL DEFAULT 'active'::text,
+  price_paid numeric NOT NULL,
+  credits_allocated integer NOT NULL,
+  started_at timestamp with time zone DEFAULT now(),
+  expires_at timestamp with time zone NOT NULL,
+  cancelled_at timestamp with time zone,
+  auto_renew boolean DEFAULT true,
+  purchase_transaction_id uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: subscription_plans
+CREATE TABLE IF NOT EXISTS subscription_plans (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  description text,
+  plan_code text NOT NULL,
+  base_price numeric NOT NULL,
+  credits_monthly integer NOT NULL,
+  duration_days integer NOT NULL DEFAULT 30,
+  region_id uuid,
+  regional_price numeric,
+  regional_credits integer,
+  user_type text NOT NULL,
+  min_kyc_level integer DEFAULT 0,
+  features jsonb DEFAULT '{}'::jsonb,
+  max_active_listings integer,
+  contact_views_included integer,
+  is_active boolean DEFAULT true,
+  display_order integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: transactions
+CREATE TABLE IF NOT EXISTS transactions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  type text NOT NULL,
+  amount_cash numeric DEFAULT 0,
+  amount_credits integer DEFAULT 0,
+  region_id uuid,
+  pricing_rule_id uuid,
+  gst_rate numeric,
+  gst_amount numeric,
+  gst_number text,
+  reference_id uuid,
+  reference_type text,
+  description text NOT NULL,
+  gateway text,
+  gateway_transaction_id text,
+  gateway_response jsonb,
+  coupon_id uuid,
+  discount_applied numeric DEFAULT 0,
+  status text NOT NULL DEFAULT 'pending'::text,
+  failure_reason text,
+  refunded_at timestamp with time zone,
+  invoice_number text,
+  invoice_generated boolean DEFAULT false,
+  ip_address inet,
+  user_agent text,
+  metadata jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -498,6 +740,36 @@ CREATE TABLE IF NOT EXISTS user_ratings (
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
   responded_at timestamp with time zone
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: user_regional_preferences
+CREATE TABLE IF NOT EXISTS user_regional_preferences (
+  user_id uuid NOT NULL,
+  primary_region_id uuid,
+  active_regions ARRAY,
+  preferred_language text DEFAULT 'english'::text,
+  preferred_currency text DEFAULT 'INR'::text,
+  receive_regional_offers boolean DEFAULT true,
+  receive_festival_campaigns boolean DEFAULT true,
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (user_id)
+);
+
+
+-- Table: wallets
+CREATE TABLE IF NOT EXISTS wallets (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  balance integer NOT NULL DEFAULT 0,
+  region_specific_credits jsonb DEFAULT '{}'::jsonb,
+  lifetime_credits_purchased integer DEFAULT 0,
+  lifetime_credits_spent integer DEFAULT 0,
+  lifetime_cash_spent numeric DEFAULT 0,
+  last_transaction_region_id uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

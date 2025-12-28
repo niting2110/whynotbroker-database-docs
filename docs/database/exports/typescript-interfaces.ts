@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-27T06:58:58.674Z
+// Generated: 2025-12-28T06:59:12.180Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -251,6 +251,161 @@ export interface Database {
     };
   };
 
+  campaign_participants: {
+    Row: {
+      id: string;
+      campaign_id: string;
+      user_id: string;
+      region_id?: string;
+      credits_awarded?: number;
+      conditions_met?: any;
+      is_completed?: boolean;
+      completed_at?: string | Date;
+      joined_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      campaign_id?: string;
+      user_id?: string;
+      region_id?: string;
+      credits_awarded?: number;
+      conditions_met?: any;
+      is_completed?: boolean;
+      completed_at?: any;
+      joined_at?: any;
+    };
+  };
+
+  coupon_usage: {
+    Row: {
+      id: string;
+      coupon_id: string;
+      user_id: string;
+      transaction_id?: string;
+      discount_applied: number;
+      original_amount: number;
+      final_amount: number;
+      region_id?: string;
+      used_at?: string | Date;
+    };
+    Insert: {
+      discount_applied: number;
+      original_amount: number;
+      final_amount: number;
+    };
+    Update: {
+      coupon_id?: string;
+      user_id?: string;
+      transaction_id?: string;
+      discount_applied?: number;
+      original_amount?: number;
+      final_amount?: number;
+      region_id?: string;
+      used_at?: any;
+    };
+  };
+
+  coupons: {
+    Row: {
+      id: string;
+      code: string;
+      description?: string;
+      discount_type: string;
+      discount_value: number;
+      max_discount_amount?: number;
+      min_purchase_amount?: number;
+      region_ids?: any;
+      excluded_region_ids?: any;
+      applicable_to?: any;
+      user_type_restrictions?: any;
+      new_users_only?: boolean;
+      usage_limit_global?: number;
+      usage_limit_per_user?: number;
+      usage_limit_per_region?: any;
+      times_used?: number;
+      valid_from?: string | Date;
+      valid_until?: string | Date;
+      campaign_id?: string;
+      attribution_source?: string;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      code: string;
+      discount_type: string;
+      discount_value: number;
+    };
+    Update: {
+      code?: string;
+      description?: string;
+      discount_type?: string;
+      discount_value?: number;
+      max_discount_amount?: number;
+      min_purchase_amount?: number;
+      region_ids?: any;
+      excluded_region_ids?: any;
+      applicable_to?: any;
+      user_type_restrictions?: any;
+      new_users_only?: boolean;
+      usage_limit_global?: number;
+      usage_limit_per_user?: number;
+      usage_limit_per_region?: any;
+      times_used?: number;
+      valid_from?: any;
+      valid_until?: any;
+      campaign_id?: string;
+      attribution_source?: string;
+      is_active?: boolean;
+      updated_at?: any;
+    };
+  };
+
+  credit_packages: {
+    Row: {
+      id: string;
+      name: string;
+      credits: number;
+      base_price: number;
+      bonus_credits?: number;
+      region_id?: string;
+      regional_price?: number;
+      is_popular?: boolean;
+      user_type_restriction?: string;
+      validity_days?: number;
+      display_order?: number;
+      badge_text?: string;
+      description?: string;
+      features?: any;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      credits: number;
+      base_price: number;
+    };
+    Update: {
+      name?: string;
+      credits?: number;
+      base_price?: number;
+      bonus_credits?: number;
+      region_id?: string;
+      regional_price?: number;
+      is_popular?: boolean;
+      user_type_restriction?: string;
+      validity_days?: number;
+      display_order?: number;
+      badge_text?: string;
+      description?: string;
+      features?: any;
+      is_active?: boolean;
+      updated_at?: any;
+    };
+  };
+
   messages: {
     Row: {
       id: string;
@@ -375,6 +530,43 @@ export interface Database {
     };
   };
 
+  pricing_rules: {
+    Row: {
+      id: string;
+      action: string;
+      credit_cost: number;
+      cash_price?: number;
+      region_id?: string;
+      user_type?: string;
+      discount_percentage?: number;
+      surge_pricing_multiplier?: number;
+      effective_from?: string | Date;
+      effective_until?: string | Date;
+      description?: string;
+      is_active?: boolean;
+      priority?: number;
+      created_at?: string | Date;
+    };
+    Insert: {
+      action: string;
+      credit_cost: number;
+    };
+    Update: {
+      action?: string;
+      credit_cost?: number;
+      cash_price?: number;
+      region_id?: string;
+      user_type?: string;
+      discount_percentage?: number;
+      surge_pricing_multiplier?: number;
+      effective_from?: any;
+      effective_until?: any;
+      description?: string;
+      is_active?: boolean;
+      priority?: number;
+    };
+  };
+
   profiles: {
     Row: {
       id: string;
@@ -441,6 +633,52 @@ export interface Database {
       updated_at?: any;
       last_login?: any;
       last_active?: any;
+    };
+  };
+
+  promotional_campaigns: {
+    Row: {
+      id: string;
+      name: string;
+      description?: string;
+      campaign_type?: string;
+      region_ids?: any;
+      language_preference?: any;
+      credits_reward?: number;
+      discount_percentage?: number;
+      free_services?: any;
+      conditions?: any;
+      budget_allocated?: number;
+      budget_spent?: number;
+      participant_limit?: number;
+      current_participants?: number;
+      valid_from?: string | Date;
+      valid_until?: string | Date;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+    };
+    Update: {
+      name?: string;
+      description?: string;
+      campaign_type?: string;
+      region_ids?: any;
+      language_preference?: any;
+      credits_reward?: number;
+      discount_percentage?: number;
+      free_services?: any;
+      conditions?: any;
+      budget_allocated?: number;
+      budget_spent?: number;
+      participant_limit?: number;
+      current_participants?: number;
+      valid_from?: any;
+      valid_until?: any;
+      is_active?: boolean;
+      updated_at?: any;
     };
   };
 
@@ -812,6 +1050,46 @@ export interface Database {
     };
   };
 
+  regions: {
+    Row: {
+      id: string;
+      name: string;
+      code: string;
+      type: string;
+      parent_region_id?: string;
+      gst_number?: string;
+      gst_rate?: number;
+      is_active?: boolean;
+      requires_kyc?: boolean;
+      market_tier?: number;
+      population_estimate?: number;
+      currency_code?: string;
+      timezone?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      code: string;
+      type: string;
+    };
+    Update: {
+      name?: string;
+      code?: string;
+      type?: string;
+      parent_region_id?: string;
+      gst_number?: string;
+      gst_rate?: number;
+      is_active?: boolean;
+      requires_kyc?: boolean;
+      market_tier?: number;
+      population_estimate?: number;
+      currency_code?: string;
+      timezone?: string;
+      updated_at?: any;
+    };
+  };
+
   role_permissions: {
     Row: {
       role_id: string;
@@ -859,6 +1137,184 @@ export interface Database {
       results_count?: number;
       session_id?: string;
       ip_address?: any;
+    };
+  };
+
+  security_flags: {
+    Row: {
+      id: string;
+      admin_email: string;
+      flagged_by: string;
+      reason: string;
+      status: string;
+      resolution_notes?: string;
+      resolved_by?: string;
+      created_at: string | Date;
+      resolved_at?: string | Date;
+    };
+    Insert: {
+      admin_email: string;
+      flagged_by: string;
+      reason: string;
+    };
+    Update: {
+      admin_email?: string;
+      flagged_by?: string;
+      reason?: string;
+      status?: string;
+      resolution_notes?: string;
+      resolved_by?: string;
+      resolved_at?: any;
+    };
+  };
+
+  subscription_enrollments: {
+    Row: {
+      id: string;
+      user_id: string;
+      plan_id: string;
+      status: string;
+      price_paid: number;
+      credits_allocated: number;
+      started_at?: string | Date;
+      expires_at: string | Date;
+      cancelled_at?: string | Date;
+      auto_renew?: boolean;
+      purchase_transaction_id?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      credits_allocated: number;
+      expires_at: any;
+    };
+    Update: {
+      user_id?: string;
+      plan_id?: string;
+      status?: string;
+      price_paid?: number;
+      credits_allocated?: number;
+      started_at?: any;
+      expires_at?: any;
+      cancelled_at?: any;
+      auto_renew?: boolean;
+      purchase_transaction_id?: string;
+      updated_at?: any;
+    };
+  };
+
+  subscription_plans: {
+    Row: {
+      id: string;
+      name: string;
+      description?: string;
+      plan_code: string;
+      base_price: number;
+      credits_monthly: number;
+      duration_days: number;
+      region_id?: string;
+      regional_price?: number;
+      regional_credits?: number;
+      user_type: string;
+      min_kyc_level?: number;
+      features?: any;
+      max_active_listings?: number;
+      contact_views_included?: number;
+      is_active?: boolean;
+      display_order?: number;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      plan_code: string;
+      base_price: number;
+      credits_monthly: number;
+      user_type: string;
+    };
+    Update: {
+      name?: string;
+      description?: string;
+      plan_code?: string;
+      base_price?: number;
+      credits_monthly?: number;
+      duration_days?: number;
+      region_id?: string;
+      regional_price?: number;
+      regional_credits?: number;
+      user_type?: string;
+      min_kyc_level?: number;
+      features?: any;
+      max_active_listings?: number;
+      contact_views_included?: number;
+      is_active?: boolean;
+      display_order?: number;
+      updated_at?: any;
+    };
+  };
+
+  transactions: {
+    Row: {
+      id: string;
+      user_id: string;
+      type: string;
+      amount_cash?: number;
+      amount_credits?: number;
+      region_id?: string;
+      pricing_rule_id?: string;
+      gst_rate?: number;
+      gst_amount?: number;
+      gst_number?: string;
+      reference_id?: string;
+      reference_type?: string;
+      description: string;
+      gateway?: string;
+      gateway_transaction_id?: string;
+      gateway_response?: any;
+      coupon_id?: string;
+      discount_applied?: number;
+      status: string;
+      failure_reason?: string;
+      refunded_at?: string | Date;
+      invoice_number?: string;
+      invoice_generated?: boolean;
+      ip_address?: any;
+      user_agent?: string;
+      metadata?: any;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      type: string;
+      description: string;
+    };
+    Update: {
+      user_id?: string;
+      type?: string;
+      amount_cash?: number;
+      amount_credits?: number;
+      region_id?: string;
+      pricing_rule_id?: string;
+      gst_rate?: number;
+      gst_amount?: number;
+      gst_number?: string;
+      reference_id?: string;
+      reference_type?: string;
+      description?: string;
+      gateway?: string;
+      gateway_transaction_id?: string;
+      gateway_response?: any;
+      coupon_id?: string;
+      discount_applied?: number;
+      status?: string;
+      failure_reason?: string;
+      refunded_at?: any;
+      invoice_number?: string;
+      invoice_generated?: boolean;
+      ip_address?: any;
+      user_agent?: string;
+      metadata?: any;
+      updated_at?: any;
     };
   };
 
@@ -917,6 +1373,58 @@ export interface Database {
       report_count?: number;
       updated_at?: any;
       responded_at?: any;
+    };
+  };
+
+  user_regional_preferences: {
+    Row: {
+      user_id: string;
+      primary_region_id?: string;
+      active_regions?: any;
+      preferred_language?: string;
+      preferred_currency?: string;
+      receive_regional_offers?: boolean;
+      receive_festival_campaigns?: boolean;
+      updated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      primary_region_id?: string;
+      active_regions?: any;
+      preferred_language?: string;
+      preferred_currency?: string;
+      receive_regional_offers?: boolean;
+      receive_festival_campaigns?: boolean;
+      updated_at?: any;
+    };
+  };
+
+  wallets: {
+    Row: {
+      id: string;
+      user_id: string;
+      balance: number;
+      region_specific_credits?: any;
+      lifetime_credits_purchased?: number;
+      lifetime_credits_spent?: number;
+      lifetime_cash_spent?: number;
+      last_transaction_region_id?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      balance?: number;
+      region_specific_credits?: any;
+      lifetime_credits_purchased?: number;
+      lifetime_credits_spent?: number;
+      lifetime_cash_spent?: number;
+      last_transaction_region_id?: string;
+      updated_at?: any;
     };
   };
 

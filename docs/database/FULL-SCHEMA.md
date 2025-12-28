@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-27T06:58:58.656Z
-> **Total Tables:** 27
+> Auto-generated on: 2025-12-28T06:59:12.161Z
+> **Total Tables:** 40
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~18
+- Rows: ~32
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -165,7 +165,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_messages`
 
 **Statistics:**
-- Rows: ~16
+- Rows: ~17
 - Columns: 6
 - Indexes: 1
 - Foreign Keys: 2
@@ -256,7 +256,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~14
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -367,7 +367,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admins`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~10
 - Columns: 6
 - Indexes: 3
 - Foreign Keys: 1
@@ -598,6 +598,343 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `campaign_participants`
+
+> Track user participation in campaigns
+
+**Statistics:**
+- Rows: ~0
+- Columns: 9
+- Indexes: 5
+- Foreign Keys: 2
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `campaign_id` | `uuid` | NO | `—` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `credits_awarded` | `integer` | YES | `0` | — |
+| `conditions_met` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `is_completed` | `boolean` | YES | `false` | — |
+| `completed_at` | `timestamp with time zone` | YES | `—` | — |
+| `joined_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45863_1_not_null`: N/A
+- `2200_45863_2_not_null`: N/A
+- `2200_45863_3_not_null`: N/A
+
+**FOREIGN KEY:**
+- `campaign_participants_campaign_id_fkey`: FOREIGN KEY (campaign_id) REFERENCES promotional_campaigns(id) ON DELETE CASCADE
+- `campaign_participants_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+
+**PRIMARY KEY:**
+- `campaign_participants_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `campaign_participants_campaign_id_user_id_key`: UNIQUE (campaign_id, user_id)
+- `campaign_participants_campaign_id_user_id_key`: UNIQUE (campaign_id, user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `campaign_participants_campaign_id_user_id_key` | btree | campaign_id, user_id | ✓ | — | `CREATE UNIQUE INDEX campaign_participants_campaign_id_user_id_key ON public.campaign_participants USING btree (campaign_id, user_id)` |
+| `campaign_participants_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX campaign_participants_pkey ON public.campaign_participants USING btree (id)` |
+| `idx_campaign_participants_campaign` | btree | campaign_id | — | — | `CREATE INDEX idx_campaign_participants_campaign ON public.campaign_participants USING btree (campaign_id)` |
+| `idx_campaign_participants_completed` | btree | is_completed | — | — | `CREATE INDEX idx_campaign_participants_completed ON public.campaign_participants USING btree (is_completed)` |
+| `idx_campaign_participants_user` | btree | user_id | — | — | `CREATE INDEX idx_campaign_participants_user ON public.campaign_participants USING btree (user_id)` |
+
+### Foreign Keys
+
+- `campaign_participants_campaign_id_fkey`:
+  - Columns: `campaign_id` → `promotional_campaigns(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `campaign_participants_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+### Triggers
+
+- `trigger_increment_campaign_participants`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION increment_campaign_participants()
+```
+
+---
+
+## `coupon_usage`
+
+> Track coupon redemptions by users
+
+**Statistics:**
+- Rows: ~0
+- Columns: 9
+- Indexes: 5
+- Foreign Keys: 2
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `coupon_id` | `uuid` | NO | `—` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `transaction_id` | `uuid` | YES | `—` | — |
+| `discount_applied` | `numeric` | NO | `—` | — |
+| `original_amount` | `numeric` | NO | `—` | — |
+| `final_amount` | `numeric` | NO | `—` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `used_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45839_1_not_null`: N/A
+- `2200_45839_2_not_null`: N/A
+- `2200_45839_3_not_null`: N/A
+- `2200_45839_5_not_null`: N/A
+- `2200_45839_6_not_null`: N/A
+- `2200_45839_7_not_null`: N/A
+
+**FOREIGN KEY:**
+- `coupon_usage_coupon_id_fkey`: FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE
+- `coupon_usage_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+
+**PRIMARY KEY:**
+- `coupon_usage_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `coupon_usage_coupon_id_user_id_transaction_id_key`: UNIQUE (coupon_id, user_id, transaction_id)
+- `coupon_usage_coupon_id_user_id_transaction_id_key`: UNIQUE (coupon_id, user_id, transaction_id)
+- `coupon_usage_coupon_id_user_id_transaction_id_key`: UNIQUE (coupon_id, user_id, transaction_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ | — | `CREATE UNIQUE INDEX coupon_usage_coupon_id_user_id_transaction_id_key ON public.coupon_usage USING btree (coupon_id, user_id, transaction_id)` |
+| `coupon_usage_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX coupon_usage_pkey ON public.coupon_usage USING btree (id)` |
+| `idx_coupon_usage_coupon` | btree | coupon_id | — | — | `CREATE INDEX idx_coupon_usage_coupon ON public.coupon_usage USING btree (coupon_id)` |
+| `idx_coupon_usage_transaction` | btree | transaction_id | — | — | `CREATE INDEX idx_coupon_usage_transaction ON public.coupon_usage USING btree (transaction_id)` |
+| `idx_coupon_usage_user` | btree | user_id | — | — | `CREATE INDEX idx_coupon_usage_user ON public.coupon_usage USING btree (user_id)` |
+
+### Foreign Keys
+
+- `coupon_usage_coupon_id_fkey`:
+  - Columns: `coupon_id` → `coupons(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `coupon_usage_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+### Triggers
+
+- `trigger_increment_coupon_usage`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION increment_coupon_usage()
+```
+
+---
+
+## `coupons`
+
+> Discount coupons with regional targeting
+
+**Statistics:**
+- Rows: ~4
+- Columns: 23
+- Indexes: 6
+- Foreign Keys: 1
+- Triggers: 3
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `code` | `text` | NO | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `discount_type` | `text` | NO | `—` | — |
+| `discount_value` | `numeric` | NO | `—` | — |
+| `max_discount_amount` | `numeric` | YES | `—` | — |
+| `min_purchase_amount` | `numeric` | YES | `0` | — |
+| `region_ids` | `ARRAY` | YES | `—` | — |
+| `excluded_region_ids` | `ARRAY` | YES | `—` | — |
+| `applicable_to` | `ARRAY` | YES | `ARRAY['credits'::text, 'subscriptions'::text, 'services'::text]` | — |
+| `user_type_restrictions` | `ARRAY` | YES | `—` | — |
+| `new_users_only` | `boolean` | YES | `false` | — |
+| `usage_limit_global` | `integer` | YES | `—` | — |
+| `usage_limit_per_user` | `integer` | YES | `1` | — |
+| `usage_limit_per_region` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `times_used` | `integer` | YES | `0` | — |
+| `valid_from` | `timestamp with time zone` | YES | `now()` | — |
+| `valid_until` | `timestamp with time zone` | YES | `—` | — |
+| `campaign_id` | `uuid` | YES | `—` | — |
+| `attribution_source` | `text` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45802_1_not_null`: N/A
+- `2200_45802_2_not_null`: N/A
+- `2200_45802_4_not_null`: N/A
+- `2200_45802_5_not_null`: N/A
+- `coupons_discount_type_check`: CHECK ((discount_type = ANY (ARRAY['percentage'::text, 'fixed_amount'::text, 'credits'::text, 'free_service'::text])))
+
+**FOREIGN KEY:**
+- `coupons_campaign_id_fkey`: FOREIGN KEY (campaign_id) REFERENCES promotional_campaigns(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `coupons_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `coupons_code_key`: UNIQUE (code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `coupons_code_key` | btree | code | ✓ | — | `CREATE UNIQUE INDEX coupons_code_key ON public.coupons USING btree (code)` |
+| `coupons_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX coupons_pkey ON public.coupons USING btree (id)` |
+| `idx_coupons_campaign` | btree | campaign_id | — | — | `CREATE INDEX idx_coupons_campaign ON public.coupons USING btree (campaign_id)` |
+| `idx_coupons_code` | btree | code | — | — | `CREATE INDEX idx_coupons_code ON public.coupons USING btree (code) WHERE (is_active = true)` |
+| `idx_coupons_regions` | gin | region_ids | — | — | `CREATE INDEX idx_coupons_regions ON public.coupons USING gin (region_ids)` |
+| `idx_coupons_valid` | btree | valid_from, valid_until | — | — | `CREATE INDEX idx_coupons_valid ON public.coupons USING btree (valid_from, valid_until) WHERE (is_active = true)` |
+
+### Foreign Keys
+
+- `coupons_campaign_id_fkey`:
+  - Columns: `campaign_id` → `promotional_campaigns(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+### Triggers
+
+- `audit_coupons`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_coupons`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_coupons`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+
+---
+
+## `credit_packages`
+
+> Pre-paid credit packages with regional pricing variations
+
+**Statistics:**
+- Rows: ~5
+- Columns: 17
+- Indexes: 3
+- Foreign Keys: 1
+- Triggers: 3
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `credits` | `integer` | NO | `—` | — |
+| `base_price` | `numeric` | NO | `—` | — |
+| `bonus_credits` | `integer` | YES | `0` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `regional_price` | `numeric` | YES | `—` | — |
+| `is_popular` | `boolean` | YES | `false` | — |
+| `user_type_restriction` | `text` | YES | `—` | — |
+| `validity_days` | `integer` | YES | `—` | — |
+| `display_order` | `integer` | YES | `0` | — |
+| `badge_text` | `text` | YES | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `features` | `ARRAY` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45731_1_not_null`: N/A
+- `2200_45731_2_not_null`: N/A
+- `2200_45731_3_not_null`: N/A
+- `2200_45731_4_not_null`: N/A
+
+**FOREIGN KEY:**
+- `credit_packages_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `credit_packages_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `credit_packages_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX credit_packages_pkey ON public.credit_packages USING btree (id)` |
+| `idx_credit_packages_active` | btree | display_order, is_active | — | — | `CREATE INDEX idx_credit_packages_active ON public.credit_packages USING btree (is_active, display_order)` |
+| `idx_credit_packages_region` | btree | region_id | — | — | `CREATE INDEX idx_credit_packages_region ON public.credit_packages USING btree (region_id) WHERE (is_active = true)` |
+
+### Foreign Keys
+
+- `credit_packages_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+### Triggers
+
+- `audit_credit_packages`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_credit_packages`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_credit_packages`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+
+---
+
 ## `messages`
 
 **Statistics:**
@@ -801,7 +1138,7 @@ This document details the live schema of the production Supabase database. All A
 ## `permissions`
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~12
 - Columns: 5
 - Indexes: 3
 - Foreign Keys: 0
@@ -846,14 +1183,97 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `pricing_rules`
+
+> Dynamic pricing rules based on action, region, and user type
+
+**Statistics:**
+- Rows: ~6
+- Columns: 14
+- Indexes: 4
+- Foreign Keys: 1
+- Triggers: 3
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `action` | `text` | NO | `—` | — |
+| `credit_cost` | `integer` | NO | `—` | — |
+| `cash_price` | `numeric` | YES | `—` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `user_type` | `text` | YES | `—` | — |
+| `discount_percentage` | `numeric` | YES | `0` | — |
+| `surge_pricing_multiplier` | `numeric` | YES | `1.0` | — |
+| `effective_from` | `timestamp with time zone` | YES | `now()` | — |
+| `effective_until` | `timestamp with time zone` | YES | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `priority` | `integer` | YES | `0` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45707_1_not_null`: N/A
+- `2200_45707_2_not_null`: N/A
+- `2200_45707_3_not_null`: N/A
+- `pricing_rules_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'all'::text])))
+
+**FOREIGN KEY:**
+- `pricing_rules_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `pricing_rules_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_pricing_rules_action` | btree | action | — | — | `CREATE INDEX idx_pricing_rules_action ON public.pricing_rules USING btree (action) WHERE (is_active = true)` |
+| `idx_pricing_rules_effective` | btree | effective_from, effective_until | — | — | `CREATE INDEX idx_pricing_rules_effective ON public.pricing_rules USING btree (effective_from, effective_until)` |
+| `idx_pricing_rules_region_action` | btree | action, region_id, is_active | — | — | `CREATE INDEX idx_pricing_rules_region_action ON public.pricing_rules USING btree (region_id, action, is_active)` |
+| `pricing_rules_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX pricing_rules_pkey ON public.pricing_rules USING btree (id)` |
+
+### Foreign Keys
+
+- `pricing_rules_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `audit_pricing_rules`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_pricing_rules`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_pricing_rules`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+
+---
+
 ## `profiles`
 
 **Statistics:**
-- Rows: ~17
+- Rows: ~21
 - Columns: 31
 - Indexes: 3
 - Foreign Keys: 0
-- Triggers: 1
+- Triggers: 2
 
 ### Columns
 
@@ -919,11 +1339,94 @@ This document details the live schema of the production Supabase database. All A
 
 ### Triggers
 
+- `trigger_create_wallet`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION create_wallet_for_new_user()
+```
 - `update_profiles_updated_at`:
   - When: BEFORE UPDATE
   - Definition:
 ```sql
   EXECUTE FUNCTION update_updated_at_column()
+```
+
+---
+
+## `promotional_campaigns`
+
+> Marketing campaigns with regional focus
+
+**Statistics:**
+- Rows: ~2
+- Columns: 19
+- Indexes: 4
+- Foreign Keys: 0
+- Triggers: 3
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `campaign_type` | `text` | YES | `—` | — |
+| `region_ids` | `ARRAY` | YES | `—` | — |
+| `language_preference` | `ARRAY` | YES | `—` | — |
+| `credits_reward` | `integer` | YES | `—` | — |
+| `discount_percentage` | `numeric` | YES | `—` | — |
+| `free_services` | `ARRAY` | YES | `—` | — |
+| `conditions` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `budget_allocated` | `numeric` | YES | `—` | — |
+| `budget_spent` | `numeric` | YES | `0` | — |
+| `participant_limit` | `integer` | YES | `—` | — |
+| `current_participants` | `integer` | YES | `0` | — |
+| `valid_from` | `timestamp with time zone` | YES | `now()` | — |
+| `valid_until` | `timestamp with time zone` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45781_1_not_null`: N/A
+- `2200_45781_2_not_null`: N/A
+- `promotional_campaigns_campaign_type_check`: CHECK ((campaign_type = ANY (ARRAY['launch'::text, 'festival'::text, 'reactivation'::text, 'referral'::text, 'partnership'::text])))
+
+**PRIMARY KEY:**
+- `promotional_campaigns_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_campaigns_active` | btree | valid_until, is_active | — | — | `CREATE INDEX idx_campaigns_active ON public.promotional_campaigns USING btree (is_active, valid_until)` |
+| `idx_campaigns_regions` | gin | region_ids | — | — | `CREATE INDEX idx_campaigns_regions ON public.promotional_campaigns USING gin (region_ids)` |
+| `idx_campaigns_type` | btree | campaign_type | — | — | `CREATE INDEX idx_campaigns_type ON public.promotional_campaigns USING btree (campaign_type) WHERE (is_active = true)` |
+| `promotional_campaigns_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX promotional_campaigns_pkey ON public.promotional_campaigns USING btree (id)` |
+
+### Triggers
+
+- `audit_promotional_campaigns`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_promotional_campaigns`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_promotional_campaigns`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
 ```
 
 ---
@@ -1546,10 +2049,79 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `regions`
+
+> Master table for regional configuration across India
+
+**Statistics:**
+- Rows: ~9
+- Columns: 15
+- Indexes: 5
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `code` | `text` | NO | `—` | — |
+| `type` | `text` | NO | `—` | — |
+| `parent_region_id` | `uuid` | YES | `—` | — |
+| `gst_number` | `text` | YES | `—` | — |
+| `gst_rate` | `numeric` | YES | `18.00` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `requires_kyc` | `boolean` | YES | `false` | — |
+| `market_tier` | `integer` | YES | `—` | — |
+| `population_estimate` | `integer` | YES | `—` | — |
+| `currency_code` | `text` | YES | `'INR'::text` | — |
+| `timezone` | `text` | YES | `'Asia/Kolkata'::text` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45678_1_not_null`: N/A
+- `2200_45678_2_not_null`: N/A
+- `2200_45678_3_not_null`: N/A
+- `2200_45678_4_not_null`: N/A
+- `regions_market_tier_check`: CHECK ((market_tier = ANY (ARRAY[1, 2, 3])))
+- `regions_type_check`: CHECK ((type = ANY (ARRAY['state'::text, 'city'::text, 'metro'::text, 'tier2'::text, 'tier3'::text])))
+
+**FOREIGN KEY:**
+- `regions_parent_region_id_fkey`: FOREIGN KEY (parent_region_id) REFERENCES regions(id)
+
+**PRIMARY KEY:**
+- `regions_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `regions_code_key`: UNIQUE (code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_regions_code` | btree | code | — | — | `CREATE INDEX idx_regions_code ON public.regions USING btree (code)` |
+| `idx_regions_parent` | btree | parent_region_id | — | — | `CREATE INDEX idx_regions_parent ON public.regions USING btree (parent_region_id)` |
+| `idx_regions_type` | btree | type | — | — | `CREATE INDEX idx_regions_type ON public.regions USING btree (type)` |
+| `regions_code_key` | btree | code | ✓ | — | `CREATE UNIQUE INDEX regions_code_key ON public.regions USING btree (code)` |
+| `regions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX regions_pkey ON public.regions USING btree (id)` |
+
+### Foreign Keys
+
+- `regions_parent_region_id_fkey`:
+  - Columns: `parent_region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~14
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -1679,6 +2251,354 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `security_flags`
+
+> Tracks flagged admin activities for security review
+
+**Statistics:**
+- Rows: ~0
+- Columns: 9
+- Indexes: 4
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_email` | `character varying(255)` | NO | `—` | — |
+| `flagged_by` | `uuid` | NO | `—` | — |
+| `reason` | `text` | NO | `—` | — |
+| `status` | `character varying(50)` | NO | `'pending'::character varying` | "Status: pending (awaiting review), reviewed (action taken), dismissed (false positive)" |
+| `resolution_notes` | `text` | YES | `—` | — |
+| `resolved_by` | `uuid` | YES | `—` | — |
+| `created_at` | `timestamp without time zone` | NO | `now()` | — |
+| `resolved_at` | `timestamp without time zone` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_46122_1_not_null`: N/A
+- `2200_46122_2_not_null`: N/A
+- `2200_46122_3_not_null`: N/A
+- `2200_46122_4_not_null`: N/A
+- `2200_46122_5_not_null`: N/A
+- `2200_46122_8_not_null`: N/A
+- `valid_status`: CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'reviewed'::character varying, 'dismissed'::character varying])::text[])))
+
+**FOREIGN KEY:**
+- `security_flags_flagged_by_fkey`: FOREIGN KEY (flagged_by) REFERENCES admins(id)
+- `security_flags_resolved_by_fkey`: FOREIGN KEY (resolved_by) REFERENCES admins(id)
+
+**PRIMARY KEY:**
+- `security_flags_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_security_flags_admin_email` | btree | admin_email | — | — | `CREATE INDEX idx_security_flags_admin_email ON public.security_flags USING btree (admin_email)` |
+| `idx_security_flags_created_at` | btree | created_at | — | — | `CREATE INDEX idx_security_flags_created_at ON public.security_flags USING btree (created_at DESC)` |
+| `idx_security_flags_status` | btree | status | — | — | `CREATE INDEX idx_security_flags_status ON public.security_flags USING btree (status)` |
+| `security_flags_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX security_flags_pkey ON public.security_flags USING btree (id)` |
+
+### Foreign Keys
+
+- `security_flags_flagged_by_fkey`:
+  - Columns: `flagged_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `security_flags_resolved_by_fkey`:
+  - Columns: `resolved_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `subscription_enrollments`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 4
+- Foreign Keys: 3
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `plan_id` | `uuid` | NO | `—` | — |
+| `status` | `text` | NO | `'active'::text` | — |
+| `price_paid` | `numeric` | NO | `—` | — |
+| `credits_allocated` | `integer` | NO | `—` | — |
+| `started_at` | `timestamp with time zone` | YES | `now()` | — |
+| `expires_at` | `timestamp with time zone` | NO | `—` | — |
+| `cancelled_at` | `timestamp with time zone` | YES | `—` | — |
+| `auto_renew` | `boolean` | YES | `true` | — |
+| `purchase_transaction_id` | `uuid` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_46003_1_not_null`: N/A
+- `2200_46003_2_not_null`: N/A
+- `2200_46003_3_not_null`: N/A
+- `2200_46003_4_not_null`: N/A
+- `2200_46003_5_not_null`: N/A
+- `2200_46003_6_not_null`: N/A
+- `2200_46003_8_not_null`: N/A
+- `subscription_enrollments_status_check`: CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'cancelled'::text, 'expired'::text])))
+
+**FOREIGN KEY:**
+- `subscription_enrollments_plan_id_fkey`: FOREIGN KEY (plan_id) REFERENCES subscription_plans(id)
+- `subscription_enrollments_purchase_transaction_id_fkey`: FOREIGN KEY (purchase_transaction_id) REFERENCES transactions(id)
+- `subscription_enrollments_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `subscription_enrollments_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_subscriptions_expires` | btree | expires_at | — | — | `CREATE INDEX idx_subscriptions_expires ON public.subscription_enrollments USING btree (expires_at) WHERE (status = 'active'::text)` |
+| `idx_subscriptions_plan` | btree | plan_id | — | — | `CREATE INDEX idx_subscriptions_plan ON public.subscription_enrollments USING btree (plan_id)` |
+| `idx_subscriptions_user` | btree | user_id, status | — | — | `CREATE INDEX idx_subscriptions_user ON public.subscription_enrollments USING btree (user_id, status)` |
+| `subscription_enrollments_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX subscription_enrollments_pkey ON public.subscription_enrollments USING btree (id)` |
+
+### Foreign Keys
+
+- `subscription_enrollments_plan_id_fkey`:
+  - Columns: `plan_id` → `subscription_plans(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `subscription_enrollments_purchase_transaction_id_fkey`:
+  - Columns: `purchase_transaction_id` → `transactions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `subscription_enrollments_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `subscription_plans`
+
+> Recurring subscription plans with regional features
+
+**Statistics:**
+- Rows: ~4
+- Columns: 19
+- Indexes: 5
+- Foreign Keys: 1
+- Triggers: 3
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `plan_code` | `text` | NO | `—` | — |
+| `base_price` | `numeric` | NO | `—` | — |
+| `credits_monthly` | `integer` | NO | `—` | — |
+| `duration_days` | `integer` | NO | `30` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `regional_price` | `numeric` | YES | `—` | — |
+| `regional_credits` | `integer` | YES | `—` | — |
+| `user_type` | `text` | NO | `—` | — |
+| `min_kyc_level` | `integer` | YES | `0` | — |
+| `features` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `max_active_listings` | `integer` | YES | `—` | — |
+| `contact_views_included` | `integer` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `display_order` | `integer` | YES | `0` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45753_11_not_null`: N/A
+- `2200_45753_1_not_null`: N/A
+- `2200_45753_2_not_null`: N/A
+- `2200_45753_4_not_null`: N/A
+- `2200_45753_5_not_null`: N/A
+- `2200_45753_6_not_null`: N/A
+- `2200_45753_7_not_null`: N/A
+- `subscription_plans_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text])))
+
+**FOREIGN KEY:**
+- `subscription_plans_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `subscription_plans_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `subscription_plans_plan_code_key`: UNIQUE (plan_code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_subscription_plans_active` | btree | is_active, display_order | — | — | `CREATE INDEX idx_subscription_plans_active ON public.subscription_plans USING btree (is_active, display_order)` |
+| `idx_subscription_plans_code` | btree | plan_code | — | — | `CREATE INDEX idx_subscription_plans_code ON public.subscription_plans USING btree (plan_code)` |
+| `idx_subscription_plans_user_type` | btree | user_type | — | — | `CREATE INDEX idx_subscription_plans_user_type ON public.subscription_plans USING btree (user_type) WHERE (is_active = true)` |
+| `subscription_plans_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX subscription_plans_pkey ON public.subscription_plans USING btree (id)` |
+| `subscription_plans_plan_code_key` | btree | plan_code | ✓ | — | `CREATE UNIQUE INDEX subscription_plans_plan_code_key ON public.subscription_plans USING btree (plan_code)` |
+
+### Foreign Keys
+
+- `subscription_plans_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+### Triggers
+
+- `audit_subscription_plans`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_subscription_plans`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `audit_subscription_plans`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+
+---
+
+## `transactions`
+
+> All financial transactions with regional GST tracking
+
+**Statistics:**
+- Rows: ~0
+- Columns: 28
+- Indexes: 8
+- Foreign Keys: 4
+- Triggers: 2
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `type` | `text` | NO | `—` | — |
+| `amount_cash` | `numeric` | YES | `0` | — |
+| `amount_credits` | `integer` | YES | `0` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `pricing_rule_id` | `uuid` | YES | `—` | — |
+| `gst_rate` | `numeric` | YES | `—` | — |
+| `gst_amount` | `numeric` | YES | `—` | — |
+| `gst_number` | `text` | YES | `—` | — |
+| `reference_id` | `uuid` | YES | `—` | — |
+| `reference_type` | `text` | YES | `—` | — |
+| `description` | `text` | NO | `—` | — |
+| `gateway` | `text` | YES | `—` | — |
+| `gateway_transaction_id` | `text` | YES | `—` | — |
+| `gateway_response` | `jsonb` | YES | `—` | — |
+| `coupon_id` | `uuid` | YES | `—` | — |
+| `discount_applied` | `numeric` | YES | `0` | — |
+| `status` | `text` | NO | `'pending'::text` | — |
+| `failure_reason` | `text` | YES | `—` | — |
+| `refunded_at` | `timestamp with time zone` | YES | `—` | — |
+| `invoice_number` | `text` | YES | `—` | — |
+| `invoice_generated` | `boolean` | YES | `false` | — |
+| `ip_address` | `inet` | YES | `—` | — |
+| `user_agent` | `text` | YES | `—` | — |
+| `metadata` | `jsonb` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45932_13_not_null`: N/A
+- `2200_45932_19_not_null`: N/A
+- `2200_45932_1_not_null`: N/A
+- `2200_45932_2_not_null`: N/A
+- `2200_45932_3_not_null`: N/A
+- `transactions_gateway_check`: CHECK ((gateway = ANY (ARRAY['razorpay'::text, 'stripe'::text, 'paytm'::text, 'phonepe'::text, 'upi'::text, 'manual'::text, 'wallet'::text])))
+- `transactions_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'processing'::text, 'succeeded'::text, 'failed'::text, 'refunded'::text])))
+- `transactions_type_check`: CHECK ((type = ANY (ARRAY['credit_purchase'::text, 'subscription_purchase'::text, 'subscription_renewal'::text, 'property_listing_fee'::text, 'contact_view_owner'::text, 'contact_view_buyer'::text, 'property_boost'::text, 'featured_listing'::text, 'verification_service'::text, 'legal_service'::text, 'refund'::text, 'admin_adjustment'::text, 'referral_bonus'::text, 'promotional_credit'::text, 'regional_campaign_reward'::text])))
+
+**FOREIGN KEY:**
+- `transactions_coupon_id_fkey`: FOREIGN KEY (coupon_id) REFERENCES coupons(id)
+- `transactions_pricing_rule_id_fkey`: FOREIGN KEY (pricing_rule_id) REFERENCES pricing_rules(id)
+- `transactions_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+- `transactions_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `transactions_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_transactions_gateway` | btree | gateway_transaction_id | — | — | `CREATE INDEX idx_transactions_gateway ON public.transactions USING btree (gateway_transaction_id) WHERE (gateway_transaction_id IS NOT NULL)` |
+| `idx_transactions_invoice` | btree | invoice_number | — | — | `CREATE INDEX idx_transactions_invoice ON public.transactions USING btree (invoice_number) WHERE (invoice_generated = true)` |
+| `idx_transactions_region` | btree | region_id, created_at | — | — | `CREATE INDEX idx_transactions_region ON public.transactions USING btree (region_id, created_at DESC)` |
+| `idx_transactions_status` | btree | status, created_at | — | — | `CREATE INDEX idx_transactions_status ON public.transactions USING btree (status, created_at DESC)` |
+| `idx_transactions_type` | btree | type, created_at | — | — | `CREATE INDEX idx_transactions_type ON public.transactions USING btree (type, created_at DESC)` |
+| `idx_transactions_user` | btree | user_id, created_at | — | — | `CREATE INDEX idx_transactions_user ON public.transactions USING btree (user_id, created_at DESC)` |
+| `idx_transactions_user_region` | btree | user_id, region_id, created_at | — | — | `CREATE INDEX idx_transactions_user_region ON public.transactions USING btree (user_id, region_id, created_at DESC)` |
+| `transactions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX transactions_pkey ON public.transactions USING btree (id)` |
+
+### Foreign Keys
+
+- `transactions_coupon_id_fkey`:
+  - Columns: `coupon_id` → `coupons(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `transactions_pricing_rule_id_fkey`:
+  - Columns: `pricing_rule_id` → `pricing_rules(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `transactions_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `transactions_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `audit_transactions_update`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION log_payment_admin_action()
+```
+- `trigger_update_transaction_timestamp`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_wallet_timestamp()
+```
 
 ---
 
@@ -1828,6 +2748,136 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION update_updated_at_column()
+```
+
+---
+
+## `user_regional_preferences`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 3
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `user_id` | `uuid` | NO | `—` | — |
+| `primary_region_id` | `uuid` | YES | `—` | — |
+| `active_regions` | `ARRAY` | YES | `—` | — |
+| `preferred_language` | `text` | YES | `'english'::text` | — |
+| `preferred_currency` | `text` | YES | `'INR'::text` | — |
+| `receive_regional_offers` | `boolean` | YES | `true` | — |
+| `receive_festival_campaigns` | `boolean` | YES | `true` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45978_1_not_null`: N/A
+
+**FOREIGN KEY:**
+- `user_regional_preferences_primary_region_id_fkey`: FOREIGN KEY (primary_region_id) REFERENCES regions(id)
+- `user_regional_preferences_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `user_regional_preferences_pkey`: PRIMARY KEY (user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_user_prefs_active_regions` | gin | active_regions | — | — | `CREATE INDEX idx_user_prefs_active_regions ON public.user_regional_preferences USING gin (active_regions)` |
+| `idx_user_prefs_region` | btree | primary_region_id | — | — | `CREATE INDEX idx_user_prefs_region ON public.user_regional_preferences USING btree (primary_region_id)` |
+| `user_regional_preferences_pkey` | btree | user_id | ✓ | ✓ | `CREATE UNIQUE INDEX user_regional_preferences_pkey ON public.user_regional_preferences USING btree (user_id)` |
+
+### Foreign Keys
+
+- `user_regional_preferences_primary_region_id_fkey`:
+  - Columns: `primary_region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `user_regional_preferences_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `wallets`
+
+> User credit wallets with regional tracking
+
+**Statistics:**
+- Rows: ~21
+- Columns: 10
+- Indexes: 4
+- Foreign Keys: 2
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `balance` | `integer` | NO | `0` | — |
+| `region_specific_credits` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `lifetime_credits_purchased` | `integer` | YES | `0` | — |
+| `lifetime_credits_spent` | `integer` | YES | `0` | — |
+| `lifetime_cash_spent` | `numeric` | YES | `0` | — |
+| `last_transaction_region_id` | `uuid` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_45900_1_not_null`: N/A
+- `2200_45900_2_not_null`: N/A
+- `2200_45900_3_not_null`: N/A
+- `wallets_balance_check`: CHECK ((balance >= 0))
+
+**FOREIGN KEY:**
+- `wallets_last_transaction_region_id_fkey`: FOREIGN KEY (last_transaction_region_id) REFERENCES regions(id)
+- `wallets_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `wallets_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `wallets_user_id_key`: UNIQUE (user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_wallets_balance` | btree | balance | — | — | `CREATE INDEX idx_wallets_balance ON public.wallets USING btree (balance) WHERE (balance > 0)` |
+| `idx_wallets_user_id` | btree | user_id | — | — | `CREATE INDEX idx_wallets_user_id ON public.wallets USING btree (user_id)` |
+| `wallets_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX wallets_pkey ON public.wallets USING btree (id)` |
+| `wallets_user_id_key` | btree | user_id | ✓ | — | `CREATE UNIQUE INDEX wallets_user_id_key ON public.wallets USING btree (user_id)` |
+
+### Foreign Keys
+
+- `wallets_last_transaction_region_id_fkey`:
+  - Columns: `last_transaction_region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `wallets_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `trigger_update_wallet_timestamp`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_wallet_timestamp()
 ```
 
 ---

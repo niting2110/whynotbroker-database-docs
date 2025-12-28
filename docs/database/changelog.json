@@ -88,5 +88,20 @@
       "functions": 39,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2025-12-28T06:59:12.184Z",
+    "schema_hash": "d0c2afa5638050d1f57c70be57f945cf",
+    "statistics": {
+      "tables": 40,
+      "views": 14,
+      "materialized_views": 0,
+      "columns": 531,
+      "constraints": 354,
+      "indexes": 155,
+      "relationships": 66,
+      "functions": 55,
+      "extensions": 9
+    }
   }
 ]

@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 44
-Generated: 2025-12-27T06:58:58.659Z
+Total Relationships: 66
+Generated: 2025-12-28T06:59:12.165Z
 
 ```
 admin_audit_logs:
@@ -52,6 +52,26 @@ blog_posts:
   └─→ profiles (via: blog_posts_author_id_fkey)
       columns: author_id
 
+campaign_participants:
+  └─→ promotional_campaigns (via: campaign_participants_campaign_id_fkey)
+      columns: campaign_id
+  └─→ regions (via: campaign_participants_region_id_fkey)
+      columns: region_id
+
+coupon_usage:
+  └─→ coupons (via: coupon_usage_coupon_id_fkey)
+      columns: coupon_id
+  └─→ regions (via: coupon_usage_region_id_fkey)
+      columns: region_id
+
+coupons:
+  └─→ promotional_campaigns (via: coupons_campaign_id_fkey)
+      columns: campaign_id
+
+credit_packages:
+  └─→ regions (via: credit_packages_region_id_fkey)
+      columns: region_id
+
 messages:
   └─→ properties (via: messages_property_id_fkey)
       columns: property_id
@@ -69,6 +89,10 @@ moderation_history:
 notifications:
   └─→ profiles (via: notifications_user_id_fkey)
       columns: user_id
+
+pricing_rules:
+  └─→ regions (via: pricing_rules_region_id_fkey)
+      columns: region_id
 
 properties:
   └─→ profiles (via: properties_agency_id_fkey)
@@ -114,6 +138,10 @@ property_views:
   └─→ profiles (via: property_views_user_id_fkey)
       columns: user_id
 
+regions:
+  └─→ regions (via: regions_parent_region_id_fkey)
+      columns: parent_region_id
+
 role_permissions:
   └─→ permissions (via: role_permissions_permission_id_fkey)
       columns: permission_id
@@ -122,6 +150,34 @@ role_permissions:
 
 search_history:
   └─→ profiles (via: search_history_user_id_fkey)
+      columns: user_id
+
+security_flags:
+  └─→ admins (via: security_flags_flagged_by_fkey)
+      columns: flagged_by
+  └─→ admins (via: security_flags_resolved_by_fkey)
+      columns: resolved_by
+
+subscription_enrollments:
+  └─→ subscription_plans (via: subscription_enrollments_plan_id_fkey)
+      columns: plan_id
+  └─→ transactions (via: subscription_enrollments_purchase_transaction_id_fkey)
+      columns: purchase_transaction_id
+  └─→ profiles (via: subscription_enrollments_user_id_fkey)
+      columns: user_id
+
+subscription_plans:
+  └─→ regions (via: subscription_plans_region_id_fkey)
+      columns: region_id
+
+transactions:
+  └─→ coupons (via: transactions_coupon_id_fkey)
+      columns: coupon_id
+  └─→ pricing_rules (via: transactions_pricing_rule_id_fkey)
+      columns: pricing_rule_id
+  └─→ regions (via: transactions_region_id_fkey)
+      columns: region_id
+  └─→ profiles (via: transactions_user_id_fkey)
       columns: user_id
 
 user_favorites:
@@ -137,5 +193,17 @@ user_ratings:
       columns: rated_user_id
   └─→ profiles (via: user_ratings_rating_user_id_fkey)
       columns: rating_user_id
+
+user_regional_preferences:
+  └─→ regions (via: user_regional_preferences_primary_region_id_fkey)
+      columns: primary_region_id
+  └─→ profiles (via: user_regional_preferences_user_id_fkey)
+      columns: user_id
+
+wallets:
+  └─→ regions (via: wallets_last_transaction_region_id_fkey)
+      columns: last_transaction_region_id
+  └─→ profiles (via: wallets_user_id_fkey)
+      columns: user_id
 
 ```

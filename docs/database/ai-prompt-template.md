@@ -4,23 +4,36 @@
 You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKER database. Use this schema information to answer questions and write queries.
 
 ## Database Schema Summary
-**Total Tables:** 27
+**Total Tables:** 40
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
 - properties (93 columns)
 - profiles (31 columns)
+- transactions (28 columns)
+- coupons (23 columns)
+- subscription_plans (19 columns)
+- promotional_campaigns (19 columns)
 - appointments (18 columns)
 - messages (18 columns)
+- credit_packages (17 columns)
 - user_ratings (17 columns)
 - blog_posts (17 columns)
+- regions (15 columns)
+- pricing_rules (14 columns)
 - property_images (13 columns)
+- subscription_enrollments (13 columns)
 - property_documents (12 columns)
 - moderation_history (10 columns)
 - property_views (10 columns)
+- wallets (10 columns)
 - notifications (10 columns)
+- campaign_participants (9 columns)
+- coupon_usage (9 columns)
+- security_flags (9 columns)
 - property_assignments (8 columns)
 - admin_audit_logs (8 columns)
+- user_regional_preferences (8 columns)
 - search_history (8 columns)
 - admin_leaves (8 columns)
 - admin_users (7 columns)

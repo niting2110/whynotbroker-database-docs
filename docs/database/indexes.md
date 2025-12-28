@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2025-12-27T06:58:58.660Z
-Total Indexes: 95
+Generated: 2025-12-28T06:59:12.166Z
+Total Indexes: 155
 
 ## All Indexes
 
@@ -25,6 +25,25 @@ Total Indexes: 95
 | `blog_posts` | `blog_posts_pid_key` | btree | pid | ✓ | `CREATE UNIQUE INDEX blog_posts_pid_key ON public.blog_posts USING btree (pid)` |
 | `blog_posts` | `blog_posts_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX blog_posts_pkey ON public.blog_posts USING btree (id)` |
 | `blog_posts` | `blog_posts_slug_key` | btree | slug | ✓ | `CREATE UNIQUE INDEX blog_posts_slug_key ON public.blog_posts USING btree (slug)` |
+| `campaign_participants` | `campaign_participants_campaign_id_user_id_key` | btree | campaign_id, user_id | ✓ | `CREATE UNIQUE INDEX campaign_participants_campaign_id_user_id_key ON public.campaign_participants USING btree (campaign_id, user_id)` |
+| `campaign_participants` | `campaign_participants_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX campaign_participants_pkey ON public.campaign_participants USING btree (id)` |
+| `campaign_participants` | `idx_campaign_participants_campaign` | btree | campaign_id | — | `CREATE INDEX idx_campaign_participants_campaign ON public.campaign_participants USING btree (campaign_id)` |
+| `campaign_participants` | `idx_campaign_participants_completed` | btree | is_completed | — | `CREATE INDEX idx_campaign_participants_completed ON public.campaign_participants USING btree (is_completed)` |
+| `campaign_participants` | `idx_campaign_participants_user` | btree | user_id | — | `CREATE INDEX idx_campaign_participants_user ON public.campaign_participants USING btree (user_id)` |
+| `coupon_usage` | `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ | `CREATE UNIQUE INDEX coupon_usage_coupon_id_user_id_transaction_id_key ON public.coupon_usage USING btree (coupon_id, user_id, transaction_id)` |
+| `coupon_usage` | `coupon_usage_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX coupon_usage_pkey ON public.coupon_usage USING btree (id)` |
+| `coupon_usage` | `idx_coupon_usage_coupon` | btree | coupon_id | — | `CREATE INDEX idx_coupon_usage_coupon ON public.coupon_usage USING btree (coupon_id)` |
+| `coupon_usage` | `idx_coupon_usage_transaction` | btree | transaction_id | — | `CREATE INDEX idx_coupon_usage_transaction ON public.coupon_usage USING btree (transaction_id)` |
+| `coupon_usage` | `idx_coupon_usage_user` | btree | user_id | — | `CREATE INDEX idx_coupon_usage_user ON public.coupon_usage USING btree (user_id)` |
+| `coupons` | `coupons_code_key` | btree | code | ✓ | `CREATE UNIQUE INDEX coupons_code_key ON public.coupons USING btree (code)` |
+| `coupons` | `coupons_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX coupons_pkey ON public.coupons USING btree (id)` |
+| `coupons` | `idx_coupons_campaign` | btree | campaign_id | — | `CREATE INDEX idx_coupons_campaign ON public.coupons USING btree (campaign_id)` |
+| `coupons` | `idx_coupons_code` | btree | code | — | `CREATE INDEX idx_coupons_code ON public.coupons USING btree (code) WHERE (is_active = true)` |
+| `coupons` | `idx_coupons_regions` | gin | region_ids | — | `CREATE INDEX idx_coupons_regions ON public.coupons USING gin (region_ids)` |
+| `coupons` | `idx_coupons_valid` | btree | valid_from, valid_until | — | `CREATE INDEX idx_coupons_valid ON public.coupons USING btree (valid_from, valid_until) WHERE (is_active = true)` |
+| `credit_packages` | `credit_packages_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX credit_packages_pkey ON public.credit_packages USING btree (id)` |
+| `credit_packages` | `idx_credit_packages_active` | btree | display_order, is_active | — | `CREATE INDEX idx_credit_packages_active ON public.credit_packages USING btree (is_active, display_order)` |
+| `credit_packages` | `idx_credit_packages_region` | btree | region_id | — | `CREATE INDEX idx_credit_packages_region ON public.credit_packages USING btree (region_id) WHERE (is_active = true)` |
 | `messages` | `idx_messages_property` | btree | property_id | — | `CREATE INDEX idx_messages_property ON public.messages USING btree (property_id)` |
 | `messages` | `idx_messages_sender_receiver` | btree | sender_id, receiver_id | — | `CREATE INDEX idx_messages_sender_receiver ON public.messages USING btree (sender_id, receiver_id)` |
 | `messages` | `messages_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id)` |
@@ -34,9 +53,17 @@ Total Indexes: 95
 | `permissions` | `permission_unique` | btree | domain, action, scope | ✓ | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
 | `permissions` | `permissions_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
 | `permissions` | `permissions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
+| `pricing_rules` | `idx_pricing_rules_action` | btree | action | — | `CREATE INDEX idx_pricing_rules_action ON public.pricing_rules USING btree (action) WHERE (is_active = true)` |
+| `pricing_rules` | `idx_pricing_rules_effective` | btree | effective_from, effective_until | — | `CREATE INDEX idx_pricing_rules_effective ON public.pricing_rules USING btree (effective_from, effective_until)` |
+| `pricing_rules` | `idx_pricing_rules_region_action` | btree | action, region_id, is_active | — | `CREATE INDEX idx_pricing_rules_region_action ON public.pricing_rules USING btree (region_id, action, is_active)` |
+| `pricing_rules` | `pricing_rules_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX pricing_rules_pkey ON public.pricing_rules USING btree (id)` |
 | `profiles` | `profiles_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX profiles_email_key ON public.profiles USING btree (email)` |
 | `profiles` | `profiles_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)` |
 | `profiles` | `profiles_username_key` | btree | username | ✓ | `CREATE UNIQUE INDEX profiles_username_key ON public.profiles USING btree (username)` |
+| `promotional_campaigns` | `idx_campaigns_active` | btree | valid_until, is_active | — | `CREATE INDEX idx_campaigns_active ON public.promotional_campaigns USING btree (is_active, valid_until)` |
+| `promotional_campaigns` | `idx_campaigns_regions` | gin | region_ids | — | `CREATE INDEX idx_campaigns_regions ON public.promotional_campaigns USING gin (region_ids)` |
+| `promotional_campaigns` | `idx_campaigns_type` | btree | campaign_type | — | `CREATE INDEX idx_campaigns_type ON public.promotional_campaigns USING btree (campaign_type) WHERE (is_active = true)` |
+| `promotional_campaigns` | `promotional_campaigns_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX promotional_campaigns_pkey ON public.promotional_campaigns USING btree (id)` |
 | `properties` | `idx_properties_active_published` | btree | status, is_active | — | `CREATE INDEX idx_properties_active_published ON public.properties USING btree (is_active, status) WHERE ((is_active = true) AND (status = 'published'::text))` |
 | `properties` | `idx_properties_agency_id` | btree | agency_id | — | `CREATE INDEX idx_properties_agency_id ON public.properties USING btree (agency_id)` |
 | `properties` | `idx_properties_agent_id` | btree | agent_id | — | `CREATE INDEX idx_properties_agent_id ON public.properties USING btree (agent_id)` |
@@ -88,11 +115,37 @@ Total Indexes: 95
 | `property_views` | `idx_property_views_property_session` | btree | property_id, session_id | — | `CREATE INDEX idx_property_views_property_session ON public.property_views USING btree (property_id, session_id)` |
 | `property_views` | `property_views_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX property_views_pkey ON public.property_views USING btree (id)` |
 | `property_views` | `unique_property_session` | btree | property_id, session_id | ✓ | `CREATE UNIQUE INDEX unique_property_session ON public.property_views USING btree (property_id, session_id)` |
+| `regions` | `idx_regions_code` | btree | code | — | `CREATE INDEX idx_regions_code ON public.regions USING btree (code)` |
+| `regions` | `idx_regions_parent` | btree | parent_region_id | — | `CREATE INDEX idx_regions_parent ON public.regions USING btree (parent_region_id)` |
+| `regions` | `idx_regions_type` | btree | type | — | `CREATE INDEX idx_regions_type ON public.regions USING btree (type)` |
+| `regions` | `regions_code_key` | btree | code | ✓ | `CREATE UNIQUE INDEX regions_code_key ON public.regions USING btree (code)` |
+| `regions` | `regions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX regions_pkey ON public.regions USING btree (id)` |
 | `role_permissions` | `role_permissions_pkey` | btree | role_id, permission_id | ✓ | `CREATE UNIQUE INDEX role_permissions_pkey ON public.role_permissions USING btree (role_id, permission_id)` |
 | `roles` | `roles_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX roles_name_key ON public.roles USING btree (name)` |
 | `roles` | `roles_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)` |
 | `search_history` | `idx_search_history_user` | btree | user_id | — | `CREATE INDEX idx_search_history_user ON public.search_history USING btree (user_id)` |
 | `search_history` | `search_history_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX search_history_pkey ON public.search_history USING btree (id)` |
+| `security_flags` | `idx_security_flags_admin_email` | btree | admin_email | — | `CREATE INDEX idx_security_flags_admin_email ON public.security_flags USING btree (admin_email)` |
+| `security_flags` | `idx_security_flags_created_at` | btree | created_at | — | `CREATE INDEX idx_security_flags_created_at ON public.security_flags USING btree (created_at DESC)` |
+| `security_flags` | `idx_security_flags_status` | btree | status | — | `CREATE INDEX idx_security_flags_status ON public.security_flags USING btree (status)` |
+| `security_flags` | `security_flags_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX security_flags_pkey ON public.security_flags USING btree (id)` |
+| `subscription_enrollments` | `idx_subscriptions_expires` | btree | expires_at | — | `CREATE INDEX idx_subscriptions_expires ON public.subscription_enrollments USING btree (expires_at) WHERE (status = 'active'::text)` |
+| `subscription_enrollments` | `idx_subscriptions_plan` | btree | plan_id | — | `CREATE INDEX idx_subscriptions_plan ON public.subscription_enrollments USING btree (plan_id)` |
+| `subscription_enrollments` | `idx_subscriptions_user` | btree | user_id, status | — | `CREATE INDEX idx_subscriptions_user ON public.subscription_enrollments USING btree (user_id, status)` |
+| `subscription_enrollments` | `subscription_enrollments_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX subscription_enrollments_pkey ON public.subscription_enrollments USING btree (id)` |
+| `subscription_plans` | `idx_subscription_plans_active` | btree | is_active, display_order | — | `CREATE INDEX idx_subscription_plans_active ON public.subscription_plans USING btree (is_active, display_order)` |
+| `subscription_plans` | `idx_subscription_plans_code` | btree | plan_code | — | `CREATE INDEX idx_subscription_plans_code ON public.subscription_plans USING btree (plan_code)` |
+| `subscription_plans` | `idx_subscription_plans_user_type` | btree | user_type | — | `CREATE INDEX idx_subscription_plans_user_type ON public.subscription_plans USING btree (user_type) WHERE (is_active = true)` |
+| `subscription_plans` | `subscription_plans_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX subscription_plans_pkey ON public.subscription_plans USING btree (id)` |
+| `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ | `CREATE UNIQUE INDEX subscription_plans_plan_code_key ON public.subscription_plans USING btree (plan_code)` |
+| `transactions` | `idx_transactions_gateway` | btree | gateway_transaction_id | — | `CREATE INDEX idx_transactions_gateway ON public.transactions USING btree (gateway_transaction_id) WHERE (gateway_transaction_id IS NOT NULL)` |
+| `transactions` | `idx_transactions_invoice` | btree | invoice_number | — | `CREATE INDEX idx_transactions_invoice ON public.transactions USING btree (invoice_number) WHERE (invoice_generated = true)` |
+| `transactions` | `idx_transactions_region` | btree | region_id, created_at | — | `CREATE INDEX idx_transactions_region ON public.transactions USING btree (region_id, created_at DESC)` |
+| `transactions` | `idx_transactions_status` | btree | status, created_at | — | `CREATE INDEX idx_transactions_status ON public.transactions USING btree (status, created_at DESC)` |
+| `transactions` | `idx_transactions_type` | btree | type, created_at | — | `CREATE INDEX idx_transactions_type ON public.transactions USING btree (type, created_at DESC)` |
+| `transactions` | `idx_transactions_user` | btree | user_id, created_at | — | `CREATE INDEX idx_transactions_user ON public.transactions USING btree (user_id, created_at DESC)` |
+| `transactions` | `idx_transactions_user_region` | btree | user_id, region_id, created_at | — | `CREATE INDEX idx_transactions_user_region ON public.transactions USING btree (user_id, region_id, created_at DESC)` |
+| `transactions` | `transactions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX transactions_pkey ON public.transactions USING btree (id)` |
 | `user_favorites` | `idx_user_favorites_property` | btree | property_id | — | `CREATE INDEX idx_user_favorites_property ON public.user_favorites USING btree (property_id)` |
 | `user_favorites` | `idx_user_favorites_property_user` | btree | user_id, property_id | — | `CREATE INDEX idx_user_favorites_property_user ON public.user_favorites USING btree (property_id, user_id)` |
 | `user_favorites` | `idx_user_favorites_user` | btree | user_id | — | `CREATE INDEX idx_user_favorites_user ON public.user_favorites USING btree (user_id)` |
@@ -102,10 +155,21 @@ Total Indexes: 95
 | `user_ratings` | `idx_user_ratings_rated_user` | btree | rated_user_id | — | `CREATE INDEX idx_user_ratings_rated_user ON public.user_ratings USING btree (rated_user_id)` |
 | `user_ratings` | `user_ratings_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX user_ratings_pkey ON public.user_ratings USING btree (id)` |
 | `user_ratings` | `user_ratings_rating_user_id_rated_user_id_rated_property_id_key` | btree | rated_user_id, rated_property_id, rating_user_id | ✓ | `CREATE UNIQUE INDEX user_ratings_rating_user_id_rated_user_id_rated_property_id_key ON public.user_ratings USING btree (rating_user_id, rated_user_id, rated_property_id)` |
+| `user_regional_preferences` | `idx_user_prefs_active_regions` | gin | active_regions | — | `CREATE INDEX idx_user_prefs_active_regions ON public.user_regional_preferences USING gin (active_regions)` |
+| `user_regional_preferences` | `idx_user_prefs_region` | btree | primary_region_id | — | `CREATE INDEX idx_user_prefs_region ON public.user_regional_preferences USING btree (primary_region_id)` |
+| `user_regional_preferences` | `user_regional_preferences_pkey` | btree | user_id | ✓ | `CREATE UNIQUE INDEX user_regional_preferences_pkey ON public.user_regional_preferences USING btree (user_id)` |
+| `wallets` | `idx_wallets_balance` | btree | balance | — | `CREATE INDEX idx_wallets_balance ON public.wallets USING btree (balance) WHERE (balance > 0)` |
+| `wallets` | `idx_wallets_user_id` | btree | user_id | — | `CREATE INDEX idx_wallets_user_id ON public.wallets USING btree (user_id)` |
+| `wallets` | `wallets_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX wallets_pkey ON public.wallets USING btree (id)` |
+| `wallets` | `wallets_user_id_key` | btree | user_id | ✓ | `CREATE UNIQUE INDEX wallets_user_id_key ON public.wallets USING btree (user_id)` |
 
 ## Performance Recommendations
 
 ### ⚠️ Potential Duplicate Indexes
+
+**Table: `coupons`, Columns: code**
+- `coupons_code_key` (btree, unique)
+- `idx_coupons_code` (btree)
 
 **Table: `properties`, Columns: pid**
 - `idx_properties_pid` (btree)
@@ -124,7 +188,19 @@ Total Indexes: 95
 - `idx_property_views_property_session` (btree)
 - `unique_property_session` (btree, unique)
 
+**Table: `regions`, Columns: code**
+- `idx_regions_code` (btree)
+- `regions_code_key` (btree, unique)
+
+**Table: `subscription_plans`, Columns: plan_code**
+- `idx_subscription_plans_code` (btree)
+- `subscription_plans_plan_code_key` (btree, unique)
+
 **Table: `user_favorites`, Columns: user_id, property_id**
 - `idx_user_favorites_property_user` (btree)
 - `user_favorites_user_id_property_id_key` (btree, unique)
+
+**Table: `wallets`, Columns: user_id**
+- `idx_wallets_user_id` (btree)
+- `wallets_user_id_key` (btree, unique)
 

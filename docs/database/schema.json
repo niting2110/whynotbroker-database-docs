@@ -1,17 +1,17 @@
 {
-  "generated_at": "2025-12-27T06:58:58.658Z",
+  "generated_at": "2025-12-28T06:59:12.163Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 27,
-    "views": 6,
+    "tables": 40,
+    "views": 14,
     "materialized_views": 0,
-    "columns": 338,
-    "constraints": 243,
-    "indexes": 95,
-    "relationships": 44,
-    "functions": 39,
+    "columns": 531,
+    "constraints": 354,
+    "indexes": 155,
+    "relationships": 66,
+    "functions": 55,
     "extensions": 9
   },
   "tables": [
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 18,
+      "rows": 32,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -204,7 +204,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 18,
+        "row_count": 32,
         "column_count": 8
       }
     },
@@ -520,7 +520,7 @@
       "name": "admin_messages",
       "comment": null,
       "columns": 6,
-      "rows": 16,
+      "rows": 17,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -683,7 +683,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 16,
+        "row_count": 17,
         "column_count": 6
       }
     },
@@ -803,7 +803,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 2,
-      "rows": 7,
+      "rows": 14,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -923,7 +923,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 7,
+        "row_count": 14,
         "column_count": 2
       }
     },
@@ -1114,7 +1114,7 @@
       "name": "admins",
       "comment": null,
       "columns": 6,
-      "rows": 7,
+      "rows": 10,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -1313,7 +1313,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 7,
+        "row_count": 10,
         "column_count": 6
       }
     },
@@ -2041,6 +2041,1290 @@
           }
         ],
         "row_count": 0,
+        "column_count": 17
+      }
+    },
+    {
+      "name": "campaign_participants",
+      "comment": "Track user participation in campaigns",
+      "columns": 9,
+      "rows": 0,
+      "size_bytes": 49152,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "campaign_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "credits_awarded",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "conditions_met",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_completed",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "completed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "joined_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45863_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45863_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45863_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_campaign_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "campaign_id",
+            "definition": "FOREIGN KEY (campaign_id) REFERENCES promotional_campaigns(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_campaign_id_user_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "user_id",
+            "definition": "UNIQUE (campaign_id, user_id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_campaign_id_user_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "campaign_id",
+            "definition": "UNIQUE (campaign_id, user_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "campaign_participants_campaign_id_user_id_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{campaign_id,user_id}",
+            "index_definition": "CREATE UNIQUE INDEX campaign_participants_campaign_id_user_id_key ON public.campaign_participants USING btree (campaign_id, user_id)"
+          },
+          {
+            "index_name": "campaign_participants_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX campaign_participants_pkey ON public.campaign_participants USING btree (id)"
+          },
+          {
+            "index_name": "idx_campaign_participants_campaign",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{campaign_id}",
+            "index_definition": "CREATE INDEX idx_campaign_participants_campaign ON public.campaign_participants USING btree (campaign_id)"
+          },
+          {
+            "index_name": "idx_campaign_participants_completed",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{is_completed}",
+            "index_definition": "CREATE INDEX idx_campaign_participants_completed ON public.campaign_participants USING btree (is_completed)"
+          },
+          {
+            "index_name": "idx_campaign_participants_user",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_campaign_participants_user ON public.campaign_participants USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "campaign_participants_campaign_id_fkey",
+            "foreign_table_name": "promotional_campaigns",
+            "columns": [
+              "campaign_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "campaign_participants_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "trigger_increment_campaign_participants",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION increment_campaign_participants()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 9
+      }
+    },
+    {
+      "name": "coupon_usage",
+      "comment": "Track coupon redemptions by users",
+      "columns": 9,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "coupon_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "transaction_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_applied",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "original_amount",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "final_amount",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "used_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45839_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45839_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45839_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45839_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45839_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45839_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_coupon_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "coupon_id",
+            "definition": "FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_coupon_id_user_id_transaction_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "transaction_id",
+            "definition": "UNIQUE (coupon_id, user_id, transaction_id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_coupon_id_user_id_transaction_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "user_id",
+            "definition": "UNIQUE (coupon_id, user_id, transaction_id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_coupon_id_user_id_transaction_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "coupon_id",
+            "definition": "UNIQUE (coupon_id, user_id, transaction_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "coupon_usage_coupon_id_user_id_transaction_id_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{coupon_id,user_id,transaction_id}",
+            "index_definition": "CREATE UNIQUE INDEX coupon_usage_coupon_id_user_id_transaction_id_key ON public.coupon_usage USING btree (coupon_id, user_id, transaction_id)"
+          },
+          {
+            "index_name": "coupon_usage_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX coupon_usage_pkey ON public.coupon_usage USING btree (id)"
+          },
+          {
+            "index_name": "idx_coupon_usage_coupon",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{coupon_id}",
+            "index_definition": "CREATE INDEX idx_coupon_usage_coupon ON public.coupon_usage USING btree (coupon_id)"
+          },
+          {
+            "index_name": "idx_coupon_usage_transaction",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{transaction_id}",
+            "index_definition": "CREATE INDEX idx_coupon_usage_transaction ON public.coupon_usage USING btree (transaction_id)"
+          },
+          {
+            "index_name": "idx_coupon_usage_user",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_coupon_usage_user ON public.coupon_usage USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "coupon_usage_coupon_id_fkey",
+            "foreign_table_name": "coupons",
+            "columns": [
+              "coupon_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "coupon_usage_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "trigger_increment_coupon_usage",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION increment_coupon_usage()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 9
+      }
+    },
+    {
+      "name": "coupons",
+      "comment": "Discount coupons with regional targeting",
+      "columns": 23,
+      "rows": 4,
+      "size_bytes": 122880,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "code",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_value",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "max_discount_amount",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "min_purchase_amount",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_ids",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "excluded_region_ids",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "applicable_to",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": "ARRAY['credits'::text, 'subscriptions'::text, 'services'::text]",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_type_restrictions",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "new_users_only",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "usage_limit_global",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "usage_limit_per_user",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "1",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "usage_limit_per_region",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "times_used",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "valid_from",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "valid_until",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "campaign_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "attribution_source",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 20,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 21,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 22,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 23,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45802_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45802_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45802_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45802_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupons_discount_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((discount_type = ANY (ARRAY['percentage'::text, 'fixed_amount'::text, 'credits'::text, 'free_service'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupons_campaign_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "campaign_id",
+            "definition": "FOREIGN KEY (campaign_id) REFERENCES promotional_campaigns(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupons_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "coupons_code_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "code",
+            "definition": "UNIQUE (code)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "coupons_code_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{code}",
+            "index_definition": "CREATE UNIQUE INDEX coupons_code_key ON public.coupons USING btree (code)"
+          },
+          {
+            "index_name": "coupons_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX coupons_pkey ON public.coupons USING btree (id)"
+          },
+          {
+            "index_name": "idx_coupons_campaign",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{campaign_id}",
+            "index_definition": "CREATE INDEX idx_coupons_campaign ON public.coupons USING btree (campaign_id)"
+          },
+          {
+            "index_name": "idx_coupons_code",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{code}",
+            "index_definition": "CREATE INDEX idx_coupons_code ON public.coupons USING btree (code) WHERE (is_active = true)"
+          },
+          {
+            "index_name": "idx_coupons_regions",
+            "index_type": "gin",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_ids}",
+            "index_definition": "CREATE INDEX idx_coupons_regions ON public.coupons USING gin (region_ids)"
+          },
+          {
+            "index_name": "idx_coupons_valid",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{valid_from,valid_until}",
+            "index_definition": "CREATE INDEX idx_coupons_valid ON public.coupons USING btree (valid_from, valid_until) WHERE (is_active = true)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "coupons_campaign_id_fkey",
+            "foreign_table_name": "promotional_campaigns",
+            "columns": [
+              "campaign_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "audit_coupons",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_coupons",
+            "event_manipulation": "DELETE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_coupons",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 4,
+        "column_count": 23
+      }
+    },
+    {
+      "name": "credit_packages",
+      "comment": "Pre-paid credit packages with regional pricing variations",
+      "columns": 17,
+      "rows": 5,
+      "size_bytes": 65536,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "credits",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "base_price",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "bonus_credits",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "regional_price",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_popular",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_type_restriction",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "validity_days",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "display_order",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "badge_text",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "features",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45731_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45731_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45731_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45731_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "credit_packages_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "credit_packages_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "credit_packages_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX credit_packages_pkey ON public.credit_packages USING btree (id)"
+          },
+          {
+            "index_name": "idx_credit_packages_active",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{display_order,is_active}",
+            "index_definition": "CREATE INDEX idx_credit_packages_active ON public.credit_packages USING btree (is_active, display_order)"
+          },
+          {
+            "index_name": "idx_credit_packages_region",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id}",
+            "index_definition": "CREATE INDEX idx_credit_packages_region ON public.credit_packages USING btree (region_id) WHERE (is_active = true)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "credit_packages_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "audit_credit_packages",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_credit_packages",
+            "event_manipulation": "DELETE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_credit_packages",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 5,
         "column_count": 17
       }
     },
@@ -2861,7 +4145,7 @@
       "name": "permissions",
       "comment": null,
       "columns": 5,
-      "rows": 10,
+      "rows": 12,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -3034,15 +4318,306 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 10,
+        "row_count": 12,
         "column_count": 5
+      }
+    },
+    {
+      "name": "pricing_rules",
+      "comment": "Dynamic pricing rules based on action, region, and user type",
+      "columns": 14,
+      "rows": 6,
+      "size_bytes": 81920,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "action",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "credit_cost",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "cash_price",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_percentage",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "surge_pricing_multiplier",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "1.0",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "effective_from",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "effective_until",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "priority",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45707_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45707_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45707_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pricing_rules_user_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'all'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pricing_rules_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pricing_rules_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pricing_rules_action",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{action}",
+            "index_definition": "CREATE INDEX idx_pricing_rules_action ON public.pricing_rules USING btree (action) WHERE (is_active = true)"
+          },
+          {
+            "index_name": "idx_pricing_rules_effective",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{effective_from,effective_until}",
+            "index_definition": "CREATE INDEX idx_pricing_rules_effective ON public.pricing_rules USING btree (effective_from, effective_until)"
+          },
+          {
+            "index_name": "idx_pricing_rules_region_action",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{action,region_id,is_active}",
+            "index_definition": "CREATE INDEX idx_pricing_rules_region_action ON public.pricing_rules USING btree (region_id, action, is_active)"
+          },
+          {
+            "index_name": "pricing_rules_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pricing_rules_pkey ON public.pricing_rules USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pricing_rules_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "audit_pricing_rules",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_pricing_rules",
+            "event_manipulation": "DELETE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_pricing_rules",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 6,
+        "column_count": 14
       }
     },
     {
       "name": "profiles",
       "comment": null,
       "columns": 31,
-      "rows": 17,
+      "rows": 21,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -3481,6 +5056,13 @@
         "foreign_keys": [],
         "triggers": [
           {
+            "trigger_name": "trigger_create_wallet",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION create_wallet_for_new_user()",
+            "trigger_comment": null
+          },
+          {
             "trigger_name": "update_profiles_updated_at",
             "event_manipulation": "UPDATE",
             "action_timing": "BEFORE",
@@ -3488,8 +5070,326 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 17,
+        "row_count": 21,
         "column_count": 31
+      }
+    },
+    {
+      "name": "promotional_campaigns",
+      "comment": "Marketing campaigns with regional focus",
+      "columns": 19,
+      "rows": 2,
+      "size_bytes": 90112,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "campaign_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_ids",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "language_preference",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "credits_reward",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_percentage",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "free_services",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "conditions",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "budget_allocated",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "budget_spent",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "participant_limit",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "current_participants",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "valid_from",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "valid_until",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45781_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45781_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "promotional_campaigns_campaign_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((campaign_type = ANY (ARRAY['launch'::text, 'festival'::text, 'reactivation'::text, 'referral'::text, 'partnership'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "promotional_campaigns_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_campaigns_active",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{valid_until,is_active}",
+            "index_definition": "CREATE INDEX idx_campaigns_active ON public.promotional_campaigns USING btree (is_active, valid_until)"
+          },
+          {
+            "index_name": "idx_campaigns_regions",
+            "index_type": "gin",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_ids}",
+            "index_definition": "CREATE INDEX idx_campaigns_regions ON public.promotional_campaigns USING gin (region_ids)"
+          },
+          {
+            "index_name": "idx_campaigns_type",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{campaign_type}",
+            "index_definition": "CREATE INDEX idx_campaigns_type ON public.promotional_campaigns USING btree (campaign_type) WHERE (is_active = true)"
+          },
+          {
+            "index_name": "promotional_campaigns_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX promotional_campaigns_pkey ON public.promotional_campaigns USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [
+          {
+            "trigger_name": "audit_promotional_campaigns",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_promotional_campaigns",
+            "event_manipulation": "DELETE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_promotional_campaigns",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 2,
+        "column_count": 19
       }
     },
     {
@@ -6619,10 +8519,321 @@
       }
     },
     {
+      "name": "regions",
+      "comment": "Master table for regional configuration across India",
+      "columns": 15,
+      "rows": 9,
+      "size_bytes": 98304,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "code",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "parent_region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_number",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_rate",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "18.00",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "requires_kyc",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "market_tier",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "population_estimate",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "currency_code",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'INR'::text",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "timezone",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'Asia/Kolkata'::text",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45678_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45678_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45678_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45678_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "regions_market_tier_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((market_tier = ANY (ARRAY[1, 2, 3])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "regions_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((type = ANY (ARRAY['state'::text, 'city'::text, 'metro'::text, 'tier2'::text, 'tier3'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "regions_parent_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "parent_region_id",
+            "definition": "FOREIGN KEY (parent_region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "regions_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "regions_code_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "code",
+            "definition": "UNIQUE (code)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_regions_code",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{code}",
+            "index_definition": "CREATE INDEX idx_regions_code ON public.regions USING btree (code)"
+          },
+          {
+            "index_name": "idx_regions_parent",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{parent_region_id}",
+            "index_definition": "CREATE INDEX idx_regions_parent ON public.regions USING btree (parent_region_id)"
+          },
+          {
+            "index_name": "idx_regions_type",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{type}",
+            "index_definition": "CREATE INDEX idx_regions_type ON public.regions USING btree (type)"
+          },
+          {
+            "index_name": "regions_code_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{code}",
+            "index_definition": "CREATE UNIQUE INDEX regions_code_key ON public.regions USING btree (code)"
+          },
+          {
+            "index_name": "regions_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX regions_pkey ON public.regions USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "regions_parent_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "parent_region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 9,
+        "column_count": 15
+      }
+    },
+    {
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 10,
+      "rows": 14,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -6734,7 +8945,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 10,
+        "row_count": 14,
         "column_count": 2
       }
     },
@@ -6994,6 +9205,1544 @@
         "triggers": [],
         "row_count": 0,
         "column_count": 8
+      }
+    },
+    {
+      "name": "security_flags",
+      "comment": "Tracks flagged admin activities for security review",
+      "columns": 9,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "admin_email",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": 255,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "flagged_by",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reason",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'pending'::character varying",
+            "ordinal_position": 5,
+            "character_maximum_length": 50,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Status: pending (awaiting review), reviewed (action taken), dismissed (false positive)"
+          },
+          {
+            "column_name": "resolution_notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolved_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp without time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolved_at",
+            "data_type": "timestamp without time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_46122_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46122_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46122_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46122_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46122_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46122_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "valid_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'reviewed'::character varying, 'dismissed'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "security_flags_flagged_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "flagged_by",
+            "definition": "FOREIGN KEY (flagged_by) REFERENCES admins(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "security_flags_resolved_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "resolved_by",
+            "definition": "FOREIGN KEY (resolved_by) REFERENCES admins(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "security_flags_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_security_flags_admin_email",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_email}",
+            "index_definition": "CREATE INDEX idx_security_flags_admin_email ON public.security_flags USING btree (admin_email)"
+          },
+          {
+            "index_name": "idx_security_flags_created_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_security_flags_created_at ON public.security_flags USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "idx_security_flags_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_security_flags_status ON public.security_flags USING btree (status)"
+          },
+          {
+            "index_name": "security_flags_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX security_flags_pkey ON public.security_flags USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "security_flags_flagged_by_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "flagged_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "security_flags_resolved_by_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "resolved_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 9
+      }
+    },
+    {
+      "name": "subscription_enrollments",
+      "comment": null,
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "plan_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'active'::text",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "price_paid",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "credits_allocated",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "started_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "expires_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "cancelled_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "auto_renew",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "purchase_transaction_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_46003_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_46003_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'cancelled'::text, 'expired'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_plan_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "plan_id",
+            "definition": "FOREIGN KEY (plan_id) REFERENCES subscription_plans(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_purchase_transaction_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "purchase_transaction_id",
+            "definition": "FOREIGN KEY (purchase_transaction_id) REFERENCES transactions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_subscriptions_expires",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{expires_at}",
+            "index_definition": "CREATE INDEX idx_subscriptions_expires ON public.subscription_enrollments USING btree (expires_at) WHERE (status = 'active'::text)"
+          },
+          {
+            "index_name": "idx_subscriptions_plan",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{plan_id}",
+            "index_definition": "CREATE INDEX idx_subscriptions_plan ON public.subscription_enrollments USING btree (plan_id)"
+          },
+          {
+            "index_name": "idx_subscriptions_user",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id,status}",
+            "index_definition": "CREATE INDEX idx_subscriptions_user ON public.subscription_enrollments USING btree (user_id, status)"
+          },
+          {
+            "index_name": "subscription_enrollments_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX subscription_enrollments_pkey ON public.subscription_enrollments USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "subscription_enrollments_plan_id_fkey",
+            "foreign_table_name": "subscription_plans",
+            "columns": [
+              "plan_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_purchase_transaction_id_fkey",
+            "foreign_table_name": "transactions",
+            "columns": [
+              "purchase_transaction_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "subscription_enrollments_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "subscription_plans",
+      "comment": "Recurring subscription plans with regional features",
+      "columns": 19,
+      "rows": 4,
+      "size_bytes": 98304,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "plan_code",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "base_price",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "credits_monthly",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "duration_days",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "30",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "regional_price",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "regional_credits",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "min_kyc_level",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "features",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "max_active_listings",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "contact_views_included",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "display_order",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45753_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_plans_user_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_plans_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_plans_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "subscription_plans_plan_code_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "plan_code",
+            "definition": "UNIQUE (plan_code)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_subscription_plans_active",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{is_active,display_order}",
+            "index_definition": "CREATE INDEX idx_subscription_plans_active ON public.subscription_plans USING btree (is_active, display_order)"
+          },
+          {
+            "index_name": "idx_subscription_plans_code",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{plan_code}",
+            "index_definition": "CREATE INDEX idx_subscription_plans_code ON public.subscription_plans USING btree (plan_code)"
+          },
+          {
+            "index_name": "idx_subscription_plans_user_type",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_type}",
+            "index_definition": "CREATE INDEX idx_subscription_plans_user_type ON public.subscription_plans USING btree (user_type) WHERE (is_active = true)"
+          },
+          {
+            "index_name": "subscription_plans_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX subscription_plans_pkey ON public.subscription_plans USING btree (id)"
+          },
+          {
+            "index_name": "subscription_plans_plan_code_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{plan_code}",
+            "index_definition": "CREATE UNIQUE INDEX subscription_plans_plan_code_key ON public.subscription_plans USING btree (plan_code)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "subscription_plans_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "audit_subscription_plans",
+            "event_manipulation": "INSERT",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_subscription_plans",
+            "event_manipulation": "DELETE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "audit_subscription_plans",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 4,
+        "column_count": 19
+      }
+    },
+    {
+      "name": "transactions",
+      "comment": "All financial transactions with regional GST tracking",
+      "columns": 28,
+      "rows": 0,
+      "size_bytes": 73728,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "amount_cash",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "amount_credits",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pricing_rule_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_rate",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_amount",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_number",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reference_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reference_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gateway",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gateway_transaction_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gateway_response",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "coupon_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "discount_applied",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'pending'::text",
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "failure_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 20,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "refunded_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 21,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "invoice_number",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 22,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "invoice_generated",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 23,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "ip_address",
+            "data_type": "inet",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 24,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_agent",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 25,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "metadata",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 26,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 27,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 28,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45932_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45932_19_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45932_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45932_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45932_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_gateway_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((gateway = ANY (ARRAY['razorpay'::text, 'stripe'::text, 'paytm'::text, 'phonepe'::text, 'upi'::text, 'manual'::text, 'wallet'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'processing'::text, 'succeeded'::text, 'failed'::text, 'refunded'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((type = ANY (ARRAY['credit_purchase'::text, 'subscription_purchase'::text, 'subscription_renewal'::text, 'property_listing_fee'::text, 'contact_view_owner'::text, 'contact_view_buyer'::text, 'property_boost'::text, 'featured_listing'::text, 'verification_service'::text, 'legal_service'::text, 'refund'::text, 'admin_adjustment'::text, 'referral_bonus'::text, 'promotional_credit'::text, 'regional_campaign_reward'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_coupon_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "coupon_id",
+            "definition": "FOREIGN KEY (coupon_id) REFERENCES coupons(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_pricing_rule_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pricing_rule_id",
+            "definition": "FOREIGN KEY (pricing_rule_id) REFERENCES pricing_rules(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_transactions_gateway",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{gateway_transaction_id}",
+            "index_definition": "CREATE INDEX idx_transactions_gateway ON public.transactions USING btree (gateway_transaction_id) WHERE (gateway_transaction_id IS NOT NULL)"
+          },
+          {
+            "index_name": "idx_transactions_invoice",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{invoice_number}",
+            "index_definition": "CREATE INDEX idx_transactions_invoice ON public.transactions USING btree (invoice_number) WHERE (invoice_generated = true)"
+          },
+          {
+            "index_name": "idx_transactions_region",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id,created_at}",
+            "index_definition": "CREATE INDEX idx_transactions_region ON public.transactions USING btree (region_id, created_at DESC)"
+          },
+          {
+            "index_name": "idx_transactions_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status,created_at}",
+            "index_definition": "CREATE INDEX idx_transactions_status ON public.transactions USING btree (status, created_at DESC)"
+          },
+          {
+            "index_name": "idx_transactions_type",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{type,created_at}",
+            "index_definition": "CREATE INDEX idx_transactions_type ON public.transactions USING btree (type, created_at DESC)"
+          },
+          {
+            "index_name": "idx_transactions_user",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id,created_at}",
+            "index_definition": "CREATE INDEX idx_transactions_user ON public.transactions USING btree (user_id, created_at DESC)"
+          },
+          {
+            "index_name": "idx_transactions_user_region",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id,region_id,created_at}",
+            "index_definition": "CREATE INDEX idx_transactions_user_region ON public.transactions USING btree (user_id, region_id, created_at DESC)"
+          },
+          {
+            "index_name": "transactions_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX transactions_pkey ON public.transactions USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "transactions_coupon_id_fkey",
+            "foreign_table_name": "coupons",
+            "columns": [
+              "coupon_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "transactions_pricing_rule_id_fkey",
+            "foreign_table_name": "pricing_rules",
+            "columns": [
+              "pricing_rule_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "transactions_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "transactions_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "audit_transactions_update",
+            "event_manipulation": "UPDATE",
+            "action_timing": "AFTER",
+            "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "trigger_update_transaction_timestamp",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_wallet_timestamp()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 28
       }
     },
     {
@@ -7590,15 +11339,487 @@
         "row_count": 0,
         "column_count": 17
       }
+    },
+    {
+      "name": "user_regional_preferences",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "primary_region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "active_regions",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "preferred_language",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'english'::text",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "preferred_currency",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'INR'::text",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "receive_regional_offers",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "receive_festival_campaigns",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45978_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "user_regional_preferences_primary_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "primary_region_id",
+            "definition": "FOREIGN KEY (primary_region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "user_regional_preferences_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "user_regional_preferences_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "user_id",
+            "definition": "PRIMARY KEY (user_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_user_prefs_active_regions",
+            "index_type": "gin",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{active_regions}",
+            "index_definition": "CREATE INDEX idx_user_prefs_active_regions ON public.user_regional_preferences USING gin (active_regions)"
+          },
+          {
+            "index_name": "idx_user_prefs_region",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{primary_region_id}",
+            "index_definition": "CREATE INDEX idx_user_prefs_region ON public.user_regional_preferences USING btree (primary_region_id)"
+          },
+          {
+            "index_name": "user_regional_preferences_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE UNIQUE INDEX user_regional_preferences_pkey ON public.user_regional_preferences USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "user_regional_preferences_primary_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "primary_region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "user_regional_preferences_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
+      "name": "wallets",
+      "comment": "User credit wallets with regional tracking",
+      "columns": 10,
+      "rows": 21,
+      "size_bytes": 73728,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "balance",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "region_specific_credits",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "lifetime_credits_purchased",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "lifetime_credits_spent",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "lifetime_cash_spent",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "last_transaction_region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_45900_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45900_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45900_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "wallets_balance_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((balance >= 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "wallets_last_transaction_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "last_transaction_region_id",
+            "definition": "FOREIGN KEY (last_transaction_region_id) REFERENCES regions(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "wallets_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "wallets_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "wallets_user_id_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "user_id",
+            "definition": "UNIQUE (user_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_wallets_balance",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{balance}",
+            "index_definition": "CREATE INDEX idx_wallets_balance ON public.wallets USING btree (balance) WHERE (balance > 0)"
+          },
+          {
+            "index_name": "idx_wallets_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_wallets_user_id ON public.wallets USING btree (user_id)"
+          },
+          {
+            "index_name": "wallets_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX wallets_pkey ON public.wallets USING btree (id)"
+          },
+          {
+            "index_name": "wallets_user_id_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE UNIQUE INDEX wallets_user_id_key ON public.wallets USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "wallets_last_transaction_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "last_transaction_region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "wallets_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "trigger_update_wallet_timestamp",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_wallet_timestamp()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 21,
+        "column_count": 10
+      }
     }
   ],
   "views": [
+    {
+      "view_name": "active_regional_coupons",
+      "view_comment": null
+    },
+    {
+      "view_name": "active_subscriptions_summary",
+      "view_comment": "All active subscriptions with expiry tracking"
+    },
     {
       "view_name": "admin_moderation_history",
       "view_comment": null
     },
     {
       "view_name": "admin_review_queue",
+      "view_comment": null
+    },
+    {
+      "view_name": "coupon_performance",
+      "view_comment": "Coupon usage statistics and effectiveness"
+    },
+    {
+      "view_name": "my_accessible_transactions",
+      "view_comment": "Transactions filtered by user permissions"
+    },
+    {
+      "view_name": "pending_staff_view",
       "view_comment": null
     },
     {
@@ -7616,6 +11837,18 @@
     {
       "view_name": "public_property_listings",
       "view_comment": "Public read-only view for property listings. \r\nShows only published and active properties.\r\nDescription trimmed to 200 chars for performance.\r\nBase table RLS controls access."
+    },
+    {
+      "view_name": "regional_revenue_summary",
+      "view_comment": "Monthly revenue breakdown by region"
+    },
+    {
+      "view_name": "transaction_type_summary",
+      "view_comment": "Transaction volume and value by type"
+    },
+    {
+      "view_name": "user_wallet_summary",
+      "view_comment": "Complete user wallet information with regional preferences"
     }
   ],
   "materialized_views": [],
@@ -7660,6 +11893,12 @@
   ],
   "functions": [
     {
+      "function_name": "add_credits_to_wallet",
+      "arguments": "p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid",
+      "return_type": "boolean",
+      "function_comment": "Safely add credits to user wallet with validation"
+    },
+    {
       "function_name": "admin_has_permission",
       "arguments": "p_permission text",
       "return_type": "boolean",
@@ -7702,6 +11941,12 @@
       "function_comment": null
     },
     {
+      "function_name": "calculate_gst",
+      "arguments": "p_amount numeric, p_region_id uuid",
+      "return_type": "TABLE(gst_rate numeric, gst_amount numeric, total_amount numeric)",
+      "function_comment": "Calculate GST amount based on region rate"
+    },
+    {
       "function_name": "calculate_price_per_unit",
       "arguments": "",
       "return_type": "trigger",
@@ -7714,10 +11959,22 @@
       "function_comment": null
     },
     {
+      "function_name": "create_wallet_for_new_user",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "deactivate_admin",
       "arguments": "p_admin_email text",
       "return_type": "void",
       "function_comment": null
+    },
+    {
+      "function_name": "deduct_credits_from_wallet",
+      "arguments": "p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid",
+      "return_type": "boolean",
+      "function_comment": "Safely deduct credits from user wallet with balance check"
     },
     {
       "function_name": "format_area_display",
@@ -7757,21 +12014,39 @@
     },
     {
       "function_name": "get_admin_context",
-      "arguments": "p_user_id uuid",
+      "arguments": "",
       "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
     },
     {
       "function_name": "get_admin_context",
-      "arguments": "",
+      "arguments": "p_user_id uuid",
       "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
+    },
+    {
+      "function_name": "get_applicable_coupons",
+      "arguments": "p_user_id uuid, p_region_id uuid",
+      "return_type": "TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)",
+      "function_comment": "Get all valid coupons for user in specific region"
     },
     {
       "function_name": "get_current_admin_id",
       "arguments": "",
       "return_type": "uuid",
       "function_comment": null
+    },
+    {
+      "function_name": "get_effective_pricing",
+      "arguments": "p_action text, p_region_id uuid, p_user_type text",
+      "return_type": "TABLE(credit_cost integer, cash_price numeric, rule_id uuid, description text)",
+      "function_comment": "Get pricing for action based on region and user type with priority"
+    },
+    {
+      "function_name": "get_my_permissions",
+      "arguments": "",
+      "return_type": "TABLE(permission_name text)",
+      "function_comment": "Get all permissions for current authenticated user"
     },
     {
       "function_name": "get_pincode",
@@ -7804,7 +12079,31 @@
       "function_comment": null
     },
     {
+      "function_name": "handle_new_admin_signup",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "handle_new_user",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
+      "function_name": "has_permission",
+      "arguments": "p_user_id uuid, p_permission text",
+      "return_type": "boolean",
+      "function_comment": "Check if user has specific permission through admin roles"
+    },
+    {
+      "function_name": "increment_campaign_participants",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
+      "function_name": "increment_coupon_usage",
       "arguments": "",
       "return_type": "trigger",
       "function_comment": null
@@ -7852,10 +12151,22 @@
       "function_comment": null
     },
     {
+      "function_name": "log_payment_admin_action",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": "Audit log for all admin actions on payment tables"
+    },
+    {
       "function_name": "log_price_change",
       "arguments": "",
       "return_type": "trigger",
       "function_comment": null
+    },
+    {
+      "function_name": "process_credit_purchase",
+      "arguments": "p_user_id uuid, p_package_id uuid, p_region_id uuid, p_coupon_code text DEFAULT NULL::text, p_gateway text DEFAULT 'razorpay'::text, p_gateway_transaction_id text DEFAULT NULL::text",
+      "return_type": "uuid",
+      "function_comment": "Complete credit purchase flow with GST and coupons"
     },
     {
       "function_name": "reactivate_admin",
@@ -7882,6 +12193,12 @@
       "function_comment": null
     },
     {
+      "function_name": "spend_credits_for_action",
+      "arguments": "p_user_id uuid, p_action text, p_region_id uuid, p_reference_id uuid DEFAULT NULL::uuid, p_reference_type text DEFAULT NULL::text",
+      "return_type": "uuid",
+      "function_comment": "Deduct credits for specific action with pricing rules"
+    },
+    {
       "function_name": "submit_moderation_decision",
       "arguments": "p_property_id uuid, p_action text, p_reason text, p_notes text, p_checklist jsonb",
       "return_type": "void",
@@ -7892,6 +12209,18 @@
       "arguments": "",
       "return_type": "trigger",
       "function_comment": null
+    },
+    {
+      "function_name": "update_wallet_timestamp",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
+      "function_name": "validate_coupon",
+      "arguments": "p_coupon_code text, p_user_id uuid, p_region_id uuid, p_purchase_amount numeric",
+      "return_type": "TABLE(is_valid boolean, discount_amount numeric, message text, coupon_id uuid)",
+      "function_comment": "Validate coupon code and calculate discount"
     }
   ],
   "relationships": [
@@ -8016,6 +12345,54 @@
       ]
     },
     {
+      "fromTable": "campaign_participants",
+      "toTable": "promotional_campaigns",
+      "constraint_name": "campaign_participants_campaign_id_fkey",
+      "columns": [
+        "campaign_id"
+      ]
+    },
+    {
+      "fromTable": "campaign_participants",
+      "toTable": "regions",
+      "constraint_name": "campaign_participants_region_id_fkey",
+      "columns": [
+        "region_id"
+      ]
+    },
+    {
+      "fromTable": "coupon_usage",
+      "toTable": "coupons",
+      "constraint_name": "coupon_usage_coupon_id_fkey",
+      "columns": [
+        "coupon_id"
+      ]
+    },
+    {
+      "fromTable": "coupon_usage",
+      "toTable": "regions",
+      "constraint_name": "coupon_usage_region_id_fkey",
+      "columns": [
+        "region_id"
+      ]
+    },
+    {
+      "fromTable": "coupons",
+      "toTable": "promotional_campaigns",
+      "constraint_name": "coupons_campaign_id_fkey",
+      "columns": [
+        "campaign_id"
+      ]
+    },
+    {
+      "fromTable": "credit_packages",
+      "toTable": "regions",
+      "constraint_name": "credit_packages_region_id_fkey",
+      "columns": [
+        "region_id"
+      ]
+    },
+    {
       "fromTable": "messages",
       "toTable": "properties",
       "constraint_name": "messages_property_id_fkey",
@@ -8061,6 +12438,14 @@
       "constraint_name": "notifications_user_id_fkey",
       "columns": [
         "user_id"
+      ]
+    },
+    {
+      "fromTable": "pricing_rules",
+      "toTable": "regions",
+      "constraint_name": "pricing_rules_region_id_fkey",
+      "columns": [
+        "region_id"
       ]
     },
     {
@@ -8184,6 +12569,14 @@
       ]
     },
     {
+      "fromTable": "regions",
+      "toTable": "regions",
+      "constraint_name": "regions_parent_region_id_fkey",
+      "columns": [
+        "parent_region_id"
+      ]
+    },
+    {
       "fromTable": "role_permissions",
       "toTable": "permissions",
       "constraint_name": "role_permissions_permission_id_fkey",
@@ -8203,6 +12596,86 @@
       "fromTable": "search_history",
       "toTable": "profiles",
       "constraint_name": "search_history_user_id_fkey",
+      "columns": [
+        "user_id"
+      ]
+    },
+    {
+      "fromTable": "security_flags",
+      "toTable": "admins",
+      "constraint_name": "security_flags_flagged_by_fkey",
+      "columns": [
+        "flagged_by"
+      ]
+    },
+    {
+      "fromTable": "security_flags",
+      "toTable": "admins",
+      "constraint_name": "security_flags_resolved_by_fkey",
+      "columns": [
+        "resolved_by"
+      ]
+    },
+    {
+      "fromTable": "subscription_enrollments",
+      "toTable": "subscription_plans",
+      "constraint_name": "subscription_enrollments_plan_id_fkey",
+      "columns": [
+        "plan_id"
+      ]
+    },
+    {
+      "fromTable": "subscription_enrollments",
+      "toTable": "transactions",
+      "constraint_name": "subscription_enrollments_purchase_transaction_id_fkey",
+      "columns": [
+        "purchase_transaction_id"
+      ]
+    },
+    {
+      "fromTable": "subscription_enrollments",
+      "toTable": "profiles",
+      "constraint_name": "subscription_enrollments_user_id_fkey",
+      "columns": [
+        "user_id"
+      ]
+    },
+    {
+      "fromTable": "subscription_plans",
+      "toTable": "regions",
+      "constraint_name": "subscription_plans_region_id_fkey",
+      "columns": [
+        "region_id"
+      ]
+    },
+    {
+      "fromTable": "transactions",
+      "toTable": "coupons",
+      "constraint_name": "transactions_coupon_id_fkey",
+      "columns": [
+        "coupon_id"
+      ]
+    },
+    {
+      "fromTable": "transactions",
+      "toTable": "pricing_rules",
+      "constraint_name": "transactions_pricing_rule_id_fkey",
+      "columns": [
+        "pricing_rule_id"
+      ]
+    },
+    {
+      "fromTable": "transactions",
+      "toTable": "regions",
+      "constraint_name": "transactions_region_id_fkey",
+      "columns": [
+        "region_id"
+      ]
+    },
+    {
+      "fromTable": "transactions",
+      "toTable": "profiles",
+      "constraint_name": "transactions_user_id_fkey",
       "columns": [
         "user_id"
       ]
@@ -8245,6 +12718,38 @@
       "constraint_name": "user_ratings_rating_user_id_fkey",
       "columns": [
         "rating_user_id"
+      ]
+    },
+    {
+      "fromTable": "user_regional_preferences",
+      "toTable": "regions",
+      "constraint_name": "user_regional_preferences_primary_region_id_fkey",
+      "columns": [
+        "primary_region_id"
+      ]
+    },
+    {
+      "fromTable": "user_regional_preferences",
+      "toTable": "profiles",
+      "constraint_name": "user_regional_preferences_user_id_fkey",
+      "columns": [
+        "user_id"
+      ]
+    },
+    {
+      "fromTable": "wallets",
+      "toTable": "regions",
+      "constraint_name": "wallets_last_transaction_region_id_fkey",
+      "columns": [
+        "last_transaction_region_id"
+      ]
+    },
+    {
+      "fromTable": "wallets",
+      "toTable": "profiles",
+      "constraint_name": "wallets_user_id_fkey",
+      "columns": [
+        "user_id"
       ]
     }
   ]
