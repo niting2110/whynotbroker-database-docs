@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-28T06:59:12.163Z",
+  "generated_at": "2025-12-29T07:03:46.868Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,7 +7,7 @@
     "tables": 40,
     "views": 14,
     "materialized_views": 0,
-    "columns": 531,
+    "columns": 534,
     "constraints": 354,
     "indexes": 155,
     "relationships": 66,
@@ -1113,7 +1113,7 @@
     {
       "name": "admins",
       "comment": null,
-      "columns": 6,
+      "columns": 9,
       "rows": 10,
       "size_bytes": 65536,
       "details": {
@@ -1179,6 +1179,39 @@
             "is_nullable": "NO",
             "column_default": "now()",
             "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "password_hash",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "full_name",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "last_login_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -1314,7 +1347,7 @@
           }
         ],
         "row_count": 10,
-        "column_count": 6
+        "column_count": 9
       }
     },
     {

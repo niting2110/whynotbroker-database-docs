@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2025-12-28T06:59:12.167Z
+-- Generated: 2025-12-29T07:03:46.872Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -91,7 +91,10 @@ CREATE TABLE IF NOT EXISTS admins (
   email text NOT NULL,
   is_active boolean NOT NULL DEFAULT true,
   permissions_version integer NOT NULL DEFAULT 1,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  password_hash text,
+  full_name text,
+  last_login_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 

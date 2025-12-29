@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-28T06:59:12.161Z
+> Auto-generated on: 2025-12-29T07:03:46.866Z
 > **Total Tables:** 40
 > **PostgreSQL Version:** 17.6
 
@@ -368,7 +368,7 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~10
-- Columns: 6
+- Columns: 9
 - Indexes: 3
 - Foreign Keys: 1
 - Triggers: 1
@@ -383,6 +383,9 @@ This document details the live schema of the production Supabase database. All A
 | `is_active` | `boolean` | NO | `true` | — |
 | `permissions_version` | `integer` | NO | `1` | — |
 | `created_at` | `timestamp with time zone` | NO | `now()` | — |
+| `password_hash` | `text` | YES | `—` | — |
+| `full_name` | `text` | YES | `—` | — |
+| `last_login_at` | `timestamp with time zone` | YES | `—` | — |
 
 ### Constraints
 

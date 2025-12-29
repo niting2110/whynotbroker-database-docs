@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2025-12-28T06:59:12.159Z  
-> Schema Hash: `d0c2afa5638050d1f57c70be57f945cf`
+> Generated: 2025-12-29T07:03:46.864Z  
+> Schema Hash: `d592eea4cc56596647c28abaf3d17a9d`
 
 ## 📊 Quick Stats
 - **Total Tables:** 40
 - **Total Views:** 14
 - **Total Materialized Views:** 0
-- **Total Columns:** 531
+- **Total Columns:** 534
 - **Total Relationships:** 66
 - **Total Size:** 25.18 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 28/12/2025, 12:29:12 pm IST
+- **Last Updated:** 29/12/2025, 12:33:46 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -58,7 +58,7 @@ This documentation updates:
 | `admin_notices` | 5 | ~1 | 0.03 MB |  |
 | `admin_roles` | 2 | ~14 | 0.02 MB |  |
 | `admin_users` | 7 | ~2 | 0.73 MB |  |
-| `admins` | 6 | ~10 | 0.06 MB |  |
+| `admins` | 9 | ~10 | 0.06 MB |  |
 | `appointments` | 18 | ~0 | 0.03 MB |  |
 | `blog_posts` | 17 | ~0 | 0.03 MB |  |
 | `campaign_participants` | 9 | ~0 | 0.05 MB | "Track user participation in ca..." |

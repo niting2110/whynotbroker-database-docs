@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-28T06:59:12.180Z
+// Generated: 2025-12-29T07:03:46.892Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -150,6 +150,9 @@ export interface Database {
       is_active: boolean;
       permissions_version: number;
       created_at: string | Date;
+      password_hash?: string;
+      full_name?: string;
+      last_login_at?: string | Date;
     };
     Insert: {
       email: string;
@@ -159,6 +162,9 @@ export interface Database {
       email?: string;
       is_active?: boolean;
       permissions_version?: number;
+      password_hash?: string;
+      full_name?: string;
+      last_login_at?: any;
     };
   };
 

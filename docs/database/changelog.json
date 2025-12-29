@@ -103,5 +103,20 @@
       "functions": 55,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2025-12-29T07:03:46.895Z",
+    "schema_hash": "d592eea4cc56596647c28abaf3d17a9d",
+    "statistics": {
+      "tables": 40,
+      "views": 14,
+      "materialized_views": 0,
+      "columns": 534,
+      "constraints": 354,
+      "indexes": 155,
+      "relationships": 66,
+      "functions": 55,
+      "extensions": 9
+    }
   }
 ]
