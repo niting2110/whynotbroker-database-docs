@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-29T07:03:46.866Z
+> Auto-generated on: 2025-12-31T07:01:49.146Z
 > **Total Tables:** 40
 > **PostgreSQL Version:** 17.6
 
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~32
+- Rows: ~115
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
