@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2025-12-31T07:01:49.146Z
-> **Total Tables:** 40
+> Auto-generated on: 2026-01-01T07:01:39.281Z
+> **Total Tables:** 63
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -368,7 +368,7 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~10
-- Columns: 9
+- Columns: 12
 - Indexes: 3
 - Foreign Keys: 1
 - Triggers: 1
@@ -386,6 +386,9 @@ This document details the live schema of the production Supabase database. All A
 | `password_hash` | `text` | YES | `—` | — |
 | `full_name` | `text` | YES | `—` | — |
 | `last_login_at` | `timestamp with time zone` | YES | `—` | — |
+| `specialization` | `ARRAY` | YES | `—` | — |
+| `assigned_regions` | `ARRAY` | YES | `—` | — |
+| `assigned_cities` | `ARRAY` | YES | `—` | — |
 
 ### Constraints
 
@@ -598,6 +601,66 @@ This document details the live schema of the production Supabase database. All A
 ```sql
   EXECUTE FUNCTION update_updated_at_column()
 ```
+
+---
+
+## `builders`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 26
+- Indexes: 3
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `company_name` | `text` | NO | `—` | — |
+| `registration_number` | `text` | YES | `—` | — |
+| `rera_number` | `text` | YES | `—` | — |
+| `pan_number` | `text` | YES | `—` | — |
+| `gst_number` | `text` | YES | `—` | — |
+| `logo_url` | `text` | YES | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `established_year` | `integer` | YES | `—` | — |
+| `total_projects` | `integer` | YES | `0` | — |
+| `completed_projects` | `integer` | YES | `0` | — |
+| `ongoing_projects` | `integer` | YES | `0` | — |
+| `total_units_delivered` | `integer` | YES | `0` | — |
+| `specialization` | `ARRAY` | YES | `—` | — |
+| `operating_cities` | `ARRAY` | YES | `—` | — |
+| `website_url` | `text` | YES | `—` | — |
+| `contact_email` | `text` | YES | `—` | — |
+| `contact_phone` | `text` | YES | `—` | — |
+| `office_address` | `text` | YES | `—` | — |
+| `rating` | `numeric` | YES | `—` | — |
+| `total_ratings` | `integer` | YES | `0` | — |
+| `is_verified` | `boolean` | YES | `false` | — |
+| `is_featured` | `boolean` | YES | `false` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50816_1_not_null`: N/A
+- `2200_50816_2_not_null`: N/A
+- `2200_50816_3_not_null`: N/A
+
+**PRIMARY KEY:**
+- `builders_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `builders_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX builders_pkey ON public.builders USING btree (id)` |
+| `idx_builders_name` | btree | name | — | — | `CREATE INDEX idx_builders_name ON public.builders USING btree (name)` |
+| `idx_builders_verified` | btree | is_verified | — | — | `CREATE INDEX idx_builders_verified ON public.builders USING btree (is_verified)` |
 
 ---
 
@@ -938,13 +1001,355 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `hot_properties`
+
+> Real-time tracking of trending properties with high demand signals
+
+**Statistics:**
+- Rows: ~0
+- Columns: 25
+- Indexes: 5
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `heat_score` | `numeric` | NO | `0` | — |
+| `views_spike_percentage` | `numeric` | YES | `—` | — |
+| `inquiries_spike_percentage` | `numeric` | YES | `—` | — |
+| `favorites_spike_percentage` | `numeric` | YES | `—` | — |
+| `views_per_hour` | `numeric` | YES | `—` | — |
+| `inquiries_per_day` | `numeric` | YES | `—` | — |
+| `unique_viewers_per_day` | `numeric` | YES | `—` | — |
+| `comparing_users_count` | `integer` | YES | `0` | — |
+| `saved_by_users_count` | `integer` | YES | `0` | — |
+| `sharing_frequency` | `numeric` | YES | `—` | — |
+| `price_recently_reduced` | `boolean` | YES | `false` | — |
+| `new_listing` | `boolean` | YES | `false` | — |
+| `limited_availability` | `boolean` | YES | `false` | — |
+| `hot_reasons` | `ARRAY` | YES | `—` | — |
+| `heat_trend` | `text` | YES | `—` | — |
+| `days_as_hot` | `integer` | YES | `0` | — |
+| `peak_heat_score` | `numeric` | YES | `—` | — |
+| `estimated_days_until_sold` | `integer` | YES | `—` | — |
+| `probability_sold_this_week` | `numeric` | YES | `—` | — |
+| `is_currently_hot` | `boolean` | YES | `true` | — |
+| `became_hot_at` | `timestamp with time zone` | YES | `now()` | — |
+| `cooled_down_at` | `timestamp with time zone` | YES | `—` | — |
+| `calculated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51346_1_not_null`: N/A
+- `2200_51346_2_not_null`: N/A
+- `2200_51346_3_not_null`: N/A
+- `hot_properties_heat_trend_check`: CHECK ((heat_trend = ANY (ARRAY['rising'::text, 'peak'::text, 'cooling'::text, 'stable'::text])))
+
+**FOREIGN KEY:**
+- `hot_properties_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `hot_properties_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `hot_properties_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX hot_properties_pkey ON public.hot_properties USING btree (id)` |
+| `idx_hot_properties_active` | btree | heat_score, is_currently_hot | — | — | `CREATE INDEX idx_hot_properties_active ON public.hot_properties USING btree (is_currently_hot, heat_score DESC)` |
+| `idx_hot_properties_property` | btree | property_id | — | — | `CREATE INDEX idx_hot_properties_property ON public.hot_properties USING btree (property_id)` |
+| `idx_hot_properties_score` | btree | heat_score | — | — | `CREATE INDEX idx_hot_properties_score ON public.hot_properties USING btree (heat_score DESC) WHERE (is_currently_hot = true)` |
+| `idx_hot_properties_trend` | btree | heat_trend | — | — | `CREATE INDEX idx_hot_properties_trend ON public.hot_properties USING btree (heat_trend)` |
+
+### Foreign Keys
+
+- `hot_properties_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `loan_calculations`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 2
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | YES | `—` | — |
+| `property_id` | `uuid` | YES | `—` | — |
+| `property_price` | `numeric` | NO | `—` | — |
+| `down_payment` | `numeric` | NO | `—` | — |
+| `loan_amount` | `numeric` | NO | `—` | — |
+| `interest_rate` | `numeric` | NO | `—` | — |
+| `tenure_years` | `integer` | NO | `—` | — |
+| `emi_amount` | `numeric` | NO | `—` | — |
+| `total_interest` | `numeric` | YES | `—` | — |
+| `total_amount` | `numeric` | YES | `—` | — |
+| `calculation_data` | `jsonb` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50934_1_not_null`: N/A
+- `2200_50934_4_not_null`: N/A
+- `2200_50934_5_not_null`: N/A
+- `2200_50934_6_not_null`: N/A
+- `2200_50934_7_not_null`: N/A
+- `2200_50934_8_not_null`: N/A
+- `2200_50934_9_not_null`: N/A
+
+**FOREIGN KEY:**
+- `loan_calculations_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE SET NULL
+- `loan_calculations_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `loan_calculations_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_loan_calculations_user` | btree | user_id | — | — | `CREATE INDEX idx_loan_calculations_user ON public.loan_calculations USING btree (user_id)` |
+| `loan_calculations_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX loan_calculations_pkey ON public.loan_calculations USING btree (id)` |
+
+### Foreign Keys
+
+- `loan_calculations_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `loan_calculations_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `localities`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 24
+- Indexes: 4
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `city` | `text` | NO | `—` | — |
+| `state` | `text` | NO | `—` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `pincode` | `text` | YES | `—` | — |
+| `latitude` | `numeric` | YES | `—` | — |
+| `longitude` | `numeric` | YES | `—` | — |
+| `boundary_geojson` | `jsonb` | YES | `—` | — |
+| `locality_type` | `text` | YES | `—` | — |
+| `tier_rating` | `integer` | YES | `—` | — |
+| `avg_price_per_sqft` | `numeric` | YES | `—` | — |
+| `price_trend_6m` | `numeric` | YES | `—` | — |
+| `price_trend_1y` | `numeric` | YES | `—` | — |
+| `total_properties` | `integer` | YES | `0` | — |
+| `available_properties` | `integer` | YES | `0` | — |
+| `infrastructure_score` | `numeric` | YES | `—` | — |
+| `connectivity_score` | `numeric` | YES | `—` | — |
+| `safety_score` | `numeric` | YES | `—` | — |
+| `amenities_score` | `numeric` | YES | `—` | — |
+| `is_gated_community` | `boolean` | YES | `false` | — |
+| `is_verified` | `boolean` | YES | `false` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50622_1_not_null`: N/A
+- `2200_50622_2_not_null`: N/A
+- `2200_50622_3_not_null`: N/A
+- `2200_50622_4_not_null`: N/A
+- `localities_locality_type_check`: CHECK ((locality_type = ANY (ARRAY['residential'::text, 'commercial'::text, 'mixed'::text, 'industrial'::text])))
+- `localities_tier_rating_check`: CHECK (((tier_rating >= 1) AND (tier_rating <= 5)))
+
+**FOREIGN KEY:**
+- `localities_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+
+**PRIMARY KEY:**
+- `localities_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_localities_city` | btree | city, state | — | — | `CREATE INDEX idx_localities_city ON public.localities USING btree (city, state)` |
+| `idx_localities_pincode` | btree | pincode | — | — | `CREATE INDEX idx_localities_pincode ON public.localities USING btree (pincode)` |
+| `idx_localities_region` | btree | region_id | — | — | `CREATE INDEX idx_localities_region ON public.localities USING btree (region_id)` |
+| `localities_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX localities_pkey ON public.localities USING btree (id)` |
+
+### Foreign Keys
+
+- `localities_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `locality_amenities`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 10
+- Indexes: 3
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `locality_id` | `uuid` | NO | `—` | — |
+| `category` | `text` | NO | `—` | — |
+| `name` | `text` | NO | `—` | — |
+| `distance_km` | `numeric` | NO | `—` | — |
+| `rating` | `numeric` | YES | `—` | — |
+| `latitude` | `numeric` | YES | `—` | — |
+| `longitude` | `numeric` | YES | `—` | — |
+| `is_verified` | `boolean` | YES | `false` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50646_1_not_null`: N/A
+- `2200_50646_2_not_null`: N/A
+- `2200_50646_3_not_null`: N/A
+- `2200_50646_4_not_null`: N/A
+- `2200_50646_5_not_null`: N/A
+- `locality_amenities_category_check`: CHECK ((category = ANY (ARRAY['school'::text, 'hospital'::text, 'shopping'::text, 'restaurant'::text, 'bank'::text, 'atm'::text, 'metro_station'::text, 'bus_stop'::text, 'railway_station'::text, 'airport'::text, 'park'::text, 'gym'::text, 'temple'::text, 'mosque'::text, 'church'::text, 'mall'::text, 'police_station'::text, 'fire_station'::text, 'post_office'::text, 'government_office'::text])))
+
+**FOREIGN KEY:**
+- `locality_amenities_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `locality_amenities_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_locality_amenities_distance` | btree | locality_id, distance_km | — | — | `CREATE INDEX idx_locality_amenities_distance ON public.locality_amenities USING btree (locality_id, distance_km)` |
+| `idx_locality_amenities_locality` | btree | locality_id, category | — | — | `CREATE INDEX idx_locality_amenities_locality ON public.locality_amenities USING btree (locality_id, category)` |
+| `locality_amenities_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX locality_amenities_pkey ON public.locality_amenities USING btree (id)` |
+
+### Foreign Keys
+
+- `locality_amenities_locality_id_fkey`:
+  - Columns: `locality_id` → `localities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `market_trends`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 16
+- Indexes: 4
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `region_id` | `uuid` | YES | `—` | — |
+| `locality_id` | `uuid` | YES | `—` | — |
+| `property_type` | `text` | NO | `—` | — |
+| `bhk_type` | `text` | YES | `—` | — |
+| `avg_price` | `numeric` | NO | `—` | — |
+| `median_price` | `numeric` | YES | `—` | — |
+| `min_price` | `numeric` | YES | `—` | — |
+| `max_price` | `numeric` | YES | `—` | — |
+| `total_listings` | `integer` | YES | `—` | — |
+| `sold_count` | `integer` | YES | `—` | — |
+| `avg_time_to_sell` | `integer` | YES | `—` | — |
+| `supply_demand_ratio` | `numeric` | YES | `—` | — |
+| `price_change_percentage` | `numeric` | YES | `—` | — |
+| `month_year` | `date` | NO | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50764_15_not_null`: N/A
+- `2200_50764_1_not_null`: N/A
+- `2200_50764_4_not_null`: N/A
+- `2200_50764_6_not_null`: N/A
+
+**FOREIGN KEY:**
+- `market_trends_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
+- `market_trends_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+
+**PRIMARY KEY:**
+- `market_trends_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `market_trends_region_id_locality_id_property_type_bhk_type__key`: UNIQUE (region_id, locality_id, property_type, bhk_type, month_year)
+- `market_trends_region_id_locality_id_property_type_bhk_type__key`: UNIQUE (region_id, locality_id, property_type, bhk_type, month_year)
+- `market_trends_region_id_locality_id_property_type_bhk_type__key`: UNIQUE (region_id, locality_id, property_type, bhk_type, month_year)
+- `market_trends_region_id_locality_id_property_type_bhk_type__key`: UNIQUE (region_id, locality_id, property_type, bhk_type, month_year)
+- `market_trends_region_id_locality_id_property_type_bhk_type__key`: UNIQUE (region_id, locality_id, property_type, bhk_type, month_year)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_market_trends_locality` | btree | locality_id, month_year | — | — | `CREATE INDEX idx_market_trends_locality ON public.market_trends USING btree (locality_id, month_year)` |
+| `idx_market_trends_region` | btree | region_id, month_year | — | — | `CREATE INDEX idx_market_trends_region ON public.market_trends USING btree (region_id, month_year)` |
+| `market_trends_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX market_trends_pkey ON public.market_trends USING btree (id)` |
+| `market_trends_region_id_locality_id_property_type_bhk_type__key` | btree | region_id, locality_id, property_type, bhk_type, month_year | ✓ | — | `CREATE UNIQUE INDEX market_trends_region_id_locality_id_property_type_bhk_type__key ON public.market_trends USING btree (region_id, locality_id, property_type, bhk_type, month_year)` |
+
+### Foreign Keys
+
+- `market_trends_locality_id_fkey`:
+  - Columns: `locality_id` → `localities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `market_trends_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
 ## `messages`
 
 **Statistics:**
 - Rows: ~0
-- Columns: 18
+- Columns: 21
 - Indexes: 3
-- Foreign Keys: 3
+- Foreign Keys: 5
 - Triggers: 1
 
 ### Columns
@@ -969,6 +1374,9 @@ This document details the live schema of the production Supabase database. All A
 | `user_agent` | `text` | YES | `—` | — |
 | `created_at` | `timestamp with time zone` | YES | `now()` | — |
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+| `lead_id` | `uuid` | YES | `—` | — |
+| `parent_message_id` | `uuid` | YES | `—` | — |
+| `attachments` | `ARRAY` | YES | `—` | — |
 
 ### Constraints
 
@@ -981,6 +1389,8 @@ This document details the live schema of the production Supabase database. All A
 - `messages_message_type_check`: CHECK ((message_type = ANY (ARRAY['inquiry'::text, 'response'::text, 'general'::text, 'appointment'::text, 'feedback'::text])))
 
 **FOREIGN KEY:**
+- `messages_lead_id_fkey`: FOREIGN KEY (lead_id) REFERENCES property_leads(id)
+- `messages_parent_message_id_fkey`: FOREIGN KEY (parent_message_id) REFERENCES messages(id)
 - `messages_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE SET NULL
 - `messages_receiver_id_fkey`: FOREIGN KEY (receiver_id) REFERENCES profiles(id) ON DELETE CASCADE
 - `messages_sender_id_fkey`: FOREIGN KEY (sender_id) REFERENCES profiles(id) ON DELETE CASCADE
@@ -998,6 +1408,14 @@ This document details the live schema of the production Supabase database. All A
 
 ### Foreign Keys
 
+- `messages_lead_id_fkey`:
+  - Columns: `lead_id` → `property_leads(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `messages_parent_message_id_fkey`:
+  - Columns: `parent_message_id` → `messages(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `messages_property_id_fkey`:
   - Columns: `property_id` → `properties(id)`
   - ON UPDATE: NO ACTION
@@ -1079,6 +1497,59 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `property_id` → `properties(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+
+---
+
+## `notification_preferences`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 1
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `user_id` | `uuid` | NO | `—` | — |
+| `email_enabled` | `boolean` | YES | `true` | — |
+| `sms_enabled` | `boolean` | YES | `true` | — |
+| `push_enabled` | `boolean` | YES | `true` | — |
+| `whatsapp_enabled` | `boolean` | YES | `false` | — |
+| `new_properties` | `boolean` | YES | `true` | — |
+| `price_drops` | `boolean` | YES | `true` | — |
+| `saved_search_matches` | `boolean` | YES | `true` | — |
+| `property_updates` | `boolean` | YES | `true` | — |
+| `promotional` | `boolean` | YES | `true` | — |
+| `newsletter` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50865_1_not_null`: N/A
+
+**FOREIGN KEY:**
+- `notification_preferences_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `notification_preferences_pkey`: PRIMARY KEY (user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `notification_preferences_pkey` | btree | user_id | ✓ | ✓ | `CREATE UNIQUE INDEX notification_preferences_pkey ON public.notification_preferences USING btree (user_id)` |
+
+### Foreign Keys
+
+- `notification_preferences_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -1273,7 +1744,7 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~21
-- Columns: 31
+- Columns: 42
 - Indexes: 3
 - Foreign Keys: 0
 - Triggers: 2
@@ -1313,12 +1784,24 @@ This document details the live schema of the production Supabase database. All A
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
 | `last_login` | `timestamp with time zone` | YES | `—` | — |
 | `last_active` | `timestamp with time zone` | YES | `—` | — |
+| `whatsapp_verified` | `boolean` | YES | `false` | — |
+| `email_verified` | `boolean` | YES | `false` | — |
+| `phone_verified` | `boolean` | YES | `false` | — |
+| `kyc_status` | `text` | YES | `'not_submitted'::text` | — |
+| `kyc_documents` | `jsonb` | YES | `—` | — |
+| `preferred_localities` | `ARRAY` | YES | `—` | — |
+| `search_preferences` | `jsonb` | YES | `—` | — |
+| `total_inquiries_sent` | `integer` | YES | `0` | — |
+| `total_views_received` | `integer` | YES | `0` | — |
+| `response_time_hours` | `integer` | YES | `—` | — |
+| `response_rate` | `numeric` | YES | `—` | — |
 
 ### Constraints
 
 **CHECK:**
 - `2200_18686_1_not_null`: N/A
 - `profiles_account_status_check`: CHECK ((account_status = ANY (ARRAY['active'::text, 'suspended'::text, 'inactive'::text])))
+- `profiles_kyc_status_check`: CHECK ((kyc_status = ANY (ARRAY['not_submitted'::text, 'pending'::text, 'verified'::text, 'rejected'::text])))
 - `profiles_role_check`: CHECK ((role = ANY (ARRAY['user'::text, 'admin'::text, 'staff'::text])))
 - `profiles_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'admin'::text])))
 
@@ -1353,6 +1836,114 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION update_updated_at_column()
+```
+
+---
+
+## `projects`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 34
+- Indexes: 5
+- Foreign Keys: 2
+- Triggers: 2
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `builder_id` | `uuid` | NO | `—` | — |
+| `name` | `text` | NO | `—` | — |
+| `slug` | `text` | YES | `—` | — |
+| `description` | `text` | YES | `—` | — |
+| `project_type` | `text` | YES | `—` | — |
+| `status` | `text` | YES | `—` | — |
+| `rera_number` | `text` | YES | `—` | — |
+| `location` | `text` | NO | `—` | — |
+| `city` | `text` | NO | `—` | — |
+| `state` | `text` | NO | `—` | — |
+| `locality_id` | `uuid` | YES | `—` | — |
+| `latitude` | `numeric` | YES | `—` | — |
+| `longitude` | `numeric` | YES | `—` | — |
+| `total_units` | `integer` | YES | `—` | — |
+| `available_units` | `integer` | YES | `—` | — |
+| `total_towers` | `integer` | YES | `—` | — |
+| `total_floors` | `integer` | YES | `—` | — |
+| `launch_date` | `date` | YES | `—` | — |
+| `possession_date` | `date` | YES | `—` | — |
+| `price_range_min` | `numeric` | YES | `—` | — |
+| `price_range_max` | `numeric` | YES | `—` | — |
+| `configurations` | `ARRAY` | YES | `—` | — |
+| `area_range_min` | `numeric` | YES | `—` | — |
+| `area_range_max` | `numeric` | YES | `—` | — |
+| `amenities` | `ARRAY` | YES | `—` | — |
+| `images` | `ARRAY` | YES | `—` | — |
+| `brochure_url` | `text` | YES | `—` | — |
+| `video_url` | `text` | YES | `—` | — |
+| `view_count` | `integer` | YES | `0` | — |
+| `inquiry_count` | `integer` | YES | `0` | — |
+| `is_featured` | `boolean` | YES | `false` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50835_10_not_null`: N/A
+- `2200_50835_11_not_null`: N/A
+- `2200_50835_1_not_null`: N/A
+- `2200_50835_2_not_null`: N/A
+- `2200_50835_3_not_null`: N/A
+- `2200_50835_9_not_null`: N/A
+- `projects_project_type_check`: CHECK ((project_type = ANY (ARRAY['residential'::text, 'commercial'::text, 'mixed'::text])))
+- `projects_status_check`: CHECK ((status = ANY (ARRAY['upcoming'::text, 'under_construction'::text, 'ready_to_move'::text, 'completed'::text])))
+
+**FOREIGN KEY:**
+- `projects_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id) ON DELETE CASCADE
+- `projects_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
+
+**PRIMARY KEY:**
+- `projects_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `projects_slug_key`: UNIQUE (slug)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_projects_builder` | btree | builder_id | — | — | `CREATE INDEX idx_projects_builder ON public.projects USING btree (builder_id)` |
+| `idx_projects_city` | btree | status, city | — | — | `CREATE INDEX idx_projects_city ON public.projects USING btree (city, status)` |
+| `idx_projects_locality` | btree | locality_id | — | — | `CREATE INDEX idx_projects_locality ON public.projects USING btree (locality_id)` |
+| `projects_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX projects_pkey ON public.projects USING btree (id)` |
+| `projects_slug_key` | btree | slug | ✓ | — | `CREATE UNIQUE INDEX projects_slug_key ON public.projects USING btree (slug)` |
+
+### Foreign Keys
+
+- `projects_builder_id_fkey`:
+  - Columns: `builder_id` → `builders(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `projects_locality_id_fkey`:
+  - Columns: `locality_id` → `localities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+### Triggers
+
+- `trigger_update_builder_counts`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_builder_project_counts()
+```
+- `trigger_update_builder_counts`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_builder_project_counts()
 ```
 
 ---
@@ -1438,10 +2029,10 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~9,000
-- Columns: 93
-- Indexes: 24
-- Foreign Keys: 3
-- Triggers: 6
+- Columns: 115
+- Indexes: 27
+- Foreign Keys: 7
+- Triggers: 9
 
 ### Columns
 
@@ -1540,6 +2131,28 @@ This document details the live schema of the production Supabase database. All A
 | `meta_keywords` | `ARRAY` | YES | `—` | — |
 | `tags` | `ARRAY` | YES | `—` | — |
 | `moderation_state` | `text` | NO | `'not_submitted'::text` | — |
+| `locality_id` | `uuid` | YES | `—` | — |
+| `builder_id` | `uuid` | YES | `—` | — |
+| `project_id` | `uuid` | YES | `—` | — |
+| `corner_plot` | `boolean` | YES | `false` | — |
+| `width_facing` | `numeric` | YES | `—` | — |
+| `boundary_wall` | `boolean` | YES | `false` | — |
+| `gated_security` | `boolean` | YES | `false` | — |
+| `video_url` | `text` | YES | `—` | — |
+| `virtual_tour_url` | `text` | YES | `—` | — |
+| `floor_plan_images` | `ARRAY` | YES | `—` | — |
+| `approved_by_bank` | `boolean` | YES | `false` | — |
+| `loan_available` | `boolean` | YES | `false` | — |
+| `possession_status` | `text` | YES | `—` | — |
+| `water_supply` | `text` | YES | `—` | — |
+| `electricity_backup` | `text` | YES | `—` | — |
+| `lift_available` | `boolean` | YES | `false` | — |
+| `reserved_parking` | `integer` | YES | `0` | — |
+| `open_parking` | `integer` | YES | `0` | — |
+| `property_facing_road_width` | `numeric` | YES | `—` | — |
+| `govt_approved` | `boolean` | YES | `false` | — |
+| `clear_title` | `boolean` | YES | `false` | — |
+| `last_viewed_by` | `uuid` | YES | `—` | — |
 
 ### Constraints
 
@@ -1559,6 +2172,7 @@ This document details the live schema of the production Supabase database. All A
 - `bhk_type_numeric_check`: CHECK (((bhk_type IS NULL) OR (bhk_type ~ '^[0-9]+bhk$'::text)))
 - `properties_area_unit_check`: CHECK ((area_unit = ANY (ARRAY['sqft'::text, 'sqm'::text, 'acre'::text, 'hectare'::text, 'gunta'::text, 'marla'::text, 'bigha'::text])))
 - `properties_availability_schedule_check`: CHECK ((availability_schedule = ANY (ARRAY['everyday'::text, 'weekdays'::text, 'weekends'::text, 'custom'::text])))
+- `properties_electricity_backup_check`: CHECK ((electricity_backup = ANY (ARRAY['none'::text, 'partial'::text, 'full'::text, 'solar'::text])))
 - `properties_facing_check`: CHECK ((facing = ANY (ARRAY['north'::text, 'south'::text, 'east'::text, 'west'::text, 'northeast'::text, 'northwest'::text, 'southeast'::text, 'southwest'::text, 'north-east'::text, 'north-west'::text, 'south-east'::text, 'south-west'::text])))
 - `properties_floor_type_check`: CHECK ((floor_type = ANY (ARRAY['ground'::text, 'first'::text, 'second'::text, 'third'::text, 'higher'::text, 'penthouse'::text, 'basement'::text])))
 - `properties_furnishing_check`: CHECK ((furnishing = ANY (ARRAY['unfurnished'::text, 'semi_furnished'::text, 'fully_furnished'::text])))
@@ -1566,14 +2180,20 @@ This document details the live schema of the production Supabase database. All A
 - `properties_listing_type_check`: CHECK ((listing_type = ANY (ARRAY['sale'::text, 'rent'::text, 'lease'::text, 'pg'::text, 'hostel'::text, 'flatmate'::text])))
 - `properties_moderation_state_check`: CHECK ((moderation_state = ANY (ARRAY['not_submitted'::text, 'pending'::text, 'under_review'::text, 'approved'::text, 'rejected'::text, 'changes_requested'::text])))
 - `properties_ownership_type_check`: CHECK ((ownership_type = ANY (ARRAY['freehold'::text, 'leasehold'::text, 'cooperative'::text, 'power_of_attorney'::text, 'joint'::text])))
+- `properties_possession_status_check`: CHECK ((possession_status = ANY (ARRAY['immediate'::text, 'within_3months'::text, 'within_6months'::text, 'under_construction'::text])))
 - `properties_property_age_check`: CHECK ((property_age = ANY (ARRAY['under_construction'::text, '0-1'::text, '1-5'::text, '5-10'::text, '10-20'::text, '20+'::text, 'new_launch'::text])))
 - `properties_show_property_by_check`: CHECK ((show_property_by = ANY (ARRAY['owner'::text, 'agent'::text, 'broker'::text, 'builder'::text, 'representative'::text])))
+- `properties_water_supply_check`: CHECK ((water_supply = ANY (ARRAY['municipal'::text, 'borewell'::text, 'both'::text])))
 - `property_type_check`: CHECK ((property_type = ANY (ARRAY['apartment'::text, 'house'::text, 'villa'::text, 'commercial'::text, 'land'::text, 'farm'::text, 'pg'::text, 'hostel'::text])))
 - `status_check`: CHECK ((status = ANY (ARRAY['draft'::text, 'pending'::text, 'published'::text, 'sold'::text, 'rented'::text])))
 
 **FOREIGN KEY:**
 - `properties_agency_id_fkey`: FOREIGN KEY (agency_id) REFERENCES profiles(id) ON DELETE SET NULL
 - `properties_agent_id_fkey`: FOREIGN KEY (agent_id) REFERENCES profiles(id) ON DELETE SET NULL
+- `properties_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id)
+- `properties_last_viewed_by_fkey`: FOREIGN KEY (last_viewed_by) REFERENCES profiles(id)
+- `properties_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
+- `properties_project_id_fkey`: FOREIGN KEY (project_id) REFERENCES projects(id)
 - `properties_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
@@ -1593,6 +2213,7 @@ This document details the live schema of the production Supabase database. All A
 | `idx_properties_agent_id` | btree | agent_id | — | — | `CREATE INDEX idx_properties_agent_id ON public.properties USING btree (agent_id)` |
 | `idx_properties_area` | btree | built_up_area | — | — | `CREATE INDEX idx_properties_area ON public.properties USING btree (built_up_area)` |
 | `idx_properties_bedrooms` | btree | bedrooms | — | — | `CREATE INDEX idx_properties_bedrooms ON public.properties USING btree (bedrooms)` |
+| `idx_properties_builder` | btree | builder_id | — | — | `CREATE INDEX idx_properties_builder ON public.properties USING btree (builder_id)` |
 | `idx_properties_city_locality` | btree | city, locality | — | — | `CREATE INDEX idx_properties_city_locality ON public.properties USING btree (city, locality)` |
 | `idx_properties_city_price_filter` | btree | price, city, status, is_active | — | — | `CREATE INDEX idx_properties_city_price_filter ON public.properties USING btree (city, price, status, is_active)` |
 | `idx_properties_city_status_active` | btree | city, status, is_active | — | — | `CREATE INDEX idx_properties_city_status_active ON public.properties USING btree (city, status, is_active)` |
@@ -1600,9 +2221,11 @@ This document details the live schema of the production Supabase database. All A
 | `idx_properties_featured` | btree | is_featured | — | — | `CREATE INDEX idx_properties_featured ON public.properties USING btree (is_featured) WHERE (is_featured = true)` |
 | `idx_properties_featured_smart` | btree | status, is_active, is_featured, created_at, featured_until | — | — | `CREATE INDEX idx_properties_featured_smart ON public.properties USING btree (is_featured, featured_until DESC NULLS LAST, created_at DESC, status, is_active)` |
 | `idx_properties_listing_type` | btree | listing_type | — | — | `CREATE INDEX idx_properties_listing_type ON public.properties USING btree (listing_type)` |
+| `idx_properties_locality` | btree | locality_id | — | — | `CREATE INDEX idx_properties_locality ON public.properties USING btree (locality_id)` |
 | `idx_properties_pid` | btree | pid | — | — | `CREATE INDEX idx_properties_pid ON public.properties USING btree (pid)` |
 | `idx_properties_price` | btree | price | — | — | `CREATE INDEX idx_properties_price ON public.properties USING btree (price)` |
 | `idx_properties_price_status_active` | btree | price, status, is_active | — | — | `CREATE INDEX idx_properties_price_status_active ON public.properties USING btree (price, status, is_active)` |
+| `idx_properties_project` | btree | project_id | — | — | `CREATE INDEX idx_properties_project ON public.properties USING btree (project_id)` |
 | `idx_properties_property_type` | btree | property_type | — | — | `CREATE INDEX idx_properties_property_type ON public.properties USING btree (property_type)` |
 | `idx_properties_search` | btree | property_type, price, city, bedrooms, status | — | — | `CREATE INDEX idx_properties_search ON public.properties USING btree (city, price, bedrooms, property_type, status) WHERE ((status = 'published'::text) AND (is_active = true))` |
 | `idx_properties_status` | btree | status | — | — | `CREATE INDEX idx_properties_status ON public.properties USING btree (status)` |
@@ -1623,6 +2246,22 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `agent_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+- `properties_builder_id_fkey`:
+  - Columns: `builder_id` → `builders(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `properties_last_viewed_by_fkey`:
+  - Columns: `last_viewed_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `properties_locality_id_fkey`:
+  - Columns: `locality_id` → `localities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `properties_project_id_fkey`:
+  - Columns: `project_id` → `projects(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `properties_user_id_fkey`:
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
@@ -1659,6 +2298,24 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION log_price_change()
+```
+- `trigger_update_locality_counts`:
+  - When: AFTER INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_locality_property_counts()
+```
+- `trigger_update_locality_counts`:
+  - When: AFTER DELETE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_locality_property_counts()
+```
+- `trigger_update_locality_counts`:
+  - When: AFTER UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_locality_property_counts()
 ```
 - `update_properties_updated_at`:
   - When: BEFORE UPDATE
@@ -1789,6 +2446,54 @@ This document details the live schema of the production Supabase database. All A
   - ON DELETE: NO ACTION
 - `property_assignments_property_id_fkey`:
   - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `property_comparisons`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 6
+- Indexes: 2
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | YES | `—` | — |
+| `property_ids` | `ARRAY` | NO | `—` | — |
+| `comparison_data` | `jsonb` | YES | `—` | — |
+| `session_id` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50697_1_not_null`: N/A
+- `2200_50697_3_not_null`: N/A
+
+**FOREIGN KEY:**
+- `property_comparisons_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `property_comparisons_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_comparisons_user` | btree | user_id | — | — | `CREATE INDEX idx_property_comparisons_user ON public.property_comparisons USING btree (user_id)` |
+| `property_comparisons_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_comparisons_pkey ON public.property_comparisons USING btree (id)` |
+
+### Foreign Keys
+
+- `property_comparisons_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
 
@@ -1933,6 +2638,183 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `property_intelligence_scores`
+
+> AI-powered property scoring system for ranking and recommendation
+
+**Statistics:**
+- Rows: ~0
+- Columns: 41
+- Indexes: 8
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `overall_score` | `numeric` | NO | `0` | — |
+| `value_score` | `numeric` | YES | `0` | — |
+| `demand_score` | `numeric` | YES | `0` | — |
+| `quality_score` | `numeric` | YES | `0` | — |
+| `location_score` | `numeric` | YES | `0` | — |
+| `view_velocity` | `numeric` | YES | `0` | — |
+| `inquiry_rate` | `numeric` | YES | `0` | — |
+| `favorite_rate` | `numeric` | YES | `0` | — |
+| `contact_reveal_rate` | `numeric` | YES | `0` | — |
+| `site_visit_conversion_rate` | `numeric` | YES | `0` | — |
+| `avg_time_on_listing_seconds` | `integer` | YES | `—` | — |
+| `repeat_view_rate` | `numeric` | YES | `—` | — |
+| `share_count` | `integer` | YES | `0` | — |
+| `comparison_count` | `integer` | YES | `0` | — |
+| `price_competitiveness` | `numeric` | YES | `—` | — |
+| `price_per_sqft_rank` | `integer` | YES | `—` | — |
+| `price_trend` | `text` | YES | `—` | — |
+| `estimated_market_value` | `numeric` | YES | `—` | — |
+| `value_gap_percentage` | `numeric` | YES | `—` | — |
+| `listing_completeness_score` | `numeric` | YES | `—` | — |
+| `image_quality_score` | `numeric` | YES | `—` | — |
+| `description_quality_score` | `numeric` | YES | `—` | — |
+| `verification_score` | `numeric` | YES | `—` | — |
+| `days_on_market` | `integer` | YES | `0` | — |
+| `estimated_days_to_sell` | `integer` | YES | `—` | — |
+| `freshness_score` | `numeric` | YES | `—` | — |
+| `rank_in_locality` | `integer` | YES | `—` | — |
+| `rank_in_city` | `integer` | YES | `—` | — |
+| `similar_properties_count` | `integer` | YES | `—` | — |
+| `better_value_alternatives_count` | `integer` | YES | `—` | — |
+| `is_hot_property` | `boolean` | YES | `false` | — |
+| `hot_property_reasons` | `ARRAY` | YES | `—` | — |
+| `urgency_score` | `numeric` | YES | `0` | — |
+| `investment_score` | `numeric` | YES | `0` | — |
+| `roi_potential` | `numeric` | YES | `—` | — |
+| `appreciation_potential` | `text` | YES | `—` | — |
+| `risk_score` | `numeric` | YES | `0` | — |
+| `risk_factors` | `ARRAY` | YES | `—` | — |
+| `calculated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51151_1_not_null`: N/A
+- `2200_51151_2_not_null`: N/A
+- `2200_51151_3_not_null`: N/A
+- `property_intelligence_scores_appreciation_potential_check`: CHECK ((appreciation_potential = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
+- `property_intelligence_scores_price_trend_check`: CHECK ((price_trend = ANY (ARRAY['overpriced'::text, 'fair'::text, 'underpriced'::text, 'great_deal'::text])))
+
+**FOREIGN KEY:**
+- `property_intelligence_scores_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `property_intelligence_scores_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `property_intelligence_scores_property_id_key`: UNIQUE (property_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_intel_demand` | btree | demand_score | — | — | `CREATE INDEX idx_property_intel_demand ON public.property_intelligence_scores USING btree (demand_score DESC)` |
+| `idx_property_intel_hot` | btree | is_hot_property | — | — | `CREATE INDEX idx_property_intel_hot ON public.property_intelligence_scores USING btree (is_hot_property) WHERE (is_hot_property = true)` |
+| `idx_property_intel_overall` | btree | overall_score | — | — | `CREATE INDEX idx_property_intel_overall ON public.property_intelligence_scores USING btree (overall_score DESC)` |
+| `idx_property_intel_property` | btree | property_id | — | — | `CREATE INDEX idx_property_intel_property ON public.property_intelligence_scores USING btree (property_id)` |
+| `idx_property_intel_trend` | btree | price_trend | — | — | `CREATE INDEX idx_property_intel_trend ON public.property_intelligence_scores USING btree (price_trend)` |
+| `idx_property_intel_value` | btree | value_score | — | — | `CREATE INDEX idx_property_intel_value ON public.property_intelligence_scores USING btree (value_score DESC)` |
+| `property_intelligence_scores_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_intelligence_scores_pkey ON public.property_intelligence_scores USING btree (id)` |
+| `property_intelligence_scores_property_id_key` | btree | property_id | ✓ | — | `CREATE UNIQUE INDEX property_intelligence_scores_property_id_key ON public.property_intelligence_scores USING btree (property_id)` |
+
+### Foreign Keys
+
+- `property_intelligence_scores_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `property_leads`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 21
+- Indexes: 4
+- Foreign Keys: 3
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `lead_user_id` | `uuid` | YES | `—` | — |
+| `lead_name` | `text` | YES | `—` | — |
+| `lead_phone` | `text` | NO | `—` | — |
+| `lead_email` | `text` | YES | `—` | — |
+| `lead_type` | `text` | YES | `—` | — |
+| `source` | `text` | YES | `—` | — |
+| `status` | `text` | YES | `'new'::text` | — |
+| `priority` | `text` | YES | `'medium'::text` | — |
+| `assigned_to` | `uuid` | YES | `—` | — |
+| `budget_min` | `numeric` | YES | `—` | — |
+| `budget_max` | `numeric` | YES | `—` | — |
+| `notes` | `text` | YES | `—` | — |
+| `follow_up_date` | `date` | YES | `—` | — |
+| `conversion_probability` | `integer` | YES | `—` | — |
+| `ip_address` | `inet` | YES | `—` | — |
+| `user_agent` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `last_contacted_at` | `timestamp with time zone` | YES | `—` | — |
+| `converted_at` | `timestamp with time zone` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50664_1_not_null`: N/A
+- `2200_50664_2_not_null`: N/A
+- `2200_50664_5_not_null`: N/A
+- `property_leads_conversion_probability_check`: CHECK (((conversion_probability >= 0) AND (conversion_probability <= 100)))
+- `property_leads_lead_type_check`: CHECK ((lead_type = ANY (ARRAY['site_visit'::text, 'call_request'::text, 'email_inquiry'::text, 'whatsapp'::text, 'contact_view'::text])))
+- `property_leads_priority_check`: CHECK ((priority = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'urgent'::text])))
+- `property_leads_status_check`: CHECK ((status = ANY (ARRAY['new'::text, 'contacted'::text, 'qualified'::text, 'negotiating'::text, 'converted'::text, 'lost'::text])))
+
+**FOREIGN KEY:**
+- `property_leads_assigned_to_fkey`: FOREIGN KEY (assigned_to) REFERENCES profiles(id)
+- `property_leads_lead_user_id_fkey`: FOREIGN KEY (lead_user_id) REFERENCES profiles(id) ON DELETE SET NULL
+- `property_leads_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `property_leads_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_leads_assigned` | btree | assigned_to | — | — | `CREATE INDEX idx_property_leads_assigned ON public.property_leads USING btree (assigned_to)` |
+| `idx_property_leads_property` | btree | property_id | — | — | `CREATE INDEX idx_property_leads_property ON public.property_leads USING btree (property_id)` |
+| `idx_property_leads_status` | btree | status, priority | — | — | `CREATE INDEX idx_property_leads_status ON public.property_leads USING btree (status, priority)` |
+| `property_leads_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_leads_pkey ON public.property_leads USING btree (id)` |
+
+### Foreign Keys
+
+- `property_leads_assigned_to_fkey`:
+  - Columns: `assigned_to` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `property_leads_lead_user_id_fkey`:
+  - Columns: `lead_user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `property_leads_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `property_price_history`
 
 **Statistics:**
@@ -1985,6 +2867,450 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `property_id` → `properties(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `property_ranking_criteria`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 37
+- Indexes: 7
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `price_value_rating` | `numeric` | YES | `5` | — |
+| `roi_potential_rating` | `numeric` | YES | `5` | — |
+| `appreciation_potential_rating` | `numeric` | YES | `5` | — |
+| `location_desirability_rating` | `numeric` | YES | `5` | — |
+| `connectivity_rating` | `numeric` | YES | `5` | — |
+| `infrastructure_rating` | `numeric` | YES | `5` | — |
+| `safety_rating` | `numeric` | YES | `5` | — |
+| `construction_quality_rating` | `numeric` | YES | `5` | — |
+| `maintenance_rating` | `numeric` | YES | `5` | — |
+| `amenities_rating` | `numeric` | YES | `5` | — |
+| `design_rating` | `numeric` | YES | `5` | — |
+| `legal_clarity_rating` | `numeric` | YES | `5` | — |
+| `documentation_completeness_rating` | `numeric` | YES | `5` | — |
+| `title_clarity_rating` | `numeric` | YES | `5` | — |
+| `demand_rating` | `numeric` | YES | `5` | — |
+| `liquidity_rating` | `numeric` | YES | `5` | — |
+| `competitive_position_rating` | `numeric` | YES | `5` | — |
+| `seller_reputation_rating` | `numeric` | YES | `5` | — |
+| `response_rate_rating` | `numeric` | YES | `5` | — |
+| `negotiation_flexibility_rating` | `numeric` | YES | `5` | — |
+| `investment_rank` | `numeric` | YES | `0` | — |
+| `first_time_buyer_rank` | `numeric` | YES | `0` | — |
+| `family_rank` | `numeric` | YES | `0` | — |
+| `senior_citizen_rank` | `numeric` | YES | `0` | — |
+| `overall_rank_in_locality` | `integer` | YES | `—` | — |
+| `overall_rank_in_city` | `integer` | YES | `—` | — |
+| `overall_rank_in_price_range` | `integer` | YES | `—` | — |
+| `value_percentile` | `integer` | YES | `—` | — |
+| `demand_percentile` | `integer` | YES | `—` | — |
+| `quality_percentile` | `integer` | YES | `—` | — |
+| `deal_quality` | `text` | YES | `—` | — |
+| `deal_score` | `numeric` | YES | `0` | — |
+| `urgency_level` | `text` | YES | `—` | — |
+| `opportunity_type` | `ARRAY` | YES | `—` | — |
+| `calculated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51298_1_not_null`: N/A
+- `2200_51298_2_not_null`: N/A
+- `property_ranking_criteria_deal_quality_check`: CHECK ((deal_quality = ANY (ARRAY['excellent_deal'::text, 'good_deal'::text, 'fair_deal'::text, 'overpriced'::text, 'poor_deal'::text])))
+- `property_ranking_criteria_urgency_level_check`: CHECK ((urgency_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'critical'::text])))
+
+**FOREIGN KEY:**
+- `property_ranking_criteria_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `property_ranking_criteria_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `property_ranking_criteria_property_id_key`: UNIQUE (property_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_ranking_deal_quality` | btree | deal_quality, deal_score | — | — | `CREATE INDEX idx_ranking_deal_quality ON public.property_ranking_criteria USING btree (deal_quality, deal_score DESC)` |
+| `idx_ranking_investment` | btree | investment_rank | — | — | `CREATE INDEX idx_ranking_investment ON public.property_ranking_criteria USING btree (investment_rank DESC)` |
+| `idx_ranking_locality` | btree | overall_rank_in_locality | — | — | `CREATE INDEX idx_ranking_locality ON public.property_ranking_criteria USING btree (overall_rank_in_locality)` |
+| `idx_ranking_property` | btree | property_id | — | — | `CREATE INDEX idx_ranking_property ON public.property_ranking_criteria USING btree (property_id)` |
+| `idx_ranking_value_percentile` | btree | value_percentile | — | — | `CREATE INDEX idx_ranking_value_percentile ON public.property_ranking_criteria USING btree (value_percentile)` |
+| `property_ranking_criteria_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_ranking_criteria_pkey ON public.property_ranking_criteria USING btree (id)` |
+| `property_ranking_criteria_property_id_key` | btree | property_id | ✓ | — | `CREATE UNIQUE INDEX property_ranking_criteria_property_id_key ON public.property_ranking_criteria USING btree (property_id)` |
+
+### Foreign Keys
+
+- `property_ranking_criteria_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `property_repeat_views`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 21
+- Indexes: 5
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `user_id` | `uuid` | YES | `—` | — |
+| `session_id` | `text` | YES | `—` | — |
+| `view_number` | `integer` | NO | `—` | — |
+| `time_since_last_view_hours` | `numeric` | YES | `—` | — |
+| `total_time_on_page_seconds` | `integer` | YES | `—` | — |
+| `scrolled_percentage` | `integer` | YES | `—` | — |
+| `images_viewed` | `integer` | YES | `—` | — |
+| `video_played` | `boolean` | YES | `false` | — |
+| `floor_plan_viewed` | `boolean` | YES | `false` | — |
+| `amenities_expanded` | `boolean` | YES | `false` | — |
+| `location_map_interacted` | `boolean` | YES | `false` | — |
+| `contact_revealed` | `boolean` | YES | `false` | — |
+| `favorite_added` | `boolean` | YES | `false` | — |
+| `inquiry_sent` | `boolean` | YES | `false` | — |
+| `comparison_added` | `boolean` | YES | `false` | — |
+| `shared` | `boolean` | YES | `false` | — |
+| `device_type` | `text` | YES | `—` | — |
+| `referrer_source` | `text` | YES | `—` | — |
+| `viewed_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51118_1_not_null`: N/A
+- `2200_51118_2_not_null`: N/A
+- `2200_51118_5_not_null`: N/A
+- `property_repeat_views_device_type_check`: CHECK ((device_type = ANY (ARRAY['mobile'::text, 'tablet'::text, 'desktop'::text])))
+
+**FOREIGN KEY:**
+- `property_repeat_views_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_repeat_views_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `property_repeat_views_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_repeat_actions` | btree | property_id | — | — | `CREATE INDEX idx_property_repeat_actions ON public.property_repeat_views USING btree (property_id) WHERE ((contact_revealed = true) OR (inquiry_sent = true))` |
+| `idx_property_repeat_number` | btree | property_id, user_id, view_number | — | — | `CREATE INDEX idx_property_repeat_number ON public.property_repeat_views USING btree (property_id, user_id, view_number)` |
+| `idx_property_repeat_property` | btree | property_id | — | — | `CREATE INDEX idx_property_repeat_property ON public.property_repeat_views USING btree (property_id)` |
+| `idx_property_repeat_user` | btree | user_id | — | — | `CREATE INDEX idx_property_repeat_user ON public.property_repeat_views USING btree (user_id)` |
+| `property_repeat_views_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_repeat_views_pkey ON public.property_repeat_views USING btree (id)` |
+
+### Foreign Keys
+
+- `property_repeat_views_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_repeat_views_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+---
+
+## `property_reports`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 3
+- Foreign Keys: 3
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `reported_by` | `uuid` | YES | `—` | — |
+| `report_type` | `text` | NO | `—` | — |
+| `description` | `text` | NO | `—` | — |
+| `evidence_urls` | `ARRAY` | YES | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `reviewed_by` | `uuid` | YES | `—` | — |
+| `action_taken` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `resolved_at` | `timestamp with time zone` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50787_1_not_null`: N/A
+- `2200_50787_2_not_null`: N/A
+- `2200_50787_4_not_null`: N/A
+- `2200_50787_5_not_null`: N/A
+- `property_reports_report_type_check`: CHECK ((report_type = ANY (ARRAY['fake_listing'::text, 'wrong_information'::text, 'inappropriate_content'::text, 'duplicate_listing'::text, 'spam'::text, 'fraud'::text, 'sold_property'::text, 'other'::text])))
+- `property_reports_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'investigating'::text, 'resolved'::text, 'dismissed'::text])))
+
+**FOREIGN KEY:**
+- `property_reports_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_reports_reported_by_fkey`: FOREIGN KEY (reported_by) REFERENCES profiles(id) ON DELETE SET NULL
+- `property_reports_reviewed_by_fkey`: FOREIGN KEY (reviewed_by) REFERENCES admins(id)
+
+**PRIMARY KEY:**
+- `property_reports_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_reports_property` | btree | property_id | — | — | `CREATE INDEX idx_property_reports_property ON public.property_reports USING btree (property_id)` |
+| `idx_property_reports_status` | btree | status | — | — | `CREATE INDEX idx_property_reports_status ON public.property_reports USING btree (status)` |
+| `property_reports_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_reports_pkey ON public.property_reports USING btree (id)` |
+
+### Foreign Keys
+
+- `property_reports_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_reports_reported_by_fkey`:
+  - Columns: `reported_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `property_reports_reviewed_by_fkey`:
+  - Columns: `reviewed_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `property_shares`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 6
+- Indexes: 2
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `shared_by` | `uuid` | YES | `—` | — |
+| `platform` | `text` | NO | `—` | — |
+| `ip_address` | `inet` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50887_1_not_null`: N/A
+- `2200_50887_2_not_null`: N/A
+- `2200_50887_4_not_null`: N/A
+- `property_shares_platform_check`: CHECK ((platform = ANY (ARRAY['whatsapp'::text, 'facebook'::text, 'twitter'::text, 'linkedin'::text, 'email'::text, 'copy_link'::text, 'sms'::text])))
+
+**FOREIGN KEY:**
+- `property_shares_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_shares_shared_by_fkey`: FOREIGN KEY (shared_by) REFERENCES profiles(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `property_shares_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_shares_property` | btree | property_id | — | — | `CREATE INDEX idx_property_shares_property ON public.property_shares USING btree (property_id)` |
+| `property_shares_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_shares_pkey ON public.property_shares USING btree (id)` |
+
+### Foreign Keys
+
+- `property_shares_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_shares_shared_by_fkey`:
+  - Columns: `shared_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+---
+
+## `property_valuations`
+
+> Automated and manual property valuation tracking
+
+**Statistics:**
+- Rows: ~0
+- Columns: 37
+- Indexes: 5
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `estimated_value` | `numeric` | NO | `—` | — |
+| `confidence_score` | `numeric` | YES | `—` | — |
+| `valuation_method` | `text` | YES | `—` | — |
+| `min_estimated_value` | `numeric` | YES | `—` | — |
+| `max_estimated_value` | `numeric` | YES | `—` | — |
+| `comparable_properties_used` | `integer` | YES | `—` | — |
+| `comparable_property_ids` | `ARRAY` | YES | `—` | — |
+| `avg_comparable_price` | `numeric` | YES | `—` | — |
+| `base_price_per_sqft` | `numeric` | YES | `—` | — |
+| `location_adjustment_percentage` | `numeric` | YES | `—` | — |
+| `age_adjustment_percentage` | `numeric` | YES | `—` | — |
+| `amenities_adjustment_percentage` | `numeric` | YES | `—` | — |
+| `condition_adjustment_percentage` | `numeric` | YES | `—` | — |
+| `market_trend_adjustment_percentage` | `numeric` | YES | `—` | — |
+| `locality_avg_price_per_sqft` | `numeric` | YES | `—` | — |
+| `locality_price_growth_1y` | `numeric` | YES | `—` | — |
+| `proximity_premium_percentage` | `numeric` | YES | `—` | — |
+| `property_age_years` | `integer` | YES | `—` | — |
+| `maintenance_condition` | `text` | YES | `—` | — |
+| `unique_selling_points` | `ARRAY` | YES | `—` | — |
+| `market_temperature` | `text` | YES | `—` | — |
+| `seasonal_adjustment` | `numeric` | YES | `—` | — |
+| `land_value` | `numeric` | YES | `—` | — |
+| `construction_value` | `numeric` | YES | `—` | — |
+| `depreciation_value` | `numeric` | YES | `—` | — |
+| `appreciation_value` | `numeric` | YES | `—` | — |
+| `model_version` | `text` | YES | `—` | — |
+| `model_accuracy` | `numeric` | YES | `—` | — |
+| `feature_importance` | `jsonb` | YES | `—` | — |
+| `validation_status` | `text` | YES | `—` | — |
+| `validated_by` | `uuid` | YES | `—` | — |
+| `validation_notes` | `text` | YES | `—` | — |
+| `valuation_date` | `date` | NO | `CURRENT_DATE` | — |
+| `valid_until` | `date` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51193_1_not_null`: N/A
+- `2200_51193_2_not_null`: N/A
+- `2200_51193_35_not_null`: N/A
+- `2200_51193_3_not_null`: N/A
+- `property_valuations_maintenance_condition_check`: CHECK ((maintenance_condition = ANY (ARRAY['excellent'::text, 'good'::text, 'average'::text, 'needs_work'::text, 'poor'::text])))
+- `property_valuations_market_temperature_check`: CHECK ((market_temperature = ANY (ARRAY['buyer_market'::text, 'balanced'::text, 'seller_market'::text, 'hot_market'::text])))
+- `property_valuations_validation_status_check`: CHECK ((validation_status = ANY (ARRAY['pending'::text, 'validated'::text, 'disputed'::text, 'updated'::text])))
+- `property_valuations_valuation_method_check`: CHECK ((valuation_method = ANY (ARRAY['automated_ml'::text, 'comparative_market_analysis'::text, 'manual_assessment'::text, 'hybrid'::text, 'professional_appraisal'::text])))
+
+**FOREIGN KEY:**
+- `property_valuations_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_valuations_validated_by_fkey`: FOREIGN KEY (validated_by) REFERENCES profiles(id)
+
+**PRIMARY KEY:**
+- `property_valuations_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_valuations_confidence` | btree | confidence_score | — | — | `CREATE INDEX idx_valuations_confidence ON public.property_valuations USING btree (confidence_score DESC)` |
+| `idx_valuations_date` | btree | valuation_date | — | — | `CREATE INDEX idx_valuations_date ON public.property_valuations USING btree (valuation_date DESC)` |
+| `idx_valuations_method` | btree | valuation_method | — | — | `CREATE INDEX idx_valuations_method ON public.property_valuations USING btree (valuation_method)` |
+| `idx_valuations_property` | btree | property_id, valuation_date | — | — | `CREATE INDEX idx_valuations_property ON public.property_valuations USING btree (property_id, valuation_date DESC)` |
+| `property_valuations_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_valuations_pkey ON public.property_valuations USING btree (id)` |
+
+### Foreign Keys
+
+- `property_valuations_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_valuations_validated_by_fkey`:
+  - Columns: `validated_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `property_verifications`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 3
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `verification_type` | `text` | NO | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `verified_by` | `uuid` | YES | `—` | — |
+| `verification_agency` | `text` | YES | `—` | — |
+| `verification_number` | `text` | YES | `—` | — |
+| `report_url` | `text` | YES | `—` | — |
+| `findings` | `jsonb` | YES | `—` | — |
+| `valid_until` | `timestamp with time zone` | YES | `—` | — |
+| `cost` | `numeric` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `verified_at` | `timestamp with time zone` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50598_1_not_null`: N/A
+- `2200_50598_2_not_null`: N/A
+- `2200_50598_3_not_null`: N/A
+- `property_verifications_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'in_progress'::text, 'verified'::text, 'rejected'::text, 'expired'::text])))
+- `property_verifications_verification_type_check`: CHECK ((verification_type = ANY (ARRAY['title_verification'::text, 'legal_clearance'::text, 'encumbrance_check'::text, 'property_tax_verification'::text, 'building_approval'::text, 'structural_audit'::text, 'valuation_report'::text, 'tenant_verification'::text, 'site_inspection'::text])))
+
+**FOREIGN KEY:**
+- `property_verifications_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_verifications_verified_by_fkey`: FOREIGN KEY (verified_by) REFERENCES profiles(id)
+
+**PRIMARY KEY:**
+- `property_verifications_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_verifications_property` | btree | property_id | — | — | `CREATE INDEX idx_property_verifications_property ON public.property_verifications USING btree (property_id)` |
+| `idx_property_verifications_status` | btree | verification_type, status | — | — | `CREATE INDEX idx_property_verifications_status ON public.property_verifications USING btree (status, verification_type)` |
+| `property_verifications_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_verifications_pkey ON public.property_verifications USING btree (id)` |
+
+### Foreign Keys
+
+- `property_verifications_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_verifications_verified_by_fkey`:
+  - Columns: `verified_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 
 ---
 
@@ -2049,6 +3375,141 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+
+---
+
+## `property_visits`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 3
+- Foreign Keys: 3
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `visitor_id` | `uuid` | YES | `—` | — |
+| `visit_date` | `date` | NO | `—` | — |
+| `visit_time` | `time without time zone` | YES | `—` | — |
+| `visit_type` | `text` | YES | `—` | — |
+| `status` | `text` | YES | `'scheduled'::text` | — |
+| `accompanied_by` | `uuid` | YES | `—` | — |
+| `feedback` | `text` | YES | `—` | — |
+| `interest_level` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50733_1_not_null`: N/A
+- `2200_50733_2_not_null`: N/A
+- `2200_50733_4_not_null`: N/A
+- `property_visits_interest_level_check`: CHECK ((interest_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
+- `property_visits_status_check`: CHECK ((status = ANY (ARRAY['scheduled'::text, 'completed'::text, 'cancelled'::text, 'no_show'::text])))
+- `property_visits_visit_type_check`: CHECK ((visit_type = ANY (ARRAY['scheduled'::text, 'walk_in'::text, 'virtual'::text])))
+
+**FOREIGN KEY:**
+- `property_visits_accompanied_by_fkey`: FOREIGN KEY (accompanied_by) REFERENCES profiles(id)
+- `property_visits_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `property_visits_visitor_id_fkey`: FOREIGN KEY (visitor_id) REFERENCES profiles(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `property_visits_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_property_visits_property` | btree | property_id, visit_date | — | — | `CREATE INDEX idx_property_visits_property ON public.property_visits USING btree (property_id, visit_date)` |
+| `idx_property_visits_visitor` | btree | visitor_id | — | — | `CREATE INDEX idx_property_visits_visitor ON public.property_visits USING btree (visitor_id)` |
+| `property_visits_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_visits_pkey ON public.property_visits USING btree (id)` |
+
+### Foreign Keys
+
+- `property_visits_accompanied_by_fkey`:
+  - Columns: `accompanied_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `property_visits_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `property_visits_visitor_id_fkey`:
+  - Columns: `visitor_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+---
+
+## `referrals`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 12
+- Indexes: 4
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `referrer_id` | `uuid` | NO | `—` | — |
+| `referred_id` | `uuid` | YES | `—` | — |
+| `referral_code` | `text` | NO | `—` | — |
+| `referred_email` | `text` | YES | `—` | — |
+| `referred_phone` | `text` | YES | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `reward_type` | `text` | YES | `—` | — |
+| `reward_amount` | `numeric` | YES | `—` | — |
+| `credited_at` | `timestamp with time zone` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `converted_at` | `timestamp with time zone` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50908_1_not_null`: N/A
+- `2200_50908_2_not_null`: N/A
+- `2200_50908_4_not_null`: N/A
+- `referrals_reward_type_check`: CHECK ((reward_type = ANY (ARRAY['credits'::text, 'cash'::text, 'discount'::text])))
+- `referrals_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'registered'::text, 'converted'::text, 'expired'::text])))
+
+**FOREIGN KEY:**
+- `referrals_referred_id_fkey`: FOREIGN KEY (referred_id) REFERENCES profiles(id) ON DELETE SET NULL
+- `referrals_referrer_id_fkey`: FOREIGN KEY (referrer_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `referrals_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `referrals_referral_code_key`: UNIQUE (referral_code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_referrals_code` | btree | referral_code | — | — | `CREATE INDEX idx_referrals_code ON public.referrals USING btree (referral_code)` |
+| `idx_referrals_referrer` | btree | referrer_id | — | — | `CREATE INDEX idx_referrals_referrer ON public.referrals USING btree (referrer_id)` |
+| `referrals_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX referrals_pkey ON public.referrals USING btree (id)` |
+| `referrals_referral_code_key` | btree | referral_code | ✓ | — | `CREATE UNIQUE INDEX referrals_referral_code_key ON public.referrals USING btree (referral_code)` |
+
+### Foreign Keys
+
+- `referrals_referred_id_fkey`:
+  - Columns: `referred_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `referrals_referrer_id_fkey`:
+  - Columns: `referrer_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -2118,6 +3579,95 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `parent_region_id` → `regions(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+
+---
+
+## `repeat_customer_analytics`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 31
+- Indexes: 7
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `total_visits` | `integer` | YES | `0` | — |
+| `visits_last_7_days` | `integer` | YES | `0` | — |
+| `visits_last_30_days` | `integer` | YES | `0` | — |
+| `visits_last_90_days` | `integer` | YES | `0` | — |
+| `consecutive_days_active` | `integer` | YES | `0` | — |
+| `longest_streak_days` | `integer` | YES | `0` | — |
+| `total_unique_properties_viewed` | `integer` | YES | `0` | — |
+| `properties_viewed_multiple_times` | `integer` | YES | `0` | — |
+| `avg_views_per_property` | `numeric` | YES | `—` | — |
+| `most_viewed_property_id` | `uuid` | YES | `—` | — |
+| `most_viewed_property_count` | `integer` | YES | `0` | — |
+| `consistent_search_criteria` | `boolean` | YES | `false` | — |
+| `search_criteria_changes` | `integer` | YES | `0` | — |
+| `location_focus_count` | `integer` | YES | `0` | — |
+| `price_range_stability` | `numeric` | YES | `—` | — |
+| `avg_days_between_visits` | `numeric` | YES | `—` | — |
+| `visit_frequency_trend` | `text` | YES | `—` | — |
+| `inquiries_per_property_viewed` | `numeric` | YES | `—` | — |
+| `conversion_funnel_stage` | `text` | YES | `—` | — |
+| `is_repeat_customer` | `boolean` | YES | `false` | — |
+| `repeat_customer_type` | `text` | YES | `—` | — |
+| `previous_properties_bought` | `integer` | YES | `0` | — |
+| `previous_properties_sold` | `integer` | YES | `0` | — |
+| `total_transaction_value` | `numeric` | YES | `0` | — |
+| `customer_lifetime_value` | `numeric` | YES | `0` | — |
+| `churn_risk_score` | `numeric` | YES | `0` | — |
+| `reactivation_potential` | `numeric` | YES | `0` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51069_1_not_null`: N/A
+- `2200_51069_2_not_null`: N/A
+- `repeat_customer_analytics_conversion_funnel_stage_check`: CHECK ((conversion_funnel_stage = ANY (ARRAY['awareness'::text, 'consideration'::text, 'decision'::text, 'action'::text, 'converted'::text])))
+- `repeat_customer_analytics_repeat_customer_type_check`: CHECK ((repeat_customer_type = ANY (ARRAY['investor'::text, 'upgrader'::text, 'downgrader'::text, 'flipper'::text, 'multiple_property_owner'::text])))
+- `repeat_customer_analytics_visit_frequency_trend_check`: CHECK ((visit_frequency_trend = ANY (ARRAY['increasing'::text, 'stable'::text, 'decreasing'::text, 'sporadic'::text])))
+
+**FOREIGN KEY:**
+- `repeat_customer_analytics_most_viewed_property_id_fkey`: FOREIGN KEY (most_viewed_property_id) REFERENCES properties(id)
+- `repeat_customer_analytics_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `repeat_customer_analytics_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `repeat_customer_analytics_user_id_key`: UNIQUE (user_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_repeat_churn` | btree | churn_risk_score | — | — | `CREATE INDEX idx_repeat_churn ON public.repeat_customer_analytics USING btree (churn_risk_score DESC)` |
+| `idx_repeat_customer_user` | btree | user_id | — | — | `CREATE INDEX idx_repeat_customer_user ON public.repeat_customer_analytics USING btree (user_id)` |
+| `idx_repeat_frequency` | btree | visit_frequency_trend | — | — | `CREATE INDEX idx_repeat_frequency ON public.repeat_customer_analytics USING btree (visit_frequency_trend)` |
+| `idx_repeat_stage` | btree | conversion_funnel_stage | — | — | `CREATE INDEX idx_repeat_stage ON public.repeat_customer_analytics USING btree (conversion_funnel_stage)` |
+| `idx_repeat_visits` | btree | visits_last_30_days | — | — | `CREATE INDEX idx_repeat_visits ON public.repeat_customer_analytics USING btree (visits_last_30_days DESC)` |
+| `repeat_customer_analytics_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX repeat_customer_analytics_pkey ON public.repeat_customer_analytics USING btree (id)` |
+| `repeat_customer_analytics_user_id_key` | btree | user_id | ✓ | — | `CREATE UNIQUE INDEX repeat_customer_analytics_user_id_key ON public.repeat_customer_analytics USING btree (user_id)` |
+
+### Foreign Keys
+
+- `repeat_customer_analytics_most_viewed_property_id_fkey`:
+  - Columns: `most_viewed_property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `repeat_customer_analytics_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -2204,6 +3754,62 @@ This document details the live schema of the production Supabase database. All A
 |------|------|---------|--------|---------|------------|
 | `roles_name_key` | btree | name | ✓ | — | `CREATE UNIQUE INDEX roles_name_key ON public.roles USING btree (name)` |
 | `roles_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)` |
+
+---
+
+## `saved_searches`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 2
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `search_name` | `text` | NO | `—` | — |
+| `filters` | `jsonb` | NO | `—` | — |
+| `notification_enabled` | `boolean` | YES | `true` | — |
+| `notification_frequency` | `text` | YES | `'daily'::text` | — |
+| `last_notified_at` | `timestamp with time zone` | YES | `—` | — |
+| `match_count` | `integer` | YES | `0` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_50712_1_not_null`: N/A
+- `2200_50712_2_not_null`: N/A
+- `2200_50712_3_not_null`: N/A
+- `2200_50712_4_not_null`: N/A
+- `saved_searches_notification_frequency_check`: CHECK ((notification_frequency = ANY (ARRAY['instant'::text, 'daily'::text, 'weekly'::text])))
+
+**FOREIGN KEY:**
+- `saved_searches_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `saved_searches_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_saved_searches_user` | btree | user_id, is_active | — | — | `CREATE INDEX idx_saved_searches_user ON public.saved_searches USING btree (user_id, is_active)` |
+| `saved_searches_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX saved_searches_pkey ON public.saved_searches USING btree (id)` |
+
+### Foreign Keys
+
+- `saved_searches_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -2497,9 +4103,9 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~0
-- Columns: 28
+- Columns: 31
 - Indexes: 8
-- Foreign Keys: 4
+- Foreign Keys: 7
 - Triggers: 2
 
 ### Columns
@@ -2534,6 +4140,9 @@ This document details the live schema of the production Supabase database. All A
 | `metadata` | `jsonb` | YES | `—` | — |
 | `created_at` | `timestamp with time zone` | YES | `now()` | — |
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+| `lead_id` | `uuid` | YES | `—` | — |
+| `builder_id` | `uuid` | YES | `—` | — |
+| `project_id` | `uuid` | YES | `—` | — |
 
 ### Constraints
 
@@ -2548,8 +4157,11 @@ This document details the live schema of the production Supabase database. All A
 - `transactions_type_check`: CHECK ((type = ANY (ARRAY['credit_purchase'::text, 'subscription_purchase'::text, 'subscription_renewal'::text, 'property_listing_fee'::text, 'contact_view_owner'::text, 'contact_view_buyer'::text, 'property_boost'::text, 'featured_listing'::text, 'verification_service'::text, 'legal_service'::text, 'refund'::text, 'admin_adjustment'::text, 'referral_bonus'::text, 'promotional_credit'::text, 'regional_campaign_reward'::text])))
 
 **FOREIGN KEY:**
+- `transactions_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id)
 - `transactions_coupon_id_fkey`: FOREIGN KEY (coupon_id) REFERENCES coupons(id)
+- `transactions_lead_id_fkey`: FOREIGN KEY (lead_id) REFERENCES property_leads(id)
 - `transactions_pricing_rule_id_fkey`: FOREIGN KEY (pricing_rule_id) REFERENCES pricing_rules(id)
+- `transactions_project_id_fkey`: FOREIGN KEY (project_id) REFERENCES projects(id)
 - `transactions_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
 - `transactions_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
 
@@ -2571,12 +4183,24 @@ This document details the live schema of the production Supabase database. All A
 
 ### Foreign Keys
 
+- `transactions_builder_id_fkey`:
+  - Columns: `builder_id` → `builders(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `transactions_coupon_id_fkey`:
   - Columns: `coupon_id` → `coupons(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `transactions_lead_id_fkey`:
+  - Columns: `lead_id` → `property_leads(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `transactions_pricing_rule_id_fkey`:
   - Columns: `pricing_rule_id` → `pricing_rules(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `transactions_project_id_fkey`:
+  - Columns: `project_id` → `projects(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
 - `transactions_region_id_fkey`:
@@ -2602,6 +4226,181 @@ This document details the live schema of the production Supabase database. All A
 ```sql
   EXECUTE FUNCTION update_wallet_timestamp()
 ```
+
+---
+
+## `undervalued_properties`
+
+> Identifies properties with excellent value - priced below market estimates
+
+**Statistics:**
+- Rows: ~0
+- Columns: 27
+- Indexes: 6
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `property_id` | `uuid` | NO | `—` | — |
+| `listed_price` | `numeric` | NO | `—` | — |
+| `estimated_market_value` | `numeric` | NO | `—` | — |
+| `undervaluation_amount` | `numeric` | NO | `—` | — |
+| `undervaluation_percentage` | `numeric` | NO | `—` | — |
+| `deal_rating` | `text` | YES | `—` | — |
+| `savings_potential` | `numeric` | YES | `—` | — |
+| `undervaluation_reasons` | `ARRAY` | YES | `—` | — |
+| `confidence_level` | `text` | YES | `—` | — |
+| `comparable_properties_count` | `integer` | YES | `—` | — |
+| `data_quality_score` | `numeric` | YES | `—` | — |
+| `locality_price_trend` | `text` | YES | `—` | — |
+| `time_to_market_correction_days` | `integer` | YES | `—` | — |
+| `competition_level` | `text` | YES | `—` | — |
+| `investment_opportunity_score` | `numeric` | YES | `—` | — |
+| `risk_adjusted_score` | `numeric` | YES | `—` | — |
+| `expected_appreciation_1y_percentage` | `numeric` | YES | `—` | — |
+| `expected_appreciation_3y_percentage` | `numeric` | YES | `—` | — |
+| `discovered_at` | `timestamp with time zone` | YES | `now()` | — |
+| `algorithm_version` | `text` | YES | `—` | — |
+| `manual_verification_status` | `text` | YES | `—` | — |
+| `verified_by` | `uuid` | YES | `—` | — |
+| `alert_sent` | `boolean` | YES | `false` | — |
+| `alert_sent_to_users` | `ARRAY` | YES | `—` | — |
+| `expires_at` | `timestamp with time zone` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51419_1_not_null`: N/A
+- `2200_51419_2_not_null`: N/A
+- `2200_51419_3_not_null`: N/A
+- `2200_51419_4_not_null`: N/A
+- `2200_51419_5_not_null`: N/A
+- `2200_51419_6_not_null`: N/A
+- `undervalued_properties_competition_level_check`: CHECK ((competition_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))
+- `undervalued_properties_confidence_level_check`: CHECK ((confidence_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
+- `undervalued_properties_deal_rating_check`: CHECK ((deal_rating = ANY (ARRAY['hidden_gem'::text, 'excellent_value'::text, 'good_value'::text, 'fair_value'::text])))
+- `undervalued_properties_manual_verification_status_check`: CHECK ((manual_verification_status = ANY (ARRAY['pending'::text, 'verified'::text, 'rejected'::text, 'expired'::text])))
+
+**FOREIGN KEY:**
+- `undervalued_properties_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+- `undervalued_properties_verified_by_fkey`: FOREIGN KEY (verified_by) REFERENCES profiles(id)
+
+**PRIMARY KEY:**
+- `undervalued_properties_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_undervalued_expires_at` | btree | expires_at | — | — | `CREATE INDEX idx_undervalued_expires_at ON public.undervalued_properties USING btree (expires_at)` |
+| `idx_undervalued_opportunity` | btree | investment_opportunity_score | — | — | `CREATE INDEX idx_undervalued_opportunity ON public.undervalued_properties USING btree (investment_opportunity_score DESC)` |
+| `idx_undervalued_percentage` | btree | undervaluation_percentage | — | — | `CREATE INDEX idx_undervalued_percentage ON public.undervalued_properties USING btree (undervaluation_percentage DESC)` |
+| `idx_undervalued_property` | btree | property_id | — | — | `CREATE INDEX idx_undervalued_property ON public.undervalued_properties USING btree (property_id)` |
+| `idx_undervalued_rating` | btree | deal_rating | — | — | `CREATE INDEX idx_undervalued_rating ON public.undervalued_properties USING btree (deal_rating)` |
+| `undervalued_properties_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX undervalued_properties_pkey ON public.undervalued_properties USING btree (id)` |
+
+### Foreign Keys
+
+- `undervalued_properties_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `undervalued_properties_verified_by_fkey`:
+  - Columns: `verified_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `user_engagement_metrics`
+
+> Tracks detailed user behavior and engagement patterns for identifying repeat customers and high-intent users
+
+**Statistics:**
+- Rows: ~0
+- Columns: 36
+- Indexes: 6
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `user_id` | `uuid` | NO | `—` | — |
+| `total_sessions` | `integer` | YES | `0` | — |
+| `total_page_views` | `integer` | YES | `0` | — |
+| `total_property_views` | `integer` | YES | `0` | — |
+| `unique_properties_viewed` | `integer` | YES | `0` | — |
+| `total_searches` | `integer` | YES | `0` | — |
+| `saved_searches_count` | `integer` | YES | `0` | — |
+| `avg_search_frequency_days` | `numeric` | YES | `—` | — |
+| `avg_session_duration_seconds` | `integer` | YES | `—` | — |
+| `avg_properties_per_session` | `numeric` | YES | `—` | — |
+| `property_detail_views` | `integer` | YES | `0` | — |
+| `contact_reveals` | `integer` | YES | `0` | — |
+| `favorites_count` | `integer` | YES | `0` | — |
+| `inquiries_sent` | `integer` | YES | `0` | — |
+| `site_visits_scheduled` | `integer` | YES | `0` | — |
+| `comparisons_made` | `integer` | YES | `0` | — |
+| `properties_listed` | `integer` | YES | `0` | — |
+| `valuation_requests` | `integer` | YES | `0` | — |
+| `documents_uploaded` | `integer` | YES | `0` | — |
+| `engagement_score` | `numeric` | YES | `0` | — |
+| `intent_score` | `numeric` | YES | `0` | — |
+| `user_segment` | `text` | YES | `—` | — |
+| `buying_intent` | `text` | YES | `—` | — |
+| `selling_intent` | `text` | YES | `—` | — |
+| `first_activity_at` | `timestamp with time zone` | YES | `—` | — |
+| `last_activity_at` | `timestamp with time zone` | YES | `—` | — |
+| `most_active_day_of_week` | `integer` | YES | `—` | — |
+| `most_active_hour_of_day` | `integer` | YES | `—` | — |
+| `preferred_locations` | `ARRAY` | YES | `—` | — |
+| `preferred_property_types` | `ARRAY` | YES | `—` | — |
+| `preferred_bhk_types` | `ARRAY` | YES | `—` | — |
+| `budget_range_min` | `numeric` | YES | `—` | — |
+| `budget_range_max` | `numeric` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_51029_1_not_null`: N/A
+- `2200_51029_2_not_null`: N/A
+- `user_engagement_metrics_buying_intent_check`: CHECK ((buying_intent = ANY (ARRAY['none'::text, 'low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
+- `user_engagement_metrics_selling_intent_check`: CHECK ((selling_intent = ANY (ARRAY['none'::text, 'low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
+- `user_engagement_metrics_user_segment_check`: CHECK ((user_segment = ANY (ARRAY['cold_lead'::text, 'warm_lead'::text, 'hot_lead'::text, 'super_hot'::text, 'active_buyer'::text, 'active_seller'::text, 'investor'::text, 'dormant'::text])))
+
+**FOREIGN KEY:**
+- `user_engagement_metrics_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `user_engagement_metrics_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_user_engagement_intent` | btree | buying_intent, selling_intent | — | — | `CREATE INDEX idx_user_engagement_intent ON public.user_engagement_metrics USING btree (buying_intent, selling_intent)` |
+| `idx_user_engagement_last_active` | btree | last_activity_at | — | — | `CREATE INDEX idx_user_engagement_last_active ON public.user_engagement_metrics USING btree (last_activity_at DESC)` |
+| `idx_user_engagement_score` | btree | engagement_score, intent_score | — | — | `CREATE INDEX idx_user_engagement_score ON public.user_engagement_metrics USING btree (engagement_score DESC, intent_score DESC)` |
+| `idx_user_engagement_segment` | btree | user_segment | — | — | `CREATE INDEX idx_user_engagement_segment ON public.user_engagement_metrics USING btree (user_segment)` |
+| `idx_user_engagement_user` | btree | user_id | — | — | `CREATE INDEX idx_user_engagement_user ON public.user_engagement_metrics USING btree (user_id)` |
+| `user_engagement_metrics_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX user_engagement_metrics_pkey ON public.user_engagement_metrics USING btree (id)` |
+
+### Foreign Keys
+
+- `user_engagement_metrics_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 

@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2025-12-31T07:01:49.165Z
+// Generated: 2026-01-01T07:01:39.315Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -153,6 +153,9 @@ export interface Database {
       password_hash?: string;
       full_name?: string;
       last_login_at?: string | Date;
+      specialization?: any;
+      assigned_regions?: any;
+      assigned_cities?: any;
     };
     Insert: {
       email: string;
@@ -165,6 +168,9 @@ export interface Database {
       password_hash?: string;
       full_name?: string;
       last_login_at?: any;
+      specialization?: any;
+      assigned_regions?: any;
+      assigned_cities?: any;
     };
   };
 
@@ -253,6 +259,67 @@ export interface Database {
       like_count?: number;
       comment_count?: number;
       published_at?: any;
+      updated_at?: any;
+    };
+  };
+
+  builders: {
+    Row: {
+      id: string;
+      name: string;
+      company_name: string;
+      registration_number?: string;
+      rera_number?: string;
+      pan_number?: string;
+      gst_number?: string;
+      logo_url?: string;
+      description?: string;
+      established_year?: number;
+      total_projects?: number;
+      completed_projects?: number;
+      ongoing_projects?: number;
+      total_units_delivered?: number;
+      specialization?: any;
+      operating_cities?: any;
+      website_url?: string;
+      contact_email?: string;
+      contact_phone?: string;
+      office_address?: string;
+      rating?: number;
+      total_ratings?: number;
+      is_verified?: boolean;
+      is_featured?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      company_name: string;
+    };
+    Update: {
+      name?: string;
+      company_name?: string;
+      registration_number?: string;
+      rera_number?: string;
+      pan_number?: string;
+      gst_number?: string;
+      logo_url?: string;
+      description?: string;
+      established_year?: number;
+      total_projects?: number;
+      completed_projects?: number;
+      ongoing_projects?: number;
+      total_units_delivered?: number;
+      specialization?: any;
+      operating_cities?: any;
+      website_url?: string;
+      contact_email?: string;
+      contact_phone?: string;
+      office_address?: string;
+      rating?: number;
+      total_ratings?: number;
+      is_verified?: boolean;
+      is_featured?: boolean;
       updated_at?: any;
     };
   };
@@ -412,6 +479,233 @@ export interface Database {
     };
   };
 
+  hot_properties: {
+    Row: {
+      id: string;
+      property_id: string;
+      heat_score: number;
+      views_spike_percentage?: number;
+      inquiries_spike_percentage?: number;
+      favorites_spike_percentage?: number;
+      views_per_hour?: number;
+      inquiries_per_day?: number;
+      unique_viewers_per_day?: number;
+      comparing_users_count?: number;
+      saved_by_users_count?: number;
+      sharing_frequency?: number;
+      price_recently_reduced?: boolean;
+      new_listing?: boolean;
+      limited_availability?: boolean;
+      hot_reasons?: any;
+      heat_trend?: string;
+      days_as_hot?: number;
+      peak_heat_score?: number;
+      estimated_days_until_sold?: number;
+      probability_sold_this_week?: number;
+      is_currently_hot?: boolean;
+      became_hot_at?: string | Date;
+      cooled_down_at?: string | Date;
+      calculated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      property_id?: string;
+      heat_score?: number;
+      views_spike_percentage?: number;
+      inquiries_spike_percentage?: number;
+      favorites_spike_percentage?: number;
+      views_per_hour?: number;
+      inquiries_per_day?: number;
+      unique_viewers_per_day?: number;
+      comparing_users_count?: number;
+      saved_by_users_count?: number;
+      sharing_frequency?: number;
+      price_recently_reduced?: boolean;
+      new_listing?: boolean;
+      limited_availability?: boolean;
+      hot_reasons?: any;
+      heat_trend?: string;
+      days_as_hot?: number;
+      peak_heat_score?: number;
+      estimated_days_until_sold?: number;
+      probability_sold_this_week?: number;
+      is_currently_hot?: boolean;
+      became_hot_at?: any;
+      cooled_down_at?: any;
+      calculated_at?: any;
+    };
+  };
+
+  loan_calculations: {
+    Row: {
+      id: string;
+      user_id?: string;
+      property_id?: string;
+      property_price: number;
+      down_payment: number;
+      loan_amount: number;
+      interest_rate: number;
+      tenure_years: number;
+      emi_amount: number;
+      total_interest?: number;
+      total_amount?: number;
+      calculation_data?: any;
+      created_at?: string | Date;
+    };
+    Insert: {
+      property_price: number;
+      down_payment: number;
+      loan_amount: number;
+      interest_rate: number;
+      tenure_years: number;
+      emi_amount: number;
+    };
+    Update: {
+      user_id?: string;
+      property_id?: string;
+      property_price?: number;
+      down_payment?: number;
+      loan_amount?: number;
+      interest_rate?: number;
+      tenure_years?: number;
+      emi_amount?: number;
+      total_interest?: number;
+      total_amount?: number;
+      calculation_data?: any;
+    };
+  };
+
+  localities: {
+    Row: {
+      id: string;
+      name: string;
+      city: string;
+      state: string;
+      region_id?: string;
+      pincode?: string;
+      latitude?: number;
+      longitude?: number;
+      boundary_geojson?: any;
+      locality_type?: string;
+      tier_rating?: number;
+      avg_price_per_sqft?: number;
+      price_trend_6m?: number;
+      price_trend_1y?: number;
+      total_properties?: number;
+      available_properties?: number;
+      infrastructure_score?: number;
+      connectivity_score?: number;
+      safety_score?: number;
+      amenities_score?: number;
+      is_gated_community?: boolean;
+      is_verified?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      city: string;
+      state: string;
+    };
+    Update: {
+      name?: string;
+      city?: string;
+      state?: string;
+      region_id?: string;
+      pincode?: string;
+      latitude?: number;
+      longitude?: number;
+      boundary_geojson?: any;
+      locality_type?: string;
+      tier_rating?: number;
+      avg_price_per_sqft?: number;
+      price_trend_6m?: number;
+      price_trend_1y?: number;
+      total_properties?: number;
+      available_properties?: number;
+      infrastructure_score?: number;
+      connectivity_score?: number;
+      safety_score?: number;
+      amenities_score?: number;
+      is_gated_community?: boolean;
+      is_verified?: boolean;
+      updated_at?: any;
+    };
+  };
+
+  locality_amenities: {
+    Row: {
+      id: string;
+      locality_id: string;
+      category: string;
+      name: string;
+      distance_km: number;
+      rating?: number;
+      latitude?: number;
+      longitude?: number;
+      is_verified?: boolean;
+      created_at?: string | Date;
+    };
+    Insert: {
+      category: string;
+      name: string;
+      distance_km: number;
+    };
+    Update: {
+      locality_id?: string;
+      category?: string;
+      name?: string;
+      distance_km?: number;
+      rating?: number;
+      latitude?: number;
+      longitude?: number;
+      is_verified?: boolean;
+    };
+  };
+
+  market_trends: {
+    Row: {
+      id: string;
+      region_id?: string;
+      locality_id?: string;
+      property_type: string;
+      bhk_type?: string;
+      avg_price: number;
+      median_price?: number;
+      min_price?: number;
+      max_price?: number;
+      total_listings?: number;
+      sold_count?: number;
+      avg_time_to_sell?: number;
+      supply_demand_ratio?: number;
+      price_change_percentage?: number;
+      month_year: string | Date;
+      created_at?: string | Date;
+    };
+    Insert: {
+      property_type: string;
+      avg_price: number;
+      month_year: any;
+    };
+    Update: {
+      region_id?: string;
+      locality_id?: string;
+      property_type?: string;
+      bhk_type?: string;
+      avg_price?: number;
+      median_price?: number;
+      min_price?: number;
+      max_price?: number;
+      total_listings?: number;
+      sold_count?: number;
+      avg_time_to_sell?: number;
+      supply_demand_ratio?: number;
+      price_change_percentage?: number;
+      month_year?: any;
+    };
+  };
+
   messages: {
     Row: {
       id: string;
@@ -432,6 +726,9 @@ export interface Database {
       user_agent?: string;
       created_at?: string | Date;
       updated_at?: string | Date;
+      lead_id?: string;
+      parent_message_id?: string;
+      attachments?: any;
     };
     Insert: {
       message: string;
@@ -453,6 +750,9 @@ export interface Database {
       ip_address?: any;
       user_agent?: string;
       updated_at?: any;
+      lead_id?: string;
+      parent_message_id?: string;
+      attachments?: any;
     };
   };
 
@@ -481,6 +781,40 @@ export interface Database {
       checklist?: any;
       previous_state?: string;
       new_state?: string;
+    };
+  };
+
+  notification_preferences: {
+    Row: {
+      user_id: string;
+      email_enabled?: boolean;
+      sms_enabled?: boolean;
+      push_enabled?: boolean;
+      whatsapp_enabled?: boolean;
+      new_properties?: boolean;
+      price_drops?: boolean;
+      saved_search_matches?: boolean;
+      property_updates?: boolean;
+      promotional?: boolean;
+      newsletter?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      email_enabled?: boolean;
+      sms_enabled?: boolean;
+      push_enabled?: boolean;
+      whatsapp_enabled?: boolean;
+      new_properties?: boolean;
+      price_drops?: boolean;
+      saved_search_matches?: boolean;
+      property_updates?: boolean;
+      promotional?: boolean;
+      newsletter?: boolean;
+      updated_at?: any;
     };
   };
 
@@ -606,6 +940,17 @@ export interface Database {
       updated_at?: string | Date;
       last_login?: string | Date;
       last_active?: string | Date;
+      whatsapp_verified?: boolean;
+      email_verified?: boolean;
+      phone_verified?: boolean;
+      kyc_status?: string;
+      kyc_documents?: any;
+      preferred_localities?: any;
+      search_preferences?: any;
+      total_inquiries_sent?: number;
+      total_views_received?: number;
+      response_time_hours?: number;
+      response_rate?: number;
     };
     Insert: {
     };
@@ -639,6 +984,96 @@ export interface Database {
       updated_at?: any;
       last_login?: any;
       last_active?: any;
+      whatsapp_verified?: boolean;
+      email_verified?: boolean;
+      phone_verified?: boolean;
+      kyc_status?: string;
+      kyc_documents?: any;
+      preferred_localities?: any;
+      search_preferences?: any;
+      total_inquiries_sent?: number;
+      total_views_received?: number;
+      response_time_hours?: number;
+      response_rate?: number;
+    };
+  };
+
+  projects: {
+    Row: {
+      id: string;
+      builder_id: string;
+      name: string;
+      slug?: string;
+      description?: string;
+      project_type?: string;
+      status?: string;
+      rera_number?: string;
+      location: string;
+      city: string;
+      state: string;
+      locality_id?: string;
+      latitude?: number;
+      longitude?: number;
+      total_units?: number;
+      available_units?: number;
+      total_towers?: number;
+      total_floors?: number;
+      launch_date?: string | Date;
+      possession_date?: string | Date;
+      price_range_min?: number;
+      price_range_max?: number;
+      configurations?: any;
+      area_range_min?: number;
+      area_range_max?: number;
+      amenities?: any;
+      images?: any;
+      brochure_url?: string;
+      video_url?: string;
+      view_count?: number;
+      inquiry_count?: number;
+      is_featured?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      location: string;
+      city: string;
+      state: string;
+    };
+    Update: {
+      builder_id?: string;
+      name?: string;
+      slug?: string;
+      description?: string;
+      project_type?: string;
+      status?: string;
+      rera_number?: string;
+      location?: string;
+      city?: string;
+      state?: string;
+      locality_id?: string;
+      latitude?: number;
+      longitude?: number;
+      total_units?: number;
+      available_units?: number;
+      total_towers?: number;
+      total_floors?: number;
+      launch_date?: any;
+      possession_date?: any;
+      price_range_min?: number;
+      price_range_max?: number;
+      configurations?: any;
+      area_range_min?: number;
+      area_range_max?: number;
+      amenities?: any;
+      images?: any;
+      brochure_url?: string;
+      video_url?: string;
+      view_count?: number;
+      inquiry_count?: number;
+      is_featured?: boolean;
+      updated_at?: any;
     };
   };
 
@@ -783,6 +1218,28 @@ export interface Database {
       meta_keywords?: any;
       tags?: any;
       moderation_state: string;
+      locality_id?: string;
+      builder_id?: string;
+      project_id?: string;
+      corner_plot?: boolean;
+      width_facing?: number;
+      boundary_wall?: boolean;
+      gated_security?: boolean;
+      video_url?: string;
+      virtual_tour_url?: string;
+      floor_plan_images?: any;
+      approved_by_bank?: boolean;
+      loan_available?: boolean;
+      possession_status?: string;
+      water_supply?: string;
+      electricity_backup?: string;
+      lift_available?: boolean;
+      reserved_parking?: number;
+      open_parking?: number;
+      property_facing_road_width?: number;
+      govt_approved?: boolean;
+      clear_title?: boolean;
+      last_viewed_by?: string;
     };
     Insert: {
       title: string;
@@ -884,6 +1341,28 @@ export interface Database {
       meta_keywords?: any;
       tags?: any;
       moderation_state?: string;
+      locality_id?: string;
+      builder_id?: string;
+      project_id?: string;
+      corner_plot?: boolean;
+      width_facing?: number;
+      boundary_wall?: boolean;
+      gated_security?: boolean;
+      video_url?: string;
+      virtual_tour_url?: string;
+      floor_plan_images?: any;
+      approved_by_bank?: boolean;
+      loan_available?: boolean;
+      possession_status?: string;
+      water_supply?: string;
+      electricity_backup?: string;
+      lift_available?: boolean;
+      reserved_parking?: number;
+      open_parking?: number;
+      property_facing_road_width?: number;
+      govt_approved?: boolean;
+      clear_title?: boolean;
+      last_viewed_by?: string;
     };
   };
 
@@ -933,6 +1412,25 @@ export interface Database {
       assigned_at?: any;
       reviewed_at?: any;
       due_at?: any;
+    };
+  };
+
+  property_comparisons: {
+    Row: {
+      id: string;
+      user_id?: string;
+      property_ids: any;
+      comparison_data?: any;
+      session_id?: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      property_ids?: any;
+      comparison_data?: any;
+      session_id?: string;
     };
   };
 
@@ -1006,6 +1504,146 @@ export interface Database {
     };
   };
 
+  property_intelligence_scores: {
+    Row: {
+      id: string;
+      property_id: string;
+      overall_score: number;
+      value_score?: number;
+      demand_score?: number;
+      quality_score?: number;
+      location_score?: number;
+      view_velocity?: number;
+      inquiry_rate?: number;
+      favorite_rate?: number;
+      contact_reveal_rate?: number;
+      site_visit_conversion_rate?: number;
+      avg_time_on_listing_seconds?: number;
+      repeat_view_rate?: number;
+      share_count?: number;
+      comparison_count?: number;
+      price_competitiveness?: number;
+      price_per_sqft_rank?: number;
+      price_trend?: string;
+      estimated_market_value?: number;
+      value_gap_percentage?: number;
+      listing_completeness_score?: number;
+      image_quality_score?: number;
+      description_quality_score?: number;
+      verification_score?: number;
+      days_on_market?: number;
+      estimated_days_to_sell?: number;
+      freshness_score?: number;
+      rank_in_locality?: number;
+      rank_in_city?: number;
+      similar_properties_count?: number;
+      better_value_alternatives_count?: number;
+      is_hot_property?: boolean;
+      hot_property_reasons?: any;
+      urgency_score?: number;
+      investment_score?: number;
+      roi_potential?: number;
+      appreciation_potential?: string;
+      risk_score?: number;
+      risk_factors?: any;
+      calculated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      property_id?: string;
+      overall_score?: number;
+      value_score?: number;
+      demand_score?: number;
+      quality_score?: number;
+      location_score?: number;
+      view_velocity?: number;
+      inquiry_rate?: number;
+      favorite_rate?: number;
+      contact_reveal_rate?: number;
+      site_visit_conversion_rate?: number;
+      avg_time_on_listing_seconds?: number;
+      repeat_view_rate?: number;
+      share_count?: number;
+      comparison_count?: number;
+      price_competitiveness?: number;
+      price_per_sqft_rank?: number;
+      price_trend?: string;
+      estimated_market_value?: number;
+      value_gap_percentage?: number;
+      listing_completeness_score?: number;
+      image_quality_score?: number;
+      description_quality_score?: number;
+      verification_score?: number;
+      days_on_market?: number;
+      estimated_days_to_sell?: number;
+      freshness_score?: number;
+      rank_in_locality?: number;
+      rank_in_city?: number;
+      similar_properties_count?: number;
+      better_value_alternatives_count?: number;
+      is_hot_property?: boolean;
+      hot_property_reasons?: any;
+      urgency_score?: number;
+      investment_score?: number;
+      roi_potential?: number;
+      appreciation_potential?: string;
+      risk_score?: number;
+      risk_factors?: any;
+      calculated_at?: any;
+    };
+  };
+
+  property_leads: {
+    Row: {
+      id: string;
+      property_id: string;
+      lead_user_id?: string;
+      lead_name?: string;
+      lead_phone: string;
+      lead_email?: string;
+      lead_type?: string;
+      source?: string;
+      status?: string;
+      priority?: string;
+      assigned_to?: string;
+      budget_min?: number;
+      budget_max?: number;
+      notes?: string;
+      follow_up_date?: string | Date;
+      conversion_probability?: number;
+      ip_address?: any;
+      user_agent?: string;
+      created_at?: string | Date;
+      last_contacted_at?: string | Date;
+      converted_at?: string | Date;
+    };
+    Insert: {
+      lead_phone: string;
+    };
+    Update: {
+      property_id?: string;
+      lead_user_id?: string;
+      lead_name?: string;
+      lead_phone?: string;
+      lead_email?: string;
+      lead_type?: string;
+      source?: string;
+      status?: string;
+      priority?: string;
+      assigned_to?: string;
+      budget_min?: number;
+      budget_max?: number;
+      notes?: string;
+      follow_up_date?: any;
+      conversion_probability?: number;
+      ip_address?: any;
+      user_agent?: string;
+      last_contacted_at?: any;
+      converted_at?: any;
+    };
+  };
+
   property_price_history: {
     Row: {
       id: string;
@@ -1025,6 +1663,306 @@ export interface Database {
       change_reason?: string;
       changed_by?: string;
       changed_at?: any;
+    };
+  };
+
+  property_ranking_criteria: {
+    Row: {
+      id: string;
+      property_id: string;
+      price_value_rating?: number;
+      roi_potential_rating?: number;
+      appreciation_potential_rating?: number;
+      location_desirability_rating?: number;
+      connectivity_rating?: number;
+      infrastructure_rating?: number;
+      safety_rating?: number;
+      construction_quality_rating?: number;
+      maintenance_rating?: number;
+      amenities_rating?: number;
+      design_rating?: number;
+      legal_clarity_rating?: number;
+      documentation_completeness_rating?: number;
+      title_clarity_rating?: number;
+      demand_rating?: number;
+      liquidity_rating?: number;
+      competitive_position_rating?: number;
+      seller_reputation_rating?: number;
+      response_rate_rating?: number;
+      negotiation_flexibility_rating?: number;
+      investment_rank?: number;
+      first_time_buyer_rank?: number;
+      family_rank?: number;
+      senior_citizen_rank?: number;
+      overall_rank_in_locality?: number;
+      overall_rank_in_city?: number;
+      overall_rank_in_price_range?: number;
+      value_percentile?: number;
+      demand_percentile?: number;
+      quality_percentile?: number;
+      deal_quality?: string;
+      deal_score?: number;
+      urgency_level?: string;
+      opportunity_type?: any;
+      calculated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      property_id?: string;
+      price_value_rating?: number;
+      roi_potential_rating?: number;
+      appreciation_potential_rating?: number;
+      location_desirability_rating?: number;
+      connectivity_rating?: number;
+      infrastructure_rating?: number;
+      safety_rating?: number;
+      construction_quality_rating?: number;
+      maintenance_rating?: number;
+      amenities_rating?: number;
+      design_rating?: number;
+      legal_clarity_rating?: number;
+      documentation_completeness_rating?: number;
+      title_clarity_rating?: number;
+      demand_rating?: number;
+      liquidity_rating?: number;
+      competitive_position_rating?: number;
+      seller_reputation_rating?: number;
+      response_rate_rating?: number;
+      negotiation_flexibility_rating?: number;
+      investment_rank?: number;
+      first_time_buyer_rank?: number;
+      family_rank?: number;
+      senior_citizen_rank?: number;
+      overall_rank_in_locality?: number;
+      overall_rank_in_city?: number;
+      overall_rank_in_price_range?: number;
+      value_percentile?: number;
+      demand_percentile?: number;
+      quality_percentile?: number;
+      deal_quality?: string;
+      deal_score?: number;
+      urgency_level?: string;
+      opportunity_type?: any;
+      calculated_at?: any;
+    };
+  };
+
+  property_repeat_views: {
+    Row: {
+      id: string;
+      property_id: string;
+      user_id?: string;
+      session_id?: string;
+      view_number: number;
+      time_since_last_view_hours?: number;
+      total_time_on_page_seconds?: number;
+      scrolled_percentage?: number;
+      images_viewed?: number;
+      video_played?: boolean;
+      floor_plan_viewed?: boolean;
+      amenities_expanded?: boolean;
+      location_map_interacted?: boolean;
+      contact_revealed?: boolean;
+      favorite_added?: boolean;
+      inquiry_sent?: boolean;
+      comparison_added?: boolean;
+      shared?: boolean;
+      device_type?: string;
+      referrer_source?: string;
+      viewed_at?: string | Date;
+    };
+    Insert: {
+      view_number: number;
+    };
+    Update: {
+      property_id?: string;
+      user_id?: string;
+      session_id?: string;
+      view_number?: number;
+      time_since_last_view_hours?: number;
+      total_time_on_page_seconds?: number;
+      scrolled_percentage?: number;
+      images_viewed?: number;
+      video_played?: boolean;
+      floor_plan_viewed?: boolean;
+      amenities_expanded?: boolean;
+      location_map_interacted?: boolean;
+      contact_revealed?: boolean;
+      favorite_added?: boolean;
+      inquiry_sent?: boolean;
+      comparison_added?: boolean;
+      shared?: boolean;
+      device_type?: string;
+      referrer_source?: string;
+      viewed_at?: any;
+    };
+  };
+
+  property_reports: {
+    Row: {
+      id: string;
+      property_id: string;
+      reported_by?: string;
+      report_type: string;
+      description: string;
+      evidence_urls?: any;
+      status?: string;
+      reviewed_by?: string;
+      action_taken?: string;
+      created_at?: string | Date;
+      resolved_at?: string | Date;
+    };
+    Insert: {
+      report_type: string;
+      description: string;
+    };
+    Update: {
+      property_id?: string;
+      reported_by?: string;
+      report_type?: string;
+      description?: string;
+      evidence_urls?: any;
+      status?: string;
+      reviewed_by?: string;
+      action_taken?: string;
+      resolved_at?: any;
+    };
+  };
+
+  property_shares: {
+    Row: {
+      id: string;
+      property_id: string;
+      shared_by?: string;
+      platform: string;
+      ip_address?: any;
+      created_at?: string | Date;
+    };
+    Insert: {
+      platform: string;
+    };
+    Update: {
+      property_id?: string;
+      shared_by?: string;
+      platform?: string;
+      ip_address?: any;
+    };
+  };
+
+  property_valuations: {
+    Row: {
+      id: string;
+      property_id: string;
+      estimated_value: number;
+      confidence_score?: number;
+      valuation_method?: string;
+      min_estimated_value?: number;
+      max_estimated_value?: number;
+      comparable_properties_used?: number;
+      comparable_property_ids?: any;
+      avg_comparable_price?: number;
+      base_price_per_sqft?: number;
+      location_adjustment_percentage?: number;
+      age_adjustment_percentage?: number;
+      amenities_adjustment_percentage?: number;
+      condition_adjustment_percentage?: number;
+      market_trend_adjustment_percentage?: number;
+      locality_avg_price_per_sqft?: number;
+      locality_price_growth_1y?: number;
+      proximity_premium_percentage?: number;
+      property_age_years?: number;
+      maintenance_condition?: string;
+      unique_selling_points?: any;
+      market_temperature?: string;
+      seasonal_adjustment?: number;
+      land_value?: number;
+      construction_value?: number;
+      depreciation_value?: number;
+      appreciation_value?: number;
+      model_version?: string;
+      model_accuracy?: number;
+      feature_importance?: any;
+      validation_status?: string;
+      validated_by?: string;
+      validation_notes?: string;
+      valuation_date: string | Date;
+      valid_until?: string | Date;
+      created_at?: string | Date;
+    };
+    Insert: {
+      estimated_value: number;
+    };
+    Update: {
+      property_id?: string;
+      estimated_value?: number;
+      confidence_score?: number;
+      valuation_method?: string;
+      min_estimated_value?: number;
+      max_estimated_value?: number;
+      comparable_properties_used?: number;
+      comparable_property_ids?: any;
+      avg_comparable_price?: number;
+      base_price_per_sqft?: number;
+      location_adjustment_percentage?: number;
+      age_adjustment_percentage?: number;
+      amenities_adjustment_percentage?: number;
+      condition_adjustment_percentage?: number;
+      market_trend_adjustment_percentage?: number;
+      locality_avg_price_per_sqft?: number;
+      locality_price_growth_1y?: number;
+      proximity_premium_percentage?: number;
+      property_age_years?: number;
+      maintenance_condition?: string;
+      unique_selling_points?: any;
+      market_temperature?: string;
+      seasonal_adjustment?: number;
+      land_value?: number;
+      construction_value?: number;
+      depreciation_value?: number;
+      appreciation_value?: number;
+      model_version?: string;
+      model_accuracy?: number;
+      feature_importance?: any;
+      validation_status?: string;
+      validated_by?: string;
+      validation_notes?: string;
+      valuation_date?: any;
+      valid_until?: any;
+    };
+  };
+
+  property_verifications: {
+    Row: {
+      id: string;
+      property_id: string;
+      verification_type: string;
+      status?: string;
+      verified_by?: string;
+      verification_agency?: string;
+      verification_number?: string;
+      report_url?: string;
+      findings?: any;
+      valid_until?: string | Date;
+      cost?: number;
+      created_at?: string | Date;
+      verified_at?: string | Date;
+    };
+    Insert: {
+      verification_type: string;
+    };
+    Update: {
+      property_id?: string;
+      verification_type?: string;
+      status?: string;
+      verified_by?: string;
+      verification_agency?: string;
+      verification_number?: string;
+      report_url?: string;
+      findings?: any;
+      valid_until?: any;
+      cost?: number;
+      verified_at?: any;
     };
   };
 
@@ -1053,6 +1991,68 @@ export interface Database {
       view_duration?: number;
       is_phone_view?: boolean;
       viewed_at?: any;
+    };
+  };
+
+  property_visits: {
+    Row: {
+      id: string;
+      property_id: string;
+      visitor_id?: string;
+      visit_date: string | Date;
+      visit_time?: any;
+      visit_type?: string;
+      status?: string;
+      accompanied_by?: string;
+      feedback?: string;
+      interest_level?: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+      visit_date: any;
+    };
+    Update: {
+      property_id?: string;
+      visitor_id?: string;
+      visit_date?: any;
+      visit_time?: any;
+      visit_type?: string;
+      status?: string;
+      accompanied_by?: string;
+      feedback?: string;
+      interest_level?: string;
+    };
+  };
+
+  referrals: {
+    Row: {
+      id: string;
+      referrer_id: string;
+      referred_id?: string;
+      referral_code: string;
+      referred_email?: string;
+      referred_phone?: string;
+      status?: string;
+      reward_type?: string;
+      reward_amount?: number;
+      credited_at?: string | Date;
+      created_at?: string | Date;
+      converted_at?: string | Date;
+    };
+    Insert: {
+      referral_code: string;
+    };
+    Update: {
+      referrer_id?: string;
+      referred_id?: string;
+      referral_code?: string;
+      referred_email?: string;
+      referred_phone?: string;
+      status?: string;
+      reward_type?: string;
+      reward_amount?: number;
+      credited_at?: any;
+      converted_at?: any;
     };
   };
 
@@ -1096,6 +2096,75 @@ export interface Database {
     };
   };
 
+  repeat_customer_analytics: {
+    Row: {
+      id: string;
+      user_id: string;
+      total_visits?: number;
+      visits_last_7_days?: number;
+      visits_last_30_days?: number;
+      visits_last_90_days?: number;
+      consecutive_days_active?: number;
+      longest_streak_days?: number;
+      total_unique_properties_viewed?: number;
+      properties_viewed_multiple_times?: number;
+      avg_views_per_property?: number;
+      most_viewed_property_id?: string;
+      most_viewed_property_count?: number;
+      consistent_search_criteria?: boolean;
+      search_criteria_changes?: number;
+      location_focus_count?: number;
+      price_range_stability?: number;
+      avg_days_between_visits?: number;
+      visit_frequency_trend?: string;
+      inquiries_per_property_viewed?: number;
+      conversion_funnel_stage?: string;
+      is_repeat_customer?: boolean;
+      repeat_customer_type?: string;
+      previous_properties_bought?: number;
+      previous_properties_sold?: number;
+      total_transaction_value?: number;
+      customer_lifetime_value?: number;
+      churn_risk_score?: number;
+      reactivation_potential?: number;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      total_visits?: number;
+      visits_last_7_days?: number;
+      visits_last_30_days?: number;
+      visits_last_90_days?: number;
+      consecutive_days_active?: number;
+      longest_streak_days?: number;
+      total_unique_properties_viewed?: number;
+      properties_viewed_multiple_times?: number;
+      avg_views_per_property?: number;
+      most_viewed_property_id?: string;
+      most_viewed_property_count?: number;
+      consistent_search_criteria?: boolean;
+      search_criteria_changes?: number;
+      location_focus_count?: number;
+      price_range_stability?: number;
+      avg_days_between_visits?: number;
+      visit_frequency_trend?: string;
+      inquiries_per_property_viewed?: number;
+      conversion_funnel_stage?: string;
+      is_repeat_customer?: boolean;
+      repeat_customer_type?: string;
+      previous_properties_bought?: number;
+      previous_properties_sold?: number;
+      total_transaction_value?: number;
+      customer_lifetime_value?: number;
+      churn_risk_score?: number;
+      reactivation_potential?: number;
+      updated_at?: any;
+    };
+  };
+
   role_permissions: {
     Row: {
       role_id: string;
@@ -1119,6 +2188,37 @@ export interface Database {
     };
     Update: {
       name?: string;
+    };
+  };
+
+  saved_searches: {
+    Row: {
+      id: string;
+      user_id: string;
+      search_name: string;
+      filters: any;
+      notification_enabled?: boolean;
+      notification_frequency?: string;
+      last_notified_at?: string | Date;
+      match_count?: number;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      search_name: string;
+      filters: any;
+    };
+    Update: {
+      user_id?: string;
+      search_name?: string;
+      filters?: any;
+      notification_enabled?: boolean;
+      notification_frequency?: string;
+      last_notified_at?: any;
+      match_count?: number;
+      is_active?: boolean;
+      updated_at?: any;
     };
   };
 
@@ -1289,6 +2389,9 @@ export interface Database {
       metadata?: any;
       created_at?: string | Date;
       updated_at?: string | Date;
+      lead_id?: string;
+      builder_id?: string;
+      project_id?: string;
     };
     Insert: {
       type: string;
@@ -1320,6 +2423,153 @@ export interface Database {
       ip_address?: any;
       user_agent?: string;
       metadata?: any;
+      updated_at?: any;
+      lead_id?: string;
+      builder_id?: string;
+      project_id?: string;
+    };
+  };
+
+  undervalued_properties: {
+    Row: {
+      id: string;
+      property_id: string;
+      listed_price: number;
+      estimated_market_value: number;
+      undervaluation_amount: number;
+      undervaluation_percentage: number;
+      deal_rating?: string;
+      savings_potential?: number;
+      undervaluation_reasons?: any;
+      confidence_level?: string;
+      comparable_properties_count?: number;
+      data_quality_score?: number;
+      locality_price_trend?: string;
+      time_to_market_correction_days?: number;
+      competition_level?: string;
+      investment_opportunity_score?: number;
+      risk_adjusted_score?: number;
+      expected_appreciation_1y_percentage?: number;
+      expected_appreciation_3y_percentage?: number;
+      discovered_at?: string | Date;
+      algorithm_version?: string;
+      manual_verification_status?: string;
+      verified_by?: string;
+      alert_sent?: boolean;
+      alert_sent_to_users?: any;
+      expires_at?: string | Date;
+      created_at?: string | Date;
+    };
+    Insert: {
+      listed_price: number;
+      estimated_market_value: number;
+      undervaluation_amount: number;
+      undervaluation_percentage: number;
+    };
+    Update: {
+      property_id?: string;
+      listed_price?: number;
+      estimated_market_value?: number;
+      undervaluation_amount?: number;
+      undervaluation_percentage?: number;
+      deal_rating?: string;
+      savings_potential?: number;
+      undervaluation_reasons?: any;
+      confidence_level?: string;
+      comparable_properties_count?: number;
+      data_quality_score?: number;
+      locality_price_trend?: string;
+      time_to_market_correction_days?: number;
+      competition_level?: string;
+      investment_opportunity_score?: number;
+      risk_adjusted_score?: number;
+      expected_appreciation_1y_percentage?: number;
+      expected_appreciation_3y_percentage?: number;
+      discovered_at?: any;
+      algorithm_version?: string;
+      manual_verification_status?: string;
+      verified_by?: string;
+      alert_sent?: boolean;
+      alert_sent_to_users?: any;
+      expires_at?: any;
+    };
+  };
+
+  user_engagement_metrics: {
+    Row: {
+      id: string;
+      user_id: string;
+      total_sessions?: number;
+      total_page_views?: number;
+      total_property_views?: number;
+      unique_properties_viewed?: number;
+      total_searches?: number;
+      saved_searches_count?: number;
+      avg_search_frequency_days?: number;
+      avg_session_duration_seconds?: number;
+      avg_properties_per_session?: number;
+      property_detail_views?: number;
+      contact_reveals?: number;
+      favorites_count?: number;
+      inquiries_sent?: number;
+      site_visits_scheduled?: number;
+      comparisons_made?: number;
+      properties_listed?: number;
+      valuation_requests?: number;
+      documents_uploaded?: number;
+      engagement_score?: number;
+      intent_score?: number;
+      user_segment?: string;
+      buying_intent?: string;
+      selling_intent?: string;
+      first_activity_at?: string | Date;
+      last_activity_at?: string | Date;
+      most_active_day_of_week?: number;
+      most_active_hour_of_day?: number;
+      preferred_locations?: any;
+      preferred_property_types?: any;
+      preferred_bhk_types?: any;
+      budget_range_min?: number;
+      budget_range_max?: number;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+    };
+    Update: {
+      user_id?: string;
+      total_sessions?: number;
+      total_page_views?: number;
+      total_property_views?: number;
+      unique_properties_viewed?: number;
+      total_searches?: number;
+      saved_searches_count?: number;
+      avg_search_frequency_days?: number;
+      avg_session_duration_seconds?: number;
+      avg_properties_per_session?: number;
+      property_detail_views?: number;
+      contact_reveals?: number;
+      favorites_count?: number;
+      inquiries_sent?: number;
+      site_visits_scheduled?: number;
+      comparisons_made?: number;
+      properties_listed?: number;
+      valuation_requests?: number;
+      documents_uploaded?: number;
+      engagement_score?: number;
+      intent_score?: number;
+      user_segment?: string;
+      buying_intent?: string;
+      selling_intent?: string;
+      first_activity_at?: any;
+      last_activity_at?: any;
+      most_active_day_of_week?: number;
+      most_active_hour_of_day?: number;
+      preferred_locations?: any;
+      preferred_property_types?: any;
+      preferred_bhk_types?: any;
+      budget_range_min?: number;
+      budget_range_max?: number;
       updated_at?: any;
     };
   };

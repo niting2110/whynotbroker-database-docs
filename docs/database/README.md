@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2025-12-31T07:01:49.144Z  
-> Schema Hash: `0c61d771291299bd49b0ddd95a94ce51`
+> Generated: 2026-01-01T07:01:39.277Z  
+> Schema Hash: `66bd94fac0a7beb906b76072e1caf201`
 
 ## 📊 Quick Stats
-- **Total Tables:** 40
+- **Total Tables:** 63
 - **Total Views:** 14
-- **Total Materialized Views:** 0
-- **Total Columns:** 534
-- **Total Relationships:** 66
-- **Total Size:** 25.21 MB
+- **Total Materialized Views:** 1
+- **Total Columns:** 1058
+- **Total Relationships:** 113
+- **Total Size:** 26.35 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 31/12/2025, 12:31:49 pm IST
+- **Last Updated:** 1/1/2026, 12:31:39 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -58,35 +58,58 @@ This documentation updates:
 | `admin_notices` | 5 | ~1 | 0.03 MB |  |
 | `admin_roles` | 2 | ~14 | 0.02 MB |  |
 | `admin_users` | 7 | ~2 | 0.73 MB |  |
-| `admins` | 9 | ~10 | 0.06 MB |  |
+| `admins` | 12 | ~10 | 0.06 MB |  |
 | `appointments` | 18 | ~0 | 0.03 MB |  |
 | `blog_posts` | 17 | ~0 | 0.03 MB |  |
+| `builders` | 26 | ~0 | 0.03 MB |  |
 | `campaign_participants` | 9 | ~0 | 0.05 MB | "Track user participation in ca..." |
 | `coupon_usage` | 9 | ~0 | 0.04 MB | "Track coupon redemptions by us..." |
 | `coupons` | 23 | ~4 | 0.12 MB | "Discount coupons with regional..." |
 | `credit_packages` | 17 | ~5 | 0.06 MB | "Pre-paid credit packages with ..." |
-| `messages` | 18 | ~0 | 0.03 MB |  |
+| `hot_properties` | 25 | ~0 | 0.05 MB | "Real-time tracking of trending..." |
+| `loan_calculations` | 13 | ~0 | 0.02 MB |  |
+| `localities` | 24 | ~0 | 0.04 MB |  |
+| `locality_amenities` | 10 | ~0 | 0.03 MB |  |
+| `market_trends` | 16 | ~0 | 0.04 MB |  |
+| `messages` | 21 | ~0 | 0.03 MB |  |
 | `moderation_history` | 10 | ~8,984 | 1.59 MB |  |
+| `notification_preferences` | 13 | ~0 | 0.01 MB |  |
 | `notifications` | 10 | ~3 | 0.05 MB |  |
 | `permissions` | 5 | ~12 | 0.06 MB |  |
 | `pricing_rules` | 14 | ~6 | 0.08 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 31 | ~21 | 0.06 MB |  |
+| `profiles` | 42 | ~21 | 0.06 MB |  |
+| `projects` | 34 | ~0 | 0.05 MB |  |
 | `promotional_campaigns` | 19 | ~2 | 0.09 MB | "Marketing campaigns with regio..." |
-| `properties` | 93 | ~9,000 | 17.64 MB |  |
+| `properties` | 115 | ~9,000 | 17.88 MB |  |
 | `property_amenities` | 7 | ~0 | 0.05 MB |  |
 | `property_assignments` | 8 | ~8,980 | 3.30 MB |  |
+| `property_comparisons` | 6 | ~0 | 0.02 MB |  |
 | `property_documents` | 12 | ~0 | 0.04 MB |  |
 | `property_images` | 13 | ~3 | 0.11 MB |  |
+| `property_intelligence_scores` | 41 | ~0 | 0.07 MB | "AI-powered property scoring sy..." |
+| `property_leads` | 21 | ~0 | 0.04 MB |  |
 | `property_price_history` | 7 | ~0 | 0.03 MB |  |
+| `property_ranking_criteria` | 37 | ~0 | 0.06 MB |  |
+| `property_repeat_views` | 21 | ~0 | 0.05 MB |  |
+| `property_reports` | 11 | ~0 | 0.03 MB |  |
+| `property_shares` | 6 | ~0 | 0.02 MB |  |
+| `property_valuations` | 37 | ~0 | 0.05 MB | "Automated and manual property ..." |
+| `property_verifications` | 13 | ~0 | 0.03 MB |  |
 | `property_views` | 10 | ~21 | 0.09 MB |  |
+| `property_visits` | 11 | ~0 | 0.03 MB |  |
+| `referrals` | 12 | ~0 | 0.04 MB |  |
 | `regions` | 15 | ~9 | 0.09 MB | "Master table for regional conf..." |
+| `repeat_customer_analytics` | 31 | ~0 | 0.06 MB |  |
 | `role_permissions` | 2 | ~14 | 0.02 MB |  |
 | `roles` | 2 | ~6 | 0.05 MB |  |
+| `saved_searches` | 11 | ~0 | 0.02 MB |  |
 | `search_history` | 8 | ~0 | 0.02 MB |  |
 | `security_flags` | 9 | ~0 | 0.04 MB | "Tracks flagged admin activitie..." |
 | `subscription_enrollments` | 13 | ~0 | 0.04 MB |  |
 | `subscription_plans` | 19 | ~4 | 0.09 MB | "Recurring subscription plans w..." |
-| `transactions` | 28 | ~0 | 0.07 MB | "All financial transactions wit..." |
+| `transactions` | 31 | ~0 | 0.07 MB | "All financial transactions wit..." |
+| `undervalued_properties` | 27 | ~0 | 0.05 MB | "Identifies properties with exc..." |
+| `user_engagement_metrics` | 36 | ~0 | 0.05 MB | "Tracks detailed user behavior ..." |
 | `user_favorites` | 4 | ~3 | 0.09 MB |  |
 | `user_ratings` | 17 | ~0 | 0.04 MB |  |
 | `user_regional_preferences` | 8 | ~0 | 0.04 MB |  |
@@ -112,8 +135,11 @@ This documentation updates:
 - `audit_admin_status_change()` → trigger
 - `auto_assign_on_pending()` → trigger
 - `bulk_moderation_decision(p_property_ids uuid[], p_action text, p_reason text, p_notes text, p_checklist jsonb)` → void
+- `calculate_distance_km(lat1 numeric, lon1 numeric, lat2 numeric, lon2 numeric)` → numeric
 - `calculate_gst(p_amount numeric, p_region_id uuid)` → TABLE(gst_rate numeric, gst_amount numeric, total_amount numeric)
 - `calculate_price_per_unit()` → trigger
+- `calculate_property_intelligence_score(p_property_id uuid)` → numeric
+- `calculate_user_engagement_score(p_user_id uuid)` → numeric
 - `create_admin_by_email(p_email text)` → uuid
 - `create_wallet_for_new_user()` → trigger
 - `deactivate_admin(p_admin_email text)` → void
@@ -124,8 +150,8 @@ This documentation updates:
 - `generate_pid()` → trigger
 - `generate_property_description(prop_num integer)` → text
 - `generate_property_title(prop_num integer)` → text
-- `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_admin_context(p_user_id uuid)` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
+- `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_applicable_coupons(p_user_id uuid, p_region_id uuid)` → TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)
 - `get_current_admin_id()` → uuid
 - `get_effective_pricing(p_action text, p_region_id uuid, p_user_type text)` → TABLE(credit_cost integer, cash_price numeric, rule_id uuid, description text)
@@ -156,6 +182,8 @@ This documentation updates:
 - `revoke_role_from_admin(p_admin_email text, p_role_name text)` → void
 - `spend_credits_for_action(p_user_id uuid, p_action text, p_region_id uuid, p_reference_id uuid DEFAULT NULL::uuid, p_reference_type text DEFAULT NULL::text)` → uuid
 - `submit_moderation_decision(p_property_id uuid, p_action text, p_reason text, p_notes text, p_checklist jsonb)` → void
+- `update_builder_project_counts()` → trigger
+- `update_locality_property_counts()` → trigger
 - `update_updated_at_column()` → trigger
 - `update_wallet_timestamp()` → trigger
 - `validate_coupon(p_coupon_code text, p_user_id uuid, p_region_id uuid, p_purchase_amount numeric)` → TABLE(is_valid boolean, discount_amount numeric, message text, coupon_id uuid)
@@ -183,6 +211,8 @@ Base table RLS controls access."
 - `user_wallet_summary` - "Complete user wallet information with regional preferences"
 
 
+## 📊 Materialized Views
+- `mv_best_value_properties`
 
 ## 🔗 Key Relationships
 - `admin_audit_logs` → `admins` (`admin_audit_logs_admin_id_fkey`)
@@ -196,13 +226,13 @@ Base table RLS controls access."
 - `admin_users` → `profiles` (`admin_users_id_fkey`)
 - `admins` → `profiles` (`admins_user_id_fkey`)
 
-*...and 56 more (see [relationships.md](./relationships.md))*
+*...and 103 more (see [relationships.md](./relationships.md))*
 
 ## 📈 Performance Insights
 - **Largest Table:** `properties`
-- **Most Columns:** `properties` (93 columns)
-- **Total Indexes:** 155
-- **Total Constraints:** 354
+- **Most Columns:** `properties` (115 columns)
+- **Total Indexes:** 252
+- **Total Constraints:** 558
 
 ## 🛠️ Useful Links
 - [Supabase Dashboard](https://app.supabase.com)

@@ -71,6 +71,7 @@ WHERE id = 'property-uuid';
 - `idx_properties_agent_id`: agent_id
 - `idx_properties_area`: built_up_area
 - `idx_properties_bedrooms`: bedrooms
+- `idx_properties_builder`: builder_id
 - `idx_properties_city_locality`: city, locality
 - `idx_properties_city_price_filter`: price, city, status, is_active
 - `idx_properties_city_status_active`: city, status, is_active
@@ -78,9 +79,11 @@ WHERE id = 'property-uuid';
 - `idx_properties_featured`: is_featured
 - `idx_properties_featured_smart`: status, is_active, is_featured, created_at, featured_until
 - `idx_properties_listing_type`: listing_type
+- `idx_properties_locality`: locality_id
 - `idx_properties_pid`: pid
 - `idx_properties_price`: price
 - `idx_properties_price_status_active`: price, status, is_active
+- `idx_properties_project`: project_id
 - `idx_properties_property_type`: property_type
 - `idx_properties_search`: property_type, price, city, bedrooms, status
 - `idx_properties_status`: status
