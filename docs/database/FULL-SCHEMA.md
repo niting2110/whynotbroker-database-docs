@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-01T07:01:39.281Z
+> Auto-generated on: 2026-01-02T07:02:38.837Z
 > **Total Tables:** 63
 > **PostgreSQL Version:** 17.6
 
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~115
+- Rows: ~15
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -165,7 +165,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_messages`
 
 **Statistics:**
-- Rows: ~17
+- Rows: ~0
 - Columns: 6
 - Indexes: 1
 - Foreign Keys: 2
@@ -219,7 +219,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_notices`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~0
 - Columns: 5
 - Indexes: 1
 - Foreign Keys: 0
@@ -256,7 +256,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~14
+- Rows: ~0
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -314,7 +314,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_users`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~5
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -367,7 +367,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admins`
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~5
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 1
@@ -439,7 +439,7 @@ This document details the live schema of the production Supabase database. All A
 ## `appointments`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 18
 - Indexes: 3
 - Foreign Keys: 4
@@ -530,7 +530,7 @@ This document details the live schema of the production Supabase database. All A
 ## `blog_posts`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~100
 - Columns: 17
 - Indexes: 3
 - Foreign Keys: 1
@@ -607,7 +607,7 @@ This document details the live schema of the production Supabase database. All A
 ## `builders`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~50
 - Columns: 26
 - Indexes: 3
 - Foreign Keys: 0
@@ -823,7 +823,7 @@ This document details the live schema of the production Supabase database. All A
 > Discount coupons with regional targeting
 
 **Statistics:**
-- Rows: ~4
+- Rows: ~0
 - Columns: 23
 - Indexes: 6
 - Foreign Keys: 1
@@ -921,7 +921,7 @@ This document details the live schema of the production Supabase database. All A
 > Pre-paid credit packages with regional pricing variations
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~0
 - Columns: 17
 - Indexes: 3
 - Foreign Keys: 1
@@ -1006,7 +1006,7 @@ This document details the live schema of the production Supabase database. All A
 > Real-time tracking of trending properties with high demand signals
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~3
 - Columns: 25
 - Indexes: 5
 - Foreign Keys: 1
@@ -1143,7 +1143,7 @@ This document details the live schema of the production Supabase database. All A
 ## `localities`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~100
 - Columns: 24
 - Indexes: 4
 - Foreign Keys: 1
@@ -1215,7 +1215,7 @@ This document details the live schema of the production Supabase database. All A
 ## `locality_amenities`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~20,013
 - Columns: 10
 - Indexes: 3
 - Foreign Keys: 1
@@ -1272,7 +1272,7 @@ This document details the live schema of the production Supabase database. All A
 ## `market_trends`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~100,000
 - Columns: 16
 - Indexes: 4
 - Foreign Keys: 2
@@ -1346,7 +1346,7 @@ This document details the live schema of the production Supabase database. All A
 ## `messages`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 21
 - Indexes: 3
 - Foreign Keys: 5
@@ -1443,7 +1443,7 @@ This document details the live schema of the production Supabase database. All A
 ## `moderation_history`
 
 **Statistics:**
-- Rows: ~8,984
+- Rows: ~5
 - Columns: 10
 - Indexes: 1
 - Foreign Keys: 2
@@ -1556,7 +1556,7 @@ This document details the live schema of the production Supabase database. All A
 ## `notifications`
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~16
 - Columns: 10
 - Indexes: 2
 - Foreign Keys: 1
@@ -1612,7 +1612,7 @@ This document details the live schema of the production Supabase database. All A
 ## `permissions`
 
 **Statistics:**
-- Rows: ~12
+- Rows: ~11
 - Columns: 5
 - Indexes: 3
 - Foreign Keys: 0
@@ -1662,7 +1662,7 @@ This document details the live schema of the production Supabase database. All A
 > Dynamic pricing rules based on action, region, and user type
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~0
 - Columns: 14
 - Indexes: 4
 - Foreign Keys: 1
@@ -1743,7 +1743,7 @@ This document details the live schema of the production Supabase database. All A
 ## `profiles`
 
 **Statistics:**
-- Rows: ~21
+- Rows: ~6
 - Columns: 42
 - Indexes: 3
 - Foreign Keys: 0
@@ -1805,9 +1805,6 @@ This document details the live schema of the production Supabase database. All A
 - `profiles_role_check`: CHECK ((role = ANY (ARRAY['user'::text, 'admin'::text, 'staff'::text])))
 - `profiles_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'admin'::text])))
 
-**FOREIGN KEY:**
-- `profiles_id_fkey`: FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
-
 **PRIMARY KEY:**
 - `profiles_pkey`: PRIMARY KEY (id)
 
@@ -1843,7 +1840,7 @@ This document details the live schema of the production Supabase database. All A
 ## `projects`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 34
 - Indexes: 5
 - Foreign Keys: 2
@@ -1953,7 +1950,7 @@ This document details the live schema of the production Supabase database. All A
 > Marketing campaigns with regional focus
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~0
 - Columns: 19
 - Indexes: 4
 - Foreign Keys: 0
@@ -2028,7 +2025,7 @@ This document details the live schema of the production Supabase database. All A
 ## `properties`
 
 **Statistics:**
-- Rows: ~9,000
+- Rows: ~5
 - Columns: 115
 - Indexes: 27
 - Foreign Keys: 7
@@ -2388,7 +2385,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_assignments`
 
 **Statistics:**
-- Rows: ~8,980
+- Rows: ~5
 - Columns: 8
 - Indexes: 4
 - Foreign Keys: 2
@@ -2502,7 +2499,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_documents`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~12
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -2572,7 +2569,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_images`
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~8
 - Columns: 13
 - Indexes: 6
 - Foreign Keys: 2
@@ -2738,7 +2735,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_leads`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 21
 - Indexes: 4
 - Foreign Keys: 3
@@ -2818,7 +2815,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_price_history`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 2
@@ -3160,7 +3157,7 @@ This document details the live schema of the production Supabase database. All A
 > Automated and manual property valuation tracking
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~3
 - Columns: 37
 - Indexes: 5
 - Foreign Keys: 2
@@ -3317,7 +3314,7 @@ This document details the live schema of the production Supabase database. All A
 ## `property_views`
 
 **Statistics:**
-- Rows: ~21
+- Rows: ~10
 - Columns: 10
 - Indexes: 5
 - Foreign Keys: 2
@@ -3518,7 +3515,7 @@ This document details the live schema of the production Supabase database. All A
 > Master table for regional configuration across India
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~10
 - Columns: 15
 - Indexes: 5
 - Foreign Keys: 1
@@ -3674,7 +3671,7 @@ This document details the live schema of the production Supabase database. All A
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~14
+- Rows: ~0
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -3723,7 +3720,7 @@ This document details the live schema of the production Supabase database. All A
 ## `roles`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~0
 - Columns: 2
 - Indexes: 2
 - Foreign Keys: 0
@@ -4006,7 +4003,7 @@ This document details the live schema of the production Supabase database. All A
 > Recurring subscription plans with regional features
 
 **Statistics:**
-- Rows: ~4
+- Rows: ~0
 - Columns: 19
 - Indexes: 5
 - Foreign Keys: 1
@@ -4102,7 +4099,7 @@ This document details the live schema of the production Supabase database. All A
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~60
 - Columns: 31
 - Indexes: 8
 - Foreign Keys: 7
@@ -4407,7 +4404,7 @@ This document details the live schema of the production Supabase database. All A
 ## `user_favorites`
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~0
 - Columns: 4
 - Indexes: 5
 - Foreign Keys: 2
@@ -4614,7 +4611,7 @@ This document details the live schema of the production Supabase database. All A
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~21
+- Rows: ~6
 - Columns: 10
 - Indexes: 4
 - Foreign Keys: 2

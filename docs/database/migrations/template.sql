@@ -1,6 +1,6 @@
 -- Database Migration Template
 -- File: migrations/YYYYMMDD_description.sql
--- Generated: 2026-01-01T07:01:39.321Z
+-- Generated: 2026-01-02T07:02:39.098Z
 
 -- Start transaction
 BEGIN;

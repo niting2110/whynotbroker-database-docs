@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2026-01-01T07:01:39.277Z  
-> Schema Hash: `66bd94fac0a7beb906b76072e1caf201`
+> Generated: 2026-01-02T07:02:38.834Z  
+> Schema Hash: `98563b59e3cfa08496d251560d0c1963`
 
 ## 📊 Quick Stats
 - **Total Tables:** 63
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 1
 - **Total Columns:** 1058
 - **Total Relationships:** 113
-- **Total Size:** 26.35 MB
+- **Total Size:** 65.08 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 1/1/2026, 12:31:39 pm IST
+- **Last Updated:** 2/1/2026, 12:32:38 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,69 +51,69 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~115 | 0.09 MB |  |
+| `admin_audit_logs` | 8 | ~15 | 0.08 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
-| `admin_messages` | 6 | ~17 | 0.03 MB |  |
-| `admin_notices` | 5 | ~1 | 0.03 MB |  |
-| `admin_roles` | 2 | ~14 | 0.02 MB |  |
-| `admin_users` | 7 | ~2 | 0.73 MB |  |
-| `admins` | 12 | ~10 | 0.06 MB |  |
-| `appointments` | 18 | ~0 | 0.03 MB |  |
-| `blog_posts` | 17 | ~0 | 0.03 MB |  |
-| `builders` | 26 | ~0 | 0.03 MB |  |
+| `admin_messages` | 6 | ~0 | 0.03 MB |  |
+| `admin_notices` | 5 | ~0 | 0.03 MB |  |
+| `admin_roles` | 2 | ~0 | 0.02 MB |  |
+| `admin_users` | 7 | ~5 | 0.73 MB |  |
+| `admins` | 12 | ~5 | 0.06 MB |  |
+| `appointments` | 18 | ~5 | 0.06 MB |  |
+| `blog_posts` | 17 | ~100 | 0.10 MB |  |
+| `builders` | 26 | ~50 | 0.08 MB |  |
 | `campaign_participants` | 9 | ~0 | 0.05 MB | "Track user participation in ca..." |
 | `coupon_usage` | 9 | ~0 | 0.04 MB | "Track coupon redemptions by us..." |
-| `coupons` | 23 | ~4 | 0.12 MB | "Discount coupons with regional..." |
-| `credit_packages` | 17 | ~5 | 0.06 MB | "Pre-paid credit packages with ..." |
-| `hot_properties` | 25 | ~0 | 0.05 MB | "Real-time tracking of trending..." |
+| `coupons` | 23 | ~0 | 0.12 MB | "Discount coupons with regional..." |
+| `credit_packages` | 17 | ~0 | 0.06 MB | "Pre-paid credit packages with ..." |
+| `hot_properties` | 25 | ~3 | 0.09 MB | "Real-time tracking of trending..." |
 | `loan_calculations` | 13 | ~0 | 0.02 MB |  |
-| `localities` | 24 | ~0 | 0.04 MB |  |
-| `locality_amenities` | 10 | ~0 | 0.03 MB |  |
-| `market_trends` | 16 | ~0 | 0.04 MB |  |
-| `messages` | 21 | ~0 | 0.03 MB |  |
-| `moderation_history` | 10 | ~8,984 | 1.59 MB |  |
+| `localities` | 24 | ~100 | 0.12 MB |  |
+| `locality_amenities` | 10 | ~20,013 | 6.53 MB |  |
+| `market_trends` | 16 | ~100,000 | 42.12 MB |  |
+| `messages` | 21 | ~5 | 0.06 MB |  |
+| `moderation_history` | 10 | ~5 | 0.37 MB |  |
 | `notification_preferences` | 13 | ~0 | 0.01 MB |  |
-| `notifications` | 10 | ~3 | 0.05 MB |  |
-| `permissions` | 5 | ~12 | 0.06 MB |  |
-| `pricing_rules` | 14 | ~6 | 0.08 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 42 | ~21 | 0.06 MB |  |
-| `projects` | 34 | ~0 | 0.05 MB |  |
-| `promotional_campaigns` | 19 | ~2 | 0.09 MB | "Marketing campaigns with regio..." |
-| `properties` | 115 | ~9,000 | 17.88 MB |  |
-| `property_amenities` | 7 | ~0 | 0.05 MB |  |
-| `property_assignments` | 8 | ~8,980 | 3.30 MB |  |
+| `notifications` | 10 | ~16 | 0.05 MB |  |
+| `permissions` | 5 | ~11 | 0.06 MB |  |
+| `pricing_rules` | 14 | ~0 | 0.08 MB | "Dynamic pricing rules based on..." |
+| `profiles` | 42 | ~6 | 0.09 MB |  |
+| `projects` | 34 | ~5 | 0.09 MB |  |
+| `promotional_campaigns` | 19 | ~0 | 0.09 MB | "Marketing campaigns with regio..." |
+| `properties` | 115 | ~5 | 10.46 MB |  |
+| `property_amenities` | 7 | ~0 | 0.10 MB |  |
+| `property_assignments` | 8 | ~5 | 1.41 MB |  |
 | `property_comparisons` | 6 | ~0 | 0.02 MB |  |
-| `property_documents` | 12 | ~0 | 0.04 MB |  |
-| `property_images` | 13 | ~3 | 0.11 MB |  |
+| `property_documents` | 12 | ~12 | 0.08 MB |  |
+| `property_images` | 13 | ~8 | 0.11 MB |  |
 | `property_intelligence_scores` | 41 | ~0 | 0.07 MB | "AI-powered property scoring sy..." |
-| `property_leads` | 21 | ~0 | 0.04 MB |  |
-| `property_price_history` | 7 | ~0 | 0.03 MB |  |
+| `property_leads` | 21 | ~5 | 0.08 MB |  |
+| `property_price_history` | 7 | ~5 | 0.06 MB |  |
 | `property_ranking_criteria` | 37 | ~0 | 0.06 MB |  |
 | `property_repeat_views` | 21 | ~0 | 0.05 MB |  |
 | `property_reports` | 11 | ~0 | 0.03 MB |  |
 | `property_shares` | 6 | ~0 | 0.02 MB |  |
-| `property_valuations` | 37 | ~0 | 0.05 MB | "Automated and manual property ..." |
+| `property_valuations` | 37 | ~3 | 0.09 MB | "Automated and manual property ..." |
 | `property_verifications` | 13 | ~0 | 0.03 MB |  |
-| `property_views` | 10 | ~21 | 0.09 MB |  |
+| `property_views` | 10 | ~10 | 0.09 MB |  |
 | `property_visits` | 11 | ~0 | 0.03 MB |  |
 | `referrals` | 12 | ~0 | 0.04 MB |  |
-| `regions` | 15 | ~9 | 0.09 MB | "Master table for regional conf..." |
+| `regions` | 15 | ~10 | 0.11 MB | "Master table for regional conf..." |
 | `repeat_customer_analytics` | 31 | ~0 | 0.06 MB |  |
-| `role_permissions` | 2 | ~14 | 0.02 MB |  |
-| `roles` | 2 | ~6 | 0.05 MB |  |
+| `role_permissions` | 2 | ~0 | 0.02 MB |  |
+| `roles` | 2 | ~0 | 0.05 MB |  |
 | `saved_searches` | 11 | ~0 | 0.02 MB |  |
 | `search_history` | 8 | ~0 | 0.02 MB |  |
 | `security_flags` | 9 | ~0 | 0.04 MB | "Tracks flagged admin activitie..." |
 | `subscription_enrollments` | 13 | ~0 | 0.04 MB |  |
-| `subscription_plans` | 19 | ~4 | 0.09 MB | "Recurring subscription plans w..." |
-| `transactions` | 31 | ~0 | 0.07 MB | "All financial transactions wit..." |
+| `subscription_plans` | 19 | ~0 | 0.09 MB | "Recurring subscription plans w..." |
+| `transactions` | 31 | ~60 | 0.16 MB | "All financial transactions wit..." |
 | `undervalued_properties` | 27 | ~0 | 0.05 MB | "Identifies properties with exc..." |
 | `user_engagement_metrics` | 36 | ~0 | 0.05 MB | "Tracks detailed user behavior ..." |
-| `user_favorites` | 4 | ~3 | 0.09 MB |  |
+| `user_favorites` | 4 | ~0 | 0.09 MB |  |
 | `user_ratings` | 17 | ~0 | 0.04 MB |  |
 | `user_regional_preferences` | 8 | ~0 | 0.04 MB |  |
-| `wallets` | 10 | ~21 | 0.07 MB | "User credit wallets with regio..." |
+| `wallets` | 10 | ~6 | 0.07 MB | "User credit wallets with regio..." |
 
 ## 🔌 Extensions
 - `pg_cron` (v1.6.4)
@@ -229,10 +229,10 @@ Base table RLS controls access."
 *...and 103 more (see [relationships.md](./relationships.md))*
 
 ## 📈 Performance Insights
-- **Largest Table:** `properties`
+- **Largest Table:** `market_trends`
 - **Most Columns:** `properties` (115 columns)
 - **Total Indexes:** 252
-- **Total Constraints:** 558
+- **Total Constraints:** 557
 
 ## 🛠️ Useful Links
 - [Supabase Dashboard](https://app.supabase.com)

@@ -148,5 +148,20 @@
       "functions": 60,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2026-01-02T07:02:39.098Z",
+    "schema_hash": "98563b59e3cfa08496d251560d0c1963",
+    "statistics": {
+      "tables": 63,
+      "views": 14,
+      "materialized_views": 1,
+      "columns": 1058,
+      "constraints": 557,
+      "indexes": 252,
+      "relationships": 113,
+      "functions": 60,
+      "extensions": 9
+    }
   }
 ]
