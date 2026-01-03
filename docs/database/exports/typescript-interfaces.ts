@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-01-02T07:02:39.094Z
+// Generated: 2026-01-03T06:58:49.574Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {

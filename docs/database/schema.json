@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-02T07:02:38.841Z",
+  "generated_at": "2026-01-03T06:58:49.549Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 15,
-      "size_bytes": 81920,
+      "rows": 950,
+      "size_bytes": 278528,
       "details": {
         "columns": [
           {
@@ -204,7 +204,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 15,
+        "row_count": 950,
         "column_count": 8
       }
     },
@@ -803,7 +803,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 2,
-      "rows": 0,
+      "rows": 8,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -923,7 +923,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 8,
         "column_count": 2
       }
     },
@@ -1114,8 +1114,8 @@
       "name": "admins",
       "comment": null,
       "columns": 12,
-      "rows": 5,
-      "size_bytes": 65536,
+      "rows": 13,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -1379,7 +1379,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 13,
         "column_count": 12
       }
     },
@@ -6973,7 +6973,7 @@
       "name": "profiles",
       "comment": null,
       "columns": 42,
-      "rows": 6,
+      "rows": 14,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -7547,7 +7547,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 14,
         "column_count": 42
       }
     },
@@ -16779,7 +16779,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 0,
+      "rows": 27,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -16891,7 +16891,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 27,
         "column_count": 2
       }
     },
@@ -16899,7 +16899,7 @@
       "name": "roles",
       "comment": null,
       "columns": 2,
-      "rows": 0,
+      "rows": 8,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -16980,7 +16980,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 8,
         "column_count": 2
       }
     },
@@ -20830,7 +20830,7 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 10,
-      "rows": 6,
+      "rows": 14,
       "size_bytes": 73728,
       "details": {
         "columns": [
@@ -21082,7 +21082,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 14,
         "column_count": 10
       }
     }

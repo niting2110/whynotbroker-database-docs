@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2026-01-02T07:02:38.834Z  
-> Schema Hash: `98563b59e3cfa08496d251560d0c1963`
+> Generated: 2026-01-03T06:58:49.542Z  
+> Schema Hash: `ba8ea6519ddc0e23b898ac7bdafbe812`
 
 ## 📊 Quick Stats
 - **Total Tables:** 63
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 1
 - **Total Columns:** 1058
 - **Total Relationships:** 113
-- **Total Size:** 65.08 MB
+- **Total Size:** 65.30 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 2/1/2026, 12:32:38 pm IST
+- **Last Updated:** 3/1/2026, 12:28:49 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,14 +51,14 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~15 | 0.08 MB |  |
+| `admin_audit_logs` | 8 | ~950 | 0.27 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.03 MB |  |
 | `admin_notices` | 5 | ~0 | 0.03 MB |  |
-| `admin_roles` | 2 | ~0 | 0.02 MB |  |
+| `admin_roles` | 2 | ~8 | 0.02 MB |  |
 | `admin_users` | 7 | ~5 | 0.73 MB |  |
-| `admins` | 12 | ~5 | 0.06 MB |  |
+| `admins` | 12 | ~13 | 0.09 MB |  |
 | `appointments` | 18 | ~5 | 0.06 MB |  |
 | `blog_posts` | 17 | ~100 | 0.10 MB |  |
 | `builders` | 26 | ~50 | 0.08 MB |  |
@@ -77,7 +77,7 @@ This documentation updates:
 | `notifications` | 10 | ~16 | 0.05 MB |  |
 | `permissions` | 5 | ~11 | 0.06 MB |  |
 | `pricing_rules` | 14 | ~0 | 0.08 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 42 | ~6 | 0.09 MB |  |
+| `profiles` | 42 | ~14 | 0.09 MB |  |
 | `projects` | 34 | ~5 | 0.09 MB |  |
 | `promotional_campaigns` | 19 | ~0 | 0.09 MB | "Marketing campaigns with regio..." |
 | `properties` | 115 | ~5 | 10.46 MB |  |
@@ -100,8 +100,8 @@ This documentation updates:
 | `referrals` | 12 | ~0 | 0.04 MB |  |
 | `regions` | 15 | ~10 | 0.11 MB | "Master table for regional conf..." |
 | `repeat_customer_analytics` | 31 | ~0 | 0.06 MB |  |
-| `role_permissions` | 2 | ~0 | 0.02 MB |  |
-| `roles` | 2 | ~0 | 0.05 MB |  |
+| `role_permissions` | 2 | ~27 | 0.02 MB |  |
+| `roles` | 2 | ~8 | 0.05 MB |  |
 | `saved_searches` | 11 | ~0 | 0.02 MB |  |
 | `search_history` | 8 | ~0 | 0.02 MB |  |
 | `security_flags` | 9 | ~0 | 0.04 MB | "Tracks flagged admin activitie..." |
@@ -113,7 +113,7 @@ This documentation updates:
 | `user_favorites` | 4 | ~0 | 0.09 MB |  |
 | `user_ratings` | 17 | ~0 | 0.04 MB |  |
 | `user_regional_preferences` | 8 | ~0 | 0.04 MB |  |
-| `wallets` | 10 | ~6 | 0.07 MB | "User credit wallets with regio..." |
+| `wallets` | 10 | ~14 | 0.07 MB | "User credit wallets with regio..." |
 
 ## 🔌 Extensions
 - `pg_cron` (v1.6.4)

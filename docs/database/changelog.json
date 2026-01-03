@@ -163,5 +163,20 @@
       "functions": 60,
       "extensions": 9
     }
+  },
+  {
+    "timestamp": "2026-01-03T06:58:49.578Z",
+    "schema_hash": "ba8ea6519ddc0e23b898ac7bdafbe812",
+    "statistics": {
+      "tables": 63,
+      "views": 14,
+      "materialized_views": 1,
+      "columns": 1058,
+      "constraints": 557,
+      "indexes": 252,
+      "relationships": 113,
+      "functions": 60,
+      "extensions": 9
+    }
   }
 ]

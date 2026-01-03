@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-02T07:02:38.837Z
+> Auto-generated on: 2026-01-03T06:58:49.545Z
 > **Total Tables:** 63
 > **PostgreSQL Version:** 17.6
 
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~15
+- Rows: ~950
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -256,7 +256,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~8
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -367,7 +367,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admins`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~13
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 1
@@ -1743,7 +1743,7 @@ This document details the live schema of the production Supabase database. All A
 ## `profiles`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~14
 - Columns: 42
 - Indexes: 3
 - Foreign Keys: 0
@@ -3671,7 +3671,7 @@ This document details the live schema of the production Supabase database. All A
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~27
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -3720,7 +3720,7 @@ This document details the live schema of the production Supabase database. All A
 ## `roles`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~8
 - Columns: 2
 - Indexes: 2
 - Foreign Keys: 0
@@ -4611,7 +4611,7 @@ This document details the live schema of the production Supabase database. All A
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~14
 - Columns: 10
 - Indexes: 4
 - Foreign Keys: 2
