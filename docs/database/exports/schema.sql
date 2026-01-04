@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-01-03T06:58:49.554Z
+-- Generated: 2026-01-04T07:01:56.933Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -176,7 +176,9 @@ CREATE TABLE IF NOT EXISTS builders (
   is_verified boolean DEFAULT false,
   is_featured boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  normalized_name text,
+  dedup_group_id uuid
   ,PRIMARY KEY (id)
 );
 
@@ -195,6 +197,27 @@ CREATE TABLE IF NOT EXISTS campaign_participants (
   ,PRIMARY KEY (id)
 );
 
+
+-- Table: cities
+CREATE TABLE IF NOT EXISTS cities (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  normalized_name text NOT NULL,
+  state_id uuid NOT NULL,
+  district_id uuid,
+  lat numeric,
+  lng numeric,
+  geo_point USER-DEFINED,
+  place_id text,
+  population_estimate integer,
+  is_metro boolean DEFAULT false,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN cities.normalized_name IS 'Lowercase, trimmed name for deduplication';
 
 -- Table: coupon_usage
 CREATE TABLE IF NOT EXISTS coupon_usage (
@@ -263,6 +286,19 @@ CREATE TABLE IF NOT EXISTS credit_packages (
 );
 
 
+-- Table: districts
+CREATE TABLE IF NOT EXISTS districts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  lgd_code character varying(10) NOT NULL,
+  state_id uuid NOT NULL,
+  name text NOT NULL,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: hot_properties
 CREATE TABLE IF NOT EXISTS hot_properties (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -317,8 +353,6 @@ CREATE TABLE IF NOT EXISTS loan_calculations (
 CREATE TABLE IF NOT EXISTS localities (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   name text NOT NULL,
-  city text NOT NULL,
-  state text NOT NULL,
   region_id uuid,
   pincode text,
   latitude numeric,
@@ -338,10 +372,17 @@ CREATE TABLE IF NOT EXISTS localities (
   is_gated_community boolean DEFAULT false,
   is_verified boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  city_id uuid,
+  district_id uuid,
+  state_id uuid,
+  normalized_name text NOT NULL,
+  popularity_score numeric DEFAULT 0,
+  source text DEFAULT 'system'::text
   ,PRIMARY KEY (id)
 );
 
+COMMENT ON COLUMN localities.popularity_score IS 'Derived from property count + search frequency';
 
 -- Table: locality_amenities
 CREATE TABLE IF NOT EXISTS locality_amenities (
@@ -358,6 +399,40 @@ CREATE TABLE IF NOT EXISTS locality_amenities (
   ,PRIMARY KEY (id)
 );
 
+
+-- Table: location_boundaries
+CREATE TABLE IF NOT EXISTS location_boundaries (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  entity_type text NOT NULL,
+  entity_id uuid NOT NULL,
+  boundary USER-DEFINED NOT NULL,
+  source text,
+  confidence_score numeric DEFAULT 0.5,
+  is_active boolean DEFAULT true,
+  min_zoom integer DEFAULT 12,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN location_boundaries.min_zoom IS 'Minimum map zoom level to render boundary';
+
+-- Table: location_canonical_map
+CREATE TABLE IF NOT EXISTS location_canonical_map (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  raw_name text NOT NULL,
+  normalized_name text NOT NULL,
+  locality_id uuid,
+  city_id uuid,
+  confidence_score numeric DEFAULT 0.5,
+  usage_count integer DEFAULT 0,
+  last_used_at timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN location_canonical_map.confidence_score IS 'ML confidence in mapping (0-1)';
 
 -- Table: market_trends
 CREATE TABLE IF NOT EXISTS market_trends (
@@ -470,6 +545,22 @@ CREATE TABLE IF NOT EXISTS permissions (
 );
 
 
+-- Table: pincodes
+CREATE TABLE IF NOT EXISTS pincodes (
+  pincode character(6) NOT NULL,
+  city_id uuid NOT NULL,
+  district_id uuid,
+  state_id uuid NOT NULL,
+  lat numeric,
+  lng numeric,
+  geo_point USER-DEFINED,
+  delivery_status text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (pincode)
+);
+
+
 -- Table: pricing_rules
 CREATE TABLE IF NOT EXISTS pricing_rules (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -573,7 +664,12 @@ CREATE TABLE IF NOT EXISTS projects (
   inquiry_count integer DEFAULT 0,
   is_featured boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  city_id uuid,
+  district_id uuid,
+  state_id uuid,
+  geo_point USER-DEFINED,
+  geo_quality_score numeric DEFAULT 0
   ,PRIMARY KEY (id)
 );
 
@@ -719,10 +815,55 @@ CREATE TABLE IF NOT EXISTS properties (
   property_facing_road_width numeric,
   govt_approved boolean DEFAULT false,
   clear_title boolean DEFAULT false,
-  last_viewed_by uuid
+  last_viewed_by uuid,
+  city_id uuid,
+  district_id uuid,
+  state_id uuid,
+  pincode_fk character(6),
+  geo_point USER-DEFINED,
+  geo_quality_score numeric DEFAULT 0,
+  data_freshness_score numeric DEFAULT 100,
+  last_verified_at timestamp with time zone,
+  visibility_status text DEFAULT 'public'::text
   ,PRIMARY KEY (id)
 );
 
+COMMENT ON COLUMN properties.property_type IS 'Standard Property Types:
+• apartment - Apartment/Flat in complex
+• house - Independent House
+• villa - Luxury Villa
+• commercial - Office/Shop/Commercial
+• land - Plot/Land
+• farm - Farmhouse/Agricultural
+• pg - Paying Guest
+• hostel - Hostel';
+COMMENT ON COLUMN properties.listing_type IS 'Transaction Types:
+• sale - For Sale
+• rent - For Rent
+• lease - Long-term Lease
+• pg - PG Accommodation
+• hostel - Hostel
+• flatmate - Roommate needed';
+COMMENT ON COLUMN properties.bhk_type IS 'BHK Configurations (format: Xbhk):
+• 1rk - 1 Room Kitchen (Studio)
+• 1bhk - 1 Bedroom Hall Kitchen
+• 2bhk - 2 BHK
+• 3bhk - 3 BHK
+• 4bhk - 4 BHK
+• 5bhk - 5+ BHK';
+COMMENT ON COLUMN properties.ownership_type IS 'Ownership Types:
+• freehold - Full ownership
+• leasehold - Leased from authority
+• cooperative - Co-op society
+• power_of_attorney - POA basis
+• joint - Joint ownership';
+COMMENT ON COLUMN properties.furnishing IS 'Furnishing Status:
+• unfurnished - No furniture
+• semi_furnished - Basic furniture
+• fully_furnished - Fully equipped';
+COMMENT ON COLUMN properties.geo_quality_score IS 'Quality of geocoding: 100=verified, 70=auto, 40=pincode-only, 0=none';
+COMMENT ON COLUMN properties.data_freshness_score IS 'Decay score: 100=today, decreases daily';
+COMMENT ON COLUMN properties.visibility_status IS 'Property visibility state in search results';
 
 -- Table: property_amenities
 CREATE TABLE IF NOT EXISTS property_amenities (
@@ -1220,6 +1361,44 @@ CREATE TABLE IF NOT EXISTS security_flags (
 
 COMMENT ON COLUMN security_flags.status IS 'Status: pending (awaiting review), reviewed (action taken), dismissed (false positive)';
 
+-- Table: spatial_ref_sys
+CREATE TABLE IF NOT EXISTS spatial_ref_sys (
+  srid integer NOT NULL,
+  auth_name character varying(256),
+  auth_srid integer,
+  srtext character varying(2048),
+  proj4text character varying(2048)
+  ,PRIMARY KEY (srid)
+);
+
+
+-- Table: states
+CREATE TABLE IF NOT EXISTS states (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  lgd_code character varying(5) NOT NULL,
+  name text NOT NULL,
+  iso_code character varying(8),
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN states.lgd_code IS 'Official LGD state code from govt.in';
+
+-- Table: sub_districts
+CREATE TABLE IF NOT EXISTS sub_districts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  lgd_code character varying(10),
+  district_id uuid NOT NULL,
+  name text NOT NULL,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: subscription_enrollments
 CREATE TABLE IF NOT EXISTS subscription_enrollments (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -1260,6 +1439,18 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
   display_order integer DEFAULT 0,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: system_health_metrics
+CREATE TABLE IF NOT EXISTS system_health_metrics (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  metric_name text NOT NULL,
+  metric_value numeric NOT NULL,
+  metric_unit text,
+  context jsonb,
+  recorded_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

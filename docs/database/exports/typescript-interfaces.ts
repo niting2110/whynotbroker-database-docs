@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-01-03T06:58:49.574Z
+// Generated: 2026-01-04T07:01:56.952Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -291,6 +291,8 @@ export interface Database {
       is_featured?: boolean;
       created_at?: string | Date;
       updated_at?: string | Date;
+      normalized_name?: string;
+      dedup_group_id?: string;
     };
     Insert: {
       name: string;
@@ -321,6 +323,8 @@ export interface Database {
       is_verified?: boolean;
       is_featured?: boolean;
       updated_at?: any;
+      normalized_name?: string;
+      dedup_group_id?: string;
     };
   };
 
@@ -347,6 +351,43 @@ export interface Database {
       is_completed?: boolean;
       completed_at?: any;
       joined_at?: any;
+    };
+  };
+
+  cities: {
+    Row: {
+      id: string;
+      name: string;
+      normalized_name: string;
+      state_id: string;
+      district_id?: string;
+      lat?: number;
+      lng?: number;
+      geo_point?: any;
+      place_id?: string;
+      population_estimate?: number;
+      is_metro?: boolean;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+      normalized_name: string;
+    };
+    Update: {
+      name?: string;
+      normalized_name?: string;
+      state_id?: string;
+      district_id?: string;
+      lat?: number;
+      lng?: number;
+      geo_point?: any;
+      place_id?: string;
+      population_estimate?: number;
+      is_metro?: boolean;
+      is_active?: boolean;
+      updated_at?: any;
     };
   };
 
@@ -479,6 +520,29 @@ export interface Database {
     };
   };
 
+  districts: {
+    Row: {
+      id: string;
+      lgd_code: string;
+      state_id: string;
+      name: string;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      lgd_code: string;
+      name: string;
+    };
+    Update: {
+      lgd_code?: string;
+      state_id?: string;
+      name?: string;
+      is_active?: boolean;
+      updated_at?: any;
+    };
+  };
+
   hot_properties: {
     Row: {
       id: string;
@@ -580,8 +644,6 @@ export interface Database {
     Row: {
       id: string;
       name: string;
-      city: string;
-      state: string;
       region_id?: string;
       pincode?: string;
       latitude?: number;
@@ -602,16 +664,19 @@ export interface Database {
       is_verified?: boolean;
       created_at?: string | Date;
       updated_at?: string | Date;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      normalized_name: string;
+      popularity_score?: number;
+      source?: string;
     };
     Insert: {
       name: string;
-      city: string;
-      state: string;
+      normalized_name: string;
     };
     Update: {
       name?: string;
-      city?: string;
-      state?: string;
       region_id?: string;
       pincode?: string;
       latitude?: number;
@@ -631,6 +696,12 @@ export interface Database {
       is_gated_community?: boolean;
       is_verified?: boolean;
       updated_at?: any;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      normalized_name?: string;
+      popularity_score?: number;
+      source?: string;
     };
   };
 
@@ -661,6 +732,64 @@ export interface Database {
       latitude?: number;
       longitude?: number;
       is_verified?: boolean;
+    };
+  };
+
+  location_boundaries: {
+    Row: {
+      id: string;
+      entity_type: string;
+      entity_id: string;
+      boundary: any;
+      source?: string;
+      confidence_score?: number;
+      is_active?: boolean;
+      min_zoom?: number;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      entity_type: string;
+      boundary: any;
+    };
+    Update: {
+      entity_type?: string;
+      entity_id?: string;
+      boundary?: any;
+      source?: string;
+      confidence_score?: number;
+      is_active?: boolean;
+      min_zoom?: number;
+      updated_at?: any;
+    };
+  };
+
+  location_canonical_map: {
+    Row: {
+      id: string;
+      raw_name: string;
+      normalized_name: string;
+      locality_id?: string;
+      city_id?: string;
+      confidence_score?: number;
+      usage_count?: number;
+      last_used_at?: string | Date;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      raw_name: string;
+      normalized_name: string;
+    };
+    Update: {
+      raw_name?: string;
+      normalized_name?: string;
+      locality_id?: string;
+      city_id?: string;
+      confidence_score?: number;
+      usage_count?: number;
+      last_used_at?: any;
+      updated_at?: any;
     };
   };
 
@@ -870,6 +999,35 @@ export interface Database {
     };
   };
 
+  pincodes: {
+    Row: {
+      pincode: string;
+      city_id: string;
+      district_id?: string;
+      state_id: string;
+      lat?: number;
+      lng?: number;
+      geo_point?: any;
+      delivery_status?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      pincode: string;
+    };
+    Update: {
+      pincode?: string;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      lat?: number;
+      lng?: number;
+      geo_point?: any;
+      delivery_status?: string;
+      updated_at?: any;
+    };
+  };
+
   pricing_rules: {
     Row: {
       id: string;
@@ -1034,6 +1192,11 @@ export interface Database {
       is_featured?: boolean;
       created_at?: string | Date;
       updated_at?: string | Date;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      geo_point?: any;
+      geo_quality_score?: number;
     };
     Insert: {
       name: string;
@@ -1074,6 +1237,11 @@ export interface Database {
       inquiry_count?: number;
       is_featured?: boolean;
       updated_at?: any;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      geo_point?: any;
+      geo_quality_score?: number;
     };
   };
 
@@ -1240,6 +1408,15 @@ export interface Database {
       govt_approved?: boolean;
       clear_title?: boolean;
       last_viewed_by?: string;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      pincode_fk?: string;
+      geo_point?: any;
+      geo_quality_score?: number;
+      data_freshness_score?: number;
+      last_verified_at?: string | Date;
+      visibility_status?: string;
     };
     Insert: {
       title: string;
@@ -1363,6 +1540,15 @@ export interface Database {
       govt_approved?: boolean;
       clear_title?: boolean;
       last_viewed_by?: string;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      pincode_fk?: string;
+      geo_point?: any;
+      geo_quality_score?: number;
+      data_freshness_score?: number;
+      last_verified_at?: any;
+      visibility_status?: string;
     };
   };
 
@@ -2274,6 +2460,70 @@ export interface Database {
     };
   };
 
+  spatial_ref_sys: {
+    Row: {
+      srid: number;
+      auth_name?: string;
+      auth_srid?: number;
+      srtext?: string;
+      proj4text?: string;
+    };
+    Insert: {
+    };
+    Update: {
+      srid?: number;
+      auth_name?: string;
+      auth_srid?: number;
+      srtext?: string;
+      proj4text?: string;
+    };
+  };
+
+  states: {
+    Row: {
+      id: string;
+      lgd_code: string;
+      name: string;
+      iso_code?: string;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      lgd_code: string;
+      name: string;
+    };
+    Update: {
+      lgd_code?: string;
+      name?: string;
+      iso_code?: string;
+      is_active?: boolean;
+      updated_at?: any;
+    };
+  };
+
+  sub_districts: {
+    Row: {
+      id: string;
+      lgd_code?: string;
+      district_id: string;
+      name: string;
+      is_active?: boolean;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      name: string;
+    };
+    Update: {
+      lgd_code?: string;
+      district_id?: string;
+      name?: string;
+      is_active?: boolean;
+      updated_at?: any;
+    };
+  };
+
   subscription_enrollments: {
     Row: {
       id: string;
@@ -2356,6 +2606,28 @@ export interface Database {
       is_active?: boolean;
       display_order?: number;
       updated_at?: any;
+    };
+  };
+
+  system_health_metrics: {
+    Row: {
+      id: string;
+      metric_name: string;
+      metric_value: number;
+      metric_unit?: string;
+      context?: any;
+      recorded_at?: string | Date;
+    };
+    Insert: {
+      metric_name: string;
+      metric_value: number;
+    };
+    Update: {
+      metric_name?: string;
+      metric_value?: number;
+      metric_unit?: string;
+      context?: any;
+      recorded_at?: any;
     };
   };
 

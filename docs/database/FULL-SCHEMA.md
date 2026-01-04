@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-03T06:58:49.545Z
-> **Total Tables:** 63
+> Auto-generated on: 2026-01-04T07:01:56.921Z
+> **Total Tables:** 72
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~950
+- Rows: ~980
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -608,8 +608,8 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~50
-- Columns: 26
-- Indexes: 3
+- Columns: 28
+- Indexes: 5
 - Foreign Keys: 0
 - Triggers: 0
 
@@ -643,6 +643,8 @@ This document details the live schema of the production Supabase database. All A
 | `is_featured` | `boolean` | YES | `false` | — |
 | `created_at` | `timestamp with time zone` | YES | `now()` | — |
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+| `normalized_name` | `text` | YES | `—` | — |
+| `dedup_group_id` | `uuid` | YES | `—` | — |
 
 ### Constraints
 
@@ -659,7 +661,9 @@ This document details the live schema of the production Supabase database. All A
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
 | `builders_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX builders_pkey ON public.builders USING btree (id)` |
+| `idx_builders_dedup_group` | btree | dedup_group_id | — | — | `CREATE INDEX idx_builders_dedup_group ON public.builders USING btree (dedup_group_id)` |
 | `idx_builders_name` | btree | name | — | — | `CREATE INDEX idx_builders_name ON public.builders USING btree (name)` |
+| `idx_builders_normalized` | btree | normalized_name | — | — | `CREATE INDEX idx_builders_normalized ON public.builders USING btree (normalized_name)` |
 | `idx_builders_verified` | btree | is_verified | — | — | `CREATE INDEX idx_builders_verified ON public.builders USING btree (is_verified)` |
 
 ---
@@ -735,6 +739,95 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION increment_campaign_participants()
+```
+
+---
+
+## `cities`
+
+> Normalized city master with geo coordinates
+
+**Statistics:**
+- Rows: ~52
+- Columns: 14
+- Indexes: 8
+- Foreign Keys: 2
+- Triggers: 2
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `normalized_name` | `text` | NO | `—` | "Lowercase, trimmed name for deduplication" |
+| `state_id` | `uuid` | NO | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `lat` | `numeric` | YES | `—` | — |
+| `lng` | `numeric` | YES | `—` | — |
+| `geo_point` | `USER-DEFINED` | YES | `—` | — |
+| `place_id` | `text` | YES | `—` | — |
+| `population_estimate` | `integer` | YES | `—` | — |
+| `is_metro` | `boolean` | YES | `false` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56157_1_not_null`: N/A
+- `2200_56157_2_not_null`: N/A
+- `2200_56157_3_not_null`: N/A
+- `2200_56157_4_not_null`: N/A
+- `normalized_name_format`: CHECK ((normalized_name = lower(TRIM(BOTH FROM normalized_name))))
+- `valid_india_bounds`: CHECK (((lat IS NULL) OR ((lat >= 6.0) AND (lat <= 37.0))))
+- `valid_india_lng`: CHECK (((lng IS NULL) OR ((lng >= 68.0) AND (lng <= 98.0))))
+
+**FOREIGN KEY:**
+- `cities_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
+- `cities_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `cities_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `cities_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)` |
+| `idx_cities_district` | btree | district_id | — | — | `CREATE INDEX idx_cities_district ON public.cities USING btree (district_id)` |
+| `idx_cities_geo` | gist | geo_point | — | — | `CREATE INDEX idx_cities_geo ON public.cities USING gist (geo_point)` |
+| `idx_cities_metro` | btree | is_metro | — | — | `CREATE INDEX idx_cities_metro ON public.cities USING btree (is_metro) WHERE (is_metro = true)` |
+| `idx_cities_name_trgm` | gin | name | — | — | `CREATE INDEX idx_cities_name_trgm ON public.cities USING gin (name gin_trgm_ops)` |
+| `idx_cities_normalized_name` | btree | normalized_name | — | — | `CREATE INDEX idx_cities_normalized_name ON public.cities USING btree (normalized_name)` |
+| `idx_cities_state` | btree | state_id | — | — | `CREATE INDEX idx_cities_state ON public.cities USING btree (state_id)` |
+| `idx_cities_unique_name_state` | btree | normalized_name, state_id | ✓ | — | `CREATE UNIQUE INDEX idx_cities_unique_name_state ON public.cities USING btree (normalized_name, state_id)` |
+
+### Foreign Keys
+
+- `cities_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `cities_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `sync_city_geo_point`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_city_geo_point()
+```
+- `sync_city_geo_point`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_city_geo_point()
 ```
 
 ---
@@ -1001,6 +1094,67 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `districts`
+
+> Indian districts linked to LGD state codes
+
+**Statistics:**
+- Rows: ~0
+- Columns: 7
+- Indexes: 6
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `lgd_code` | `character varying(10)` | NO | `—` | — |
+| `state_id` | `uuid` | NO | `—` | — |
+| `name` | `text` | NO | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56113_1_not_null`: N/A
+- `2200_56113_2_not_null`: N/A
+- `2200_56113_3_not_null`: N/A
+- `2200_56113_4_not_null`: N/A
+- `valid_district_lgd`: CHECK (((lgd_code)::text ~ '^[0-9]{3,10}$'::text))
+
+**FOREIGN KEY:**
+- `districts_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `districts_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `districts_lgd_code_key`: UNIQUE (lgd_code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `districts_lgd_code_key` | btree | lgd_code | ✓ | — | `CREATE UNIQUE INDEX districts_lgd_code_key ON public.districts USING btree (lgd_code)` |
+| `districts_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX districts_pkey ON public.districts USING btree (id)` |
+| `idx_districts_lgd` | btree | lgd_code | — | — | `CREATE INDEX idx_districts_lgd ON public.districts USING btree (lgd_code)` |
+| `idx_districts_name` | btree | state_id, name | — | — | `CREATE INDEX idx_districts_name ON public.districts USING btree (state_id, name)` |
+| `idx_districts_name_trgm` | gin | name | — | — | `CREATE INDEX idx_districts_name_trgm ON public.districts USING gin (name gin_trgm_ops)` |
+| `idx_districts_state` | btree | state_id | — | — | `CREATE INDEX idx_districts_state ON public.districts USING btree (state_id)` |
+
+### Foreign Keys
+
+- `districts_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `hot_properties`
 
 > Real-time tracking of trending properties with high demand signals
@@ -1142,11 +1296,13 @@ This document details the live schema of the production Supabase database. All A
 
 ## `localities`
 
+> Micro-locations within cities (e.g., Koramangala, Indiranagar)
+
 **Statistics:**
-- Rows: ~100
-- Columns: 24
-- Indexes: 4
-- Foreign Keys: 1
+- Rows: ~115
+- Columns: 28
+- Indexes: 10
+- Foreign Keys: 4
 - Triggers: 0
 
 ### Columns
@@ -1155,8 +1311,6 @@ This document details the live schema of the production Supabase database. All A
 |--------|------|----------|---------|---------|
 | `id` | `uuid` | NO | `gen_random_uuid()` | — |
 | `name` | `text` | NO | `—` | — |
-| `city` | `text` | NO | `—` | — |
-| `state` | `text` | NO | `—` | — |
 | `region_id` | `uuid` | YES | `—` | — |
 | `pincode` | `text` | YES | `—` | — |
 | `latitude` | `numeric` | YES | `—` | — |
@@ -1177,19 +1331,29 @@ This document details the live schema of the production Supabase database. All A
 | `is_verified` | `boolean` | YES | `false` | — |
 | `created_at` | `timestamp with time zone` | YES | `now()` | — |
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | YES | `—` | — |
+| `normalized_name` | `text` | NO | `—` | — |
+| `popularity_score` | `numeric` | YES | `0` | "Derived from property count + search frequency" |
+| `source` | `text` | YES | `'system'::text` | — |
 
 ### Constraints
 
 **CHECK:**
 - `2200_50622_1_not_null`: N/A
+- `2200_50622_28_not_null`: N/A
 - `2200_50622_2_not_null`: N/A
-- `2200_50622_3_not_null`: N/A
-- `2200_50622_4_not_null`: N/A
 - `localities_locality_type_check`: CHECK ((locality_type = ANY (ARRAY['residential'::text, 'commercial'::text, 'mixed'::text, 'industrial'::text])))
+- `localities_source_check`: CHECK ((source = ANY (ARRAY['system'::text, 'user'::text, 'builder'::text, 'admin'::text])))
 - `localities_tier_rating_check`: CHECK (((tier_rating >= 1) AND (tier_rating <= 5)))
+- `normalized_name_format`: CHECK ((normalized_name = lower(TRIM(BOTH FROM normalized_name))))
 
 **FOREIGN KEY:**
+- `localities_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE
+- `localities_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
 - `localities_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id)
+- `localities_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
 - `localities_pkey`: PRIMARY KEY (id)
@@ -1198,17 +1362,35 @@ This document details the live schema of the production Supabase database. All A
 
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
-| `idx_localities_city` | btree | city, state | — | — | `CREATE INDEX idx_localities_city ON public.localities USING btree (city, state)` |
+| `idx_localities_city_new` | btree | city_id | — | — | `CREATE INDEX idx_localities_city_new ON public.localities USING btree (city_id)` |
+| `idx_localities_district` | btree | district_id | — | — | `CREATE INDEX idx_localities_district ON public.localities USING btree (district_id)` |
+| `idx_localities_name_trgm` | gin | name | — | — | `CREATE INDEX idx_localities_name_trgm ON public.localities USING gin (name gin_trgm_ops)` |
+| `idx_localities_normalized` | btree | normalized_name | — | — | `CREATE INDEX idx_localities_normalized ON public.localities USING btree (normalized_name)` |
 | `idx_localities_pincode` | btree | pincode | — | — | `CREATE INDEX idx_localities_pincode ON public.localities USING btree (pincode)` |
+| `idx_localities_popularity` | btree | popularity_score | — | — | `CREATE INDEX idx_localities_popularity ON public.localities USING btree (popularity_score DESC)` |
 | `idx_localities_region` | btree | region_id | — | — | `CREATE INDEX idx_localities_region ON public.localities USING btree (region_id)` |
+| `idx_localities_state_new` | btree | state_id | — | — | `CREATE INDEX idx_localities_state_new ON public.localities USING btree (state_id)` |
+| `idx_localities_unique_name_city` | btree | city_id, normalized_name | ✓ | — | `CREATE UNIQUE INDEX idx_localities_unique_name_city ON public.localities USING btree (normalized_name, city_id)` |
 | `localities_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX localities_pkey ON public.localities USING btree (id)` |
 
 ### Foreign Keys
 
+- `localities_city_id_fkey`:
+  - Columns: `city_id` → `cities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `localities_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `localities_region_id_fkey`:
   - Columns: `region_id` → `regions(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `localities_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -1266,6 +1448,128 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `locality_id` → `localities(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `location_boundaries`
+
+> Polygon boundaries for map highlighting
+
+**Statistics:**
+- Rows: ~0
+- Columns: 10
+- Indexes: 6
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `entity_type` | `text` | NO | `—` | — |
+| `entity_id` | `uuid` | NO | `—` | — |
+| `boundary` | `USER-DEFINED` | NO | `—` | — |
+| `source` | `text` | YES | `—` | — |
+| `confidence_score` | `numeric` | YES | `0.5` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `min_zoom` | `integer` | YES | `12` | "Minimum map zoom level to render boundary" |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56291_1_not_null`: N/A
+- `2200_56291_2_not_null`: N/A
+- `2200_56291_3_not_null`: N/A
+- `2200_56291_4_not_null`: N/A
+- `confidence_range`: CHECK (((confidence_score >= (0)::numeric) AND (confidence_score <= (1)::numeric)))
+- `location_boundaries_entity_type_check`: CHECK ((entity_type = ANY (ARRAY['city'::text, 'locality'::text, 'project'::text, 'district'::text])))
+- `location_boundaries_source_check`: CHECK ((source = ANY (ARRAY['osm'::text, 'manual'::text, 'google'::text, 'govt'::text])))
+- `valid_zoom`: CHECK (((min_zoom >= 1) AND (min_zoom <= 20)))
+
+**PRIMARY KEY:**
+- `location_boundaries_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_location_boundaries_active` | btree | is_active | — | — | `CREATE INDEX idx_location_boundaries_active ON public.location_boundaries USING btree (is_active) WHERE (is_active = true)` |
+| `idx_location_boundaries_entity` | btree | entity_type, entity_id | — | — | `CREATE INDEX idx_location_boundaries_entity ON public.location_boundaries USING btree (entity_type, entity_id)` |
+| `idx_location_boundaries_geo` | gist | boundary | — | — | `CREATE INDEX idx_location_boundaries_geo ON public.location_boundaries USING gist (boundary)` |
+| `idx_location_boundaries_unique` | btree | entity_type, entity_id, source | ✓ | — | `CREATE UNIQUE INDEX idx_location_boundaries_unique ON public.location_boundaries USING btree (entity_type, entity_id, source) WHERE (is_active = true)` |
+| `idx_location_boundaries_zoom` | btree | min_zoom | — | — | `CREATE INDEX idx_location_boundaries_zoom ON public.location_boundaries USING btree (min_zoom)` |
+| `location_boundaries_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX location_boundaries_pkey ON public.location_boundaries USING btree (id)` |
+
+---
+
+## `location_canonical_map`
+
+> Maps user input variations to canonical localities
+
+**Statistics:**
+- Rows: ~8
+- Columns: 10
+- Indexes: 8
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `raw_name` | `text` | NO | `—` | — |
+| `normalized_name` | `text` | NO | `—` | — |
+| `locality_id` | `uuid` | YES | `—` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `confidence_score` | `numeric` | YES | `0.5` | "ML confidence in mapping (0-1)" |
+| `usage_count` | `integer` | YES | `0` | — |
+| `last_used_at` | `timestamp with time zone` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56259_1_not_null`: N/A
+- `2200_56259_2_not_null`: N/A
+- `2200_56259_3_not_null`: N/A
+- `confidence_range`: CHECK (((confidence_score >= (0)::numeric) AND (confidence_score <= (1)::numeric)))
+- `usage_count_positive`: CHECK ((usage_count >= 0))
+
+**FOREIGN KEY:**
+- `location_canonical_map_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE
+- `location_canonical_map_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id) ON DELETE SET NULL
+
+**PRIMARY KEY:**
+- `location_canonical_map_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_location_canonical_city` | btree | city_id | — | — | `CREATE INDEX idx_location_canonical_city ON public.location_canonical_map USING btree (city_id)` |
+| `idx_location_canonical_confidence` | btree | confidence_score | — | — | `CREATE INDEX idx_location_canonical_confidence ON public.location_canonical_map USING btree (confidence_score DESC)` |
+| `idx_location_canonical_locality` | btree | locality_id | — | — | `CREATE INDEX idx_location_canonical_locality ON public.location_canonical_map USING btree (locality_id)` |
+| `idx_location_canonical_normalized` | btree | normalized_name | — | — | `CREATE INDEX idx_location_canonical_normalized ON public.location_canonical_map USING btree (normalized_name)` |
+| `idx_location_canonical_raw` | btree | raw_name | — | — | `CREATE INDEX idx_location_canonical_raw ON public.location_canonical_map USING btree (raw_name)` |
+| `idx_location_canonical_raw_trgm` | gin | raw_name | — | — | `CREATE INDEX idx_location_canonical_raw_trgm ON public.location_canonical_map USING gin (raw_name gin_trgm_ops)` |
+| `idx_location_canonical_usage` | btree | usage_count | — | — | `CREATE INDEX idx_location_canonical_usage ON public.location_canonical_map USING btree (usage_count DESC)` |
+| `location_canonical_map_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX location_canonical_map_pkey ON public.location_canonical_map USING btree (id)` |
+
+### Foreign Keys
+
+- `location_canonical_map_city_id_fkey`:
+  - Columns: `city_id` → `cities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `location_canonical_map_locality_id_fkey`:
+  - Columns: `locality_id` → `localities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ---
 
@@ -1657,6 +1961,92 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `pincodes`
+
+> Indian postal codes with geographic links
+
+**Statistics:**
+- Rows: ~0
+- Columns: 10
+- Indexes: 5
+- Foreign Keys: 3
+- Triggers: 2
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `pincode` | `character(6)` | NO | `—` | — |
+| `city_id` | `uuid` | NO | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | NO | `—` | — |
+| `lat` | `numeric` | YES | `—` | — |
+| `lng` | `numeric` | YES | `—` | — |
+| `geo_point` | `USER-DEFINED` | YES | `—` | — |
+| `delivery_status` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56191_1_not_null`: N/A
+- `2200_56191_2_not_null`: N/A
+- `2200_56191_4_not_null`: N/A
+- `pincodes_delivery_status_check`: CHECK ((delivery_status = ANY (ARRAY['delivery'::text, 'non_delivery'::text])))
+- `valid_pincode`: CHECK ((pincode ~ '^[1-9][0-9]{5}$'::text))
+- `valid_pincode_india_bounds`: CHECK (((lat IS NULL) OR ((lat >= 6.0) AND (lat <= 37.0))))
+
+**FOREIGN KEY:**
+- `pincodes_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE
+- `pincodes_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
+- `pincodes_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `pincodes_pkey`: PRIMARY KEY (pincode)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_pincodes_city` | btree | city_id | — | — | `CREATE INDEX idx_pincodes_city ON public.pincodes USING btree (city_id)` |
+| `idx_pincodes_district` | btree | district_id | — | — | `CREATE INDEX idx_pincodes_district ON public.pincodes USING btree (district_id)` |
+| `idx_pincodes_geo` | gist | geo_point | — | — | `CREATE INDEX idx_pincodes_geo ON public.pincodes USING gist (geo_point)` |
+| `idx_pincodes_state` | btree | state_id | — | — | `CREATE INDEX idx_pincodes_state ON public.pincodes USING btree (state_id)` |
+| `pincodes_pkey` | btree | pincode | ✓ | ✓ | `CREATE UNIQUE INDEX pincodes_pkey ON public.pincodes USING btree (pincode)` |
+
+### Foreign Keys
+
+- `pincodes_city_id_fkey`:
+  - Columns: `city_id` → `cities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pincodes_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `pincodes_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+### Triggers
+
+- `sync_pincode_geo_point`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_pincode_geo_point()
+```
+- `sync_pincode_geo_point`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_pincode_geo_point()
+```
+
+---
+
 ## `pricing_rules`
 
 > Dynamic pricing rules based on action, region, and user type
@@ -1841,9 +2231,9 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~5
-- Columns: 34
-- Indexes: 5
-- Foreign Keys: 2
+- Columns: 39
+- Indexes: 9
+- Foreign Keys: 5
 - Triggers: 2
 
 ### Columns
@@ -1884,6 +2274,11 @@ This document details the live schema of the production Supabase database. All A
 | `is_featured` | `boolean` | YES | `false` | — |
 | `created_at` | `timestamp with time zone` | YES | `now()` | — |
 | `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | YES | `—` | — |
+| `geo_point` | `USER-DEFINED` | YES | `—` | — |
+| `geo_quality_score` | `numeric` | YES | `0` | — |
 
 ### Constraints
 
@@ -1899,7 +2294,10 @@ This document details the live schema of the production Supabase database. All A
 
 **FOREIGN KEY:**
 - `projects_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id) ON DELETE CASCADE
+- `projects_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE SET NULL
+- `projects_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
 - `projects_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
+- `projects_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE SET NULL
 
 **PRIMARY KEY:**
 - `projects_pkey`: PRIMARY KEY (id)
@@ -1913,7 +2311,11 @@ This document details the live schema of the production Supabase database. All A
 |------|------|---------|--------|---------|------------|
 | `idx_projects_builder` | btree | builder_id | — | — | `CREATE INDEX idx_projects_builder ON public.projects USING btree (builder_id)` |
 | `idx_projects_city` | btree | status, city | — | — | `CREATE INDEX idx_projects_city ON public.projects USING btree (city, status)` |
+| `idx_projects_city_new` | btree | city_id | — | — | `CREATE INDEX idx_projects_city_new ON public.projects USING btree (city_id)` |
+| `idx_projects_district` | btree | district_id | — | — | `CREATE INDEX idx_projects_district ON public.projects USING btree (district_id)` |
+| `idx_projects_geo_point` | gist | geo_point | — | — | `CREATE INDEX idx_projects_geo_point ON public.projects USING gist (geo_point)` |
 | `idx_projects_locality` | btree | locality_id | — | — | `CREATE INDEX idx_projects_locality ON public.projects USING btree (locality_id)` |
+| `idx_projects_state` | btree | state_id | — | — | `CREATE INDEX idx_projects_state ON public.projects USING btree (state_id)` |
 | `projects_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX projects_pkey ON public.projects USING btree (id)` |
 | `projects_slug_key` | btree | slug | ✓ | — | `CREATE UNIQUE INDEX projects_slug_key ON public.projects USING btree (slug)` |
 
@@ -1923,10 +2325,22 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `builder_id` → `builders(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+- `projects_city_id_fkey`:
+  - Columns: `city_id` → `cities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `projects_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `projects_locality_id_fkey`:
   - Columns: `locality_id` → `localities(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `projects_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ### Triggers
 
@@ -2026,10 +2440,10 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~5
-- Columns: 115
-- Indexes: 27
-- Foreign Keys: 7
-- Triggers: 9
+- Columns: 124
+- Indexes: 37
+- Foreign Keys: 11
+- Triggers: 11
 
 ### Columns
 
@@ -2043,10 +2457,35 @@ This document details the live schema of the production Supabase database. All A
 | `title` | `text` | NO | `—` | — |
 | `slug` | `text` | YES | `—` | — |
 | `description` | `text` | YES | `—` | — |
-| `property_type` | `text` | NO | `—` | — |
-| `listing_type` | `text` | NO | `'sale'::text` | — |
-| `bhk_type` | `text` | YES | `—` | — |
-| `ownership_type` | `text` | YES | `—` | — |
+| `property_type` | `text` | NO | `—` | "Standard Property Types:
+• apartment - Apartment/Flat in complex
+• house - Independent House
+• villa - Luxury Villa
+• commercial - Office/Shop/Commercial
+• land - Plot/Land
+• farm - Farmhouse/Agricultural
+• pg - Paying Guest
+• hostel - Hostel" |
+| `listing_type` | `text` | NO | `'sale'::text` | "Transaction Types:
+• sale - For Sale
+• rent - For Rent
+• lease - Long-term Lease
+• pg - PG Accommodation
+• hostel - Hostel
+• flatmate - Roommate needed" |
+| `bhk_type` | `text` | YES | `—` | "BHK Configurations (format: Xbhk):
+• 1rk - 1 Room Kitchen (Studio)
+• 1bhk - 1 Bedroom Hall Kitchen
+• 2bhk - 2 BHK
+• 3bhk - 3 BHK
+• 4bhk - 4 BHK
+• 5bhk - 5+ BHK" |
+| `ownership_type` | `text` | YES | `—` | "Ownership Types:
+• freehold - Full ownership
+• leasehold - Leased from authority
+• cooperative - Co-op society
+• power_of_attorney - POA basis
+• joint - Joint ownership" |
 | `price` | `numeric` | NO | `—` | — |
 | `price_negotiable` | `boolean` | YES | `false` | — |
 | `maintenance_cost` | `numeric` | YES | `—` | — |
@@ -2079,7 +2518,10 @@ This document details the live schema of the production Supabase database. All A
 | `possession_year` | `integer` | YES | `—` | — |
 | `facing` | `text` | YES | `—` | — |
 | `age_of_construction` | `integer` | YES | `—` | — |
-| `furnishing` | `text` | YES | `—` | — |
+| `furnishing` | `text` | YES | `—` | "Furnishing Status:
+• unfurnished - No furniture
+• semi_furnished - Basic furniture
+• fully_furnished - Fully equipped" |
 | `kitchen_type` | `text` | YES | `—` | — |
 | `flooring_type` | `text` | YES | `—` | — |
 | `overlooking` | `text` | YES | `—` | — |
@@ -2150,6 +2592,15 @@ This document details the live schema of the production Supabase database. All A
 | `govt_approved` | `boolean` | YES | `false` | — |
 | `clear_title` | `boolean` | YES | `false` | — |
 | `last_viewed_by` | `uuid` | YES | `—` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | YES | `—` | — |
+| `pincode_fk` | `character(6)` | YES | `—` | — |
+| `geo_point` | `USER-DEFINED` | YES | `—` | — |
+| `geo_quality_score` | `numeric` | YES | `0` | "Quality of geocoding: 100=verified, 70=auto, 40=pincode-only, 0=none" |
+| `data_freshness_score` | `numeric` | YES | `100` | "Decay score: 100=today, decreases daily" |
+| `last_verified_at` | `timestamp with time zone` | YES | `—` | — |
+| `visibility_status` | `text` | YES | `'public'::text` | "Property visibility state in search results" |
 
 ### Constraints
 
@@ -2167,6 +2618,8 @@ This document details the live schema of the production Supabase database. All A
 - `2200_18738_93_not_null`: N/A
 - `2200_18738_9_not_null`: N/A
 - `bhk_type_numeric_check`: CHECK (((bhk_type IS NULL) OR (bhk_type ~ '^[0-9]+bhk$'::text)))
+- `freshness_score_range`: CHECK (((data_freshness_score >= (0)::numeric) AND (data_freshness_score <= (100)::numeric)))
+- `geo_quality_score_range`: CHECK (((geo_quality_score >= (0)::numeric) AND (geo_quality_score <= (100)::numeric)))
 - `properties_area_unit_check`: CHECK ((area_unit = ANY (ARRAY['sqft'::text, 'sqm'::text, 'acre'::text, 'hectare'::text, 'gunta'::text, 'marla'::text, 'bigha'::text])))
 - `properties_availability_schedule_check`: CHECK ((availability_schedule = ANY (ARRAY['everyday'::text, 'weekdays'::text, 'weekends'::text, 'custom'::text])))
 - `properties_electricity_backup_check`: CHECK ((electricity_backup = ANY (ARRAY['none'::text, 'partial'::text, 'full'::text, 'solar'::text])))
@@ -2180,17 +2633,23 @@ This document details the live schema of the production Supabase database. All A
 - `properties_possession_status_check`: CHECK ((possession_status = ANY (ARRAY['immediate'::text, 'within_3months'::text, 'within_6months'::text, 'under_construction'::text])))
 - `properties_property_age_check`: CHECK ((property_age = ANY (ARRAY['under_construction'::text, '0-1'::text, '1-5'::text, '5-10'::text, '10-20'::text, '20+'::text, 'new_launch'::text])))
 - `properties_show_property_by_check`: CHECK ((show_property_by = ANY (ARRAY['owner'::text, 'agent'::text, 'broker'::text, 'builder'::text, 'representative'::text])))
+- `properties_visibility_status_check`: CHECK ((visibility_status = ANY (ARRAY['public'::text, 'hidden_by_user'::text, 'hidden_by_admin'::text, 'expired'::text, 'flagged'::text, 'legal_hold'::text])))
 - `properties_water_supply_check`: CHECK ((water_supply = ANY (ARRAY['municipal'::text, 'borewell'::text, 'both'::text])))
 - `property_type_check`: CHECK ((property_type = ANY (ARRAY['apartment'::text, 'house'::text, 'villa'::text, 'commercial'::text, 'land'::text, 'farm'::text, 'pg'::text, 'hostel'::text])))
 - `status_check`: CHECK ((status = ANY (ARRAY['draft'::text, 'pending'::text, 'published'::text, 'sold'::text, 'rented'::text])))
+- `valid_property_india_bounds`: CHECK (((latitude IS NULL) OR ((latitude >= 6.0) AND (latitude <= 37.0))))
 
 **FOREIGN KEY:**
 - `properties_agency_id_fkey`: FOREIGN KEY (agency_id) REFERENCES profiles(id) ON DELETE SET NULL
 - `properties_agent_id_fkey`: FOREIGN KEY (agent_id) REFERENCES profiles(id) ON DELETE SET NULL
 - `properties_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id)
+- `properties_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE SET NULL
+- `properties_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
 - `properties_last_viewed_by_fkey`: FOREIGN KEY (last_viewed_by) REFERENCES profiles(id)
 - `properties_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
+- `properties_pincode_fk_fkey`: FOREIGN KEY (pincode_fk) REFERENCES pincodes(pincode) ON DELETE SET NULL
 - `properties_project_id_fkey`: FOREIGN KEY (project_id) REFERENCES projects(id)
+- `properties_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE SET NULL
 - `properties_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
@@ -2211,23 +2670,33 @@ This document details the live schema of the production Supabase database. All A
 | `idx_properties_area` | btree | built_up_area | — | — | `CREATE INDEX idx_properties_area ON public.properties USING btree (built_up_area)` |
 | `idx_properties_bedrooms` | btree | bedrooms | — | — | `CREATE INDEX idx_properties_bedrooms ON public.properties USING btree (bedrooms)` |
 | `idx_properties_builder` | btree | builder_id | — | — | `CREATE INDEX idx_properties_builder ON public.properties USING btree (builder_id)` |
+| `idx_properties_city_active_created` | btree | created_at, city_id | — | — | `CREATE INDEX idx_properties_city_active_created ON public.properties USING btree (city_id, created_at DESC) WHERE (visibility_status = 'public'::text)` |
 | `idx_properties_city_locality` | btree | city, locality | — | — | `CREATE INDEX idx_properties_city_locality ON public.properties USING btree (city, locality)` |
+| `idx_properties_city_new` | btree | city_id | — | — | `CREATE INDEX idx_properties_city_new ON public.properties USING btree (city_id)` |
 | `idx_properties_city_price_filter` | btree | price, city, status, is_active | — | — | `CREATE INDEX idx_properties_city_price_filter ON public.properties USING btree (city, price, status, is_active)` |
 | `idx_properties_city_status_active` | btree | city, status, is_active | — | — | `CREATE INDEX idx_properties_city_status_active ON public.properties USING btree (city, status, is_active)` |
 | `idx_properties_created_at` | btree | created_at | — | — | `CREATE INDEX idx_properties_created_at ON public.properties USING btree (created_at DESC)` |
+| `idx_properties_district` | btree | district_id | — | — | `CREATE INDEX idx_properties_district ON public.properties USING btree (district_id)` |
 | `idx_properties_featured` | btree | is_featured | — | — | `CREATE INDEX idx_properties_featured ON public.properties USING btree (is_featured) WHERE (is_featured = true)` |
 | `idx_properties_featured_smart` | btree | status, is_active, is_featured, created_at, featured_until | — | — | `CREATE INDEX idx_properties_featured_smart ON public.properties USING btree (is_featured, featured_until DESC NULLS LAST, created_at DESC, status, is_active)` |
+| `idx_properties_freshness` | btree | data_freshness_score | — | — | `CREATE INDEX idx_properties_freshness ON public.properties USING btree (data_freshness_score DESC)` |
+| `idx_properties_geo_point` | gist | geo_point | — | — | `CREATE INDEX idx_properties_geo_point ON public.properties USING gist (geo_point)` |
+| `idx_properties_geo_quality` | btree | geo_quality_score | — | — | `CREATE INDEX idx_properties_geo_quality ON public.properties USING btree (geo_quality_score DESC)` |
+| `idx_properties_last_verified` | btree | last_verified_at | — | — | `CREATE INDEX idx_properties_last_verified ON public.properties USING btree (last_verified_at DESC NULLS LAST)` |
 | `idx_properties_listing_type` | btree | listing_type | — | — | `CREATE INDEX idx_properties_listing_type ON public.properties USING btree (listing_type)` |
 | `idx_properties_locality` | btree | locality_id | — | — | `CREATE INDEX idx_properties_locality ON public.properties USING btree (locality_id)` |
 | `idx_properties_pid` | btree | pid | — | — | `CREATE INDEX idx_properties_pid ON public.properties USING btree (pid)` |
+| `idx_properties_pincode_fk` | btree | pincode_fk | — | — | `CREATE INDEX idx_properties_pincode_fk ON public.properties USING btree (pincode_fk)` |
 | `idx_properties_price` | btree | price | — | — | `CREATE INDEX idx_properties_price ON public.properties USING btree (price)` |
 | `idx_properties_price_status_active` | btree | price, status, is_active | — | — | `CREATE INDEX idx_properties_price_status_active ON public.properties USING btree (price, status, is_active)` |
 | `idx_properties_project` | btree | project_id | — | — | `CREATE INDEX idx_properties_project ON public.properties USING btree (project_id)` |
 | `idx_properties_property_type` | btree | property_type | — | — | `CREATE INDEX idx_properties_property_type ON public.properties USING btree (property_type)` |
 | `idx_properties_search` | btree | property_type, price, city, bedrooms, status | — | — | `CREATE INDEX idx_properties_search ON public.properties USING btree (city, price, bedrooms, property_type, status) WHERE ((status = 'published'::text) AND (is_active = true))` |
+| `idx_properties_state_new` | btree | state_id | — | — | `CREATE INDEX idx_properties_state_new ON public.properties USING btree (state_id)` |
 | `idx_properties_status` | btree | status | — | — | `CREATE INDEX idx_properties_status ON public.properties USING btree (status)` |
 | `idx_properties_user_id` | btree | user_id | — | — | `CREATE INDEX idx_properties_user_id ON public.properties USING btree (user_id)` |
 | `idx_properties_user_status` | btree | user_id, status, created_at | — | — | `CREATE INDEX idx_properties_user_status ON public.properties USING btree (user_id, status, created_at DESC)` |
+| `idx_properties_visibility` | btree | visibility_status | — | — | `CREATE INDEX idx_properties_visibility ON public.properties USING btree (visibility_status) WHERE (visibility_status = 'public'::text)` |
 | `properties_pid_key` | btree | pid | ✓ | — | `CREATE UNIQUE INDEX properties_pid_key ON public.properties USING btree (pid)` |
 | `properties_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX properties_pkey ON public.properties USING btree (id)` |
 | `properties_property_code_key` | btree | property_code | ✓ | — | `CREATE UNIQUE INDEX properties_property_code_key ON public.properties USING btree (property_code)` |
@@ -2247,6 +2716,14 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `builder_id` → `builders(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `properties_city_id_fkey`:
+  - Columns: `city_id` → `cities(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `properties_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `properties_last_viewed_by_fkey`:
   - Columns: `last_viewed_by` → `profiles(id)`
   - ON UPDATE: NO ACTION
@@ -2255,10 +2732,18 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `locality_id` → `localities(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `properties_pincode_fk_fkey`:
+  - Columns: `pincode_fk` → `pincodes(pincode)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `properties_project_id_fkey`:
   - Columns: `project_id` → `projects(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+- `properties_state_id_fkey`:
+  - Columns: `state_id` → `states(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `properties_user_id_fkey`:
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
@@ -2319,6 +2804,18 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION update_updated_at_column()
+```
+- `validate_property_city_distance`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION check_property_city_distance()
+```
+- `validate_property_city_distance`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION check_property_city_distance()
 ```
 
 ---
@@ -3515,7 +4012,7 @@ This document details the live schema of the production Supabase database. All A
 > Master table for regional configuration across India
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~107
 - Columns: 15
 - Indexes: 5
 - Foreign Keys: 1
@@ -3925,6 +4422,152 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `spatial_ref_sys`
+
+**Statistics:**
+- Rows: ~8,500
+- Columns: 5
+- Indexes: 1
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `srid` | `integer` | NO | `—` | — |
+| `auth_name` | `character varying(256)` | YES | `—` | — |
+| `auth_srid` | `integer` | YES | `—` | — |
+| `srtext` | `character varying(2048)` | YES | `—` | — |
+| `proj4text` | `character varying(2048)` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_55281_1_not_null`: N/A
+- `spatial_ref_sys_srid_check`: CHECK (((srid > 0) AND (srid <= 998999)))
+
+**PRIMARY KEY:**
+- `spatial_ref_sys_pkey`: PRIMARY KEY (srid)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `spatial_ref_sys_pkey` | btree | srid | ✓ | ✓ | `CREATE UNIQUE INDEX spatial_ref_sys_pkey ON public.spatial_ref_sys USING btree (srid)` |
+
+---
+
+## `states`
+
+> Indian states with LGD (Local Government Directory) codes
+
+**Statistics:**
+- Rows: ~36
+- Columns: 7
+- Indexes: 6
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `lgd_code` | `character varying(5)` | NO | `—` | "Official LGD state code from govt.in" |
+| `name` | `text` | NO | `—` | — |
+| `iso_code` | `character varying(8)` | YES | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56093_1_not_null`: N/A
+- `2200_56093_2_not_null`: N/A
+- `2200_56093_3_not_null`: N/A
+- `valid_iso_code`: CHECK (((iso_code)::text ~ '^IN-[A-Z]{2}$'::text))
+- `valid_lgd_code`: CHECK (((lgd_code)::text ~ '^[0-9]{2,5}$'::text))
+
+**PRIMARY KEY:**
+- `states_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `states_iso_code_key`: UNIQUE (iso_code)
+- `states_lgd_code_key`: UNIQUE (lgd_code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_states_active` | btree | is_active | — | — | `CREATE INDEX idx_states_active ON public.states USING btree (is_active) WHERE (is_active = true)` |
+| `idx_states_lgd` | btree | lgd_code | — | — | `CREATE INDEX idx_states_lgd ON public.states USING btree (lgd_code)` |
+| `idx_states_name` | btree | name | — | — | `CREATE INDEX idx_states_name ON public.states USING btree (name)` |
+| `states_iso_code_key` | btree | iso_code | ✓ | — | `CREATE UNIQUE INDEX states_iso_code_key ON public.states USING btree (iso_code)` |
+| `states_lgd_code_key` | btree | lgd_code | ✓ | — | `CREATE UNIQUE INDEX states_lgd_code_key ON public.states USING btree (lgd_code)` |
+| `states_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX states_pkey ON public.states USING btree (id)` |
+
+---
+
+## `sub_districts`
+
+> Sub-districts/Talukas for granular location hierarchy
+
+**Statistics:**
+- Rows: ~0
+- Columns: 7
+- Indexes: 5
+- Foreign Keys: 1
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `lgd_code` | `character varying(10)` | YES | `—` | — |
+| `district_id` | `uuid` | NO | `—` | — |
+| `name` | `text` | NO | `—` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56136_1_not_null`: N/A
+- `2200_56136_3_not_null`: N/A
+- `2200_56136_4_not_null`: N/A
+
+**FOREIGN KEY:**
+- `sub_districts_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `sub_districts_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `sub_districts_lgd_code_key`: UNIQUE (lgd_code)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_sub_districts_district` | btree | district_id | — | — | `CREATE INDEX idx_sub_districts_district ON public.sub_districts USING btree (district_id)` |
+| `idx_sub_districts_name` | btree | district_id, name | — | — | `CREATE INDEX idx_sub_districts_name ON public.sub_districts USING btree (district_id, name)` |
+| `idx_sub_districts_name_trgm` | gin | name | — | — | `CREATE INDEX idx_sub_districts_name_trgm ON public.sub_districts USING gin (name gin_trgm_ops)` |
+| `sub_districts_lgd_code_key` | btree | lgd_code | ✓ | — | `CREATE UNIQUE INDEX sub_districts_lgd_code_key ON public.sub_districts USING btree (lgd_code)` |
+| `sub_districts_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX sub_districts_pkey ON public.sub_districts USING btree (id)` |
+
+### Foreign Keys
+
+- `sub_districts_district_id_fkey`:
+  - Columns: `district_id` → `districts(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `subscription_enrollments`
 
 **Statistics:**
@@ -4091,6 +4734,45 @@ This document details the live schema of the production Supabase database. All A
 ```sql
   EXECUTE FUNCTION log_payment_admin_action()
 ```
+
+---
+
+## `system_health_metrics`
+
+**Statistics:**
+- Rows: ~2
+- Columns: 6
+- Indexes: 2
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `metric_name` | `text` | NO | `—` | — |
+| `metric_value` | `numeric` | NO | `—` | — |
+| `metric_unit` | `text` | YES | `—` | — |
+| `context` | `jsonb` | YES | `—` | — |
+| `recorded_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_56402_1_not_null`: N/A
+- `2200_56402_2_not_null`: N/A
+- `2200_56402_3_not_null`: N/A
+
+**PRIMARY KEY:**
+- `system_health_metrics_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_health_metrics_name` | btree | metric_name, recorded_at | — | — | `CREATE INDEX idx_health_metrics_name ON public.system_health_metrics USING btree (metric_name, recorded_at DESC)` |
+| `system_health_metrics_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX system_health_metrics_pkey ON public.system_health_metrics USING btree (id)` |
 
 ---
 

@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 113
-Generated: 2026-01-03T06:58:49.552Z
+Total Relationships: 132
+Generated: 2026-01-04T07:01:56.931Z
 
 ```
 admin_audit_logs:
@@ -58,6 +58,12 @@ campaign_participants:
   └─→ regions (via: campaign_participants_region_id_fkey)
       columns: region_id
 
+cities:
+  └─→ districts (via: cities_district_id_fkey)
+      columns: district_id
+  └─→ states (via: cities_state_id_fkey)
+      columns: state_id
+
 coupon_usage:
   └─→ coupons (via: coupon_usage_coupon_id_fkey)
       columns: coupon_id
@@ -72,6 +78,10 @@ credit_packages:
   └─→ regions (via: credit_packages_region_id_fkey)
       columns: region_id
 
+districts:
+  └─→ states (via: districts_state_id_fkey)
+      columns: state_id
+
 hot_properties:
   └─→ properties (via: hot_properties_property_id_fkey)
       columns: property_id
@@ -83,11 +93,23 @@ loan_calculations:
       columns: user_id
 
 localities:
+  └─→ cities (via: localities_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: localities_district_id_fkey)
+      columns: district_id
   └─→ regions (via: localities_region_id_fkey)
       columns: region_id
+  └─→ states (via: localities_state_id_fkey)
+      columns: state_id
 
 locality_amenities:
   └─→ localities (via: locality_amenities_locality_id_fkey)
+      columns: locality_id
+
+location_canonical_map:
+  └─→ cities (via: location_canonical_map_city_id_fkey)
+      columns: city_id
+  └─→ localities (via: location_canonical_map_locality_id_fkey)
       columns: locality_id
 
 market_trends:
@@ -122,6 +144,14 @@ notifications:
   └─→ profiles (via: notifications_user_id_fkey)
       columns: user_id
 
+pincodes:
+  └─→ cities (via: pincodes_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: pincodes_district_id_fkey)
+      columns: district_id
+  └─→ states (via: pincodes_state_id_fkey)
+      columns: state_id
+
 pricing_rules:
   └─→ regions (via: pricing_rules_region_id_fkey)
       columns: region_id
@@ -129,8 +159,14 @@ pricing_rules:
 projects:
   └─→ builders (via: projects_builder_id_fkey)
       columns: builder_id
+  └─→ cities (via: projects_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: projects_district_id_fkey)
+      columns: district_id
   └─→ localities (via: projects_locality_id_fkey)
       columns: locality_id
+  └─→ states (via: projects_state_id_fkey)
+      columns: state_id
 
 properties:
   └─→ profiles (via: properties_agency_id_fkey)
@@ -139,12 +175,20 @@ properties:
       columns: agent_id
   └─→ builders (via: properties_builder_id_fkey)
       columns: builder_id
+  └─→ cities (via: properties_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: properties_district_id_fkey)
+      columns: district_id
   └─→ profiles (via: properties_last_viewed_by_fkey)
       columns: last_viewed_by
   └─→ localities (via: properties_locality_id_fkey)
       columns: locality_id
+  └─→ pincodes (via: properties_pincode_fk_fkey)
+      columns: pincode_fk
   └─→ projects (via: properties_project_id_fkey)
       columns: project_id
+  └─→ states (via: properties_state_id_fkey)
+      columns: state_id
   └─→ profiles (via: properties_user_id_fkey)
       columns: user_id
 
@@ -279,6 +323,10 @@ security_flags:
       columns: flagged_by
   └─→ admins (via: security_flags_resolved_by_fkey)
       columns: resolved_by
+
+sub_districts:
+  └─→ districts (via: sub_districts_district_id_fkey)
+      columns: district_id
 
 subscription_enrollments:
   └─→ subscription_plans (via: subscription_enrollments_plan_id_fkey)

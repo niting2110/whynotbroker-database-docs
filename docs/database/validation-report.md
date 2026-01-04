@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-01-03T06:58:49.554Z
-Total Issues: 154
-Warnings: 113
-Recommendations: 41
+Generated: 2026-01-04T07:01:56.933Z
+Total Issues: 175
+Warnings: 132
+Recommendations: 43
 
 ## ⚠️ Warnings
 
@@ -26,15 +26,23 @@ Recommendations: 41
 | MEDIUM | `blog_posts` | Foreign key blog_posts_author_id_fkey has no covering index |
 | MEDIUM | `campaign_participants` | Foreign key campaign_participants_campaign_id_fkey has no covering index |
 | MEDIUM | `campaign_participants` | Foreign key campaign_participants_region_id_fkey has no covering index |
+| MEDIUM | `cities` | Foreign key cities_district_id_fkey has no covering index |
+| MEDIUM | `cities` | Foreign key cities_state_id_fkey has no covering index |
 | MEDIUM | `coupon_usage` | Foreign key coupon_usage_coupon_id_fkey has no covering index |
 | MEDIUM | `coupon_usage` | Foreign key coupon_usage_region_id_fkey has no covering index |
 | MEDIUM | `coupons` | Foreign key coupons_campaign_id_fkey has no covering index |
 | MEDIUM | `credit_packages` | Foreign key credit_packages_region_id_fkey has no covering index |
+| MEDIUM | `districts` | Foreign key districts_state_id_fkey has no covering index |
 | MEDIUM | `hot_properties` | Foreign key hot_properties_property_id_fkey has no covering index |
 | MEDIUM | `loan_calculations` | Foreign key loan_calculations_property_id_fkey has no covering index |
 | MEDIUM | `loan_calculations` | Foreign key loan_calculations_user_id_fkey has no covering index |
+| MEDIUM | `localities` | Foreign key localities_city_id_fkey has no covering index |
+| MEDIUM | `localities` | Foreign key localities_district_id_fkey has no covering index |
 | MEDIUM | `localities` | Foreign key localities_region_id_fkey has no covering index |
+| MEDIUM | `localities` | Foreign key localities_state_id_fkey has no covering index |
 | MEDIUM | `locality_amenities` | Foreign key locality_amenities_locality_id_fkey has no covering index |
+| MEDIUM | `location_canonical_map` | Foreign key location_canonical_map_city_id_fkey has no covering index |
+| MEDIUM | `location_canonical_map` | Foreign key location_canonical_map_locality_id_fkey has no covering index |
 | MEDIUM | `market_trends` | Foreign key market_trends_locality_id_fkey has no covering index |
 | MEDIUM | `market_trends` | Foreign key market_trends_region_id_fkey has no covering index |
 | MEDIUM | `messages` | Foreign key messages_lead_id_fkey has no covering index |
@@ -46,15 +54,25 @@ Recommendations: 41
 | MEDIUM | `moderation_history` | Foreign key moderation_history_property_id_fkey has no covering index |
 | MEDIUM | `notification_preferences` | Foreign key notification_preferences_user_id_fkey has no covering index |
 | MEDIUM | `notifications` | Foreign key notifications_user_id_fkey has no covering index |
+| MEDIUM | `pincodes` | Foreign key pincodes_city_id_fkey has no covering index |
+| MEDIUM | `pincodes` | Foreign key pincodes_district_id_fkey has no covering index |
+| MEDIUM | `pincodes` | Foreign key pincodes_state_id_fkey has no covering index |
 | MEDIUM | `pricing_rules` | Foreign key pricing_rules_region_id_fkey has no covering index |
 | MEDIUM | `projects` | Foreign key projects_builder_id_fkey has no covering index |
+| MEDIUM | `projects` | Foreign key projects_city_id_fkey has no covering index |
+| MEDIUM | `projects` | Foreign key projects_district_id_fkey has no covering index |
 | MEDIUM | `projects` | Foreign key projects_locality_id_fkey has no covering index |
+| MEDIUM | `projects` | Foreign key projects_state_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_agency_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_agent_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_builder_id_fkey has no covering index |
+| MEDIUM | `properties` | Foreign key properties_city_id_fkey has no covering index |
+| MEDIUM | `properties` | Foreign key properties_district_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_last_viewed_by_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_locality_id_fkey has no covering index |
+| MEDIUM | `properties` | Foreign key properties_pincode_fk_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_project_id_fkey has no covering index |
+| MEDIUM | `properties` | Foreign key properties_state_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_user_id_fkey has no covering index |
 | MEDIUM | `property_amenities` | Foreign key property_amenities_property_id_fkey has no covering index |
 | MEDIUM | `property_assignments` | Foreign key property_assignments_admin_id_fkey has no covering index |
@@ -99,6 +117,7 @@ Recommendations: 41
 | MEDIUM | `search_history` | Foreign key search_history_user_id_fkey has no covering index |
 | MEDIUM | `security_flags` | Foreign key security_flags_flagged_by_fkey has no covering index |
 | MEDIUM | `security_flags` | Foreign key security_flags_resolved_by_fkey has no covering index |
+| MEDIUM | `sub_districts` | Foreign key sub_districts_district_id_fkey has no covering index |
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_plan_id_fkey has no covering index |
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_purchase_transaction_id_fkey has no covering index |
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_user_id_fkey has no covering index |
@@ -165,6 +184,8 @@ Recommendations: 41
 | `roles` | Table missing timestamp columns (created_at, updated_at) |
 | `search_history` | Table missing timestamp columns (created_at, updated_at) |
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
+| `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |
+| `system_health_metrics` | Table missing timestamp columns (created_at, updated_at) |
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |
