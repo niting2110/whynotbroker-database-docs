@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-01-04T07:01:56.931Z
-Total Indexes: 321
+Generated: 2026-01-05T07:39:13.772Z
+Total Indexes: 342
 
 ## All Indexes
 
@@ -101,6 +101,27 @@ Total Indexes: 321
 | `market_trends` | `idx_market_trends_region` | btree | region_id, month_year | — | `CREATE INDEX idx_market_trends_region ON public.market_trends USING btree (region_id, month_year)` |
 | `market_trends` | `market_trends_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX market_trends_pkey ON public.market_trends USING btree (id)` |
 | `market_trends` | `market_trends_region_id_locality_id_property_type_bhk_type__key` | btree | region_id, locality_id, property_type, bhk_type, month_year | ✓ | `CREATE UNIQUE INDEX market_trends_region_id_locality_id_property_type_bhk_type__key ON public.market_trends USING btree (region_id, locality_id, property_type, bhk_type, month_year)` |
+| `mdm_aliases` | `idx_mdm_aliases_canonical` | btree | canonical_entity_id, canonical_entity_type | — | `CREATE INDEX idx_mdm_aliases_canonical ON public.mdm_aliases USING btree (canonical_entity_id, canonical_entity_type)` |
+| `mdm_aliases` | `idx_mdm_aliases_status` | btree | status | — | `CREATE INDEX idx_mdm_aliases_status ON public.mdm_aliases USING btree (status)` |
+| `mdm_aliases` | `idx_mdm_aliases_usage` | btree | canonical_resolution_count | — | `CREATE INDEX idx_mdm_aliases_usage ON public.mdm_aliases USING btree (canonical_resolution_count DESC)` |
+| `mdm_aliases` | `idx_mdm_aliases_value` | btree | alias_value | — | `CREATE INDEX idx_mdm_aliases_value ON public.mdm_aliases USING btree (alias_value)` |
+| `mdm_aliases` | `idx_mdm_aliases_value_trgm` | gin | alias_value | — | `CREATE INDEX idx_mdm_aliases_value_trgm ON public.mdm_aliases USING gin (alias_value gin_trgm_ops)` |
+| `mdm_aliases` | `mdm_aliases_city_unique` | btree | canonical_entity_type, alias_value, alias_language, city_id | ✓ | `CREATE UNIQUE INDEX mdm_aliases_city_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language, city_id) WHERE ((status = 'active'::text) AND (city_id IS NOT NULL))` |
+| `mdm_aliases` | `mdm_aliases_national_unique` | btree | canonical_entity_type, alias_value, alias_language | ✓ | `CREATE UNIQUE INDEX mdm_aliases_national_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language) WHERE ((status = 'active'::text) AND (city_id IS NULL) AND (district_id IS NULL) AND (state_id IS NULL))` |
+| `mdm_aliases` | `mdm_aliases_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX mdm_aliases_pkey ON public.mdm_aliases USING btree (id)` |
+| `mdm_audit_logs` | `idx_mdm_audit_action` | btree | action, created_at | — | `CREATE INDEX idx_mdm_audit_action ON public.mdm_audit_logs USING btree (action, created_at DESC)` |
+| `mdm_audit_logs` | `idx_mdm_audit_admin` | btree | admin_id, created_at | — | `CREATE INDEX idx_mdm_audit_admin ON public.mdm_audit_logs USING btree (admin_id, created_at DESC)` |
+| `mdm_audit_logs` | `idx_mdm_audit_created` | btree | created_at | — | `CREATE INDEX idx_mdm_audit_created ON public.mdm_audit_logs USING btree (created_at DESC)` |
+| `mdm_audit_logs` | `mdm_audit_logs_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX mdm_audit_logs_pkey ON public.mdm_audit_logs USING btree (id)` |
+| `mdm_curation_requests` | `idx_mdm_requests_entity` | btree | entity_type, status | — | `CREATE INDEX idx_mdm_requests_entity ON public.mdm_curation_requests USING btree (entity_type, status)` |
+| `mdm_curation_requests` | `idx_mdm_requests_priority` | btree | priority, sla_deadline | — | `CREATE INDEX idx_mdm_requests_priority ON public.mdm_curation_requests USING btree (priority, sla_deadline)` |
+| `mdm_curation_requests` | `idx_mdm_requests_sla` | btree | sla_deadline | — | `CREATE INDEX idx_mdm_requests_sla ON public.mdm_curation_requests USING btree (sla_deadline) WHERE (status = 'pending'::text)` |
+| `mdm_curation_requests` | `idx_mdm_requests_status` | btree | status | — | `CREATE INDEX idx_mdm_requests_status ON public.mdm_curation_requests USING btree (status)` |
+| `mdm_curation_requests` | `idx_mdm_requests_submitted` | btree | submitted_value | — | `CREATE INDEX idx_mdm_requests_submitted ON public.mdm_curation_requests USING btree (submitted_value)` |
+| `mdm_curation_requests` | `mdm_curation_requests_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX mdm_curation_requests_pkey ON public.mdm_curation_requests USING btree (id)` |
+| `mdm_merge_history` | `idx_mdm_merge_executed` | btree | executed_at | — | `CREATE INDEX idx_mdm_merge_executed ON public.mdm_merge_history USING btree (executed_at DESC)` |
+| `mdm_merge_history` | `idx_mdm_merge_source` | btree | source_entity_id, entity_type | — | `CREATE INDEX idx_mdm_merge_source ON public.mdm_merge_history USING btree (source_entity_id, entity_type)` |
+| `mdm_merge_history` | `mdm_merge_history_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX mdm_merge_history_pkey ON public.mdm_merge_history USING btree (id)` |
 | `messages` | `idx_messages_property` | btree | property_id | — | `CREATE INDEX idx_messages_property ON public.messages USING btree (property_id)` |
 | `messages` | `idx_messages_sender_receiver` | btree | sender_id, receiver_id | — | `CREATE INDEX idx_messages_sender_receiver ON public.messages USING btree (sender_id, receiver_id)` |
 | `messages` | `messages_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id)` |
@@ -344,6 +365,10 @@ Total Indexes: 321
 **Table: `location_canonical_map`, Columns: raw_name**
 - `idx_location_canonical_raw` (btree)
 - `idx_location_canonical_raw_trgm` (gin)
+
+**Table: `mdm_aliases`, Columns: alias_value**
+- `idx_mdm_aliases_value` (btree)
+- `idx_mdm_aliases_value_trgm` (gin)
 
 **Table: `properties`, Columns: pid**
 - `idx_properties_pid` (btree)

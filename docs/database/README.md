@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2026-01-04T07:01:56.917Z  
-> Schema Hash: `5db92d2c1894cba62c3aeb4905dc0b72`
+> Generated: 2026-01-05T07:39:13.757Z  
+> Schema Hash: `eeee696b48c46e23f51e2302f55e0f5b`
 
 ## 📊 Quick Stats
-- **Total Tables:** 72
+- **Total Tables:** 76
 - **Total Views:** 18
 - **Total Materialized Views:** 2
-- **Total Columns:** 1154
+- **Total Columns:** 1238
 - **Total Relationships:** 132
-- **Total Size:** 73.51 MB
+- **Total Size:** 74.09 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 4/1/2026, 12:31:56 pm IST
+- **Last Updated:** 5/1/2026, 1:09:13 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,7 +51,7 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~980 | 0.27 MB |  |
+| `admin_audit_logs` | 8 | ~2,648 | 0.65 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.03 MB |  |
@@ -75,6 +75,10 @@ This documentation updates:
 | `location_boundaries` | 10 | ~0 | 0.05 MB | "Polygon boundaries for map hig..." |
 | `location_canonical_map` | 10 | ~8 | 0.15 MB | "Maps user input variations to ..." |
 | `market_trends` | 16 | ~100,000 | 42.12 MB |  |
+| `mdm_aliases` | 19 | ~0 | 0.08 MB | "Scope-aware alias mappings pre..." |
+| `mdm_audit_logs` | 13 | ~0 | 0.04 MB | "Complete audit trail for MDM o..." |
+| `mdm_curation_requests` | 40 | ~0 | 0.05 MB | "MDM curation request queue wit..." |
+| `mdm_merge_history` | 12 | ~0 | 0.03 MB | "Merge operation history with r..." |
 | `messages` | 21 | ~5 | 0.06 MB |  |
 | `moderation_history` | 10 | ~5 | 0.37 MB |  |
 | `notification_preferences` | 13 | ~0 | 0.01 MB |  |
@@ -150,23 +154,23 @@ This documentation updates:
 - `_st_3dintersects(geom1 geometry, geom2 geometry)` → boolean
 - `_st_asgml(integer, geometry, integer, integer, text, text)` → text
 - `_st_asx3d(integer, geometry, integer, integer, text)` → text
-- `_st_bestsrid(geography, geography)` → integer
 - `_st_bestsrid(geography)` → integer
+- `_st_bestsrid(geography, geography)` → integer
 - `_st_contains(geom1 geometry, geom2 geometry)` → boolean
 - `_st_containsproperly(geom1 geometry, geom2 geometry)` → boolean
-- `_st_coveredby(geom1 geometry, geom2 geometry)` → boolean
 - `_st_coveredby(geog1 geography, geog2 geography)` → boolean
-- `_st_covers(geog1 geography, geog2 geography)` → boolean
+- `_st_coveredby(geom1 geometry, geom2 geometry)` → boolean
 - `_st_covers(geom1 geometry, geom2 geometry)` → boolean
+- `_st_covers(geog1 geography, geog2 geography)` → boolean
 - `_st_crosses(geom1 geometry, geom2 geometry)` → boolean
 - `_st_dfullywithin(geom1 geometry, geom2 geometry, double precision)` → boolean
-- `_st_distancetree(geography, geography, double precision, boolean)` → double precision
 - `_st_distancetree(geography, geography)` → double precision
-- `_st_distanceuncached(geography, geography)` → double precision
-- `_st_distanceuncached(geography, geography, boolean)` → double precision
+- `_st_distancetree(geography, geography, double precision, boolean)` → double precision
 - `_st_distanceuncached(geography, geography, double precision, boolean)` → double precision
-- `_st_dwithin(geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true)` → boolean
+- `_st_distanceuncached(geography, geography, boolean)` → double precision
+- `_st_distanceuncached(geography, geography)` → double precision
 - `_st_dwithin(geom1 geometry, geom2 geometry, double precision)` → boolean
+- `_st_dwithin(geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true)` → boolean
 - `_st_dwithinuncached(geography, geography, double precision)` → boolean
 - `_st_dwithinuncached(geography, geography, double precision, boolean)` → boolean
 - `_st_equals(geom1 geometry, geom2 geometry)` → boolean
@@ -185,9 +189,9 @@ This documentation updates:
 - `_st_within(geom1 geometry, geom2 geometry)` → boolean
 - `add_credits_to_wallet(p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid)` → boolean
 - `addauth(text)` → boolean
-- `addgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
-- `addgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `addgeometrycolumn(table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
+- `addgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
+- `addgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `admin_has_permission(p_permission text, p_user_id uuid DEFAULT NULL::uuid)` → boolean
 - `admin_has_permission(p_permission text)` → boolean
 - `assign_property_to_admin(p_property_id uuid)` → uuid
@@ -196,14 +200,14 @@ This documentation updates:
 - `auto_assign_on_pending()` → trigger
 - `box(box3d)` → box
 - `box(geometry)` → box
-- `box2d(box3d)` → box2d
 - `box2d(geometry)` → box2d
+- `box2d(box3d)` → box2d
 - `box2d_in(cstring)` → box2d
 - `box2d_out(box2d)` → cstring
 - `box2df_in(cstring)` → box2df
 - `box2df_out(box2df)` → cstring
-- `box3d(geometry)` → box3d
 - `box3d(box2d)` → box3d
+- `box3d(geometry)` → box3d
 - `box3d_in(cstring)` → box3d
 - `box3d_out(box3d)` → cstring
 - `box3dtobox(box3d)` → box
@@ -214,6 +218,7 @@ This documentation updates:
 - `calculate_gst(p_amount numeric, p_region_id uuid)` → TABLE(gst_rate numeric, gst_amount numeric, total_amount numeric)
 - `calculate_price_per_unit()` → trigger
 - `calculate_property_intelligence_score(p_property_id uuid)` → numeric
+- `calculate_sla_deadline(impact_score numeric)` → timestamp with time zone
 - `calculate_user_engagement_score(p_user_id uuid)` → numeric
 - `check_geo_quality_health()` → boolean
 - `check_property_city_distance()` → trigger
@@ -221,8 +226,8 @@ This documentation updates:
 - `checkauth(text, text)` → integer
 - `checkauthtrigger()` → trigger
 - `contains_2d(box2df, box2df)` → boolean
-- `contains_2d(geometry, box2df)` → boolean
 - `contains_2d(box2df, geometry)` → boolean
+- `contains_2d(geometry, box2df)` → boolean
 - `create_admin_by_email(p_email text)` → uuid
 - `create_wallet_for_new_user()` → trigger
 - `deactivate_admin(p_admin_email text)` → void
@@ -232,8 +237,8 @@ This documentation updates:
 - `dropgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying)` → text
-- `dropgeometrytable(table_name character varying)` → text
 - `dropgeometrytable(catalog_name character varying, schema_name character varying, table_name character varying)` → text
+- `dropgeometrytable(table_name character varying)` → text
 - `dropgeometrytable(schema_name character varying, table_name character varying)` → text
 - `enablelongtransactions()` → text
 - `equals(geom1 geometry, geom2 geometry)` → boolean
@@ -246,8 +251,8 @@ This documentation updates:
 - `generate_property_description(prop_num integer)` → text
 - `generate_property_title(prop_num integer)` → text
 - `geog_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
-- `geography(geometry)` → geography
 - `geography(bytea)` → geography
+- `geography(geometry)` → geography
 - `geography(geography, integer, boolean)` → geography
 - `geography_analyze(internal)` → boolean
 - `geography_cmp(geography, geography)` → integer
@@ -281,15 +286,15 @@ This documentation updates:
 - `geom2d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom3d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom4d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
-- `geometry(path)` → geometry
-- `geometry(geometry, integer, boolean)` → geometry
-- `geometry(point)` → geometry
-- `geometry(polygon)` → geometry
-- `geometry(geography)` → geometry
 - `geometry(bytea)` → geometry
-- `geometry(text)` → geometry
-- `geometry(box3d)` → geometry
+- `geometry(point)` → geometry
+- `geometry(geometry, integer, boolean)` → geometry
+- `geometry(geography)` → geometry
+- `geometry(path)` → geometry
+- `geometry(polygon)` → geometry
 - `geometry(box2d)` → geometry
+- `geometry(box3d)` → geometry
+- `geometry(text)` → geometry
 - `geometry_above(geom1 geometry, geom2 geometry)` → boolean
 - `geometry_analyze(internal)` → boolean
 - `geometry_below(geom1 geometry, geom2 geometry)` → boolean
@@ -368,8 +373,8 @@ This documentation updates:
 - `geometrytype(geometry)` → text
 - `geomfromewkb(bytea)` → geometry
 - `geomfromewkt(text)` → geometry
-- `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_admin_context(p_user_id uuid)` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
+- `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_applicable_coupons(p_user_id uuid, p_region_id uuid)` → TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)
 - `get_current_admin_id()` → uuid
 - `get_effective_pricing(p_action text, p_region_id uuid, p_user_type text)` → TABLE(credit_cost integer, cash_price numeric, rule_id uuid, description text)
@@ -412,16 +417,16 @@ This documentation updates:
 - `increment_view_count(p_property_id uuid, p_session_id text DEFAULT NULL::text)` → void
 - `increment_view_count_simple(property_id uuid, session_id text)` → void
 - `is_admin()` → boolean
-- `is_contained_2d(box2df, box2df)` → boolean
-- `is_contained_2d(box2df, geometry)` → boolean
 - `is_contained_2d(geometry, box2df)` → boolean
+- `is_contained_2d(box2df, geometry)` → boolean
+- `is_contained_2d(box2df, box2df)` → boolean
 - `is_sql_editor()` → boolean
 - `json(geometry)` → json
 - `jsonb(geometry)` → jsonb
-- `lockrow(text, text, text, text)` → integer
-- `lockrow(text, text, text)` → integer
-- `lockrow(text, text, text, text, timestamp without time zone)` → integer
 - `lockrow(text, text, text, timestamp without time zone)` → integer
+- `lockrow(text, text, text)` → integer
+- `lockrow(text, text, text, text)` → integer
+- `lockrow(text, text, text, text, timestamp without time zone)` → integer
 - `log_admin_creation()` → trigger
 - `log_admin_events()` → trigger
 - `log_payment_admin_action()` → trigger
@@ -431,10 +436,10 @@ This documentation updates:
 - `overlaps_2d(box2df, geometry)` → boolean
 - `overlaps_2d(geometry, box2df)` → boolean
 - `overlaps_geog(gidx, geography)` → boolean
-- `overlaps_geog(geography, gidx)` → boolean
 - `overlaps_geog(gidx, gidx)` → boolean
-- `overlaps_nd(geometry, gidx)` → boolean
+- `overlaps_geog(geography, gidx)` → boolean
 - `overlaps_nd(gidx, gidx)` → boolean
+- `overlaps_nd(geometry, gidx)` → boolean
 - `overlaps_nd(gidx, geometry)` → boolean
 - `path(geometry)` → path
 - `pgis_asflatgeobuf_finalfn(internal)` → bytea
@@ -442,20 +447,20 @@ This documentation updates:
 - `pgis_asflatgeobuf_transfn(internal, anyelement, boolean, text)` → internal
 - `pgis_asflatgeobuf_transfn(internal, anyelement)` → internal
 - `pgis_asgeobuf_finalfn(internal)` → bytea
-- `pgis_asgeobuf_transfn(internal, anyelement)` → internal
 - `pgis_asgeobuf_transfn(internal, anyelement, text)` → internal
+- `pgis_asgeobuf_transfn(internal, anyelement)` → internal
 - `pgis_asmvt_combinefn(internal, internal)` → internal
 - `pgis_asmvt_deserialfn(bytea, internal)` → internal
 - `pgis_asmvt_finalfn(internal)` → bytea
 - `pgis_asmvt_serialfn(internal)` → bytea
-- `pgis_asmvt_transfn(internal, anyelement, text, integer, text)` → internal
-- `pgis_asmvt_transfn(internal, anyelement, text, integer, text, text)` → internal
+- `pgis_asmvt_transfn(internal, anyelement, text, integer)` → internal
 - `pgis_asmvt_transfn(internal, anyelement)` → internal
 - `pgis_asmvt_transfn(internal, anyelement, text)` → internal
-- `pgis_asmvt_transfn(internal, anyelement, text, integer)` → internal
+- `pgis_asmvt_transfn(internal, anyelement, text, integer, text, text)` → internal
+- `pgis_asmvt_transfn(internal, anyelement, text, integer, text)` → internal
 - `pgis_geometry_accum_transfn(internal, geometry)` → internal
-- `pgis_geometry_accum_transfn(internal, geometry, double precision)` → internal
 - `pgis_geometry_accum_transfn(internal, geometry, double precision, integer)` → internal
+- `pgis_geometry_accum_transfn(internal, geometry, double precision)` → internal
 - `pgis_geometry_clusterintersecting_finalfn(internal)` → geometry[]
 - `pgis_geometry_clusterwithin_finalfn(internal)` → geometry[]
 - `pgis_geometry_collect_finalfn(internal)` → geometry
@@ -469,8 +474,8 @@ This documentation updates:
 - `pgis_geometry_union_parallel_transfn(internal, geometry)` → internal
 - `point(geometry)` → point
 - `polygon(geometry)` → polygon
-- `populate_geometry_columns(use_typmod boolean DEFAULT true)` → text
 - `populate_geometry_columns(tbl_oid oid, use_typmod boolean DEFAULT true)` → integer
+- `populate_geometry_columns(use_typmod boolean DEFAULT true)` → text
 - `postgis_addbbox(geometry)` → geometry
 - `postgis_cache_bbox()` → trigger
 - `postgis_constraint_dims(geomschema text, geomtable text, geomcolumn text)` → integer
@@ -515,6 +520,7 @@ This documentation updates:
 - `similarity(text, text)` → real
 - `similarity_dist(text, text)` → real
 - `similarity_op(text, text)` → boolean
+- `sla_hours_remaining(deadline timestamp with time zone)` → integer
 - `spend_credits_for_action(p_user_id uuid, p_action text, p_region_id uuid, p_reference_id uuid DEFAULT NULL::uuid, p_reference_type text DEFAULT NULL::text)` → uuid
 - `spheroid_in(cstring)` → spheroid
 - `spheroid_out(spheroid)` → cstring
@@ -533,73 +539,73 @@ This documentation updates:
 - `st_addmeasure(geometry, double precision, double precision)` → geometry
 - `st_addpoint(geom1 geometry, geom2 geometry, integer)` → geometry
 - `st_addpoint(geom1 geometry, geom2 geometry)` → geometry
-- `st_affine(geometry, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision)` → geometry
 - `st_affine(geometry, double precision, double precision, double precision, double precision, double precision, double precision)` → geometry
+- `st_affine(geometry, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision)` → geometry
 - `st_angle(pt1 geometry, pt2 geometry, pt3 geometry, pt4 geometry DEFAULT '0101000000000000000000F87F000000000000F87F'::geometry)` → double precision
 - `st_angle(line1 geometry, line2 geometry)` → double precision
+- `st_area(text)` → double precision
 - `st_area(geog geography, use_spheroid boolean DEFAULT true)` → double precision
 - `st_area(geometry)` → double precision
-- `st_area(text)` → double precision
 - `st_area2d(geometry)` → double precision
-- `st_asbinary(geography, text)` → bytea
 - `st_asbinary(geography)` → bytea
 - `st_asbinary(geometry)` → bytea
 - `st_asbinary(geometry, text)` → bytea
+- `st_asbinary(geography, text)` → bytea
 - `st_asencodedpolyline(geom geometry, nprecision integer DEFAULT 5)` → text
-- `st_asewkb(geometry)` → bytea
 - `st_asewkb(geometry, text)` → bytea
+- `st_asewkb(geometry)` → bytea
+- `st_asewkt(geometry, integer)` → text
 - `st_asewkt(geography)` → text
 - `st_asewkt(geography, integer)` → text
-- `st_asewkt(geometry)` → text
-- `st_asewkt(geometry, integer)` → text
 - `st_asewkt(text)` → text
-- `st_asgeojson(text)` → text
-- `st_asgeojson(r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false)` → text
-- `st_asgeojson(geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8)` → text
+- `st_asewkt(geometry)` → text
 - `st_asgeojson(geog geography, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 0)` → text
-- `st_asgml(version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text)` → text
-- `st_asgml(geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0)` → text
-- `st_asgml(geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text)` → text
+- `st_asgeojson(text)` → text
+- `st_asgeojson(geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8)` → text
+- `st_asgeojson(r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false)` → text
 - `st_asgml(text)` → text
 - `st_asgml(version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text)` → text
-- `st_ashexewkb(geometry)` → text
+- `st_asgml(geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0)` → text
+- `st_asgml(version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text)` → text
+- `st_asgml(geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text)` → text
 - `st_ashexewkb(geometry, text)` → text
-- `st_askml(geog geography, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text)` → text
+- `st_ashexewkb(geometry)` → text
 - `st_askml(text)` → text
+- `st_askml(geog geography, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text)` → text
 - `st_askml(geom geometry, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text)` → text
 - `st_aslatlontext(geom geometry, tmpl text DEFAULT ''::text)` → text
 - `st_asmarc21(geom geometry, format text DEFAULT 'hdddmmss'::text)` → text
 - `st_asmvtgeom(geom geometry, bounds box2d, extent integer DEFAULT 4096, buffer integer DEFAULT 256, clip_geom boolean DEFAULT true)` → geometry
+- `st_assvg(text)` → text
 - `st_assvg(geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15)` → text
 - `st_assvg(geog geography, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15)` → text
-- `st_assvg(text)` → text
-- `st_astext(geography)` → text
-- `st_astext(text)` → text
 - `st_astext(geometry)` → text
-- `st_astext(geometry, integer)` → text
+- `st_astext(geography)` → text
 - `st_astext(geography, integer)` → text
+- `st_astext(text)` → text
+- `st_astext(geometry, integer)` → text
 - `st_astwkb(geom geometry, prec integer DEFAULT NULL::integer, prec_z integer DEFAULT NULL::integer, prec_m integer DEFAULT NULL::integer, with_sizes boolean DEFAULT NULL::boolean, with_boxes boolean DEFAULT NULL::boolean)` → bytea
 - `st_astwkb(geom geometry[], ids bigint[], prec integer DEFAULT NULL::integer, prec_z integer DEFAULT NULL::integer, prec_m integer DEFAULT NULL::integer, with_sizes boolean DEFAULT NULL::boolean, with_boxes boolean DEFAULT NULL::boolean)` → bytea
 - `st_asx3d(geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0)` → text
-- `st_azimuth(geom1 geometry, geom2 geometry)` → double precision
 - `st_azimuth(geog1 geography, geog2 geography)` → double precision
+- `st_azimuth(geom1 geometry, geom2 geometry)` → double precision
 - `st_bdmpolyfromtext(text, integer)` → geometry
 - `st_bdpolyfromtext(text, integer)` → geometry
 - `st_boundary(geometry)` → geometry
 - `st_boundingdiagonal(geom geometry, fits boolean DEFAULT false)` → geometry
 - `st_box2dfromgeohash(text, integer DEFAULT NULL::integer)` → box2d
-- `st_buffer(geography, double precision)` → geography
-- `st_buffer(geography, double precision, text)` → geography
 - `st_buffer(text, double precision)` → geometry
-- `st_buffer(text, double precision, integer)` → geometry
-- `st_buffer(text, double precision, text)` → geometry
 - `st_buffer(geom geometry, radius double precision, quadsegs integer)` → geometry
 - `st_buffer(geom geometry, radius double precision, options text DEFAULT ''::text)` → geometry
+- `st_buffer(text, double precision, text)` → geometry
+- `st_buffer(text, double precision, integer)` → geometry
+- `st_buffer(geography, double precision, text)` → geography
 - `st_buffer(geography, double precision, integer)` → geography
+- `st_buffer(geography, double precision)` → geography
 - `st_buildarea(geometry)` → geometry
 - `st_centroid(geography, use_spheroid boolean DEFAULT true)` → geography
-- `st_centroid(text)` → geometry
 - `st_centroid(geometry)` → geometry
+- `st_centroid(text)` → geometry
 - `st_chaikinsmoothing(geometry, integer DEFAULT 1, boolean DEFAULT false)` → geometry
 - `st_cleangeometry(geometry)` → geometry
 - `st_clipbybox2d(geom geometry, box box2d)` → geometry
@@ -609,23 +615,23 @@ This documentation updates:
 - `st_clusterwithin(geometry[], double precision)` → geometry[]
 - `st_collect(geometry[])` → geometry
 - `st_collect(geom1 geometry, geom2 geometry)` → geometry
-- `st_collectionextract(geometry)` → geometry
 - `st_collectionextract(geometry, integer)` → geometry
+- `st_collectionextract(geometry)` → geometry
 - `st_collectionhomogenize(geometry)` → geometry
+- `st_combinebbox(box3d, box3d)` → box3d
 - `st_combinebbox(box2d, geometry)` → box2d
 - `st_combinebbox(box3d, geometry)` → box3d
-- `st_combinebbox(box3d, box3d)` → box3d
 - `st_concavehull(param_geom geometry, param_pctconvex double precision, param_allow_holes boolean DEFAULT false)` → geometry
 - `st_contains(geom1 geometry, geom2 geometry)` → boolean
 - `st_containsproperly(geom1 geometry, geom2 geometry)` → boolean
 - `st_convexhull(geometry)` → geometry
 - `st_coorddim(geometry geometry)` → smallint
+- `st_coveredby(text, text)` → boolean
 - `st_coveredby(geog1 geography, geog2 geography)` → boolean
 - `st_coveredby(geom1 geometry, geom2 geometry)` → boolean
-- `st_coveredby(text, text)` → boolean
-- `st_covers(text, text)` → boolean
 - `st_covers(geog1 geography, geog2 geography)` → boolean
 - `st_covers(geom1 geometry, geom2 geometry)` → boolean
+- `st_covers(text, text)` → boolean
 - `st_cpawithin(geometry, geometry, double precision)` → boolean
 - `st_crosses(geom1 geometry, geom2 geometry)` → boolean
 - `st_curvetoline(geom geometry, tol double precision DEFAULT 32, toltype integer DEFAULT 0, flags integer DEFAULT 0)` → geometry
@@ -635,11 +641,11 @@ This documentation updates:
 - `st_dimension(geometry)` → integer
 - `st_disjoint(geom1 geometry, geom2 geometry)` → boolean
 - `st_distance(text, text)` → double precision
-- `st_distance(geog1 geography, geog2 geography, use_spheroid boolean DEFAULT true)` → double precision
 - `st_distance(geom1 geometry, geom2 geometry)` → double precision
+- `st_distance(geog1 geography, geog2 geography, use_spheroid boolean DEFAULT true)` → double precision
 - `st_distancecpa(geometry, geometry)` → double precision
-- `st_distancesphere(geom1 geometry, geom2 geometry, radius double precision)` → double precision
 - `st_distancesphere(geom1 geometry, geom2 geometry)` → double precision
+- `st_distancesphere(geom1 geometry, geom2 geometry, radius double precision)` → double precision
 - `st_distancespheroid(geom1 geometry, geom2 geometry)` → double precision
 - `st_distancespheroid(geom1 geometry, geom2 geometry, spheroid)` → double precision
 - `st_dump(geometry)` → SETOF geometry_dump
@@ -655,16 +661,16 @@ This documentation updates:
 - `st_estimatedextent(text, text, text, boolean)` → box2d
 - `st_estimatedextent(text, text)` → box2d
 - `st_estimatedextent(text, text, text)` → box2d
-- `st_expand(geom geometry, dx double precision, dy double precision, dz double precision DEFAULT 0, dm double precision DEFAULT 0)` → geometry
-- `st_expand(box2d, double precision)` → box2d
-- `st_expand(box box2d, dx double precision, dy double precision)` → box2d
 - `st_expand(geometry, double precision)` → geometry
-- `st_expand(box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0)` → box3d
+- `st_expand(box box2d, dx double precision, dy double precision)` → box2d
+- `st_expand(box2d, double precision)` → box2d
 - `st_expand(box3d, double precision)` → box3d
+- `st_expand(box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0)` → box3d
+- `st_expand(geom geometry, dx double precision, dy double precision, dz double precision DEFAULT 0, dm double precision DEFAULT 0)` → geometry
 - `st_exteriorring(geometry)` → geometry
 - `st_filterbym(geometry, double precision, double precision DEFAULT NULL::double precision, boolean DEFAULT false)` → geometry
-- `st_findextent(text, text)` → box2d
 - `st_findextent(text, text, text)` → box2d
+- `st_findextent(text, text)` → box2d
 - `st_flipcoordinates(geometry)` → geometry
 - `st_force2d(geometry)` → geometry
 - `st_force3d(geom geometry, zvalue double precision DEFAULT 0.0)` → geometry
@@ -676,8 +682,8 @@ This documentation updates:
 - `st_forcepolygonccw(geometry)` → geometry
 - `st_forcepolygoncw(geometry)` → geometry
 - `st_forcerhr(geometry)` → geometry
-- `st_forcesfs(geometry)` → geometry
 - `st_forcesfs(geometry, version text)` → geometry
+- `st_forcesfs(geometry)` → geometry
 - `st_frechetdistance(geom1 geometry, geom2 geometry, double precision DEFAULT '-1'::integer)` → double precision
 - `st_fromflatgeobuf(anyelement, bytea)` → SETOF anyelement
 - `st_fromflatgeobuftotable(text, text, bytea)` → void
@@ -686,34 +692,34 @@ This documentation updates:
 - `st_geogfromtext(text)` → geography
 - `st_geogfromwkb(bytea)` → geography
 - `st_geographyfromtext(text)` → geography
-- `st_geohash(geog geography, maxchars integer DEFAULT 0)` → text
 - `st_geohash(geom geometry, maxchars integer DEFAULT 0)` → text
+- `st_geohash(geog geography, maxchars integer DEFAULT 0)` → text
 - `st_geomcollfromtext(text)` → geometry
 - `st_geomcollfromtext(text, integer)` → geometry
-- `st_geomcollfromwkb(bytea, integer)` → geometry
 - `st_geomcollfromwkb(bytea)` → geometry
+- `st_geomcollfromwkb(bytea, integer)` → geometry
 - `st_geometricmedian(g geometry, tolerance double precision DEFAULT NULL::double precision, max_iter integer DEFAULT 10000, fail_if_not_converged boolean DEFAULT false)` → geometry
-- `st_geometryfromtext(text)` → geometry
 - `st_geometryfromtext(text, integer)` → geometry
+- `st_geometryfromtext(text)` → geometry
 - `st_geometryn(geometry, integer)` → geometry
 - `st_geometrytype(geometry)` → text
 - `st_geomfromewkb(bytea)` → geometry
 - `st_geomfromewkt(text)` → geometry
 - `st_geomfromgeohash(text, integer DEFAULT NULL::integer)` → geometry
-- `st_geomfromgeojson(json)` → geometry
 - `st_geomfromgeojson(jsonb)` → geometry
+- `st_geomfromgeojson(json)` → geometry
 - `st_geomfromgeojson(text)` → geometry
 - `st_geomfromgml(text, integer)` → geometry
 - `st_geomfromgml(text)` → geometry
 - `st_geomfromkml(text)` → geometry
 - `st_geomfrommarc21(marc21xml text)` → geometry
-- `st_geomfromtext(text)` → geometry
 - `st_geomfromtext(text, integer)` → geometry
+- `st_geomfromtext(text)` → geometry
 - `st_geomfromtwkb(bytea)` → geometry
-- `st_geomfromwkb(bytea)` → geometry
 - `st_geomfromwkb(bytea, integer)` → geometry
-- `st_gmltosql(text, integer)` → geometry
+- `st_geomfromwkb(bytea)` → geometry
 - `st_gmltosql(text)` → geometry
+- `st_gmltosql(text, integer)` → geometry
 - `st_hasarc(geometry geometry)` → boolean
 - `st_hausdorffdistance(geom1 geometry, geom2 geometry, double precision)` → double precision
 - `st_hausdorffdistance(geom1 geometry, geom2 geometry)` → double precision
@@ -721,12 +727,12 @@ This documentation updates:
 - `st_hexagongrid(size double precision, bounds geometry, OUT geom geometry, OUT i integer, OUT j integer)` → SETOF record
 - `st_interiorringn(geometry, integer)` → geometry
 - `st_interpolatepoint(line geometry, point geometry)` → double precision
-- `st_intersection(text, text)` → geometry
 - `st_intersection(geography, geography)` → geography
+- `st_intersection(text, text)` → geometry
 - `st_intersection(geom1 geometry, geom2 geometry, gridsize double precision DEFAULT '-1'::integer)` → geometry
+- `st_intersects(text, text)` → boolean
 - `st_intersects(geom1 geometry, geom2 geometry)` → boolean
 - `st_intersects(geog1 geography, geog2 geography)` → boolean
-- `st_intersects(text, text)` → boolean
 - `st_isclosed(geometry)` → boolean
 - `st_iscollection(geometry)` → boolean
 - `st_isempty(geometry)` → boolean
@@ -734,8 +740,8 @@ This documentation updates:
 - `st_ispolygoncw(geometry)` → boolean
 - `st_isring(geometry)` → boolean
 - `st_issimple(geometry)` → boolean
-- `st_isvalid(geometry, integer)` → boolean
 - `st_isvalid(geometry)` → boolean
+- `st_isvalid(geometry, integer)` → boolean
 - `st_isvaliddetail(geom geometry, flags integer DEFAULT 0)` → valid_detail
 - `st_isvalidreason(geometry, integer)` → text
 - `st_isvalidreason(geometry)` → text
@@ -750,8 +756,8 @@ This documentation updates:
 - `st_linecrossingdirection(line1 geometry, line2 geometry)` → integer
 - `st_linefromencodedpolyline(txtin text, nprecision integer DEFAULT 5)` → geometry
 - `st_linefrommultipoint(geometry)` → geometry
-- `st_linefromtext(text)` → geometry
 - `st_linefromtext(text, integer)` → geometry
+- `st_linefromtext(text)` → geometry
 - `st_linefromwkb(bytea, integer)` → geometry
 - `st_linefromwkb(bytea)` → geometry
 - `st_lineinterpolatepoint(geometry, double precision)` → geometry
@@ -759,8 +765,8 @@ This documentation updates:
 - `st_linelocatepoint(geom1 geometry, geom2 geometry)` → double precision
 - `st_linemerge(geometry, boolean)` → geometry
 - `st_linemerge(geometry)` → geometry
-- `st_linestringfromwkb(bytea, integer)` → geometry
 - `st_linestringfromwkb(bytea)` → geometry
+- `st_linestringfromwkb(bytea, integer)` → geometry
 - `st_linesubstring(geometry, double precision, double precision)` → geometry
 - `st_linetocurve(geometry geometry)` → geometry
 - `st_locatealong(geometry geometry, measure double precision, leftrightoffset double precision DEFAULT 0.0)` → geometry
@@ -772,14 +778,14 @@ This documentation updates:
 - `st_makeenvelope(double precision, double precision, double precision, double precision, integer DEFAULT 0)` → geometry
 - `st_makeline(geom1 geometry, geom2 geometry)` → geometry
 - `st_makeline(geometry[])` → geometry
-- `st_makepoint(double precision, double precision, double precision)` → geometry
 - `st_makepoint(double precision, double precision, double precision, double precision)` → geometry
+- `st_makepoint(double precision, double precision, double precision)` → geometry
 - `st_makepoint(double precision, double precision)` → geometry
 - `st_makepointm(double precision, double precision, double precision)` → geometry
-- `st_makepolygon(geometry)` → geometry
 - `st_makepolygon(geometry, geometry[])` → geometry
-- `st_makevalid(geometry)` → geometry
+- `st_makepolygon(geometry)` → geometry
 - `st_makevalid(geom geometry, params text)` → geometry
+- `st_makevalid(geometry)` → geometry
 - `st_maxdistance(geom1 geometry, geom2 geometry)` → double precision
 - `st_maximuminscribedcircle(geometry, OUT center geometry, OUT nearest geometry, OUT radius double precision)` → record
 - `st_memsize(geometry)` → integer
@@ -789,14 +795,14 @@ This documentation updates:
 - `st_minimumclearanceline(geometry)` → geometry
 - `st_mlinefromtext(text)` → geometry
 - `st_mlinefromtext(text, integer)` → geometry
-- `st_mlinefromwkb(bytea, integer)` → geometry
 - `st_mlinefromwkb(bytea)` → geometry
-- `st_mpointfromtext(text)` → geometry
+- `st_mlinefromwkb(bytea, integer)` → geometry
 - `st_mpointfromtext(text, integer)` → geometry
-- `st_mpointfromwkb(bytea, integer)` → geometry
+- `st_mpointfromtext(text)` → geometry
 - `st_mpointfromwkb(bytea)` → geometry
-- `st_mpolyfromtext(text)` → geometry
+- `st_mpointfromwkb(bytea, integer)` → geometry
 - `st_mpolyfromtext(text, integer)` → geometry
+- `st_mpolyfromtext(text)` → geometry
 - `st_mpolyfromwkb(bytea, integer)` → geometry
 - `st_mpolyfromwkb(bytea)` → geometry
 - `st_multi(geometry)` → geometry
@@ -808,8 +814,8 @@ This documentation updates:
 - `st_multipointfromwkb(bytea, integer)` → geometry
 - `st_multipolyfromwkb(bytea, integer)` → geometry
 - `st_multipolyfromwkb(bytea)` → geometry
-- `st_multipolygonfromtext(text)` → geometry
 - `st_multipolygonfromtext(text, integer)` → geometry
+- `st_multipolygonfromtext(text)` → geometry
 - `st_ndims(geometry)` → smallint
 - `st_node(g geometry)` → geometry
 - `st_normalize(geom geometry)` → geometry
@@ -825,8 +831,8 @@ This documentation updates:
 - `st_orientedenvelope(geometry)` → geometry
 - `st_overlaps(geom1 geometry, geom2 geometry)` → boolean
 - `st_patchn(geometry, integer)` → geometry
-- `st_perimeter(geometry)` → double precision
 - `st_perimeter(geog geography, use_spheroid boolean DEFAULT true)` → double precision
+- `st_perimeter(geometry)` → double precision
 - `st_perimeter2d(geometry)` → double precision
 - `st_point(double precision, double precision)` → geometry
 - `st_point(double precision, double precision, srid integer)` → geometry
@@ -842,15 +848,15 @@ This documentation updates:
 - `st_points(geometry)` → geometry
 - `st_pointz(xcoordinate double precision, ycoordinate double precision, zcoordinate double precision, srid integer DEFAULT 0)` → geometry
 - `st_pointzm(xcoordinate double precision, ycoordinate double precision, zcoordinate double precision, mcoordinate double precision, srid integer DEFAULT 0)` → geometry
-- `st_polyfromtext(text)` → geometry
 - `st_polyfromtext(text, integer)` → geometry
-- `st_polyfromwkb(bytea)` → geometry
+- `st_polyfromtext(text)` → geometry
 - `st_polyfromwkb(bytea, integer)` → geometry
+- `st_polyfromwkb(bytea)` → geometry
 - `st_polygon(geometry, integer)` → geometry
-- `st_polygonfromtext(text)` → geometry
 - `st_polygonfromtext(text, integer)` → geometry
-- `st_polygonfromwkb(bytea)` → geometry
+- `st_polygonfromtext(text)` → geometry
 - `st_polygonfromwkb(bytea, integer)` → geometry
+- `st_polygonfromwkb(bytea)` → geometry
 - `st_polygonize(geometry[])` → geometry
 - `st_project(geog geography, distance double precision, azimuth double precision)` → geography
 - `st_quantizecoordinates(g geometry, prec_x integer, prec_y integer DEFAULT NULL::integer, prec_z integer DEFAULT NULL::integer, prec_m integer DEFAULT NULL::integer)` → geometry
@@ -862,9 +868,9 @@ This documentation updates:
 - `st_removepoint(geometry, integer)` → geometry
 - `st_removerepeatedpoints(geom geometry, tolerance double precision DEFAULT 0.0)` → geometry
 - `st_reverse(geometry)` → geometry
-- `st_rotate(geometry, double precision, double precision, double precision)` → geometry
-- `st_rotate(geometry, double precision, geometry)` → geometry
 - `st_rotate(geometry, double precision)` → geometry
+- `st_rotate(geometry, double precision, geometry)` → geometry
+- `st_rotate(geometry, double precision, double precision, double precision)` → geometry
 - `st_rotatex(geometry, double precision)` → geometry
 - `st_rotatey(geometry, double precision)` → geometry
 - `st_rotatez(geometry, double precision)` → geometry
@@ -882,15 +888,15 @@ This documentation updates:
 - `st_sharedpaths(geom1 geometry, geom2 geometry)` → geometry
 - `st_shiftlongitude(geometry)` → geometry
 - `st_shortestline(geom1 geometry, geom2 geometry)` → geometry
-- `st_simplify(geometry, double precision)` → geometry
 - `st_simplify(geometry, double precision, boolean)` → geometry
+- `st_simplify(geometry, double precision)` → geometry
 - `st_simplifypolygonhull(geom geometry, vertex_fraction double precision, is_outer boolean DEFAULT true)` → geometry
 - `st_simplifypreservetopology(geometry, double precision)` → geometry
 - `st_simplifyvw(geometry, double precision)` → geometry
 - `st_snap(geom1 geometry, geom2 geometry, double precision)` → geometry
-- `st_snaptogrid(geometry, double precision, double precision)` → geometry
-- `st_snaptogrid(geometry, double precision, double precision, double precision, double precision)` → geometry
 - `st_snaptogrid(geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision)` → geometry
+- `st_snaptogrid(geometry, double precision, double precision, double precision, double precision)` → geometry
+- `st_snaptogrid(geometry, double precision, double precision)` → geometry
 - `st_snaptogrid(geometry, double precision)` → geometry
 - `st_split(geom1 geometry, geom2 geometry)` → geometry
 - `st_square(size double precision, cell_i integer, cell_j integer, origin geometry DEFAULT '010100000000000000000000000000000000000000'::geometry)` → geometry
@@ -899,25 +905,25 @@ This documentation updates:
 - `st_srid(geom geometry)` → integer
 - `st_startpoint(geometry)` → geometry
 - `st_subdivide(geom geometry, maxvertices integer DEFAULT 256, gridsize double precision DEFAULT '-1.0'::numeric)` → SETOF geometry
-- `st_summary(geography)` → text
 - `st_summary(geometry)` → text
+- `st_summary(geography)` → text
 - `st_swapordinates(geom geometry, ords cstring)` → geometry
 - `st_symdifference(geom1 geometry, geom2 geometry, gridsize double precision DEFAULT '-1.0'::numeric)` → geometry
 - `st_symmetricdifference(geom1 geometry, geom2 geometry)` → geometry
 - `st_tileenvelope(zoom integer, x integer, y integer, bounds geometry DEFAULT '0102000020110F00000200000093107C45F81B73C193107C45F81B73C193107C45F81B734193107C45F81B7341'::geometry, margin double precision DEFAULT 0.0)` → geometry
 - `st_touches(geom1 geometry, geom2 geometry)` → boolean
 - `st_transform(geom geometry, to_proj text)` → geometry
-- `st_transform(geom geometry, from_proj text, to_srid integer)` → geometry
 - `st_transform(geom geometry, from_proj text, to_proj text)` → geometry
+- `st_transform(geom geometry, from_proj text, to_srid integer)` → geometry
 - `st_transform(geometry, integer)` → geometry
 - `st_translate(geometry, double precision, double precision)` → geometry
 - `st_translate(geometry, double precision, double precision, double precision)` → geometry
 - `st_transscale(geometry, double precision, double precision, double precision, double precision)` → geometry
 - `st_triangulatepolygon(g1 geometry)` → geometry
 - `st_unaryunion(geometry, gridsize double precision DEFAULT '-1.0'::numeric)` → geometry
-- `st_union(geometry[])` → geometry
-- `st_union(geom1 geometry, geom2 geometry, gridsize double precision)` → geometry
 - `st_union(geom1 geometry, geom2 geometry)` → geometry
+- `st_union(geom1 geometry, geom2 geometry, gridsize double precision)` → geometry
+- `st_union(geometry[])` → geometry
 - `st_voronoilines(g1 geometry, tolerance double precision DEFAULT 0.0, extend_to geometry DEFAULT NULL::geometry)` → geometry
 - `st_voronoipolygons(g1 geometry, tolerance double precision DEFAULT 0.0, extend_to geometry DEFAULT NULL::geometry)` → geometry
 - `st_within(geom1 geometry, geom2 geometry)` → boolean
@@ -947,10 +953,11 @@ This documentation updates:
 - `update_city_geo_point()` → trigger
 - `update_locality_property_counts()` → trigger
 - `update_pincode_geo_point()` → trigger
+- `update_updated_at()` → trigger
 - `update_updated_at_column()` → trigger
 - `update_wallet_timestamp()` → trigger
-- `updategeometrysrid(character varying, character varying, character varying, integer)` → text
 - `updategeometrysrid(character varying, character varying, integer)` → text
+- `updategeometrysrid(character varying, character varying, character varying, integer)` → text
 - `updategeometrysrid(catalogn_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer)` → text
 - `validate_coupon(p_coupon_code text, p_user_id uuid, p_region_id uuid, p_purchase_amount numeric)` → TABLE(is_valid boolean, discount_amount numeric, message text, coupon_id uuid)
 - `word_similarity(text, text)` → real
@@ -1007,8 +1014,8 @@ Base table RLS controls access."
 ## 📈 Performance Insights
 - **Largest Table:** `market_trends`
 - **Most Columns:** `properties` (124 columns)
-- **Total Indexes:** 321
-- **Total Constraints:** 638
+- **Total Indexes:** 342
+- **Total Constraints:** 670
 
 ## 🛠️ Useful Links
 - [Supabase Dashboard](https://app.supabase.com)

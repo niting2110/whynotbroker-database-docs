@@ -4,13 +4,14 @@
 You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKER database. Use this schema information to answer questions and write queries.
 
 ## Database Schema Summary
-**Total Tables:** 72
+**Total Tables:** 76
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
 - properties (124 columns)
 - profiles (42 columns)
 - property_intelligence_scores (41 columns)
+- mdm_curation_requests (40 columns)
 - projects (39 columns)
 - property_valuations (37 columns)
 - property_ranking_criteria (37 columns)
@@ -27,6 +28,7 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - property_repeat_views (21 columns)
 - subscription_plans (19 columns)
 - promotional_campaigns (19 columns)
+- mdm_aliases (19 columns)
 - appointments (18 columns)
 - blog_posts (17 columns)
 - credit_packages (17 columns)
@@ -36,6 +38,7 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - cities (14 columns)
 - pricing_rules (14 columns)
 - property_images (13 columns)
+- mdm_audit_logs (13 columns)
 - subscription_enrollments (13 columns)
 - property_verifications (13 columns)
 - loan_calculations (13 columns)
@@ -43,6 +46,7 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - admins (12 columns)
 - property_documents (12 columns)
 - referrals (12 columns)
+- mdm_merge_history (12 columns)
 - property_reports (11 columns)
 - property_visits (11 columns)
 - saved_searches (11 columns)

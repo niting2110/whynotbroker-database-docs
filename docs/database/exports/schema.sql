@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-01-04T07:01:56.933Z
+-- Generated: 2026-01-05T07:39:13.775Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -452,6 +452,114 @@ CREATE TABLE IF NOT EXISTS market_trends (
   price_change_percentage numeric,
   month_year date NOT NULL,
   created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: mdm_aliases
+CREATE TABLE IF NOT EXISTS mdm_aliases (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  canonical_entity_id uuid NOT NULL,
+  canonical_entity_type text NOT NULL,
+  alias_value text NOT NULL,
+  alias_language text DEFAULT 'english'::text,
+  city_id uuid,
+  district_id uuid,
+  state_id uuid,
+  alias_type text DEFAULT 'user_input'::text,
+  alias_confidence numeric,
+  status text DEFAULT 'active'::text,
+  retired_reason text,
+  retired_at timestamp with time zone,
+  canonical_resolution_count integer DEFAULT 0,
+  last_used_at timestamp with time zone,
+  created_by uuid,
+  approved_by uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: mdm_audit_logs
+CREATE TABLE IF NOT EXISTS mdm_audit_logs (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  admin_email text,
+  action text NOT NULL,
+  entity_id uuid,
+  entity_type text,
+  request_id uuid,
+  changes jsonb,
+  reason text,
+  affected_count integer DEFAULT 0,
+  ip_address text,
+  user_agent text,
+  created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: mdm_curation_requests
+CREATE TABLE IF NOT EXISTS mdm_curation_requests (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  request_type text NOT NULL,
+  entity_type text NOT NULL,
+  submitted_value text NOT NULL,
+  submitted_by text,
+  submitted_from text,
+  submission_context jsonb,
+  city_id uuid,
+  district_id uuid,
+  state_id uuid,
+  potential_matches jsonb,
+  suggested_canonical_id uuid,
+  suggested_canonical_type text,
+  match_confidence numeric,
+  detection_algorithm text,
+  lgd_conflict boolean DEFAULT false,
+  lgd_official_name text,
+  lgd_code text,
+  rera_conflict boolean DEFAULT false,
+  rera_official_name text,
+  rera_id text,
+  geo_conflict boolean DEFAULT false,
+  geo_conflict_details jsonb,
+  impact_score_snapshot numeric,
+  impact_components_snapshot jsonb,
+  priority text DEFAULT 'medium'::text,
+  sla_deadline timestamp with time zone,
+  sla_hours_assigned integer,
+  status text DEFAULT 'pending'::text,
+  escalated_to_service text,
+  escalation_reason text,
+  resolved_by text,
+  resolved_at timestamp with time zone,
+  resolution_action text,
+  resolution_notes text,
+  created_alias_id uuid,
+  merged_into_entity_id uuid,
+  merged_into_entity_type text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: mdm_merge_history
+CREATE TABLE IF NOT EXISTS mdm_merge_history (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  source_entity_id uuid NOT NULL,
+  target_entity_id uuid NOT NULL,
+  entity_type text NOT NULL,
+  merge_reason text,
+  reversal_strategy text NOT NULL,
+  affected_properties_count integer DEFAULT 0,
+  executed_by uuid,
+  executed_at timestamp with time zone DEFAULT now(),
+  reversed_at timestamp with time zone,
+  reversed_by uuid,
+  reversal_notes text
   ,PRIMARY KEY (id)
 );
 

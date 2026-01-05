@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-01-04T07:01:56.933Z
-Total Issues: 175
+Generated: 2026-01-05T07:39:13.774Z
+Total Issues: 177
 Warnings: 132
-Recommendations: 43
+Recommendations: 45
 
 ## ⚠️ Warnings
 
@@ -159,6 +159,8 @@ Recommendations: 43
 | `loan_calculations` | Table missing timestamp columns (created_at, updated_at) |
 | `locality_amenities` | Table missing timestamp columns (created_at, updated_at) |
 | `market_trends` | Table missing timestamp columns (created_at, updated_at) |
+| `mdm_audit_logs` | Table missing timestamp columns (created_at, updated_at) |
+| `mdm_merge_history` | Table missing timestamp columns (created_at, updated_at) |
 | `moderation_history` | Table missing timestamp columns (created_at, updated_at) |
 | `notifications` | Table missing timestamp columns (created_at, updated_at) |
 | `permissions` | Table missing timestamp columns (created_at, updated_at) |

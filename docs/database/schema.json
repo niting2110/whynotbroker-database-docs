@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-01-04T07:01:56.926Z",
+  "generated_at": "2026-01-05T07:39:13.765Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 72,
+    "tables": 76,
     "views": 18,
     "materialized_views": 2,
-    "columns": 1154,
-    "constraints": 638,
-    "indexes": 321,
+    "columns": 1238,
+    "constraints": 670,
+    "indexes": 342,
     "relationships": 132,
-    "functions": 820,
+    "functions": 823,
     "extensions": 11
   },
   "tables": [
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 980,
-      "size_bytes": 286720,
+      "rows": 2648,
+      "size_bytes": 679936,
       "details": {
         "columns": [
           {
@@ -204,7 +204,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 980,
+        "row_count": 2648,
         "column_count": 8
       }
     },
@@ -6750,6 +6750,1456 @@
         "triggers": [],
         "row_count": 100000,
         "column_count": 16
+      }
+    },
+    {
+      "name": "mdm_aliases",
+      "comment": "Scope-aware alias mappings preventing cross-city conflicts",
+      "columns": 19,
+      "rows": 0,
+      "size_bytes": 81920,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "canonical_entity_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "canonical_entity_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "alias_value",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "alias_language",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'english'::text",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "city_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "district_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "state_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "alias_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'user_input'::text",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "alias_confidence",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": 3,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'active'::text",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "retired_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "retired_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "canonical_resolution_count",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "last_used_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "approved_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_57597_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57597_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57597_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57597_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_alias_confidence_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((alias_confidence >= (0)::numeric) AND (alias_confidence <= (1)::numeric)))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_alias_language_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((alias_language = ANY (ARRAY['english'::text, 'hindi'::text, 'kannada'::text, 'tamil'::text, 'telugu'::text, 'malayalam'::text, 'marathi'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_alias_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((alias_type = ANY (ARRAY['user_input'::text, 'admin_created'::text, 'auto_detected'::text, 'historical'::text, 'abbreviation'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_canonical_entity_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((canonical_entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'retired'::text, 'orphaned'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_aliases_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_mdm_aliases_canonical",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{canonical_entity_id,canonical_entity_type}",
+            "index_definition": "CREATE INDEX idx_mdm_aliases_canonical ON public.mdm_aliases USING btree (canonical_entity_id, canonical_entity_type)"
+          },
+          {
+            "index_name": "idx_mdm_aliases_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_mdm_aliases_status ON public.mdm_aliases USING btree (status)"
+          },
+          {
+            "index_name": "idx_mdm_aliases_usage",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{canonical_resolution_count}",
+            "index_definition": "CREATE INDEX idx_mdm_aliases_usage ON public.mdm_aliases USING btree (canonical_resolution_count DESC)"
+          },
+          {
+            "index_name": "idx_mdm_aliases_value",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{alias_value}",
+            "index_definition": "CREATE INDEX idx_mdm_aliases_value ON public.mdm_aliases USING btree (alias_value)"
+          },
+          {
+            "index_name": "idx_mdm_aliases_value_trgm",
+            "index_type": "gin",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{alias_value}",
+            "index_definition": "CREATE INDEX idx_mdm_aliases_value_trgm ON public.mdm_aliases USING gin (alias_value gin_trgm_ops)"
+          },
+          {
+            "index_name": "mdm_aliases_city_unique",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{canonical_entity_type,alias_value,alias_language,city_id}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_aliases_city_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language, city_id) WHERE ((status = 'active'::text) AND (city_id IS NOT NULL))"
+          },
+          {
+            "index_name": "mdm_aliases_national_unique",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{canonical_entity_type,alias_value,alias_language}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_aliases_national_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language) WHERE ((status = 'active'::text) AND (city_id IS NULL) AND (district_id IS NULL) AND (state_id IS NULL))"
+          },
+          {
+            "index_name": "mdm_aliases_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_aliases_pkey ON public.mdm_aliases USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [
+          {
+            "trigger_name": "update_mdm_aliases_updated_at",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_updated_at()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 19
+      }
+    },
+    {
+      "name": "mdm_audit_logs",
+      "comment": "Complete audit trail for MDM operations",
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "admin_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "admin_email",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "action",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "request_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "changes",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "affected_count",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "ip_address",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_agent",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_57623_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57623_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_audit_logs_action_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((action = ANY (ARRAY['alias_created'::text, 'alias_retired'::text, 'alias_updated'::text, 'request_approved'::text, 'request_auto_approved'::text, 'request_rejected'::text, 'request_escalated'::text, 'canonical_created'::text, 'canonical_deprecated'::text, 'canonical_merged'::text, 'merge_executed'::text, 'conflict_flagged'::text, 'conflict_resolved'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_audit_logs_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_mdm_audit_action",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{action,created_at}",
+            "index_definition": "CREATE INDEX idx_mdm_audit_action ON public.mdm_audit_logs USING btree (action, created_at DESC)"
+          },
+          {
+            "index_name": "idx_mdm_audit_admin",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id,created_at}",
+            "index_definition": "CREATE INDEX idx_mdm_audit_admin ON public.mdm_audit_logs USING btree (admin_id, created_at DESC)"
+          },
+          {
+            "index_name": "idx_mdm_audit_created",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_mdm_audit_created ON public.mdm_audit_logs USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "mdm_audit_logs_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_audit_logs_pkey ON public.mdm_audit_logs USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "mdm_curation_requests",
+      "comment": "MDM curation request queue with SLA tracking",
+      "columns": 40,
+      "rows": 0,
+      "size_bytes": 57344,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "request_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "submitted_value",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "submitted_by",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "submitted_from",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "submission_context",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "city_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "district_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "state_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "potential_matches",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "suggested_canonical_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "suggested_canonical_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "match_confidence",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": 3,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "detection_algorithm",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "lgd_conflict",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "lgd_official_name",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "lgd_code",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "rera_conflict",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "rera_official_name",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 20,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "rera_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 21,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "geo_conflict",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 22,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "geo_conflict_details",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 23,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "impact_score_snapshot",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 24,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "impact_components_snapshot",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 25,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "priority",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'medium'::text",
+            "ordinal_position": 26,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "sla_deadline",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 27,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "sla_hours_assigned",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 28,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'pending'::text",
+            "ordinal_position": 29,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "escalated_to_service",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 30,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "escalation_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 31,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolved_by",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 32,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolved_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 33,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolution_action",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 34,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolution_notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 35,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_alias_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 36,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "merged_into_entity_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 37,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "merged_into_entity_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 38,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 39,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 40,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_57572_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57572_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57572_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57572_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_entity_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_match_confidence_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((match_confidence >= (0)::numeric) AND (match_confidence <= (1)::numeric)))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_priority_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((priority = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'critical'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_request_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((request_type = ANY (ARRAY['alias_creation'::text, 'conflict_flag'::text, 'duplicate_detection'::text, 'quality_issue'::text, 'canonical_creation_request'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'auto_mapped'::text, 'escalated_to_domain'::text, 'approved'::text, 'rejected'::text, 'merged'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_curation_requests_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_mdm_requests_entity",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{entity_type,status}",
+            "index_definition": "CREATE INDEX idx_mdm_requests_entity ON public.mdm_curation_requests USING btree (entity_type, status)"
+          },
+          {
+            "index_name": "idx_mdm_requests_priority",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{priority,sla_deadline}",
+            "index_definition": "CREATE INDEX idx_mdm_requests_priority ON public.mdm_curation_requests USING btree (priority, sla_deadline)"
+          },
+          {
+            "index_name": "idx_mdm_requests_sla",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{sla_deadline}",
+            "index_definition": "CREATE INDEX idx_mdm_requests_sla ON public.mdm_curation_requests USING btree (sla_deadline) WHERE (status = 'pending'::text)"
+          },
+          {
+            "index_name": "idx_mdm_requests_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_mdm_requests_status ON public.mdm_curation_requests USING btree (status)"
+          },
+          {
+            "index_name": "idx_mdm_requests_submitted",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{submitted_value}",
+            "index_definition": "CREATE INDEX idx_mdm_requests_submitted ON public.mdm_curation_requests USING btree (submitted_value)"
+          },
+          {
+            "index_name": "mdm_curation_requests_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_curation_requests_pkey ON public.mdm_curation_requests USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [
+          {
+            "trigger_name": "update_mdm_requests_updated_at",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_updated_at()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 40
+      }
+    },
+    {
+      "name": "mdm_merge_history",
+      "comment": "Merge operation history with reversal tracking",
+      "columns": 12,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "source_entity_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "target_entity_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "entity_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "merge_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reversal_strategy",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "affected_properties_count",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "executed_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "executed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reversed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reversed_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reversal_notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_57637_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57637_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57637_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57637_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_57637_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_merge_history_entity_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_merge_history_reversal_strategy_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((reversal_strategy = ANY (ARRAY['alias_only'::text, 'requires_rewrite'::text, 'irreversible'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "mdm_merge_history_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_mdm_merge_executed",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{executed_at}",
+            "index_definition": "CREATE INDEX idx_mdm_merge_executed ON public.mdm_merge_history USING btree (executed_at DESC)"
+          },
+          {
+            "index_name": "idx_mdm_merge_source",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{source_entity_id,entity_type}",
+            "index_definition": "CREATE INDEX idx_mdm_merge_source ON public.mdm_merge_history USING btree (source_entity_id, entity_type)"
+          },
+          {
+            "index_name": "mdm_merge_history_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX mdm_merge_history_pkey ON public.mdm_merge_history USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 12
       }
     },
     {
@@ -24073,13 +25523,13 @@
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography, geography",
+      "arguments": "geography",
       "return_type": "integer",
       "function_comment": null
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography",
+      "arguments": "geography, geography",
       "return_type": "integer",
       "function_comment": null
     },
@@ -24097,25 +25547,25 @@
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geog1 geography, geog2 geography",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_covers",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_covers",
       "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_covers",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -24133,19 +25583,19 @@
     },
     {
       "function_name": "_st_distancetree",
-      "arguments": "geography, geography, double precision, boolean",
+      "arguments": "geography, geography",
       "return_type": "double precision",
       "function_comment": null
     },
     {
       "function_name": "_st_distancetree",
-      "arguments": "geography, geography",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "double precision",
       "function_comment": null
     },
     {
       "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "double precision",
       "function_comment": null
     },
@@ -24157,19 +25607,19 @@
     },
     {
       "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography, double precision, boolean",
+      "arguments": "geography, geography",
       "return_type": "double precision",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithin",
-      "arguments": "geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "arguments": "geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -24283,9 +25733,9 @@
     },
     {
       "function_name": "addgeometrycolumn",
-      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "arguments": "table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
-      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+      "function_comment": "args: table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "addgeometrycolumn",
@@ -24295,9 +25745,9 @@
     },
     {
       "function_name": "addgeometrycolumn",
-      "arguments": "table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
-      "function_comment": "args: table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "admin_has_permission",
@@ -24349,15 +25799,15 @@
     },
     {
       "function_name": "box2d",
-      "arguments": "box3d",
-      "return_type": "box2d",
-      "function_comment": null
-    },
-    {
-      "function_name": "box2d",
       "arguments": "geometry",
       "return_type": "box2d",
       "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
+    },
+    {
+      "function_name": "box2d",
+      "arguments": "box3d",
+      "return_type": "box2d",
+      "function_comment": null
     },
     {
       "function_name": "box2d_in",
@@ -24385,15 +25835,15 @@
     },
     {
       "function_name": "box3d",
-      "arguments": "geometry",
-      "return_type": "box3d",
-      "function_comment": "args: geom - Returns a BOX3D representing the 3D extent of a geometry."
-    },
-    {
-      "function_name": "box3d",
       "arguments": "box2d",
       "return_type": "box3d",
       "function_comment": null
+    },
+    {
+      "function_name": "box3d",
+      "arguments": "geometry",
+      "return_type": "box3d",
+      "function_comment": "args: geom - Returns a BOX3D representing the 3D extent of a geometry."
     },
     {
       "function_name": "box3d_in",
@@ -24456,6 +25906,12 @@
       "function_comment": null
     },
     {
+      "function_name": "calculate_sla_deadline",
+      "arguments": "impact_score numeric",
+      "return_type": "timestamp with time zone",
+      "function_comment": null
+    },
+    {
       "function_name": "calculate_user_engagement_score",
       "arguments": "p_user_id uuid",
       "return_type": "numeric",
@@ -24499,13 +25955,13 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "geometry, box2df",
+      "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "contains_2d",
-      "arguments": "box2df, geometry",
+      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -24565,15 +26021,15 @@
     },
     {
       "function_name": "dropgeometrytable",
-      "arguments": "table_name character varying",
-      "return_type": "text",
-      "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
-    },
-    {
-      "function_name": "dropgeometrytable",
       "arguments": "catalog_name character varying, schema_name character varying, table_name character varying",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name - Drops a table and all its references in geometry_columns."
+    },
+    {
+      "function_name": "dropgeometrytable",
+      "arguments": "table_name character varying",
+      "return_type": "text",
+      "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
     },
     {
       "function_name": "dropgeometrytable",
@@ -24649,13 +26105,13 @@
     },
     {
       "function_name": "geography",
-      "arguments": "geometry",
+      "arguments": "bytea",
       "return_type": "geography",
       "function_comment": null
     },
     {
       "function_name": "geography",
-      "arguments": "bytea",
+      "arguments": "geometry",
       "return_type": "geography",
       "function_comment": null
     },
@@ -24859,13 +26315,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "path",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "geometry, integer, boolean",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -24877,7 +26327,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "polygon",
+      "arguments": "geometry, integer, boolean",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -24889,13 +26339,19 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "bytea",
+      "arguments": "path",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "geometry",
-      "arguments": "text",
+      "arguments": "polygon",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box2d",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -24907,7 +26363,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "box2d",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -25381,13 +26837,13 @@
     },
     {
       "function_name": "get_admin_context",
-      "arguments": "",
+      "arguments": "p_user_id uuid",
       "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
     },
     {
       "function_name": "get_admin_context",
-      "arguments": "p_user_id uuid",
+      "arguments": "",
       "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
     },
@@ -25645,7 +27101,7 @@
     },
     {
       "function_name": "is_contained_2d",
-      "arguments": "box2df, box2df",
+      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -25657,7 +27113,7 @@
     },
     {
       "function_name": "is_contained_2d",
-      "arguments": "geometry, box2df",
+      "arguments": "box2df, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -25681,9 +27137,9 @@
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, text",
+      "arguments": "text, text, text, timestamp without time zone",
       "return_type": "integer",
-      "function_comment": null
+      "function_comment": "args: a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
     },
     {
       "function_name": "lockrow",
@@ -25693,15 +27149,15 @@
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, text, timestamp without time zone",
+      "arguments": "text, text, text, text",
       "return_type": "integer",
-      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
+      "function_comment": null
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, timestamp without time zone",
+      "arguments": "text, text, text, text, timestamp without time zone",
       "return_type": "integer",
-      "function_comment": "args: a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
+      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
     },
     {
       "function_name": "log_admin_creation",
@@ -25759,12 +27215,18 @@
     },
     {
       "function_name": "overlaps_geog",
-      "arguments": "geography, gidx",
+      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "overlaps_geog",
+      "arguments": "geography, gidx",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "overlaps_nd",
       "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
@@ -25772,12 +27234,6 @@
     {
       "function_name": "overlaps_nd",
       "arguments": "geometry, gidx",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "overlaps_nd",
-      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -25825,13 +27281,13 @@
     },
     {
       "function_name": "pgis_asgeobuf_transfn",
-      "arguments": "internal, anyelement",
+      "arguments": "internal, anyelement, text",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_asgeobuf_transfn",
-      "arguments": "internal, anyelement, text",
+      "arguments": "internal, anyelement",
       "return_type": "internal",
       "function_comment": null
     },
@@ -25861,13 +27317,7 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer, text",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer, text, text",
+      "arguments": "internal, anyelement, text, integer",
       "return_type": "internal",
       "function_comment": null
     },
@@ -25885,7 +27335,13 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer",
+      "arguments": "internal, anyelement, text, integer, text, text",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asmvt_transfn",
+      "arguments": "internal, anyelement, text, integer, text",
       "return_type": "internal",
       "function_comment": null
     },
@@ -25897,13 +27353,13 @@
     },
     {
       "function_name": "pgis_geometry_accum_transfn",
-      "arguments": "internal, geometry, double precision",
+      "arguments": "internal, geometry, double precision, integer",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_geometry_accum_transfn",
-      "arguments": "internal, geometry, double precision, integer",
+      "arguments": "internal, geometry, double precision",
       "return_type": "internal",
       "function_comment": null
     },
@@ -25987,15 +27443,15 @@
     },
     {
       "function_name": "populate_geometry_columns",
-      "arguments": "use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
-    },
-    {
-      "function_name": "populate_geometry_columns",
       "arguments": "tbl_oid oid, use_typmod boolean DEFAULT true",
       "return_type": "integer",
       "function_comment": "args: relation_oid, use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
+    },
+    {
+      "function_name": "populate_geometry_columns",
+      "arguments": "use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
     },
     {
       "function_name": "postgis_addbbox",
@@ -26262,6 +27718,12 @@
       "function_comment": null
     },
     {
+      "function_name": "sla_hours_remaining",
+      "arguments": "deadline timestamp with time zone",
+      "return_type": "integer",
+      "function_comment": null
+    },
+    {
       "function_name": "spend_credits_for_action",
       "arguments": "p_user_id uuid, p_action text, p_region_id uuid, p_reference_id uuid DEFAULT NULL::uuid, p_reference_type text DEFAULT NULL::text",
       "return_type": "uuid",
@@ -26371,15 +27833,15 @@
     },
     {
       "function_name": "st_affine",
-      "arguments": "geometry, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, a, b, c, d, e, f, g, h, i, xoff, yoff, zoff - Apply a 3D affine transformation to a geometry."
-    },
-    {
-      "function_name": "st_affine",
       "arguments": "geometry, double precision, double precision, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, a, b, d, e, xoff, yoff - Apply a 3D affine transformation to a geometry."
+    },
+    {
+      "function_name": "st_affine",
+      "arguments": "geometry, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, a, b, c, d, e, f, g, h, i, xoff, yoff, zoff - Apply a 3D affine transformation to a geometry."
     },
     {
       "function_name": "st_angle",
@@ -26395,6 +27857,12 @@
     },
     {
       "function_name": "st_area",
+      "arguments": "text",
+      "return_type": "double precision",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_area",
       "arguments": "geog geography, use_spheroid boolean DEFAULT true",
       "return_type": "double precision",
       "function_comment": "args: geog, use_spheroid=true - Returns the area of a polygonal geometry."
@@ -26406,21 +27874,9 @@
       "function_comment": "args: g1 - Returns the area of a polygonal geometry."
     },
     {
-      "function_name": "st_area",
-      "arguments": "text",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
       "function_name": "st_area2d",
       "arguments": "geometry",
       "return_type": "double precision",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asbinary",
-      "arguments": "geography, text",
-      "return_type": "bytea",
       "function_comment": null
     },
     {
@@ -26442,9 +27898,21 @@
       "function_comment": null
     },
     {
+      "function_name": "st_asbinary",
+      "arguments": "geography, text",
+      "return_type": "bytea",
+      "function_comment": null
+    },
+    {
       "function_name": "st_asencodedpolyline",
       "arguments": "geom geometry, nprecision integer DEFAULT 5",
       "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asewkb",
+      "arguments": "geometry, text",
+      "return_type": "bytea",
       "function_comment": null
     },
     {
@@ -26454,9 +27922,9 @@
       "function_comment": null
     },
     {
-      "function_name": "st_asewkb",
-      "arguments": "geometry, text",
-      "return_type": "bytea",
+      "function_name": "st_asewkt",
+      "arguments": "geometry, integer",
+      "return_type": "text",
       "function_comment": null
     },
     {
@@ -26473,31 +27941,25 @@
     },
     {
       "function_name": "st_asewkt",
+      "arguments": "text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asewkt",
       "arguments": "geometry",
       "return_type": "text",
       "function_comment": null
     },
     {
-      "function_name": "st_asewkt",
-      "arguments": "geometry, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkt",
-      "arguments": "text",
+      "function_name": "st_asgeojson",
+      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgeojson",
       "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgeojson",
-      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
       "return_type": "text",
       "function_comment": null
     },
@@ -26509,25 +27971,7 @@
     },
     {
       "function_name": "st_asgeojson",
-      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 0",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
+      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
       "return_type": "text",
       "function_comment": null
     },
@@ -26544,8 +27988,20 @@
       "function_comment": null
     },
     {
-      "function_name": "st_ashexewkb",
-      "arguments": "geometry",
+      "function_name": "st_asgml",
+      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
       "return_type": "text",
       "function_comment": null
     },
@@ -26556,14 +28012,20 @@
       "function_comment": null
     },
     {
-      "function_name": "st_askml",
-      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text",
+      "function_name": "st_ashexewkb",
+      "arguments": "geometry",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_askml",
       "arguments": "text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_askml",
+      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text",
       "return_type": "text",
       "function_comment": null
     },
@@ -26593,6 +28055,12 @@
     },
     {
       "function_name": "st_assvg",
+      "arguments": "text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_assvg",
       "arguments": "geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
       "return_type": "text",
       "function_comment": null
@@ -26604,8 +28072,8 @@
       "function_comment": null
     },
     {
-      "function_name": "st_assvg",
-      "arguments": "text",
+      "function_name": "st_astext",
+      "arguments": "geometry",
       "return_type": "text",
       "function_comment": null
     },
@@ -26617,25 +28085,19 @@
     },
     {
       "function_name": "st_astext",
+      "arguments": "geography, integer",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_astext",
       "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_astext",
-      "arguments": "geometry",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_astext",
       "arguments": "geometry, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_astext",
-      "arguments": "geography, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -26659,13 +28121,13 @@
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
@@ -26701,31 +28163,7 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geography, double precision",
-      "return_type": "geography",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "geography, double precision, text",
-      "return_type": "geography",
-      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters - Computes a geometry covering all points within a given distance from a geometry."
-    },
-    {
-      "function_name": "st_buffer",
       "arguments": "text, double precision",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "text, double precision, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "text, double precision, text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -26743,9 +28181,33 @@
     },
     {
       "function_name": "st_buffer",
+      "arguments": "text, double precision, text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "text, double precision, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "geography, double precision, text",
+      "return_type": "geography",
+      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
       "arguments": "geography, double precision, integer",
       "return_type": "geography",
       "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "geography, double precision",
+      "return_type": "geography",
+      "function_comment": null
     },
     {
       "function_name": "st_buildarea",
@@ -26761,15 +28223,15 @@
     },
     {
       "function_name": "st_centroid",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_centroid",
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: g1 - Returns the geometric center of a geometry."
+    },
+    {
+      "function_name": "st_centroid",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
     },
     {
       "function_name": "st_chaikinsmoothing",
@@ -26827,21 +28289,27 @@
     },
     {
       "function_name": "st_collectionextract",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: collection - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
-    },
-    {
-      "function_name": "st_collectionextract",
       "arguments": "geometry, integer",
       "return_type": "geometry",
       "function_comment": "args: collection, type - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
+    },
+    {
+      "function_name": "st_collectionextract",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: collection - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
     },
     {
       "function_name": "st_collectionhomogenize",
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: collection - Returns the simplest representation of a geometry collection."
+    },
+    {
+      "function_name": "st_combinebbox",
+      "arguments": "box3d, box3d",
+      "return_type": "box3d",
+      "function_comment": null
     },
     {
       "function_name": "st_combinebbox",
@@ -26852,12 +28320,6 @@
     {
       "function_name": "st_combinebbox",
       "arguments": "box3d, geometry",
-      "return_type": "box3d",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_combinebbox",
-      "arguments": "box3d, box3d",
       "return_type": "box3d",
       "function_comment": null
     },
@@ -26893,6 +28355,12 @@
     },
     {
       "function_name": "st_coveredby",
+      "arguments": "text, text",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_coveredby",
       "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
@@ -26900,18 +28368,6 @@
     {
       "function_name": "st_coveredby",
       "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_coveredby",
-      "arguments": "text, text",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_covers",
-      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -26924,6 +28380,12 @@
     {
       "function_name": "st_covers",
       "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_covers",
+      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -26983,15 +28445,15 @@
     },
     {
       "function_name": "st_distance",
-      "arguments": "geog1 geography, geog2 geography, use_spheroid boolean DEFAULT true",
-      "return_type": "double precision",
-      "function_comment": "args: geog1, geog2, use_spheroid=true - Returns the distance between two geometry or geography values."
-    },
-    {
-      "function_name": "st_distance",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": "args: g1, g2 - Returns the distance between two geometry or geography values."
+    },
+    {
+      "function_name": "st_distance",
+      "arguments": "geog1 geography, geog2 geography, use_spheroid boolean DEFAULT true",
+      "return_type": "double precision",
+      "function_comment": "args: geog1, geog2, use_spheroid=true - Returns the distance between two geometry or geography values."
     },
     {
       "function_name": "st_distancecpa",
@@ -27001,15 +28463,15 @@
     },
     {
       "function_name": "st_distancesphere",
-      "arguments": "geom1 geometry, geom2 geometry, radius double precision",
-      "return_type": "double precision",
-      "function_comment": "args: geomlonlatA, geomlonlatB, radius=6371008 - Returns minimum distance in meters between two lon/lat geometries using a spherical earth model."
-    },
-    {
-      "function_name": "st_distancesphere",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": null
+    },
+    {
+      "function_name": "st_distancesphere",
+      "arguments": "geom1 geometry, geom2 geometry, radius double precision",
+      "return_type": "double precision",
+      "function_comment": "args: geomlonlatA, geomlonlatB, radius=6371008 - Returns minimum distance in meters between two lon/lat geometries using a spherical earth model."
     },
     {
       "function_name": "st_distancespheroid",
@@ -27103,15 +28565,9 @@
     },
     {
       "function_name": "st_expand",
-      "arguments": "geom geometry, dx double precision, dy double precision, dz double precision DEFAULT 0, dm double precision DEFAULT 0",
+      "arguments": "geometry, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geom, dx, dy, dz=0, dm=0 - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box2d, double precision",
-      "return_type": "box2d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+      "function_comment": "args: geom, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_expand",
@@ -27121,9 +28577,15 @@
     },
     {
       "function_name": "st_expand",
-      "arguments": "geometry, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geom, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+      "arguments": "box2d, double precision",
+      "return_type": "box2d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box3d, double precision",
+      "return_type": "box3d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_expand",
@@ -27133,9 +28595,9 @@
     },
     {
       "function_name": "st_expand",
-      "arguments": "box3d, double precision",
-      "return_type": "box3d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+      "arguments": "geom geometry, dx double precision, dy double precision, dz double precision DEFAULT 0, dm double precision DEFAULT 0",
+      "return_type": "geometry",
+      "function_comment": "args: geom, dx, dy, dz=0, dm=0 - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_exteriorring",
@@ -27151,13 +28613,13 @@
     },
     {
       "function_name": "st_findextent",
-      "arguments": "text, text",
+      "arguments": "text, text, text",
       "return_type": "box2d",
       "function_comment": null
     },
     {
       "function_name": "st_findextent",
-      "arguments": "text, text, text",
+      "arguments": "text, text",
       "return_type": "box2d",
       "function_comment": null
     },
@@ -27229,15 +28691,15 @@
     },
     {
       "function_name": "st_forcesfs",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: geomA - Force the geometries to use SFS 1.1 geometry types only."
-    },
-    {
-      "function_name": "st_forcesfs",
       "arguments": "geometry, version text",
       "return_type": "geometry",
       "function_comment": "args: geomA, version - Force the geometries to use SFS 1.1 geometry types only."
+    },
+    {
+      "function_name": "st_forcesfs",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: geomA - Force the geometries to use SFS 1.1 geometry types only."
     },
     {
       "function_name": "st_frechetdistance",
@@ -27289,13 +28751,13 @@
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geog geography, maxchars integer DEFAULT 0",
+      "arguments": "geom geometry, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geom geometry, maxchars integer DEFAULT 0",
+      "arguments": "geog geography, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
@@ -27313,13 +28775,13 @@
     },
     {
       "function_name": "st_geomcollfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geomcollfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27331,13 +28793,13 @@
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27373,13 +28835,13 @@
     },
     {
       "function_name": "st_geomfromgeojson",
-      "arguments": "json",
+      "arguments": "jsonb",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geomfromgeojson",
-      "arguments": "jsonb",
+      "arguments": "json",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27415,13 +28877,13 @@
     },
     {
       "function_name": "st_geomfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geomfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27433,25 +28895,25 @@
     },
     {
       "function_name": "st_geomfromwkb",
-      "arguments": "bytea",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromwkb",
       "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_gmltosql",
-      "arguments": "text, integer",
+      "function_name": "st_geomfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_gmltosql",
       "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_gmltosql",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27499,21 +28961,27 @@
     },
     {
       "function_name": "st_intersection",
-      "arguments": "text, text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_intersection",
       "arguments": "geography, geography",
       "return_type": "geography",
       "function_comment": "args: geogA, geogB - Computes a geometry representing the shared portion of geometries A and B."
     },
     {
       "function_name": "st_intersection",
+      "arguments": "text, text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_intersection",
       "arguments": "geom1 geometry, geom2 geometry, gridsize double precision DEFAULT '-1'::integer",
       "return_type": "geometry",
       "function_comment": "args: geomA, geomB, gridSize = -1 - Computes a geometry representing the shared portion of geometries A and B."
+    },
+    {
+      "function_name": "st_intersects",
+      "arguments": "text, text",
+      "return_type": "boolean",
+      "function_comment": null
     },
     {
       "function_name": "st_intersects",
@@ -27524,12 +28992,6 @@
     {
       "function_name": "st_intersects",
       "arguments": "geog1 geography, geog2 geography",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_intersects",
-      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -27577,15 +29039,15 @@
     },
     {
       "function_name": "st_isvalid",
-      "arguments": "geometry, integer",
-      "return_type": "boolean",
-      "function_comment": "args: g, flags - Tests if a geometry is well-formed in 2D."
-    },
-    {
-      "function_name": "st_isvalid",
       "arguments": "geometry",
       "return_type": "boolean",
       "function_comment": "args: g - Tests if a geometry is well-formed in 2D."
+    },
+    {
+      "function_name": "st_isvalid",
+      "arguments": "geometry, integer",
+      "return_type": "boolean",
+      "function_comment": "args: g, flags - Tests if a geometry is well-formed in 2D."
     },
     {
       "function_name": "st_isvaliddetail",
@@ -27673,13 +29135,13 @@
     },
     {
       "function_name": "st_linefromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linefromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27727,13 +29189,13 @@
     },
     {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27805,15 +29267,15 @@
     },
     {
       "function_name": "st_makepoint",
-      "arguments": "double precision, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
-    },
-    {
-      "function_name": "st_makepoint",
       "arguments": "double precision, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: x, y, z, m - Creates a 2D, 3DZ or 4D Point."
+    },
+    {
+      "function_name": "st_makepoint",
+      "arguments": "double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
     },
     {
       "function_name": "st_makepoint",
@@ -27829,27 +29291,27 @@
     },
     {
       "function_name": "st_makepolygon",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
-    },
-    {
-      "function_name": "st_makepolygon",
       "arguments": "geometry, geometry[]",
       "return_type": "geometry",
       "function_comment": "args: outerlinestring, interiorlinestrings - Creates a Polygon from a shell and optional list of holes."
     },
     {
-      "function_name": "st_makevalid",
+      "function_name": "st_makepolygon",
       "arguments": "geometry",
       "return_type": "geometry",
-      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
+      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
     },
     {
       "function_name": "st_makevalid",
       "arguments": "geom geometry, params text",
       "return_type": "geometry",
       "function_comment": "args: input, params - Attempts to make an invalid geometry valid without losing vertices."
+    },
+    {
+      "function_name": "st_makevalid",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
     },
     {
       "function_name": "st_maxdistance",
@@ -27907,13 +29369,19 @@
     },
     {
       "function_name": "st_mlinefromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mlinefromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_mpointfromtext",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27924,8 +29392,8 @@
       "function_comment": null
     },
     {
-      "function_name": "st_mpointfromtext",
-      "arguments": "text, integer",
+      "function_name": "st_mpointfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -27936,20 +29404,14 @@
       "function_comment": null
     },
     {
-      "function_name": "st_mpointfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_mpolyfromtext",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpolyfromtext",
       "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_mpolyfromtext",
-      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -28021,13 +29483,13 @@
     },
     {
       "function_name": "st_multipolygonfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_multipolygonfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -28123,15 +29585,15 @@
     },
     {
       "function_name": "st_perimeter",
-      "arguments": "geometry",
-      "return_type": "double precision",
-      "function_comment": "args: g1 - Returns the length of the boundary of a polygonal geometry or geography."
-    },
-    {
-      "function_name": "st_perimeter",
       "arguments": "geog geography, use_spheroid boolean DEFAULT true",
       "return_type": "double precision",
       "function_comment": "args: geog, use_spheroid=true - Returns the length of the boundary of a polygonal geometry or geography."
+    },
+    {
+      "function_name": "st_perimeter",
+      "arguments": "geometry",
+      "return_type": "double precision",
+      "function_comment": "args: g1 - Returns the length of the boundary of a polygonal geometry or geography."
     },
     {
       "function_name": "st_perimeter2d",
@@ -28225,25 +29687,25 @@
     },
     {
       "function_name": "st_polyfromtext",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_polyfromtext",
       "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_polyfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_polyfromtext",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polyfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_polyfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -28255,25 +29717,25 @@
     },
     {
       "function_name": "st_polygonfromtext",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_polygonfromtext",
       "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_polygonfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_polygonfromtext",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polygonfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_polygonfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -28345,9 +29807,9 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision, double precision, double precision",
+      "arguments": "geometry, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
+      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotate",
@@ -28357,9 +29819,9 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision",
+      "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
+      "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotatex",
@@ -28465,15 +29927,15 @@
     },
     {
       "function_name": "st_simplify",
-      "arguments": "geometry, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, tolerance - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
-    },
-    {
-      "function_name": "st_simplify",
       "arguments": "geometry, double precision, boolean",
       "return_type": "geometry",
       "function_comment": "args: geomA, tolerance, preserveCollapsed - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
+    },
+    {
+      "function_name": "st_simplify",
+      "arguments": "geometry, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, tolerance - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
     },
     {
       "function_name": "st_simplifypolygonhull",
@@ -28501,9 +29963,9 @@
     },
     {
       "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision, double precision",
+      "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+      "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_snaptogrid",
@@ -28513,9 +29975,9 @@
     },
     {
       "function_name": "st_snaptogrid",
-      "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
+      "arguments": "geometry, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
+      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_snaptogrid",
@@ -28567,13 +30029,13 @@
     },
     {
       "function_name": "st_summary",
-      "arguments": "geography",
+      "arguments": "geometry",
       "return_type": "text",
       "function_comment": "args: g - Returns a text summary of the contents of a geometry."
     },
     {
       "function_name": "st_summary",
-      "arguments": "geometry",
+      "arguments": "geography",
       "return_type": "text",
       "function_comment": "args: g - Returns a text summary of the contents of a geometry."
     },
@@ -28615,15 +30077,15 @@
     },
     {
       "function_name": "st_transform",
-      "arguments": "geom geometry, from_proj text, to_srid integer",
-      "return_type": "geometry",
-      "function_comment": "args: geom, from_proj, to_srid - Return a new geometry with coordinates transformed to a different spatial reference system."
-    },
-    {
-      "function_name": "st_transform",
       "arguments": "geom geometry, from_proj text, to_proj text",
       "return_type": "geometry",
       "function_comment": "args: geom, from_proj, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
+    },
+    {
+      "function_name": "st_transform",
+      "arguments": "geom geometry, from_proj text, to_srid integer",
+      "return_type": "geometry",
+      "function_comment": "args: geom, from_proj, to_srid - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_transform",
@@ -28663,9 +30125,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geometry[]",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
-      "function_comment": "args: g1_array - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_union",
@@ -28675,9 +30137,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geometry[]",
       "return_type": "geometry",
-      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1_array - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_voronoilines",
@@ -28854,6 +30316,12 @@
       "function_comment": null
     },
     {
+      "function_name": "update_updated_at",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "update_updated_at_column",
       "arguments": "",
       "return_type": "trigger",
@@ -28867,15 +30335,15 @@
     },
     {
       "function_name": "updategeometrysrid",
-      "arguments": "character varying, character varying, character varying, integer",
-      "return_type": "text",
-      "function_comment": "args: schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
-    },
-    {
-      "function_name": "updategeometrysrid",
       "arguments": "character varying, character varying, integer",
       "return_type": "text",
       "function_comment": "args: table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
+    },
+    {
+      "function_name": "updategeometrysrid",
+      "arguments": "character varying, character varying, character varying, integer",
+      "return_type": "text",
+      "function_comment": "args: schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
     },
     {
       "function_name": "updategeometrysrid",

@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-04T07:01:56.921Z
-> **Total Tables:** 72
+> Auto-generated on: 2026-01-05T07:39:13.761Z
+> **Total Tables:** 76
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~980
+- Rows: ~2,648
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -1644,6 +1644,277 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `region_id` → `regions(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+
+---
+
+## `mdm_aliases`
+
+> Scope-aware alias mappings preventing cross-city conflicts
+
+**Statistics:**
+- Rows: ~0
+- Columns: 19
+- Indexes: 8
+- Foreign Keys: 0
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `canonical_entity_id` | `uuid` | NO | `—` | — |
+| `canonical_entity_type` | `text` | NO | `—` | — |
+| `alias_value` | `text` | NO | `—` | — |
+| `alias_language` | `text` | YES | `'english'::text` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | YES | `—` | — |
+| `alias_type` | `text` | YES | `'user_input'::text` | — |
+| `alias_confidence` | `numeric` | YES | `—` | — |
+| `status` | `text` | YES | `'active'::text` | — |
+| `retired_reason` | `text` | YES | `—` | — |
+| `retired_at` | `timestamp with time zone` | YES | `—` | — |
+| `canonical_resolution_count` | `integer` | YES | `0` | — |
+| `last_used_at` | `timestamp with time zone` | YES | `—` | — |
+| `created_by` | `uuid` | YES | `—` | — |
+| `approved_by` | `uuid` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_57597_1_not_null`: N/A
+- `2200_57597_2_not_null`: N/A
+- `2200_57597_3_not_null`: N/A
+- `2200_57597_4_not_null`: N/A
+- `mdm_aliases_alias_confidence_check`: CHECK (((alias_confidence >= (0)::numeric) AND (alias_confidence <= (1)::numeric)))
+- `mdm_aliases_alias_language_check`: CHECK ((alias_language = ANY (ARRAY['english'::text, 'hindi'::text, 'kannada'::text, 'tamil'::text, 'telugu'::text, 'malayalam'::text, 'marathi'::text])))
+- `mdm_aliases_alias_type_check`: CHECK ((alias_type = ANY (ARRAY['user_input'::text, 'admin_created'::text, 'auto_detected'::text, 'historical'::text, 'abbreviation'::text])))
+- `mdm_aliases_canonical_entity_type_check`: CHECK ((canonical_entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))
+- `mdm_aliases_status_check`: CHECK ((status = ANY (ARRAY['active'::text, 'retired'::text, 'orphaned'::text])))
+
+**PRIMARY KEY:**
+- `mdm_aliases_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_mdm_aliases_canonical` | btree | canonical_entity_id, canonical_entity_type | — | — | `CREATE INDEX idx_mdm_aliases_canonical ON public.mdm_aliases USING btree (canonical_entity_id, canonical_entity_type)` |
+| `idx_mdm_aliases_status` | btree | status | — | — | `CREATE INDEX idx_mdm_aliases_status ON public.mdm_aliases USING btree (status)` |
+| `idx_mdm_aliases_usage` | btree | canonical_resolution_count | — | — | `CREATE INDEX idx_mdm_aliases_usage ON public.mdm_aliases USING btree (canonical_resolution_count DESC)` |
+| `idx_mdm_aliases_value` | btree | alias_value | — | — | `CREATE INDEX idx_mdm_aliases_value ON public.mdm_aliases USING btree (alias_value)` |
+| `idx_mdm_aliases_value_trgm` | gin | alias_value | — | — | `CREATE INDEX idx_mdm_aliases_value_trgm ON public.mdm_aliases USING gin (alias_value gin_trgm_ops)` |
+| `mdm_aliases_city_unique` | btree | canonical_entity_type, alias_value, alias_language, city_id | ✓ | — | `CREATE UNIQUE INDEX mdm_aliases_city_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language, city_id) WHERE ((status = 'active'::text) AND (city_id IS NOT NULL))` |
+| `mdm_aliases_national_unique` | btree | canonical_entity_type, alias_value, alias_language | ✓ | — | `CREATE UNIQUE INDEX mdm_aliases_national_unique ON public.mdm_aliases USING btree (alias_value, canonical_entity_type, alias_language) WHERE ((status = 'active'::text) AND (city_id IS NULL) AND (district_id IS NULL) AND (state_id IS NULL))` |
+| `mdm_aliases_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX mdm_aliases_pkey ON public.mdm_aliases USING btree (id)` |
+
+### Triggers
+
+- `update_mdm_aliases_updated_at`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_updated_at()
+```
+
+---
+
+## `mdm_audit_logs`
+
+> Complete audit trail for MDM operations
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 4
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `admin_email` | `text` | YES | `—` | — |
+| `action` | `text` | NO | `—` | — |
+| `entity_id` | `uuid` | YES | `—` | — |
+| `entity_type` | `text` | YES | `—` | — |
+| `request_id` | `uuid` | YES | `—` | — |
+| `changes` | `jsonb` | YES | `—` | — |
+| `reason` | `text` | YES | `—` | — |
+| `affected_count` | `integer` | YES | `0` | — |
+| `ip_address` | `text` | YES | `—` | — |
+| `user_agent` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_57623_1_not_null`: N/A
+- `2200_57623_4_not_null`: N/A
+- `mdm_audit_logs_action_check`: CHECK ((action = ANY (ARRAY['alias_created'::text, 'alias_retired'::text, 'alias_updated'::text, 'request_approved'::text, 'request_auto_approved'::text, 'request_rejected'::text, 'request_escalated'::text, 'canonical_created'::text, 'canonical_deprecated'::text, 'canonical_merged'::text, 'merge_executed'::text, 'conflict_flagged'::text, 'conflict_resolved'::text])))
+
+**PRIMARY KEY:**
+- `mdm_audit_logs_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_mdm_audit_action` | btree | action, created_at | — | — | `CREATE INDEX idx_mdm_audit_action ON public.mdm_audit_logs USING btree (action, created_at DESC)` |
+| `idx_mdm_audit_admin` | btree | admin_id, created_at | — | — | `CREATE INDEX idx_mdm_audit_admin ON public.mdm_audit_logs USING btree (admin_id, created_at DESC)` |
+| `idx_mdm_audit_created` | btree | created_at | — | — | `CREATE INDEX idx_mdm_audit_created ON public.mdm_audit_logs USING btree (created_at DESC)` |
+| `mdm_audit_logs_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX mdm_audit_logs_pkey ON public.mdm_audit_logs USING btree (id)` |
+
+---
+
+## `mdm_curation_requests`
+
+> MDM curation request queue with SLA tracking
+
+**Statistics:**
+- Rows: ~0
+- Columns: 40
+- Indexes: 6
+- Foreign Keys: 0
+- Triggers: 1
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `request_type` | `text` | NO | `—` | — |
+| `entity_type` | `text` | NO | `—` | — |
+| `submitted_value` | `text` | NO | `—` | — |
+| `submitted_by` | `text` | YES | `—` | — |
+| `submitted_from` | `text` | YES | `—` | — |
+| `submission_context` | `jsonb` | YES | `—` | — |
+| `city_id` | `uuid` | YES | `—` | — |
+| `district_id` | `uuid` | YES | `—` | — |
+| `state_id` | `uuid` | YES | `—` | — |
+| `potential_matches` | `jsonb` | YES | `—` | — |
+| `suggested_canonical_id` | `uuid` | YES | `—` | — |
+| `suggested_canonical_type` | `text` | YES | `—` | — |
+| `match_confidence` | `numeric` | YES | `—` | — |
+| `detection_algorithm` | `text` | YES | `—` | — |
+| `lgd_conflict` | `boolean` | YES | `false` | — |
+| `lgd_official_name` | `text` | YES | `—` | — |
+| `lgd_code` | `text` | YES | `—` | — |
+| `rera_conflict` | `boolean` | YES | `false` | — |
+| `rera_official_name` | `text` | YES | `—` | — |
+| `rera_id` | `text` | YES | `—` | — |
+| `geo_conflict` | `boolean` | YES | `false` | — |
+| `geo_conflict_details` | `jsonb` | YES | `—` | — |
+| `impact_score_snapshot` | `numeric` | YES | `—` | — |
+| `impact_components_snapshot` | `jsonb` | YES | `—` | — |
+| `priority` | `text` | YES | `'medium'::text` | — |
+| `sla_deadline` | `timestamp with time zone` | YES | `—` | — |
+| `sla_hours_assigned` | `integer` | YES | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `escalated_to_service` | `text` | YES | `—` | — |
+| `escalation_reason` | `text` | YES | `—` | — |
+| `resolved_by` | `text` | YES | `—` | — |
+| `resolved_at` | `timestamp with time zone` | YES | `—` | — |
+| `resolution_action` | `text` | YES | `—` | — |
+| `resolution_notes` | `text` | YES | `—` | — |
+| `created_alias_id` | `uuid` | YES | `—` | — |
+| `merged_into_entity_id` | `uuid` | YES | `—` | — |
+| `merged_into_entity_type` | `text` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_57572_1_not_null`: N/A
+- `2200_57572_2_not_null`: N/A
+- `2200_57572_3_not_null`: N/A
+- `2200_57572_4_not_null`: N/A
+- `mdm_curation_requests_entity_type_check`: CHECK ((entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))
+- `mdm_curation_requests_match_confidence_check`: CHECK (((match_confidence >= (0)::numeric) AND (match_confidence <= (1)::numeric)))
+- `mdm_curation_requests_priority_check`: CHECK ((priority = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'critical'::text])))
+- `mdm_curation_requests_request_type_check`: CHECK ((request_type = ANY (ARRAY['alias_creation'::text, 'conflict_flag'::text, 'duplicate_detection'::text, 'quality_issue'::text, 'canonical_creation_request'::text])))
+- `mdm_curation_requests_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'auto_mapped'::text, 'escalated_to_domain'::text, 'approved'::text, 'rejected'::text, 'merged'::text])))
+
+**PRIMARY KEY:**
+- `mdm_curation_requests_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_mdm_requests_entity` | btree | entity_type, status | — | — | `CREATE INDEX idx_mdm_requests_entity ON public.mdm_curation_requests USING btree (entity_type, status)` |
+| `idx_mdm_requests_priority` | btree | priority, sla_deadline | — | — | `CREATE INDEX idx_mdm_requests_priority ON public.mdm_curation_requests USING btree (priority, sla_deadline)` |
+| `idx_mdm_requests_sla` | btree | sla_deadline | — | — | `CREATE INDEX idx_mdm_requests_sla ON public.mdm_curation_requests USING btree (sla_deadline) WHERE (status = 'pending'::text)` |
+| `idx_mdm_requests_status` | btree | status | — | — | `CREATE INDEX idx_mdm_requests_status ON public.mdm_curation_requests USING btree (status)` |
+| `idx_mdm_requests_submitted` | btree | submitted_value | — | — | `CREATE INDEX idx_mdm_requests_submitted ON public.mdm_curation_requests USING btree (submitted_value)` |
+| `mdm_curation_requests_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX mdm_curation_requests_pkey ON public.mdm_curation_requests USING btree (id)` |
+
+### Triggers
+
+- `update_mdm_requests_updated_at`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION update_updated_at()
+```
+
+---
+
+## `mdm_merge_history`
+
+> Merge operation history with reversal tracking
+
+**Statistics:**
+- Rows: ~0
+- Columns: 12
+- Indexes: 3
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `source_entity_id` | `uuid` | NO | `—` | — |
+| `target_entity_id` | `uuid` | NO | `—` | — |
+| `entity_type` | `text` | NO | `—` | — |
+| `merge_reason` | `text` | YES | `—` | — |
+| `reversal_strategy` | `text` | NO | `—` | — |
+| `affected_properties_count` | `integer` | YES | `0` | — |
+| `executed_by` | `uuid` | YES | `—` | — |
+| `executed_at` | `timestamp with time zone` | YES | `now()` | — |
+| `reversed_at` | `timestamp with time zone` | YES | `—` | — |
+| `reversed_by` | `uuid` | YES | `—` | — |
+| `reversal_notes` | `text` | YES | `—` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_57637_1_not_null`: N/A
+- `2200_57637_2_not_null`: N/A
+- `2200_57637_3_not_null`: N/A
+- `2200_57637_4_not_null`: N/A
+- `2200_57637_6_not_null`: N/A
+- `mdm_merge_history_entity_type_check`: CHECK ((entity_type = ANY (ARRAY['locality'::text, 'builder'::text, 'project'::text, 'property_type'::text, 'amenity'::text])))
+- `mdm_merge_history_reversal_strategy_check`: CHECK ((reversal_strategy = ANY (ARRAY['alias_only'::text, 'requires_rewrite'::text, 'irreversible'::text])))
+
+**PRIMARY KEY:**
+- `mdm_merge_history_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `idx_mdm_merge_executed` | btree | executed_at | — | — | `CREATE INDEX idx_mdm_merge_executed ON public.mdm_merge_history USING btree (executed_at DESC)` |
+| `idx_mdm_merge_source` | btree | source_entity_id, entity_type | — | — | `CREATE INDEX idx_mdm_merge_source ON public.mdm_merge_history USING btree (source_entity_id, entity_type)` |
+| `mdm_merge_history_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX mdm_merge_history_pkey ON public.mdm_merge_history USING btree (id)` |
 
 ---
 

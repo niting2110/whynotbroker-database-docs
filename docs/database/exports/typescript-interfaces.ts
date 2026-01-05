@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-01-04T07:01:56.952Z
+// Generated: 2026-01-05T07:39:13.782Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -832,6 +832,211 @@ export interface Database {
       supply_demand_ratio?: number;
       price_change_percentage?: number;
       month_year?: any;
+    };
+  };
+
+  mdm_aliases: {
+    Row: {
+      id: string;
+      canonical_entity_id: string;
+      canonical_entity_type: string;
+      alias_value: string;
+      alias_language?: string;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      alias_type?: string;
+      alias_confidence?: number;
+      status?: string;
+      retired_reason?: string;
+      retired_at?: string | Date;
+      canonical_resolution_count?: number;
+      last_used_at?: string | Date;
+      created_by?: string;
+      approved_by?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      canonical_entity_type: string;
+      alias_value: string;
+    };
+    Update: {
+      canonical_entity_id?: string;
+      canonical_entity_type?: string;
+      alias_value?: string;
+      alias_language?: string;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      alias_type?: string;
+      alias_confidence?: number;
+      status?: string;
+      retired_reason?: string;
+      retired_at?: any;
+      canonical_resolution_count?: number;
+      last_used_at?: any;
+      created_by?: string;
+      approved_by?: string;
+      updated_at?: any;
+    };
+  };
+
+  mdm_audit_logs: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      admin_email?: string;
+      action: string;
+      entity_id?: string;
+      entity_type?: string;
+      request_id?: string;
+      changes?: any;
+      reason?: string;
+      affected_count?: number;
+      ip_address?: string;
+      user_agent?: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+      action: string;
+    };
+    Update: {
+      admin_id?: string;
+      admin_email?: string;
+      action?: string;
+      entity_id?: string;
+      entity_type?: string;
+      request_id?: string;
+      changes?: any;
+      reason?: string;
+      affected_count?: number;
+      ip_address?: string;
+      user_agent?: string;
+    };
+  };
+
+  mdm_curation_requests: {
+    Row: {
+      id: string;
+      request_type: string;
+      entity_type: string;
+      submitted_value: string;
+      submitted_by?: string;
+      submitted_from?: string;
+      submission_context?: any;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      potential_matches?: any;
+      suggested_canonical_id?: string;
+      suggested_canonical_type?: string;
+      match_confidence?: number;
+      detection_algorithm?: string;
+      lgd_conflict?: boolean;
+      lgd_official_name?: string;
+      lgd_code?: string;
+      rera_conflict?: boolean;
+      rera_official_name?: string;
+      rera_id?: string;
+      geo_conflict?: boolean;
+      geo_conflict_details?: any;
+      impact_score_snapshot?: number;
+      impact_components_snapshot?: any;
+      priority?: string;
+      sla_deadline?: string | Date;
+      sla_hours_assigned?: number;
+      status?: string;
+      escalated_to_service?: string;
+      escalation_reason?: string;
+      resolved_by?: string;
+      resolved_at?: string | Date;
+      resolution_action?: string;
+      resolution_notes?: string;
+      created_alias_id?: string;
+      merged_into_entity_id?: string;
+      merged_into_entity_type?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+    Insert: {
+      request_type: string;
+      entity_type: string;
+      submitted_value: string;
+    };
+    Update: {
+      request_type?: string;
+      entity_type?: string;
+      submitted_value?: string;
+      submitted_by?: string;
+      submitted_from?: string;
+      submission_context?: any;
+      city_id?: string;
+      district_id?: string;
+      state_id?: string;
+      potential_matches?: any;
+      suggested_canonical_id?: string;
+      suggested_canonical_type?: string;
+      match_confidence?: number;
+      detection_algorithm?: string;
+      lgd_conflict?: boolean;
+      lgd_official_name?: string;
+      lgd_code?: string;
+      rera_conflict?: boolean;
+      rera_official_name?: string;
+      rera_id?: string;
+      geo_conflict?: boolean;
+      geo_conflict_details?: any;
+      impact_score_snapshot?: number;
+      impact_components_snapshot?: any;
+      priority?: string;
+      sla_deadline?: any;
+      sla_hours_assigned?: number;
+      status?: string;
+      escalated_to_service?: string;
+      escalation_reason?: string;
+      resolved_by?: string;
+      resolved_at?: any;
+      resolution_action?: string;
+      resolution_notes?: string;
+      created_alias_id?: string;
+      merged_into_entity_id?: string;
+      merged_into_entity_type?: string;
+      updated_at?: any;
+    };
+  };
+
+  mdm_merge_history: {
+    Row: {
+      id: string;
+      source_entity_id: string;
+      target_entity_id: string;
+      entity_type: string;
+      merge_reason?: string;
+      reversal_strategy: string;
+      affected_properties_count?: number;
+      executed_by?: string;
+      executed_at?: string | Date;
+      reversed_at?: string | Date;
+      reversed_by?: string;
+      reversal_notes?: string;
+    };
+    Insert: {
+      entity_type: string;
+      reversal_strategy: string;
+    };
+    Update: {
+      source_entity_id?: string;
+      target_entity_id?: string;
+      entity_type?: string;
+      merge_reason?: string;
+      reversal_strategy?: string;
+      affected_properties_count?: number;
+      executed_by?: string;
+      executed_at?: any;
+      reversed_at?: any;
+      reversed_by?: string;
+      reversal_notes?: string;
     };
   };
 
