@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**  
-> Generated: 2026-01-05T07:39:13.757Z  
-> Schema Hash: `eeee696b48c46e23f51e2302f55e0f5b`
+> Generated: 2026-01-06T07:02:39.226Z  
+> Schema Hash: `6e3e9403cb22695bc38a402435401c4d`
 
 ## 📊 Quick Stats
 - **Total Tables:** 76
@@ -11,7 +11,7 @@
 - **Total Relationships:** 132
 - **Total Size:** 74.09 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 5/1/2026, 1:09:13 pm IST
+- **Last Updated:** 6/1/2026, 12:32:39 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md) (5 minutes)
@@ -51,12 +51,12 @@ This documentation updates:
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~2,648 | 0.65 MB |  |
+| `admin_audit_logs` | 8 | ~2,672 | 0.65 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 8 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.03 MB |  |
 | `admin_notices` | 5 | ~0 | 0.03 MB |  |
-| `admin_roles` | 2 | ~8 | 0.02 MB |  |
+| `admin_roles` | 2 | ~9 | 0.02 MB |  |
 | `admin_users` | 7 | ~5 | 0.73 MB |  |
 | `admins` | 12 | ~13 | 0.09 MB |  |
 | `appointments` | 18 | ~5 | 0.06 MB |  |

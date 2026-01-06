@@ -208,5 +208,20 @@
       "functions": 823,
       "extensions": 11
     }
+  },
+  {
+    "timestamp": "2026-01-06T07:02:39.271Z",
+    "schema_hash": "6e3e9403cb22695bc38a402435401c4d",
+    "statistics": {
+      "tables": 76,
+      "views": 18,
+      "materialized_views": 2,
+      "columns": 1238,
+      "constraints": 670,
+      "indexes": 342,
+      "relationships": 132,
+      "functions": 823,
+      "extensions": 11
+    }
   }
 ]
