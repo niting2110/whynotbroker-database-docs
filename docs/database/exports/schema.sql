@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-01-06T07:02:39.244Z
+-- Generated: 2026-01-07T07:02:03.023Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -35,7 +35,16 @@ CREATE TABLE IF NOT EXISTS admin_leaves (
   reason text,
   backup_admin_id uuid,
   status text DEFAULT 'pending'::text,
-  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
+  leave_type_id uuid,
+  is_half_day boolean DEFAULT false,
+  half_day_period text,
+  emergency_contact text,
+  attachment_urls ARRAY DEFAULT '{}'::text[],
+  handover_notes text,
+  approved_by_id uuid,
+  rejection_reason text,
+  status_log jsonb DEFAULT '[]'::jsonb
   ,PRIMARY KEY (id)
 );
 
@@ -97,7 +106,15 @@ CREATE TABLE IF NOT EXISTS admins (
   last_login_at timestamp with time zone,
   specialization ARRAY,
   assigned_regions ARRAY,
-  assigned_cities ARRAY
+  assigned_cities ARRAY,
+  department text,
+  designation text,
+  employee_id text,
+  joining_date date,
+  profile_photo_url text,
+  reporting_manager_id uuid,
+  profile_data jsonb DEFAULT '{}'::jsonb,
+  is_manager boolean DEFAULT false
   ,PRIMARY KEY (id)
 );
 
@@ -326,6 +343,30 @@ CREATE TABLE IF NOT EXISTS hot_properties (
   became_hot_at timestamp with time zone DEFAULT now(),
   cooled_down_at timestamp with time zone,
   calculated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: leave_balances
+CREATE TABLE IF NOT EXISTS leave_balances (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  leave_type_id uuid,
+  year integer NOT NULL,
+  total_credits numeric DEFAULT 0,
+  used_credits numeric DEFAULT 0
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: leave_types
+CREATE TABLE IF NOT EXISTS leave_types (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  code text NOT NULL,
+  color_code text,
+  max_days integer DEFAULT 12,
+  is_active boolean DEFAULT true
   ,PRIMARY KEY (id)
 );
 
@@ -642,6 +683,20 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 
+-- Table: overtime_records
+CREATE TABLE IF NOT EXISTS overtime_records (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid,
+  date date NOT NULL,
+  hours numeric NOT NULL,
+  reason text,
+  status text DEFAULT 'pending'::text,
+  approved_by uuid,
+  created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+
 -- Table: permissions
 CREATE TABLE IF NOT EXISTS permissions (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -732,10 +787,16 @@ CREATE TABLE IF NOT EXISTS profiles (
   total_inquiries_sent integer DEFAULT 0,
   total_views_received integer DEFAULT 0,
   response_time_hours integer,
-  response_rate numeric
+  response_rate numeric,
+  professional_type text,
+  is_rera_registered boolean DEFAULT false,
+  rera_registration_number text,
+  rera_validity_date date
   ,PRIMARY KEY (id)
 );
 
+COMMENT ON COLUMN profiles.professional_type IS 'For agents: individual broker or part of agency';
+COMMENT ON COLUMN profiles.is_rera_registered IS 'RERA registration status for agents/builders';
 
 -- Table: projects
 CREATE TABLE IF NOT EXISTS projects (
@@ -932,7 +993,18 @@ CREATE TABLE IF NOT EXISTS properties (
   geo_quality_score numeric DEFAULT 0,
   data_freshness_score numeric DEFAULT 100,
   last_verified_at timestamp with time zone,
-  visibility_status text DEFAULT 'public'::text
+  visibility_status text DEFAULT 'public'::text,
+  data_provided_by text,
+  data_confidence_level text DEFAULT 'declared'::text,
+  location_accuracy_level text DEFAULT 'locality_only'::text,
+  site_visit_handler text DEFAULT 'owner'::text,
+  visit_notice_hours integer DEFAULT 24,
+  loan_bank_name text,
+  loan_clearance_status text DEFAULT 'unknown'::text,
+  loan_noc_available boolean DEFAULT false,
+  property_tax_paid_till date,
+  encumbrance_certificate_available boolean DEFAULT false,
+  khata_type text
   ,PRIMARY KEY (id)
 );
 
@@ -972,6 +1044,12 @@ COMMENT ON COLUMN properties.furnishing IS 'Furnishing Status:
 COMMENT ON COLUMN properties.geo_quality_score IS 'Quality of geocoding: 100=verified, 70=auto, 40=pincode-only, 0=none';
 COMMENT ON COLUMN properties.data_freshness_score IS 'Decay score: 100=today, decreases daily';
 COMMENT ON COLUMN properties.visibility_status IS 'Property visibility state in search results';
+COMMENT ON COLUMN properties.data_provided_by IS 'Auto-set from show_property_by via trigger. Trust signal for buyers.';
+COMMENT ON COLUMN properties.data_confidence_level IS 'confirmed=owner/builder (first-party), declared=agent (third-party)';
+COMMENT ON COLUMN properties.location_accuracy_level IS 'exact=pin dropped with place_id, approximate=has lat/lng, locality_only=just locality name';
+COMMENT ON COLUMN properties.site_visit_handler IS 'Who shows the property to buyers';
+COMMENT ON COLUMN properties.visit_notice_hours IS 'Hours notice required for site visit (0-168)';
+COMMENT ON COLUMN properties.khata_type IS 'Karnataka-specific: A=clear title, B=revenue records pending, E=exempted category';
 
 -- Table: property_amenities
 CREATE TABLE IF NOT EXISTS property_amenities (
@@ -1044,10 +1122,13 @@ CREATE TABLE IF NOT EXISTS property_images (
   file_size integer,
   mime_type text,
   uploaded_by uuid,
-  uploaded_at timestamp with time zone DEFAULT now()
+  uploaded_at timestamp with time zone DEFAULT now(),
+  media_status text DEFAULT 'attached'::text,
+  deleted_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 
+COMMENT ON COLUMN property_images.media_status IS 'Simple lifecycle: attached=linked to property, published=live, deleted=soft deleted';
 
 -- Table: property_intelligence_scores
 CREATE TABLE IF NOT EXISTS property_intelligence_scores (

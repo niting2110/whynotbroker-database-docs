@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-01-06T07:02:39.243Z
-Total Issues: 177
-Warnings: 132
-Recommendations: 45
+Generated: 2026-01-07T07:02:03.022Z
+Total Issues: 187
+Warnings: 139
+Recommendations: 48
 
 ## ⚠️ Warnings
 
@@ -12,12 +12,15 @@ Recommendations: 45
 | MEDIUM | `admin_audit_logs` | Foreign key admin_audit_logs_admin_id_fkey has no covering index |
 | MEDIUM | `admin_chat` | Foreign key admin_chat_admin_id_fkey has no covering index |
 | MEDIUM | `admin_leaves` | Foreign key admin_leaves_admin_id_fkey has no covering index |
+| MEDIUM | `admin_leaves` | Foreign key admin_leaves_approved_by_id_fkey has no covering index |
 | MEDIUM | `admin_leaves` | Foreign key admin_leaves_backup_admin_id_fkey has no covering index |
+| MEDIUM | `admin_leaves` | Foreign key admin_leaves_leave_type_id_fkey has no covering index |
 | MEDIUM | `admin_messages` | Foreign key admin_messages_receiver_id_fkey has no covering index |
 | MEDIUM | `admin_messages` | Foreign key admin_messages_sender_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
+| MEDIUM | `admins` | Foreign key admins_reporting_manager_id_fkey has no covering index |
 | MEDIUM | `admins` | Foreign key admins_user_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_buyer_id_fkey has no covering index |
 | MEDIUM | `appointments` | Foreign key appointments_cancelled_by_fkey has no covering index |
@@ -34,6 +37,8 @@ Recommendations: 45
 | MEDIUM | `credit_packages` | Foreign key credit_packages_region_id_fkey has no covering index |
 | MEDIUM | `districts` | Foreign key districts_state_id_fkey has no covering index |
 | MEDIUM | `hot_properties` | Foreign key hot_properties_property_id_fkey has no covering index |
+| MEDIUM | `leave_balances` | Foreign key leave_balances_admin_id_fkey has no covering index |
+| MEDIUM | `leave_balances` | Foreign key leave_balances_leave_type_id_fkey has no covering index |
 | MEDIUM | `loan_calculations` | Foreign key loan_calculations_property_id_fkey has no covering index |
 | MEDIUM | `loan_calculations` | Foreign key loan_calculations_user_id_fkey has no covering index |
 | MEDIUM | `localities` | Foreign key localities_city_id_fkey has no covering index |
@@ -54,6 +59,8 @@ Recommendations: 45
 | MEDIUM | `moderation_history` | Foreign key moderation_history_property_id_fkey has no covering index |
 | MEDIUM | `notification_preferences` | Foreign key notification_preferences_user_id_fkey has no covering index |
 | MEDIUM | `notifications` | Foreign key notifications_user_id_fkey has no covering index |
+| MEDIUM | `overtime_records` | Foreign key overtime_records_admin_id_fkey has no covering index |
+| MEDIUM | `overtime_records` | Foreign key overtime_records_approved_by_fkey has no covering index |
 | MEDIUM | `pincodes` | Foreign key pincodes_city_id_fkey has no covering index |
 | MEDIUM | `pincodes` | Foreign key pincodes_district_id_fkey has no covering index |
 | MEDIUM | `pincodes` | Foreign key pincodes_state_id_fkey has no covering index |
@@ -156,6 +163,8 @@ Recommendations: 45
 | `campaign_participants` | Table missing timestamp columns (created_at, updated_at) |
 | `coupon_usage` | Table missing timestamp columns (created_at, updated_at) |
 | `hot_properties` | Table missing timestamp columns (created_at, updated_at) |
+| `leave_balances` | Table missing timestamp columns (created_at, updated_at) |
+| `leave_types` | Table missing timestamp columns (created_at, updated_at) |
 | `loan_calculations` | Table missing timestamp columns (created_at, updated_at) |
 | `locality_amenities` | Table missing timestamp columns (created_at, updated_at) |
 | `market_trends` | Table missing timestamp columns (created_at, updated_at) |
@@ -163,6 +172,7 @@ Recommendations: 45
 | `mdm_merge_history` | Table missing timestamp columns (created_at, updated_at) |
 | `moderation_history` | Table missing timestamp columns (created_at, updated_at) |
 | `notifications` | Table missing timestamp columns (created_at, updated_at) |
+| `overtime_records` | Table missing timestamp columns (created_at, updated_at) |
 | `permissions` | Table missing timestamp columns (created_at, updated_at) |
 | `pricing_rules` | Table missing timestamp columns (created_at, updated_at) |
 | `property_amenities` | Table missing timestamp columns (created_at, updated_at) |

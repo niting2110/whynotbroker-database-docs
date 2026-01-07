@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 132
-Generated: 2026-01-06T07:02:39.241Z
+Total Relationships: 139
+Generated: 2026-01-07T07:02:03.020Z
 
 ```
 admin_audit_logs:
@@ -15,8 +15,12 @@ admin_chat:
 admin_leaves:
   └─→ admins (via: admin_leaves_admin_id_fkey)
       columns: admin_id
+  └─→ admins (via: admin_leaves_approved_by_id_fkey)
+      columns: approved_by_id
   └─→ admins (via: admin_leaves_backup_admin_id_fkey)
       columns: backup_admin_id
+  └─→ leave_types (via: admin_leaves_leave_type_id_fkey)
+      columns: leave_type_id
 
 admin_messages:
   └─→ admins (via: admin_messages_receiver_id_fkey)
@@ -35,6 +39,8 @@ admin_users:
       columns: id
 
 admins:
+  └─→ admins (via: admins_reporting_manager_id_fkey)
+      columns: reporting_manager_id
   └─→ profiles (via: admins_user_id_fkey)
       columns: user_id
 
@@ -85,6 +91,12 @@ districts:
 hot_properties:
   └─→ properties (via: hot_properties_property_id_fkey)
       columns: property_id
+
+leave_balances:
+  └─→ admins (via: leave_balances_admin_id_fkey)
+      columns: admin_id
+  └─→ leave_types (via: leave_balances_leave_type_id_fkey)
+      columns: leave_type_id
 
 loan_calculations:
   └─→ properties (via: loan_calculations_property_id_fkey)
@@ -143,6 +155,12 @@ notification_preferences:
 notifications:
   └─→ profiles (via: notifications_user_id_fkey)
       columns: user_id
+
+overtime_records:
+  └─→ admins (via: overtime_records_admin_id_fkey)
+      columns: admin_id
+  └─→ admins (via: overtime_records_approved_by_fkey)
+      columns: approved_by
 
 pincodes:
   └─→ cities (via: pincodes_city_id_fkey)

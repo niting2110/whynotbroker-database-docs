@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-06T07:02:39.231Z
-> **Total Tables:** 76
+> Auto-generated on: 2026-01-07T07:02:03.010Z
+> **Total Tables:** 79
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~2,672
+- Rows: ~3,008
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -110,9 +110,9 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~0
-- Columns: 8
+- Columns: 17
 - Indexes: 1
-- Foreign Keys: 2
+- Foreign Keys: 4
 - Triggers: 0
 
 ### Columns
@@ -127,6 +127,15 @@ This document details the live schema of the production Supabase database. All A
 | `backup_admin_id` | `uuid` | YES | `—` | — |
 | `status` | `text` | YES | `'pending'::text` | — |
 | `created_at` | `timestamp with time zone` | YES | `timezone('utc'::text, now())` | — |
+| `leave_type_id` | `uuid` | YES | `—` | — |
+| `is_half_day` | `boolean` | YES | `false` | — |
+| `half_day_period` | `text` | YES | `—` | — |
+| `emergency_contact` | `text` | YES | `—` | — |
+| `attachment_urls` | `ARRAY` | YES | `'{}'::text[]` | — |
+| `handover_notes` | `text` | YES | `—` | — |
+| `approved_by_id` | `uuid` | YES | `—` | — |
+| `rejection_reason` | `text` | YES | `—` | — |
+| `status_log` | `jsonb` | YES | `'[]'::jsonb` | — |
 
 ### Constraints
 
@@ -134,11 +143,14 @@ This document details the live schema of the production Supabase database. All A
 - `2200_42112_1_not_null`: N/A
 - `2200_42112_3_not_null`: N/A
 - `2200_42112_4_not_null`: N/A
+- `admin_leaves_half_day_period_check`: CHECK ((half_day_period = ANY (ARRAY['first_half'::text, 'second_half'::text])))
 - `admin_leaves_status_check`: CHECK ((status = ANY (ARRAY['pending'::text, 'approved'::text, 'rejected'::text])))
 
 **FOREIGN KEY:**
 - `admin_leaves_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `admin_leaves_approved_by_id_fkey`: FOREIGN KEY (approved_by_id) REFERENCES admins(id)
 - `admin_leaves_backup_admin_id_fkey`: FOREIGN KEY (backup_admin_id) REFERENCES admins(id)
+- `admin_leaves_leave_type_id_fkey`: FOREIGN KEY (leave_type_id) REFERENCES leave_types(id)
 
 **PRIMARY KEY:**
 - `admin_leaves_pkey`: PRIMARY KEY (id)
@@ -155,8 +167,16 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `admin_id` → `admins(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+- `admin_leaves_approved_by_id_fkey`:
+  - Columns: `approved_by_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `admin_leaves_backup_admin_id_fkey`:
   - Columns: `backup_admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `admin_leaves_leave_type_id_fkey`:
+  - Columns: `leave_type_id` → `leave_types(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
 
@@ -368,9 +388,9 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~13
-- Columns: 12
+- Columns: 20
 - Indexes: 3
-- Foreign Keys: 1
+- Foreign Keys: 2
 - Triggers: 1
 
 ### Columns
@@ -389,6 +409,14 @@ This document details the live schema of the production Supabase database. All A
 | `specialization` | `ARRAY` | YES | `—` | — |
 | `assigned_regions` | `ARRAY` | YES | `—` | — |
 | `assigned_cities` | `ARRAY` | YES | `—` | — |
+| `department` | `text` | YES | `—` | — |
+| `designation` | `text` | YES | `—` | — |
+| `employee_id` | `text` | YES | `—` | — |
+| `joining_date` | `date` | YES | `—` | — |
+| `profile_photo_url` | `text` | YES | `—` | — |
+| `reporting_manager_id` | `uuid` | YES | `—` | — |
+| `profile_data` | `jsonb` | YES | `'{}'::jsonb` | — |
+| `is_manager` | `boolean` | YES | `false` | — |
 
 ### Constraints
 
@@ -401,6 +429,7 @@ This document details the live schema of the production Supabase database. All A
 - `2200_39693_6_not_null`: N/A
 
 **FOREIGN KEY:**
+- `admins_reporting_manager_id_fkey`: FOREIGN KEY (reporting_manager_id) REFERENCES admins(id)
 - `admins_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
 
 **PRIMARY KEY:**
@@ -420,6 +449,10 @@ This document details the live schema of the production Supabase database. All A
 
 ### Foreign Keys
 
+- `admins_reporting_manager_id_fkey`:
+  - Columns: `reporting_manager_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `admins_user_id_fkey`:
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
@@ -1226,6 +1259,102 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `property_id` → `properties(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `leave_balances`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 6
+- Indexes: 2
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `leave_type_id` | `uuid` | YES | `—` | — |
+| `year` | `integer` | NO | `—` | — |
+| `total_credits` | `numeric` | YES | `0` | — |
+| `used_credits` | `numeric` | YES | `0` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_59940_1_not_null`: N/A
+- `2200_59940_4_not_null`: N/A
+
+**FOREIGN KEY:**
+- `leave_balances_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `leave_balances_leave_type_id_fkey`: FOREIGN KEY (leave_type_id) REFERENCES leave_types(id)
+
+**PRIMARY KEY:**
+- `leave_balances_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `leave_balances_admin_id_leave_type_id_year_key`: UNIQUE (admin_id, leave_type_id, year)
+- `leave_balances_admin_id_leave_type_id_year_key`: UNIQUE (admin_id, leave_type_id, year)
+- `leave_balances_admin_id_leave_type_id_year_key`: UNIQUE (admin_id, leave_type_id, year)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `leave_balances_admin_id_leave_type_id_year_key` | btree | admin_id, leave_type_id, year | ✓ | — | `CREATE UNIQUE INDEX leave_balances_admin_id_leave_type_id_year_key ON public.leave_balances USING btree (admin_id, leave_type_id, year)` |
+| `leave_balances_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX leave_balances_pkey ON public.leave_balances USING btree (id)` |
+
+### Foreign Keys
+
+- `leave_balances_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `leave_balances_leave_type_id_fkey`:
+  - Columns: `leave_type_id` → `leave_types(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `leave_types`
+
+**Statistics:**
+- Rows: ~3
+- Columns: 6
+- Indexes: 1
+- Foreign Keys: 0
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `name` | `text` | NO | `—` | — |
+| `code` | `text` | NO | `—` | — |
+| `color_code` | `text` | YES | `—` | — |
+| `max_days` | `integer` | YES | `12` | — |
+| `is_active` | `boolean` | YES | `true` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_59930_1_not_null`: N/A
+- `2200_59930_2_not_null`: N/A
+- `2200_59930_3_not_null`: N/A
+
+**PRIMARY KEY:**
+- `leave_types_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `leave_types_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX leave_types_pkey ON public.leave_types USING btree (id)` |
 
 ---
 
@@ -2184,6 +2313,61 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `overtime_records`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 2
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | YES | `—` | — |
+| `date` | `date` | NO | `—` | — |
+| `hours` | `numeric` | NO | `—` | — |
+| `reason` | `text` | YES | `—` | — |
+| `status` | `text` | YES | `'pending'::text` | — |
+| `approved_by` | `uuid` | YES | `—` | — |
+| `created_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_59960_1_not_null`: N/A
+- `2200_59960_3_not_null`: N/A
+- `2200_59960_4_not_null`: N/A
+
+**FOREIGN KEY:**
+- `overtime_records_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `overtime_records_approved_by_fkey`: FOREIGN KEY (approved_by) REFERENCES admins(id)
+
+**PRIMARY KEY:**
+- `overtime_records_pkey`: PRIMARY KEY (id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `overtime_records_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX overtime_records_pkey ON public.overtime_records USING btree (id)` |
+
+### Foreign Keys
+
+- `overtime_records_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `overtime_records_approved_by_fkey`:
+  - Columns: `approved_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
 ## `permissions`
 
 **Statistics:**
@@ -2405,8 +2589,8 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~14
-- Columns: 42
-- Indexes: 3
+- Columns: 46
+- Indexes: 4
 - Foreign Keys: 0
 - Triggers: 2
 
@@ -2456,6 +2640,10 @@ This document details the live schema of the production Supabase database. All A
 | `total_views_received` | `integer` | YES | `0` | — |
 | `response_time_hours` | `integer` | YES | `—` | — |
 | `response_rate` | `numeric` | YES | `—` | — |
+| `professional_type` | `text` | YES | `—` | "For agents: individual broker or part of agency" |
+| `is_rera_registered` | `boolean` | YES | `false` | "RERA registration status for agents/builders" |
+| `rera_registration_number` | `text` | YES | `—` | — |
+| `rera_validity_date` | `date` | YES | `—` | — |
 
 ### Constraints
 
@@ -2463,6 +2651,7 @@ This document details the live schema of the production Supabase database. All A
 - `2200_18686_1_not_null`: N/A
 - `profiles_account_status_check`: CHECK ((account_status = ANY (ARRAY['active'::text, 'suspended'::text, 'inactive'::text])))
 - `profiles_kyc_status_check`: CHECK ((kyc_status = ANY (ARRAY['not_submitted'::text, 'pending'::text, 'verified'::text, 'rejected'::text])))
+- `profiles_professional_type_check`: CHECK ((professional_type = ANY (ARRAY['individual'::text, 'agency'::text])))
 - `profiles_role_check`: CHECK ((role = ANY (ARRAY['user'::text, 'admin'::text, 'staff'::text])))
 - `profiles_user_type_check`: CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'admin'::text])))
 
@@ -2477,6 +2666,7 @@ This document details the live schema of the production Supabase database. All A
 
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
+| `idx_profiles_rera` | btree | rera_registration_number | — | — | `CREATE INDEX idx_profiles_rera ON public.profiles USING btree (rera_registration_number) WHERE (is_rera_registered = true)` |
 | `profiles_email_key` | btree | email | ✓ | — | `CREATE UNIQUE INDEX profiles_email_key ON public.profiles USING btree (email)` |
 | `profiles_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)` |
 | `profiles_username_key` | btree | username | ✓ | — | `CREATE UNIQUE INDEX profiles_username_key ON public.profiles USING btree (username)` |
@@ -2711,10 +2901,10 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~5
-- Columns: 124
-- Indexes: 37
+- Columns: 135
+- Indexes: 39
 - Foreign Keys: 11
-- Triggers: 11
+- Triggers: 15
 
 ### Columns
 
@@ -2872,6 +3062,17 @@ This document details the live schema of the production Supabase database. All A
 | `data_freshness_score` | `numeric` | YES | `100` | "Decay score: 100=today, decreases daily" |
 | `last_verified_at` | `timestamp with time zone` | YES | `—` | — |
 | `visibility_status` | `text` | YES | `'public'::text` | "Property visibility state in search results" |
+| `data_provided_by` | `text` | YES | `—` | "Auto-set from show_property_by via trigger. Trust signal for buyers." |
+| `data_confidence_level` | `text` | YES | `'declared'::text` | "confirmed=owner/builder (first-party), declared=agent (third-party)" |
+| `location_accuracy_level` | `text` | YES | `'locality_only'::text` | "exact=pin dropped with place_id, approximate=has lat/lng, locality_only=just locality name" |
+| `site_visit_handler` | `text` | YES | `'owner'::text` | "Who shows the property to buyers" |
+| `visit_notice_hours` | `integer` | YES | `24` | "Hours notice required for site visit (0-168)" |
+| `loan_bank_name` | `text` | YES | `—` | — |
+| `loan_clearance_status` | `text` | YES | `'unknown'::text` | — |
+| `loan_noc_available` | `boolean` | YES | `false` | — |
+| `property_tax_paid_till` | `date` | YES | `—` | — |
+| `encumbrance_certificate_available` | `boolean` | YES | `false` | — |
+| `khata_type` | `text` | YES | `—` | "Karnataka-specific: A=clear title, B=revenue records pending, E=exempted category" |
 
 ### Constraints
 
@@ -2893,18 +3094,25 @@ This document details the live schema of the production Supabase database. All A
 - `geo_quality_score_range`: CHECK (((geo_quality_score >= (0)::numeric) AND (geo_quality_score <= (100)::numeric)))
 - `properties_area_unit_check`: CHECK ((area_unit = ANY (ARRAY['sqft'::text, 'sqm'::text, 'acre'::text, 'hectare'::text, 'gunta'::text, 'marla'::text, 'bigha'::text])))
 - `properties_availability_schedule_check`: CHECK ((availability_schedule = ANY (ARRAY['everyday'::text, 'weekdays'::text, 'weekends'::text, 'custom'::text])))
+- `properties_data_confidence_level_check`: CHECK ((data_confidence_level = ANY (ARRAY['confirmed'::text, 'declared'::text, 'unverified'::text])))
+- `properties_data_provided_by_check`: CHECK ((data_provided_by = ANY (ARRAY['owner'::text, 'agent'::text, 'broker'::text, 'builder'::text, 'representative'::text])))
 - `properties_electricity_backup_check`: CHECK ((electricity_backup = ANY (ARRAY['none'::text, 'partial'::text, 'full'::text, 'solar'::text])))
 - `properties_facing_check`: CHECK ((facing = ANY (ARRAY['north'::text, 'south'::text, 'east'::text, 'west'::text, 'northeast'::text, 'northwest'::text, 'southeast'::text, 'southwest'::text, 'north-east'::text, 'north-west'::text, 'south-east'::text, 'south-west'::text])))
 - `properties_floor_type_check`: CHECK ((floor_type = ANY (ARRAY['ground'::text, 'first'::text, 'second'::text, 'third'::text, 'higher'::text, 'penthouse'::text, 'basement'::text])))
 - `properties_furnishing_check`: CHECK ((furnishing = ANY (ARRAY['unfurnished'::text, 'semi_furnished'::text, 'fully_furnished'::text])))
+- `properties_khata_type_check`: CHECK ((khata_type = ANY (ARRAY['A'::text, 'B'::text, 'E'::text, 'NA'::text, 'unknown'::text])))
 - `properties_kitchen_type_check`: CHECK ((kitchen_type = ANY (ARRAY['modular'::text, 'semi_modular'::text, 'open'::text, 'closed'::text])))
 - `properties_listing_type_check`: CHECK ((listing_type = ANY (ARRAY['sale'::text, 'rent'::text, 'lease'::text, 'pg'::text, 'hostel'::text, 'flatmate'::text])))
+- `properties_loan_clearance_status_check`: CHECK ((loan_clearance_status = ANY (ARRAY['cleared'::text, 'pending'::text, 'unknown'::text, 'not_applicable'::text])))
+- `properties_location_accuracy_level_check`: CHECK ((location_accuracy_level = ANY (ARRAY['exact'::text, 'approximate'::text, 'locality_only'::text])))
 - `properties_moderation_state_check`: CHECK ((moderation_state = ANY (ARRAY['not_submitted'::text, 'pending'::text, 'under_review'::text, 'approved'::text, 'rejected'::text, 'changes_requested'::text])))
 - `properties_ownership_type_check`: CHECK ((ownership_type = ANY (ARRAY['freehold'::text, 'leasehold'::text, 'cooperative'::text, 'power_of_attorney'::text, 'joint'::text])))
 - `properties_possession_status_check`: CHECK ((possession_status = ANY (ARRAY['immediate'::text, 'within_3months'::text, 'within_6months'::text, 'under_construction'::text])))
 - `properties_property_age_check`: CHECK ((property_age = ANY (ARRAY['under_construction'::text, '0-1'::text, '1-5'::text, '5-10'::text, '10-20'::text, '20+'::text, 'new_launch'::text])))
 - `properties_show_property_by_check`: CHECK ((show_property_by = ANY (ARRAY['owner'::text, 'agent'::text, 'broker'::text, 'builder'::text, 'representative'::text])))
+- `properties_site_visit_handler_check`: CHECK ((site_visit_handler = ANY (ARRAY['owner'::text, 'agent'::text, 'security'::text, 'representative'::text, 'tenant'::text])))
 - `properties_visibility_status_check`: CHECK ((visibility_status = ANY (ARRAY['public'::text, 'hidden_by_user'::text, 'hidden_by_admin'::text, 'expired'::text, 'flagged'::text, 'legal_hold'::text])))
+- `properties_visit_notice_hours_check`: CHECK (((visit_notice_hours >= 0) AND (visit_notice_hours <= 168)))
 - `properties_water_supply_check`: CHECK ((water_supply = ANY (ARRAY['municipal'::text, 'borewell'::text, 'both'::text])))
 - `property_type_check`: CHECK ((property_type = ANY (ARRAY['apartment'::text, 'house'::text, 'villa'::text, 'commercial'::text, 'land'::text, 'farm'::text, 'pg'::text, 'hostel'::text])))
 - `status_check`: CHECK ((status = ANY (ARRAY['draft'::text, 'pending'::text, 'published'::text, 'sold'::text, 'rented'::text])))
@@ -2953,9 +3161,11 @@ This document details the live schema of the production Supabase database. All A
 | `idx_properties_freshness` | btree | data_freshness_score | — | — | `CREATE INDEX idx_properties_freshness ON public.properties USING btree (data_freshness_score DESC)` |
 | `idx_properties_geo_point` | gist | geo_point | — | — | `CREATE INDEX idx_properties_geo_point ON public.properties USING gist (geo_point)` |
 | `idx_properties_geo_quality` | btree | geo_quality_score | — | — | `CREATE INDEX idx_properties_geo_quality ON public.properties USING btree (geo_quality_score DESC)` |
+| `idx_properties_khata` | btree | khata_type | — | — | `CREATE INDEX idx_properties_khata ON public.properties USING btree (khata_type) WHERE ((khata_type IS NOT NULL) AND (khata_type <> 'unknown'::text))` |
 | `idx_properties_last_verified` | btree | last_verified_at | — | — | `CREATE INDEX idx_properties_last_verified ON public.properties USING btree (last_verified_at DESC NULLS LAST)` |
 | `idx_properties_listing_type` | btree | listing_type | — | — | `CREATE INDEX idx_properties_listing_type ON public.properties USING btree (listing_type)` |
 | `idx_properties_locality` | btree | locality_id | — | — | `CREATE INDEX idx_properties_locality ON public.properties USING btree (locality_id)` |
+| `idx_properties_location_accuracy` | btree | location_accuracy_level | — | — | `CREATE INDEX idx_properties_location_accuracy ON public.properties USING btree (location_accuracy_level) WHERE (status = 'published'::text)` |
 | `idx_properties_pid` | btree | pid | — | — | `CREATE INDEX idx_properties_pid ON public.properties USING btree (pid)` |
 | `idx_properties_pincode_fk` | btree | pincode_fk | — | — | `CREATE INDEX idx_properties_pincode_fk ON public.properties USING btree (pincode_fk)` |
 | `idx_properties_price` | btree | price | — | — | `CREATE INDEX idx_properties_price ON public.properties USING btree (price)` |
@@ -3051,6 +3261,30 @@ This document details the live schema of the production Supabase database. All A
   - Definition:
 ```sql
   EXECUTE FUNCTION log_price_change()
+```
+- `trigger_set_data_provenance`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION set_data_provenance()
+```
+- `trigger_set_data_provenance`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION set_data_provenance()
+```
+- `trigger_set_location_accuracy`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION set_location_accuracy()
+```
+- `trigger_set_location_accuracy`:
+  - When: BEFORE UPDATE
+  - Definition:
+```sql
+  EXECUTE FUNCTION set_location_accuracy()
 ```
 - `trigger_update_locality_counts`:
   - When: AFTER INSERT
@@ -3338,10 +3572,10 @@ This document details the live schema of the production Supabase database. All A
 
 **Statistics:**
 - Rows: ~8
-- Columns: 13
+- Columns: 15
 - Indexes: 6
 - Foreign Keys: 2
-- Triggers: 0
+- Triggers: 1
 
 ### Columns
 
@@ -3360,6 +3594,8 @@ This document details the live schema of the production Supabase database. All A
 | `mime_type` | `text` | YES | `—` | — |
 | `uploaded_by` | `uuid` | YES | `—` | — |
 | `uploaded_at` | `timestamp with time zone` | YES | `now()` | — |
+| `media_status` | `text` | YES | `'attached'::text` | "Simple lifecycle: attached=linked to property, published=live, deleted=soft deleted" |
+| `deleted_at` | `timestamp with time zone` | YES | `—` | — |
 
 ### Constraints
 
@@ -3367,6 +3603,7 @@ This document details the live schema of the production Supabase database. All A
 - `2200_18866_1_not_null`: N/A
 - `2200_18866_2_not_null`: N/A
 - `2200_18866_3_not_null`: N/A
+- `property_images_media_status_check`: CHECK ((media_status = ANY (ARRAY['attached'::text, 'published'::text, 'deleted'::text])))
 
 **FOREIGN KEY:**
 - `property_images_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
@@ -3400,6 +3637,15 @@ This document details the live schema of the production Supabase database. All A
   - Columns: `uploaded_by` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+
+### Triggers
+
+- `trigger_ensure_primary_image`:
+  - When: BEFORE INSERT
+  - Definition:
+```sql
+  EXECUTE FUNCTION ensure_primary_image()
+```
 
 ---
 

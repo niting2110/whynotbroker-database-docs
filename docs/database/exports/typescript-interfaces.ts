@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-01-06T07:02:39.262Z
+// Generated: 2026-01-07T07:02:03.044Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -54,6 +54,15 @@ export interface Database {
       backup_admin_id?: string;
       status?: string;
       created_at?: string | Date;
+      leave_type_id?: string;
+      is_half_day?: boolean;
+      half_day_period?: string;
+      emergency_contact?: string;
+      attachment_urls?: any;
+      handover_notes?: string;
+      approved_by_id?: string;
+      rejection_reason?: string;
+      status_log?: any;
     };
     Insert: {
       start_date: any;
@@ -66,6 +75,15 @@ export interface Database {
       reason?: string;
       backup_admin_id?: string;
       status?: string;
+      leave_type_id?: string;
+      is_half_day?: boolean;
+      half_day_period?: string;
+      emergency_contact?: string;
+      attachment_urls?: any;
+      handover_notes?: string;
+      approved_by_id?: string;
+      rejection_reason?: string;
+      status_log?: any;
     };
   };
 
@@ -156,6 +174,14 @@ export interface Database {
       specialization?: any;
       assigned_regions?: any;
       assigned_cities?: any;
+      department?: string;
+      designation?: string;
+      employee_id?: string;
+      joining_date?: string | Date;
+      profile_photo_url?: string;
+      reporting_manager_id?: string;
+      profile_data?: any;
+      is_manager?: boolean;
     };
     Insert: {
       email: string;
@@ -171,6 +197,14 @@ export interface Database {
       specialization?: any;
       assigned_regions?: any;
       assigned_cities?: any;
+      department?: string;
+      designation?: string;
+      employee_id?: string;
+      joining_date?: any;
+      profile_photo_url?: string;
+      reporting_manager_id?: string;
+      profile_data?: any;
+      is_manager?: boolean;
     };
   };
 
@@ -598,6 +632,49 @@ export interface Database {
       became_hot_at?: any;
       cooled_down_at?: any;
       calculated_at?: any;
+    };
+  };
+
+  leave_balances: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      leave_type_id?: string;
+      year: number;
+      total_credits?: number;
+      used_credits?: number;
+    };
+    Insert: {
+      year: number;
+    };
+    Update: {
+      admin_id?: string;
+      leave_type_id?: string;
+      year?: number;
+      total_credits?: number;
+      used_credits?: number;
+    };
+  };
+
+  leave_types: {
+    Row: {
+      id: string;
+      name: string;
+      code: string;
+      color_code?: string;
+      max_days?: number;
+      is_active?: boolean;
+    };
+    Insert: {
+      name: string;
+      code: string;
+    };
+    Update: {
+      name?: string;
+      code?: string;
+      color_code?: string;
+      max_days?: number;
+      is_active?: boolean;
     };
   };
 
@@ -1182,6 +1259,31 @@ export interface Database {
     };
   };
 
+  overtime_records: {
+    Row: {
+      id: string;
+      admin_id?: string;
+      date: string | Date;
+      hours: number;
+      reason?: string;
+      status?: string;
+      approved_by?: string;
+      created_at?: string | Date;
+    };
+    Insert: {
+      date: any;
+      hours: number;
+    };
+    Update: {
+      admin_id?: string;
+      date?: any;
+      hours?: number;
+      reason?: string;
+      status?: string;
+      approved_by?: string;
+    };
+  };
+
   permissions: {
     Row: {
       id: string;
@@ -1314,6 +1416,10 @@ export interface Database {
       total_views_received?: number;
       response_time_hours?: number;
       response_rate?: number;
+      professional_type?: string;
+      is_rera_registered?: boolean;
+      rera_registration_number?: string;
+      rera_validity_date?: string | Date;
     };
     Insert: {
     };
@@ -1358,6 +1464,10 @@ export interface Database {
       total_views_received?: number;
       response_time_hours?: number;
       response_rate?: number;
+      professional_type?: string;
+      is_rera_registered?: boolean;
+      rera_registration_number?: string;
+      rera_validity_date?: any;
     };
   };
 
@@ -1622,6 +1732,17 @@ export interface Database {
       data_freshness_score?: number;
       last_verified_at?: string | Date;
       visibility_status?: string;
+      data_provided_by?: string;
+      data_confidence_level?: string;
+      location_accuracy_level?: string;
+      site_visit_handler?: string;
+      visit_notice_hours?: number;
+      loan_bank_name?: string;
+      loan_clearance_status?: string;
+      loan_noc_available?: boolean;
+      property_tax_paid_till?: string | Date;
+      encumbrance_certificate_available?: boolean;
+      khata_type?: string;
     };
     Insert: {
       title: string;
@@ -1754,6 +1875,17 @@ export interface Database {
       data_freshness_score?: number;
       last_verified_at?: any;
       visibility_status?: string;
+      data_provided_by?: string;
+      data_confidence_level?: string;
+      location_accuracy_level?: string;
+      site_visit_handler?: string;
+      visit_notice_hours?: number;
+      loan_bank_name?: string;
+      loan_clearance_status?: string;
+      loan_noc_available?: boolean;
+      property_tax_paid_till?: any;
+      encumbrance_certificate_available?: boolean;
+      khata_type?: string;
     };
   };
 
@@ -1875,6 +2007,8 @@ export interface Database {
       mime_type?: string;
       uploaded_by?: string;
       uploaded_at?: string | Date;
+      media_status?: string;
+      deleted_at?: string | Date;
     };
     Insert: {
       image_url: string;
@@ -1892,6 +2026,8 @@ export interface Database {
       mime_type?: string;
       uploaded_by?: string;
       uploaded_at?: any;
+      media_status?: string;
+      deleted_at?: any;
     };
   };
 

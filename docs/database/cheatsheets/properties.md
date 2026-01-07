@@ -84,9 +84,11 @@ WHERE id = 'property-uuid';
 - `idx_properties_freshness`: data_freshness_score
 - `idx_properties_geo_point`: geo_point
 - `idx_properties_geo_quality`: geo_quality_score
+- `idx_properties_khata`: khata_type
 - `idx_properties_last_verified`: last_verified_at
 - `idx_properties_listing_type`: listing_type
 - `idx_properties_locality`: locality_id
+- `idx_properties_location_accuracy`: location_accuracy_level
 - `idx_properties_pid`: pid
 - `idx_properties_pincode_fk`: pincode_fk
 - `idx_properties_price`: price

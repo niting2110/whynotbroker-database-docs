@@ -4,12 +4,12 @@
 You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKER database. Use this schema information to answer questions and write queries.
 
 ## Database Schema Summary
-**Total Tables:** 76
+**Total Tables:** 79
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
-- properties (124 columns)
-- profiles (42 columns)
+- properties (135 columns)
+- profiles (46 columns)
 - property_intelligence_scores (41 columns)
 - mdm_curation_requests (40 columns)
 - projects (39 columns)
@@ -26,6 +26,7 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - property_leads (21 columns)
 - messages (21 columns)
 - property_repeat_views (21 columns)
+- admins (20 columns)
 - subscription_plans (19 columns)
 - promotional_campaigns (19 columns)
 - mdm_aliases (19 columns)
@@ -33,17 +34,17 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - blog_posts (17 columns)
 - credit_packages (17 columns)
 - user_ratings (17 columns)
+- admin_leaves (17 columns)
 - market_trends (16 columns)
 - regions (15 columns)
+- property_images (15 columns)
 - cities (14 columns)
 - pricing_rules (14 columns)
-- property_images (13 columns)
 - mdm_audit_logs (13 columns)
 - subscription_enrollments (13 columns)
 - property_verifications (13 columns)
 - loan_calculations (13 columns)
 - notification_preferences (13 columns)
-- admins (12 columns)
 - property_documents (12 columns)
 - referrals (12 columns)
 - mdm_merge_history (12 columns)
@@ -65,7 +66,7 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - admin_audit_logs (8 columns)
 - user_regional_preferences (8 columns)
 - search_history (8 columns)
-- admin_leaves (8 columns)
+- overtime_records (8 columns)
 - admin_users (7 columns)
 - states (7 columns)
 - property_amenities (7 columns)
@@ -74,8 +75,10 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - sub_districts (7 columns)
 - system_health_metrics (6 columns)
 - admin_messages (6 columns)
+- leave_types (6 columns)
 - property_comparisons (6 columns)
 - property_shares (6 columns)
+- leave_balances (6 columns)
 - spatial_ref_sys (5 columns)
 - permissions (5 columns)
 - admin_notices (5 columns)

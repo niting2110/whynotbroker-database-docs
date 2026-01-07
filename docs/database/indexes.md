@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-01-06T07:02:39.241Z
-Total Indexes: 342
+Generated: 2026-01-07T07:02:03.020Z
+Total Indexes: 349
 
 ## All Indexes
 
@@ -68,6 +68,9 @@ Total Indexes: 342
 | `hot_properties` | `idx_hot_properties_property` | btree | property_id | — | `CREATE INDEX idx_hot_properties_property ON public.hot_properties USING btree (property_id)` |
 | `hot_properties` | `idx_hot_properties_score` | btree | heat_score | — | `CREATE INDEX idx_hot_properties_score ON public.hot_properties USING btree (heat_score DESC) WHERE (is_currently_hot = true)` |
 | `hot_properties` | `idx_hot_properties_trend` | btree | heat_trend | — | `CREATE INDEX idx_hot_properties_trend ON public.hot_properties USING btree (heat_trend)` |
+| `leave_balances` | `leave_balances_admin_id_leave_type_id_year_key` | btree | admin_id, leave_type_id, year | ✓ | `CREATE UNIQUE INDEX leave_balances_admin_id_leave_type_id_year_key ON public.leave_balances USING btree (admin_id, leave_type_id, year)` |
+| `leave_balances` | `leave_balances_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX leave_balances_pkey ON public.leave_balances USING btree (id)` |
+| `leave_types` | `leave_types_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX leave_types_pkey ON public.leave_types USING btree (id)` |
 | `loan_calculations` | `idx_loan_calculations_user` | btree | user_id | — | `CREATE INDEX idx_loan_calculations_user ON public.loan_calculations USING btree (user_id)` |
 | `loan_calculations` | `loan_calculations_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX loan_calculations_pkey ON public.loan_calculations USING btree (id)` |
 | `localities` | `idx_localities_city_new` | btree | city_id | — | `CREATE INDEX idx_localities_city_new ON public.localities USING btree (city_id)` |
@@ -129,6 +132,7 @@ Total Indexes: 342
 | `notification_preferences` | `notification_preferences_pkey` | btree | user_id | ✓ | `CREATE UNIQUE INDEX notification_preferences_pkey ON public.notification_preferences USING btree (user_id)` |
 | `notifications` | `idx_notifications_user_unread` | btree | user_id, is_read | — | `CREATE INDEX idx_notifications_user_unread ON public.notifications USING btree (user_id, is_read) WHERE (is_read = false)` |
 | `notifications` | `notifications_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX notifications_pkey ON public.notifications USING btree (id)` |
+| `overtime_records` | `overtime_records_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX overtime_records_pkey ON public.overtime_records USING btree (id)` |
 | `permissions` | `permission_unique` | btree | domain, action, scope | ✓ | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
 | `permissions` | `permissions_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
 | `permissions` | `permissions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
@@ -141,6 +145,7 @@ Total Indexes: 342
 | `pricing_rules` | `idx_pricing_rules_effective` | btree | effective_from, effective_until | — | `CREATE INDEX idx_pricing_rules_effective ON public.pricing_rules USING btree (effective_from, effective_until)` |
 | `pricing_rules` | `idx_pricing_rules_region_action` | btree | action, region_id, is_active | — | `CREATE INDEX idx_pricing_rules_region_action ON public.pricing_rules USING btree (region_id, action, is_active)` |
 | `pricing_rules` | `pricing_rules_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX pricing_rules_pkey ON public.pricing_rules USING btree (id)` |
+| `profiles` | `idx_profiles_rera` | btree | rera_registration_number | — | `CREATE INDEX idx_profiles_rera ON public.profiles USING btree (rera_registration_number) WHERE (is_rera_registered = true)` |
 | `profiles` | `profiles_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX profiles_email_key ON public.profiles USING btree (email)` |
 | `profiles` | `profiles_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)` |
 | `profiles` | `profiles_username_key` | btree | username | ✓ | `CREATE UNIQUE INDEX profiles_username_key ON public.profiles USING btree (username)` |
@@ -175,9 +180,11 @@ Total Indexes: 342
 | `properties` | `idx_properties_freshness` | btree | data_freshness_score | — | `CREATE INDEX idx_properties_freshness ON public.properties USING btree (data_freshness_score DESC)` |
 | `properties` | `idx_properties_geo_point` | gist | geo_point | — | `CREATE INDEX idx_properties_geo_point ON public.properties USING gist (geo_point)` |
 | `properties` | `idx_properties_geo_quality` | btree | geo_quality_score | — | `CREATE INDEX idx_properties_geo_quality ON public.properties USING btree (geo_quality_score DESC)` |
+| `properties` | `idx_properties_khata` | btree | khata_type | — | `CREATE INDEX idx_properties_khata ON public.properties USING btree (khata_type) WHERE ((khata_type IS NOT NULL) AND (khata_type <> 'unknown'::text))` |
 | `properties` | `idx_properties_last_verified` | btree | last_verified_at | — | `CREATE INDEX idx_properties_last_verified ON public.properties USING btree (last_verified_at DESC NULLS LAST)` |
 | `properties` | `idx_properties_listing_type` | btree | listing_type | — | `CREATE INDEX idx_properties_listing_type ON public.properties USING btree (listing_type)` |
 | `properties` | `idx_properties_locality` | btree | locality_id | — | `CREATE INDEX idx_properties_locality ON public.properties USING btree (locality_id)` |
+| `properties` | `idx_properties_location_accuracy` | btree | location_accuracy_level | — | `CREATE INDEX idx_properties_location_accuracy ON public.properties USING btree (location_accuracy_level) WHERE (status = 'published'::text)` |
 | `properties` | `idx_properties_pid` | btree | pid | — | `CREATE INDEX idx_properties_pid ON public.properties USING btree (pid)` |
 | `properties` | `idx_properties_pincode_fk` | btree | pincode_fk | — | `CREATE INDEX idx_properties_pincode_fk ON public.properties USING btree (pincode_fk)` |
 | `properties` | `idx_properties_price` | btree | price | — | `CREATE INDEX idx_properties_price ON public.properties USING btree (price)` |
