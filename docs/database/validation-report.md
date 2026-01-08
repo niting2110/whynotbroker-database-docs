@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-01-07T07:02:03.022Z
-Total Issues: 187
-Warnings: 139
-Recommendations: 48
+Generated: 2026-01-08T07:01:47.890Z
+Total Issues: 191
+Warnings: 142
+Recommendations: 49
 
 ## ⚠️ Warnings
 
@@ -17,6 +17,9 @@ Recommendations: 48
 | MEDIUM | `admin_leaves` | Foreign key admin_leaves_leave_type_id_fkey has no covering index |
 | MEDIUM | `admin_messages` | Foreign key admin_messages_receiver_id_fkey has no covering index |
 | MEDIUM | `admin_messages` | Foreign key admin_messages_sender_id_fkey has no covering index |
+| MEDIUM | `admin_regions` | Foreign key admin_regions_admin_id_fkey has no covering index |
+| MEDIUM | `admin_regions` | Foreign key admin_regions_assigned_by_fkey has no covering index |
+| MEDIUM | `admin_regions` | Foreign key admin_regions_region_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `admin_users` | Foreign key admin_users_id_fkey has no covering index |
@@ -158,6 +161,7 @@ Recommendations: 48
 | `admin_leaves` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_messages` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_notices` | Table missing timestamp columns (created_at, updated_at) |
+| `admin_regions` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_roles` | Table missing timestamp columns (created_at, updated_at) |
 | `admins` | Table missing timestamp columns (created_at, updated_at) |
 | `campaign_participants` | Table missing timestamp columns (created_at, updated_at) |

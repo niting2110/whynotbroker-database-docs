@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-01-07T07:02:03.044Z
+// Generated: 2026-01-08T07:01:47.909Z
 // Auto-generated - DO NOT EDIT manually
 
 export interface Database {
@@ -123,6 +123,27 @@ export interface Database {
       title?: string;
       content?: string;
       is_active?: boolean;
+    };
+  };
+
+  admin_regions: {
+    Row: {
+      id: string;
+      admin_id: string;
+      region_id: string;
+      region_type: string;
+      assigned_by?: string;
+      assigned_at?: string | Date;
+    };
+    Insert: {
+      region_type: string;
+    };
+    Update: {
+      admin_id?: string;
+      region_id?: string;
+      region_type?: string;
+      assigned_by?: string;
+      assigned_at?: any;
     };
   };
 
@@ -1291,6 +1312,7 @@ export interface Database {
       domain: any;
       action: any;
       scope: any;
+      usage_condition?: string;
     };
     Insert: {
       name: string;
@@ -1303,6 +1325,7 @@ export interface Database {
       domain?: any;
       action?: any;
       scope?: any;
+      usage_condition?: string;
     };
   };
 

@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated on: 2026-01-07T07:02:03.010Z
-> **Total Tables:** 79
+> Auto-generated on: 2026-01-08T07:01:47.876Z
+> **Total Tables:** 80
 > **PostgreSQL Version:** 17.6
 
 ## Overview
@@ -11,7 +11,7 @@ This document details the live schema of the production Supabase database. All A
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~3,008
+- Rows: ~3,331
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 1
@@ -273,10 +273,77 @@ This document details the live schema of the production Supabase database. All A
 
 ---
 
+## `admin_regions`
+
+**Statistics:**
+- Rows: ~2
+- Columns: 6
+- Indexes: 4
+- Foreign Keys: 3
+- Triggers: 0
+
+### Columns
+
+| Column | Type | Nullable | Default | Comment |
+|--------|------|----------|---------|---------|
+| `id` | `uuid` | NO | `gen_random_uuid()` | — |
+| `admin_id` | `uuid` | NO | `—` | — |
+| `region_id` | `uuid` | NO | `—` | — |
+| `region_type` | `text` | NO | `—` | — |
+| `assigned_by` | `uuid` | YES | `—` | — |
+| `assigned_at` | `timestamp with time zone` | YES | `now()` | — |
+
+### Constraints
+
+**CHECK:**
+- `2200_61334_1_not_null`: N/A
+- `2200_61334_2_not_null`: N/A
+- `2200_61334_3_not_null`: N/A
+- `2200_61334_4_not_null`: N/A
+- `admin_regions_region_type_check`: CHECK ((region_type = ANY (ARRAY['state'::text, 'city'::text, 'locality'::text])))
+
+**FOREIGN KEY:**
+- `admin_regions_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+- `admin_regions_assigned_by_fkey`: FOREIGN KEY (assigned_by) REFERENCES admins(id)
+- `admin_regions_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE CASCADE
+
+**PRIMARY KEY:**
+- `admin_regions_pkey`: PRIMARY KEY (id)
+
+**UNIQUE:**
+- `admin_regions_admin_id_region_id_key`: UNIQUE (admin_id, region_id)
+- `admin_regions_admin_id_region_id_key`: UNIQUE (admin_id, region_id)
+
+### Indexes
+
+| Name | Type | Columns | Unique | Primary | Definition |
+|------|------|---------|--------|---------|------------|
+| `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ | — | `CREATE UNIQUE INDEX admin_regions_admin_id_region_id_key ON public.admin_regions USING btree (admin_id, region_id)` |
+| `admin_regions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_regions_pkey ON public.admin_regions USING btree (id)` |
+| `idx_admin_regions_admin` | btree | admin_id | — | — | `CREATE INDEX idx_admin_regions_admin ON public.admin_regions USING btree (admin_id)` |
+| `idx_admin_regions_region` | btree | region_id | — | — | `CREATE INDEX idx_admin_regions_region ON public.admin_regions USING btree (region_id)` |
+
+### Foreign Keys
+
+- `admin_regions_admin_id_fkey`:
+  - Columns: `admin_id` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `admin_regions_assigned_by_fkey`:
+  - Columns: `assigned_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `admin_regions_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~8
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -1705,7 +1772,7 @@ This document details the live schema of the production Supabase database. All A
 ## `market_trends`
 
 **Statistics:**
-- Rows: ~100,000
+- Rows: ~80,000
 - Columns: 16
 - Indexes: 4
 - Foreign Keys: 2
@@ -2371,9 +2438,9 @@ This document details the live schema of the production Supabase database. All A
 ## `permissions`
 
 **Statistics:**
-- Rows: ~11
-- Columns: 5
-- Indexes: 3
+- Rows: ~49
+- Columns: 6
+- Indexes: 4
 - Foreign Keys: 0
 - Triggers: 0
 
@@ -2386,6 +2453,7 @@ This document details the live schema of the production Supabase database. All A
 | `domain` | `USER-DEFINED` | NO | `—` | — |
 | `action` | `USER-DEFINED` | NO | `—` | — |
 | `scope` | `USER-DEFINED` | NO | `—` | — |
+| `usage_condition` | `text` | YES | `—` | "General Desription" |
 
 ### Constraints
 
@@ -2404,6 +2472,7 @@ This document details the live schema of the production Supabase database. All A
 - `permission_unique`: UNIQUE (domain, action, scope)
 - `permission_unique`: UNIQUE (domain, action, scope)
 - `permission_unique`: UNIQUE (domain, action, scope)
+- `permissions_id_key`: UNIQUE (id)
 - `permissions_name_key`: UNIQUE (name)
 
 ### Indexes
@@ -2411,6 +2480,7 @@ This document details the live schema of the production Supabase database. All A
 | Name | Type | Columns | Unique | Primary | Definition |
 |------|------|---------|--------|---------|------------|
 | `permission_unique` | btree | domain, action, scope | ✓ | — | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
+| `permissions_id_key` | btree | id | ✓ | — | `CREATE UNIQUE INDEX permissions_id_key ON public.permissions USING btree (id)` |
 | `permissions_name_key` | btree | name | ✓ | — | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
 | `permissions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
 
@@ -4529,7 +4599,7 @@ This document details the live schema of the production Supabase database. All A
 > Master table for regional configuration across India
 
 **Statistics:**
-- Rows: ~107
+- Rows: ~132
 - Columns: 15
 - Indexes: 5
 - Foreign Keys: 1
@@ -5298,7 +5368,7 @@ This document details the live schema of the production Supabase database. All A
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~60
+- Rows: ~48
 - Columns: 31
 - Indexes: 8
 - Foreign Keys: 7

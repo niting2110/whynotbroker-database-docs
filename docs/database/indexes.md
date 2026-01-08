@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-01-07T07:02:03.020Z
-Total Indexes: 349
+Generated: 2026-01-08T07:01:47.887Z
+Total Indexes: 354
 
 ## All Indexes
 
@@ -14,6 +14,10 @@ Total Indexes: 349
 | `admin_leaves` | `admin_leaves_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_leaves_pkey ON public.admin_leaves USING btree (id)` |
 | `admin_messages` | `admin_messages_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)` |
 | `admin_notices` | `admin_notices_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_notices_pkey ON public.admin_notices USING btree (id)` |
+| `admin_regions` | `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ | `CREATE UNIQUE INDEX admin_regions_admin_id_region_id_key ON public.admin_regions USING btree (admin_id, region_id)` |
+| `admin_regions` | `admin_regions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_regions_pkey ON public.admin_regions USING btree (id)` |
+| `admin_regions` | `idx_admin_regions_admin` | btree | admin_id | — | `CREATE INDEX idx_admin_regions_admin ON public.admin_regions USING btree (admin_id)` |
+| `admin_regions` | `idx_admin_regions_region` | btree | region_id | — | `CREATE INDEX idx_admin_regions_region ON public.admin_regions USING btree (region_id)` |
 | `admin_roles` | `admin_roles_pkey` | btree | admin_id, role_id | ✓ | `CREATE UNIQUE INDEX admin_roles_pkey ON public.admin_roles USING btree (admin_id, role_id)` |
 | `admin_users` | `admin_users_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX admin_users_pkey ON public.admin_users USING btree (id)` |
 | `admins` | `admins_email_key` | btree | email | ✓ | `CREATE UNIQUE INDEX admins_email_key ON public.admins USING btree (email)` |
@@ -134,6 +138,7 @@ Total Indexes: 349
 | `notifications` | `notifications_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX notifications_pkey ON public.notifications USING btree (id)` |
 | `overtime_records` | `overtime_records_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX overtime_records_pkey ON public.overtime_records USING btree (id)` |
 | `permissions` | `permission_unique` | btree | domain, action, scope | ✓ | `CREATE UNIQUE INDEX permission_unique ON public.permissions USING btree (domain, action, scope)` |
+| `permissions` | `permissions_id_key` | btree | id | ✓ | `CREATE UNIQUE INDEX permissions_id_key ON public.permissions USING btree (id)` |
 | `permissions` | `permissions_name_key` | btree | name | ✓ | `CREATE UNIQUE INDEX permissions_name_key ON public.permissions USING btree (name)` |
 | `permissions` | `permissions_pkey` | btree | id | ✓ | `CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)` |
 | `pincodes` | `idx_pincodes_city` | btree | city_id | — | `CREATE INDEX idx_pincodes_city ON public.pincodes USING btree (city_id)` |
@@ -376,6 +381,10 @@ Total Indexes: 349
 **Table: `mdm_aliases`, Columns: alias_value**
 - `idx_mdm_aliases_value` (btree)
 - `idx_mdm_aliases_value_trgm` (gin)
+
+**Table: `permissions`, Columns: id**
+- `permissions_id_key` (btree, unique)
+- `permissions_pkey` (btree, unique)
 
 **Table: `properties`, Columns: pid**
 - `idx_properties_pid` (btree)

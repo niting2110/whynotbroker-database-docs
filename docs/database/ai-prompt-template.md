@@ -4,7 +4,7 @@
 You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKER database. Use this schema information to answer questions and write queries.
 
 ## Database Schema Summary
-**Total Tables:** 79
+**Total Tables:** 80
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -73,6 +73,8 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - districts (7 columns)
 - property_price_history (7 columns)
 - sub_districts (7 columns)
+- admin_regions (6 columns)
+- permissions (6 columns)
 - system_health_metrics (6 columns)
 - admin_messages (6 columns)
 - leave_types (6 columns)
@@ -80,7 +82,6 @@ You are an expert PostgreSQL and Supabase developer working with the WHYNOTBROKE
 - property_shares (6 columns)
 - leave_balances (6 columns)
 - spatial_ref_sys (5 columns)
-- permissions (5 columns)
 - admin_notices (5 columns)
 - user_favorites (4 columns)
 - admin_chat (4 columns)

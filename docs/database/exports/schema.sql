@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-01-07T07:02:03.023Z
+-- Generated: 2026-01-08T07:01:47.890Z
 -- PostgreSQL Version: 17.6
 
 -- Table: admin_audit_logs
@@ -68,6 +68,18 @@ CREATE TABLE IF NOT EXISTS admin_notices (
   content text NOT NULL,
   is_active boolean DEFAULT true,
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+  ,PRIMARY KEY (id)
+);
+
+
+-- Table: admin_regions
+CREATE TABLE IF NOT EXISTS admin_regions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  admin_id uuid NOT NULL,
+  region_id uuid NOT NULL,
+  region_type text NOT NULL,
+  assigned_by uuid,
+  assigned_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -703,10 +715,12 @@ CREATE TABLE IF NOT EXISTS permissions (
   name text NOT NULL,
   domain USER-DEFINED NOT NULL,
   action USER-DEFINED NOT NULL,
-  scope USER-DEFINED NOT NULL
+  scope USER-DEFINED NOT NULL,
+  usage_condition text
   ,PRIMARY KEY (id)
 );
 
+COMMENT ON COLUMN permissions.usage_condition IS 'General Desription';
 
 -- Table: pincodes
 CREATE TABLE IF NOT EXISTS pincodes (
