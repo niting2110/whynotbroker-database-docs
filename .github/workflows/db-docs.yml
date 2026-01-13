@@ -1,14 +1,23 @@
-name: Generate Database Docs
+﻿name: Generate Database Docs
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # Daily at 6 AM UTC
+    - cron: "0 6 * * *"   # Daily at 6 AM UTC
   workflow_dispatch:
+    inputs:
+      force_update:
+        description: "Force documentation regeneration"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
   push:
     branches: [ main ]
     paths:
-      - 'scripts/**'
-      - '.github/workflows/db-docs.yml'
+      - "scripts/**"
+      - ".github/workflows/db-docs.yml"
 
 jobs:
   generate-db-docs:
@@ -17,6 +26,15 @@ jobs:
 
     permissions:
       contents: write
+
+    env:
+      DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL || secrets.SUPABASE_DATABASE_URL }}
+      TZ: Asia/Kolkata
+      NODE_ENV: production
+      CI: true
+      DB_SSL: "true"
+      OUTPUT_DIR: "../docs/database"
+      NODE_OPTIONS: "--dns-result-order=ipv4first"
 
     steps:
       - name: Checkout repository
@@ -27,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
           cache: npm
           cache-dependency-path: scripts/package-lock.json
 
@@ -38,113 +56,90 @@ jobs:
           echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
           sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
           sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
-          echo "✅ Network configured for IPv4"
-
-      - name: Set environment
-        id: env
-        run: |
-          ENV=""
-          if [ -z "$ENV" ]; then
-            ENV="production"
-          fi
-          echo "environment=$ENV" >> $GITHUB_OUTPUT
-          echo "Using environment: $ENV"
+          echo "OK: Network configured for IPv4"
 
       - name: Install dependencies
         working-directory: scripts
         run: npm ci --prefer-offline --no-audit --no-fund
 
-      # 🔥 PATCH 1 — TLS BYPASS ADDED
-      - name: Test database connectivity
+      - name: Test database connectivity (TLS verified)
         working-directory: scripts
-        env:
-          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
-          NODE_TLS_REJECT_UNAUTHORIZED: '0'
         run: |
           echo "Testing database connection..."
           node -e "
           const { Client } = require('pg');
           const dns = require('dns');
-
           dns.setDefaultResultOrder('ipv4first');
 
           async function testConnection() {
             const connectionString = process.env.DATABASE_URL;
             if (!connectionString) {
-              console.error('❌ DATABASE_URL is not set');
+              console.error('DATABASE_URL is not set');
+              console.error('Set secrets.PRODUCTION_DATABASE_URL or secrets.SUPABASE_DATABASE_URL');
               process.exit(1);
             }
 
-            const hostname = new URL(connectionString).hostname;
-            console.log('Testing DNS resolution for:', hostname);
-            const addresses = await dns.promises.resolve4(hostname);
-            console.log('✅ DNS resolved to:', addresses[0]);
+            const url = new URL(connectionString);
+            console.log('Testing DNS resolution for:', url.hostname);
+            const addresses = await dns.promises.resolve4(url.hostname);
+            console.log('OK: DNS resolved to:', addresses[0]);
 
             const client = new Client({
               connectionString,
-              ssl: { rejectUnauthorized: false },
+              ssl: { rejectUnauthorized: true },
               connectionTimeoutMillis: 15000
             });
 
             await client.connect();
-            console.log('✅ Database connection successful');
+            console.log('OK: Database connection successful');
 
             const res = await client.query('SELECT version()');
             console.log('PostgreSQL version:', res.rows[0].version.substring(0, 50) + '...');
+
             await client.end();
-            console.log('✅ Connection test completed');
+            console.log('OK: Connection test completed');
           }
 
           testConnection().catch(err => {
-            console.error('❌ Connection failed:', err.message);
+            console.error('Connection failed:', err.message);
+            if (String(err.message || '').toLowerCase().includes('password authentication failed')) {
+              console.error('Check the database credentials in secrets.PRODUCTION_DATABASE_URL or secrets.SUPABASE_DATABASE_URL');
+            }
             process.exit(1);
           });
           "
 
-      # 🔥 PATCH 2 — TLS BYPASS ADDED
       - name: Generate documentation
         id: generate
         working-directory: scripts
         env:
-          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
-          NODE_TLS_REJECT_UNAUTHORIZED: '0'
-          ENVIRONMENT: ${{ steps.env.outputs.environment }}
-          FORCE_UPDATE: ${{ github.event.inputs.force_update }}
-          CI: true
-          NODE_ENV: production
-          TZ: Asia/Kolkata
-          DB_SSL: true
-          OUTPUT_DIR: '../docs/database'
-          NODE_OPTIONS: '--dns-result-order=ipv4first'
+          ENVIRONMENT: production
+          FORCE_UPDATE: ${{ github.event_name == 'schedule' && 'true' || (github.event.inputs.force_update == 'true' && 'true' || 'false') }}
         run: |
           echo "Starting documentation generation..."
           echo "Environment: $ENVIRONMENT"
+          echo "Force update: $FORCE_UPDATE"
           echo "Node version: $(node --version)"
 
           START_TIME=$(date +%s)
-
-          if timeout 600 node generate-complete-docs.js; then
-            EXIT_CODE=0
-            echo "✅ Documentation generated successfully"
-          else
-            EXIT_CODE=$?
-            echo "❌ Documentation generation failed"
-            exit $EXIT_CODE
-          fi
-
+          timeout 600 node generate-complete-docs.js
           END_TIME=$(date +%s)
+
           DURATION=$((END_TIME - START_TIME))
           echo "duration=$DURATION" >> $GITHUB_OUTPUT
-          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "OK: Documentation generated in ${DURATION}s"
 
-      - name: Commit and push changes
+      - name: Commit and push docs only
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          if git diff --quiet && git diff --staged --quiet; then
-            echo "No changes to commit"
+
+          # Stage ONLY the generated docs to avoid accidentally committing other files
+          git add docs/database
+
+          if git diff --staged --quiet; then
+            echo "No docs changes to commit"
           else
-            git commit -m "📚 Auto-update database docs"
+            git commit -m "Auto-update database docs"
             git push
           fi
