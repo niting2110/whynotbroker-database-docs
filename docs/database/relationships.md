@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 66
-Generated: 2025-12-31T07:01:49.150Z
+Total Relationships: 142
+Generated: 2026-01-16T07:28:03.204Z
 
 ```
 admin_audit_logs:
@@ -15,14 +15,26 @@ admin_chat:
 admin_leaves:
   └─→ admins (via: admin_leaves_admin_id_fkey)
       columns: admin_id
+  └─→ admins (via: admin_leaves_approved_by_id_fkey)
+      columns: approved_by_id
   └─→ admins (via: admin_leaves_backup_admin_id_fkey)
       columns: backup_admin_id
+  └─→ leave_types (via: admin_leaves_leave_type_id_fkey)
+      columns: leave_type_id
 
 admin_messages:
   └─→ admins (via: admin_messages_receiver_id_fkey)
       columns: receiver_id
   └─→ admins (via: admin_messages_sender_id_fkey)
       columns: sender_id
+
+admin_regions:
+  └─→ admins (via: admin_regions_admin_id_fkey)
+      columns: admin_id
+  └─→ admins (via: admin_regions_assigned_by_fkey)
+      columns: assigned_by
+  └─→ regions (via: admin_regions_region_id_fkey)
+      columns: region_id
 
 admin_roles:
   └─→ admins (via: admin_roles_admin_id_fkey)
@@ -35,6 +47,8 @@ admin_users:
       columns: id
 
 admins:
+  └─→ admins (via: admins_reporting_manager_id_fkey)
+      columns: reporting_manager_id
   └─→ profiles (via: admins_user_id_fkey)
       columns: user_id
 
@@ -58,6 +72,12 @@ campaign_participants:
   └─→ regions (via: campaign_participants_region_id_fkey)
       columns: region_id
 
+cities:
+  └─→ districts (via: cities_district_id_fkey)
+      columns: district_id
+  └─→ states (via: cities_state_id_fkey)
+      columns: state_id
+
 coupon_usage:
   └─→ coupons (via: coupon_usage_coupon_id_fkey)
       columns: coupon_id
@@ -72,7 +92,57 @@ credit_packages:
   └─→ regions (via: credit_packages_region_id_fkey)
       columns: region_id
 
+districts:
+  └─→ states (via: districts_state_id_fkey)
+      columns: state_id
+
+hot_properties:
+  └─→ properties (via: hot_properties_property_id_fkey)
+      columns: property_id
+
+leave_balances:
+  └─→ admins (via: leave_balances_admin_id_fkey)
+      columns: admin_id
+  └─→ leave_types (via: leave_balances_leave_type_id_fkey)
+      columns: leave_type_id
+
+loan_calculations:
+  └─→ properties (via: loan_calculations_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: loan_calculations_user_id_fkey)
+      columns: user_id
+
+localities:
+  └─→ cities (via: localities_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: localities_district_id_fkey)
+      columns: district_id
+  └─→ regions (via: localities_region_id_fkey)
+      columns: region_id
+  └─→ states (via: localities_state_id_fkey)
+      columns: state_id
+
+locality_amenities:
+  └─→ localities (via: locality_amenities_locality_id_fkey)
+      columns: locality_id
+
+location_canonical_map:
+  └─→ cities (via: location_canonical_map_city_id_fkey)
+      columns: city_id
+  └─→ localities (via: location_canonical_map_locality_id_fkey)
+      columns: locality_id
+
+market_trends:
+  └─→ localities (via: market_trends_locality_id_fkey)
+      columns: locality_id
+  └─→ regions (via: market_trends_region_id_fkey)
+      columns: region_id
+
 messages:
+  └─→ property_leads (via: messages_lead_id_fkey)
+      columns: lead_id
+  └─→ messages (via: messages_parent_message_id_fkey)
+      columns: parent_message_id
   └─→ properties (via: messages_property_id_fkey)
       columns: property_id
   └─→ profiles (via: messages_receiver_id_fkey)
@@ -86,19 +156,65 @@ moderation_history:
   └─→ properties (via: moderation_history_property_id_fkey)
       columns: property_id
 
+notification_preferences:
+  └─→ profiles (via: notification_preferences_user_id_fkey)
+      columns: user_id
+
 notifications:
   └─→ profiles (via: notifications_user_id_fkey)
       columns: user_id
 
+overtime_records:
+  └─→ admins (via: overtime_records_admin_id_fkey)
+      columns: admin_id
+  └─→ admins (via: overtime_records_approved_by_fkey)
+      columns: approved_by
+
+pincodes:
+  └─→ cities (via: pincodes_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: pincodes_district_id_fkey)
+      columns: district_id
+  └─→ states (via: pincodes_state_id_fkey)
+      columns: state_id
+
 pricing_rules:
   └─→ regions (via: pricing_rules_region_id_fkey)
       columns: region_id
+
+projects:
+  └─→ builders (via: projects_builder_id_fkey)
+      columns: builder_id
+  └─→ cities (via: projects_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: projects_district_id_fkey)
+      columns: district_id
+  └─→ localities (via: projects_locality_id_fkey)
+      columns: locality_id
+  └─→ states (via: projects_state_id_fkey)
+      columns: state_id
 
 properties:
   └─→ profiles (via: properties_agency_id_fkey)
       columns: agency_id
   └─→ profiles (via: properties_agent_id_fkey)
       columns: agent_id
+  └─→ builders (via: properties_builder_id_fkey)
+      columns: builder_id
+  └─→ cities (via: properties_city_id_fkey)
+      columns: city_id
+  └─→ districts (via: properties_district_id_fkey)
+      columns: district_id
+  └─→ profiles (via: properties_last_viewed_by_fkey)
+      columns: last_viewed_by
+  └─→ localities (via: properties_locality_id_fkey)
+      columns: locality_id
+  └─→ pincodes (via: properties_pincode_fk_fkey)
+      columns: pincode_fk
+  └─→ projects (via: properties_project_id_fkey)
+      columns: project_id
+  └─→ states (via: properties_state_id_fkey)
+      columns: state_id
   └─→ profiles (via: properties_user_id_fkey)
       columns: user_id
 
@@ -111,6 +227,10 @@ property_assignments:
       columns: admin_id
   └─→ properties (via: property_assignments_property_id_fkey)
       columns: property_id
+
+property_comparisons:
+  └─→ profiles (via: property_comparisons_user_id_fkey)
+      columns: user_id
 
 property_documents:
   └─→ properties (via: property_documents_property_id_fkey)
@@ -126,11 +246,59 @@ property_images:
   └─→ profiles (via: property_images_uploaded_by_fkey)
       columns: uploaded_by
 
+property_intelligence_scores:
+  └─→ properties (via: property_intelligence_scores_property_id_fkey)
+      columns: property_id
+
+property_leads:
+  └─→ profiles (via: property_leads_assigned_to_fkey)
+      columns: assigned_to
+  └─→ profiles (via: property_leads_lead_user_id_fkey)
+      columns: lead_user_id
+  └─→ properties (via: property_leads_property_id_fkey)
+      columns: property_id
+
 property_price_history:
   └─→ profiles (via: property_price_history_changed_by_fkey)
       columns: changed_by
   └─→ properties (via: property_price_history_property_id_fkey)
       columns: property_id
+
+property_ranking_criteria:
+  └─→ properties (via: property_ranking_criteria_property_id_fkey)
+      columns: property_id
+
+property_repeat_views:
+  └─→ properties (via: property_repeat_views_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_repeat_views_user_id_fkey)
+      columns: user_id
+
+property_reports:
+  └─→ properties (via: property_reports_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_reports_reported_by_fkey)
+      columns: reported_by
+  └─→ admins (via: property_reports_reviewed_by_fkey)
+      columns: reviewed_by
+
+property_shares:
+  └─→ properties (via: property_shares_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_shares_shared_by_fkey)
+      columns: shared_by
+
+property_valuations:
+  └─→ properties (via: property_valuations_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_valuations_validated_by_fkey)
+      columns: validated_by
+
+property_verifications:
+  └─→ properties (via: property_verifications_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_verifications_verified_by_fkey)
+      columns: verified_by
 
 property_views:
   └─→ properties (via: property_views_property_id_fkey)
@@ -138,15 +306,39 @@ property_views:
   └─→ profiles (via: property_views_user_id_fkey)
       columns: user_id
 
+property_visits:
+  └─→ profiles (via: property_visits_accompanied_by_fkey)
+      columns: accompanied_by
+  └─→ properties (via: property_visits_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: property_visits_visitor_id_fkey)
+      columns: visitor_id
+
+referrals:
+  └─→ profiles (via: referrals_referred_id_fkey)
+      columns: referred_id
+  └─→ profiles (via: referrals_referrer_id_fkey)
+      columns: referrer_id
+
 regions:
   └─→ regions (via: regions_parent_region_id_fkey)
       columns: parent_region_id
+
+repeat_customer_analytics:
+  └─→ properties (via: repeat_customer_analytics_most_viewed_property_id_fkey)
+      columns: most_viewed_property_id
+  └─→ profiles (via: repeat_customer_analytics_user_id_fkey)
+      columns: user_id
 
 role_permissions:
   └─→ permissions (via: role_permissions_permission_id_fkey)
       columns: permission_id
   └─→ roles (via: role_permissions_role_id_fkey)
       columns: role_id
+
+saved_searches:
+  └─→ profiles (via: saved_searches_user_id_fkey)
+      columns: user_id
 
 search_history:
   └─→ profiles (via: search_history_user_id_fkey)
@@ -157,6 +349,10 @@ security_flags:
       columns: flagged_by
   └─→ admins (via: security_flags_resolved_by_fkey)
       columns: resolved_by
+
+sub_districts:
+  └─→ districts (via: sub_districts_district_id_fkey)
+      columns: district_id
 
 subscription_enrollments:
   └─→ subscription_plans (via: subscription_enrollments_plan_id_fkey)
@@ -171,13 +367,29 @@ subscription_plans:
       columns: region_id
 
 transactions:
+  └─→ builders (via: transactions_builder_id_fkey)
+      columns: builder_id
   └─→ coupons (via: transactions_coupon_id_fkey)
       columns: coupon_id
+  └─→ property_leads (via: transactions_lead_id_fkey)
+      columns: lead_id
   └─→ pricing_rules (via: transactions_pricing_rule_id_fkey)
       columns: pricing_rule_id
+  └─→ projects (via: transactions_project_id_fkey)
+      columns: project_id
   └─→ regions (via: transactions_region_id_fkey)
       columns: region_id
   └─→ profiles (via: transactions_user_id_fkey)
+      columns: user_id
+
+undervalued_properties:
+  └─→ properties (via: undervalued_properties_property_id_fkey)
+      columns: property_id
+  └─→ profiles (via: undervalued_properties_verified_by_fkey)
+      columns: verified_by
+
+user_engagement_metrics:
+  └─→ profiles (via: user_engagement_metrics_user_id_fkey)
       columns: user_id
 
 user_favorites:
