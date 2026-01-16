@@ -1,0 +1,3 @@
+# Ensure GitHub Actions workflows use LF (avoid CRLF churn)
+.github/workflows/*.yml text eol=lf
+.github/workflows/*.yaml text eol=lf

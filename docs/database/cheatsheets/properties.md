@@ -3,66 +3,25 @@
 ## Insert
 ```sql
 INSERT INTO properties (
-  title,
-  description,
-  location,
-  price,
-  area_sqft,
-  bedrooms,
-  bathrooms,
-  user_id,
-  status,
-  created_at,
-  updated_at
+  title, description, price, user_id, 
+  status, created_at, updated_at
 ) VALUES (
-  'Sample Property',
-  'Description here',
-  'Location',
-  1000000,
-  1200,
-  2,
-  2,
-  'user-uuid',
-  'draft',
-  NOW(),
-  NOW()
+  'Sample Property', 'Description', 1000000, 'user-uuid',
+  'draft', NOW(), NOW()
 ) RETURNING *;
 ```
 
 ## Query
 ```sql
--- Basic select
 SELECT * FROM properties WHERE status = 'published';
-
--- With joins
-SELECT 
-  p.*,
-  u.email as owner_email
-FROM properties p
-JOIN users u ON p.user_id = u.id
-WHERE p.deleted_at IS NULL;
-
--- Pagination
-SELECT * FROM properties 
-ORDER BY created_at DESC 
-LIMIT 20 OFFSET 0;
 ```
 
 ## Update
 ```sql
-UPDATE properties 
-SET 
-  price = 1100000,
-  updated_at = NOW()
+UPDATE properties
+SET price = 1100000, updated_at = NOW()
 WHERE id = 'property-uuid'
 RETURNING *;
-```
-
-## Delete (Soft Delete)
-```sql
-UPDATE properties 
-SET deleted_at = NOW()
-WHERE id = 'property-uuid';
 ```
 
 ## Indexes Available
@@ -76,6 +35,7 @@ WHERE id = 'property-uuid';
 - `idx_properties_city_locality`: city, locality
 - `idx_properties_city_new`: city_id
 - `idx_properties_city_price_filter`: price, city, status, is_active
+- `idx_properties_city_price_status`: price, status, city_id
 - `idx_properties_city_status_active`: city, status, is_active
 - `idx_properties_created_at`: created_at
 - `idx_properties_district`: district_id
@@ -88,6 +48,7 @@ WHERE id = 'property-uuid';
 - `idx_properties_last_verified`: last_verified_at
 - `idx_properties_listing_type`: listing_type
 - `idx_properties_locality`: locality_id
+- `idx_properties_locality_status`: status, locality_id
 - `idx_properties_location_accuracy`: location_accuracy_level
 - `idx_properties_pid`: pid
 - `idx_properties_pincode_fk`: pincode_fk
@@ -98,6 +59,7 @@ WHERE id = 'property-uuid';
 - `idx_properties_search`: property_type, price, city, bedrooms, status
 - `idx_properties_state_new`: state_id
 - `idx_properties_status`: status
+- `idx_properties_updated_at`: updated_at
 - `idx_properties_user_id`: user_id
 - `idx_properties_user_status`: user_id, status, created_at
 - `idx_properties_visibility`: visibility_status
