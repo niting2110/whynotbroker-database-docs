@@ -1,6 +1,6 @@
 # Schema Validation Report
 
-Generated: 2026-01-16T07:28:03.205Z
+Generated: 2026-01-22T07:23:09.924Z
 Total Issues: 112
 Warnings: 63
 Recommendations: 49
@@ -38,7 +38,6 @@ Recommendations: 49
 | MEDIUM | `messages` | Foreign key messages_sender_id_fkey has no covering index |
 | MEDIUM | `moderation_history` | Foreign key moderation_history_admin_id_fkey has no covering index |
 | MEDIUM | `moderation_history` | Foreign key moderation_history_property_id_fkey has no covering index |
-| MEDIUM | `notification_preferences` | Foreign key notification_preferences_user_id_fkey has no covering index |
 | MEDIUM | `notifications` | Foreign key notifications_user_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_admin_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_approved_by_fkey has no covering index |

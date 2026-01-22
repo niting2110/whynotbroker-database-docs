@@ -50,6 +50,7 @@ RETURNING *;
 - `idx_properties_locality`: locality_id
 - `idx_properties_locality_status`: status, locality_id
 - `idx_properties_location_accuracy`: location_accuracy_level
+- `idx_properties_moderation_state`: moderation_state
 - `idx_properties_pid`: pid
 - `idx_properties_pincode_fk`: pincode_fk
 - `idx_properties_price`: price
@@ -57,6 +58,7 @@ RETURNING *;
 - `idx_properties_project`: project_id
 - `idx_properties_property_type`: property_type
 - `idx_properties_search`: property_type, price, city, bedrooms, status
+- `idx_properties_search_composite`: property_type, price, status, city_id
 - `idx_properties_state_new`: state_id
 - `idx_properties_status`: status
 - `idx_properties_updated_at`: updated_at

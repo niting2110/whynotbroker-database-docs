@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-01-16T07:28:03.194Z
-> Schema Hash: `e51e634b06b315499b4ddb28b0aa82d5`
+> Generated: 2026-01-22T07:23:09.909Z
+> Schema Hash: `99376feee3e71bcd2382b8a8345467d8`
 
 ## 📊 Quick Stats
 - **Total Tables:** 80
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1299
 - **Total Relationships:** 142
-- **Total Size:** 76.50 MB
+- **Total Size:** 76.62 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 16/1/2026, 12:58:03 pm IST
+- **Last Updated:** 22/1/2026, 12:53:09 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~3,510 | 1.16 MB |  |
+| `admin_audit_logs` | 8 | ~3,637 | 1.20 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 17 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.03 MB |  |
@@ -61,10 +61,10 @@
 | `permissions` | 6 | ~49 | 0.08 MB |  |
 | `pincodes` | 10 | ~0 | 0.05 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~0 | 0.08 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 46 | ~14 | 0.15 MB |  |
+| `profiles` | 46 | ~14 | 0.16 MB |  |
 | `projects` | 39 | ~5 | 0.18 MB |  |
 | `promotional_campaigns` | 19 | ~0 | 0.09 MB | "Marketing campaigns with regio..." |
-| `properties` | 135 | ~5 | 11.09 MB |  |
+| `properties` | 135 | ~5 | 11.13 MB |  |
 | `property_amenities` | 7 | ~0 | 0.10 MB |  |
 | `property_assignments` | 8 | ~5 | 1.41 MB |  |
 | `property_comparisons` | 6 | ~0 | 0.02 MB |  |
@@ -79,7 +79,7 @@
 | `property_shares` | 6 | ~0 | 0.02 MB |  |
 | `property_valuations` | 37 | ~3 | 0.09 MB | "Automated and manual property ..." |
 | `property_verifications` | 13 | ~0 | 0.03 MB |  |
-| `property_views` | 10 | ~11 | 0.09 MB |  |
+| `property_views` | 10 | ~11 | 0.13 MB |  |
 | `property_visits` | 11 | ~0 | 0.03 MB |  |
 | `referrals` | 12 | ~0 | 0.04 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |

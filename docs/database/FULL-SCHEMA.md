@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-01-16T07:28:03.197Z
+> Auto-generated: 2026-01-22T07:23:09.913Z
 > Total Tables: 80
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~3,510
+- Rows: ~3,637
 - Columns: 8
 - Indexes: 7
 - Foreign Keys: 1
@@ -227,73 +227,6 @@
 | `admin_regions_pkey` | btree | id | ✓ |
 | `idx_admin_regions_admin` | btree | admin_id | — |
 | `idx_admin_regions_region` | btree | region_id | — |
-
-### Foreign Keys
-
-- `admin_regions_admin_id_fkey`:
-  - Columns: `admin_id` → `admins(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-- `admin_regions_assigned_by_fkey`:
-  - Columns: `assigned_by` → `admins(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: NO ACTION
-- `admin_regions_region_id_fkey`:
-  - Columns: `region_id` → `regions(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
----
-
-## `admin_regions`
-
-**Statistics:**
-- Rows: ~2
-- Columns: 6
-- Indexes: 4
-- Foreign Keys: 3
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `admin_id` | `uuid` | NO | `—` | — |
-| `region_id` | `uuid` | NO | `—` | — |
-| `region_type` | `text` | NO | `—` | — |
-| `assigned_by` | `uuid` | YES | `—` | — |
-| `assigned_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_61334_1_not_null`: N/A
-- `2200_61334_2_not_null`: N/A
-- `2200_61334_3_not_null`: N/A
-- `2200_61334_4_not_null`: N/A
-- `admin_regions_region_type_check`: CHECK ((region_type = ANY (ARRAY['state'::text, 'city'::text, 'locality'::text])))
-
-**FOREIGN KEY:**
-- `admin_regions_admin_id_fkey`: FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
-- `admin_regions_assigned_by_fkey`: FOREIGN KEY (assigned_by) REFERENCES admins(id)
-- `admin_regions_region_id_fkey`: FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `admin_regions_pkey`: PRIMARY KEY (id)
-
-**UNIQUE:**
-- `admin_regions_admin_id_region_id_key`: UNIQUE (admin_id, region_id)
-- `admin_regions_admin_id_region_id_key`: UNIQUE (admin_id, region_id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ | — | `CREATE UNIQUE INDEX admin_regions_admin_id_region_id_key ON public.admin_regions USING btree (admin_id, region_id)` |
-| `admin_regions_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX admin_regions_pkey ON public.admin_regions USING btree (id)` |
-| `idx_admin_regions_admin` | btree | admin_id | — | — | `CREATE INDEX idx_admin_regions_admin ON public.admin_regions USING btree (admin_id)` |
-| `idx_admin_regions_region` | btree | region_id | — | — | `CREATE INDEX idx_admin_regions_region ON public.admin_regions USING btree (region_id)` |
 
 ### Foreign Keys
 
@@ -595,70 +528,6 @@
 
 ---
 
-## `builders`
-
-**Statistics:**
-- Rows: ~50
-- Columns: 28
-- Indexes: 5
-- Foreign Keys: 0
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `name` | `text` | NO | `—` | — |
-| `company_name` | `text` | NO | `—` | — |
-| `registration_number` | `text` | YES | `—` | — |
-| `rera_number` | `text` | YES | `—` | — |
-| `pan_number` | `text` | YES | `—` | — |
-| `gst_number` | `text` | YES | `—` | — |
-| `logo_url` | `text` | YES | `—` | — |
-| `description` | `text` | YES | `—` | — |
-| `established_year` | `integer` | YES | `—` | — |
-| `total_projects` | `integer` | YES | `0` | — |
-| `completed_projects` | `integer` | YES | `0` | — |
-| `ongoing_projects` | `integer` | YES | `0` | — |
-| `total_units_delivered` | `integer` | YES | `0` | — |
-| `specialization` | `ARRAY` | YES | `—` | — |
-| `operating_cities` | `ARRAY` | YES | `—` | — |
-| `website_url` | `text` | YES | `—` | — |
-| `contact_email` | `text` | YES | `—` | — |
-| `contact_phone` | `text` | YES | `—` | — |
-| `office_address` | `text` | YES | `—` | — |
-| `rating` | `numeric` | YES | `—` | — |
-| `total_ratings` | `integer` | YES | `0` | — |
-| `is_verified` | `boolean` | YES | `false` | — |
-| `is_featured` | `boolean` | YES | `false` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-| `normalized_name` | `text` | YES | `—` | — |
-| `dedup_group_id` | `uuid` | YES | `—` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_50816_1_not_null`: N/A
-- `2200_50816_2_not_null`: N/A
-- `2200_50816_3_not_null`: N/A
-
-**PRIMARY KEY:**
-- `builders_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `builders_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX builders_pkey ON public.builders USING btree (id)` |
-| `idx_builders_dedup_group` | btree | dedup_group_id | — | — | `CREATE INDEX idx_builders_dedup_group ON public.builders USING btree (dedup_group_id)` |
-| `idx_builders_name` | btree | name | — | — | `CREATE INDEX idx_builders_name ON public.builders USING btree (name)` |
-| `idx_builders_normalized` | btree | normalized_name | — | — | `CREATE INDEX idx_builders_normalized ON public.builders USING btree (normalized_name)` |
-| `idx_builders_verified` | btree | is_verified | — | — | `CREATE INDEX idx_builders_verified ON public.builders USING btree (is_verified)` |
-
----
-
 ## `campaign_participants`
 
 > Track user participation in campaigns
@@ -758,95 +627,6 @@
   - Columns: `state_id` → `states(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
-
----
-
-## `cities`
-
-> Normalized city master with geo coordinates
-
-**Statistics:**
-- Rows: ~52
-- Columns: 14
-- Indexes: 8
-- Foreign Keys: 2
-- Triggers: 2
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `name` | `text` | NO | `—` | — |
-| `normalized_name` | `text` | NO | `—` | "Lowercase, trimmed name for deduplication" |
-| `state_id` | `uuid` | NO | `—` | — |
-| `district_id` | `uuid` | YES | `—` | — |
-| `lat` | `numeric` | YES | `—` | — |
-| `lng` | `numeric` | YES | `—` | — |
-| `geo_point` | `USER-DEFINED` | YES | `—` | — |
-| `place_id` | `text` | YES | `—` | — |
-| `population_estimate` | `integer` | YES | `—` | — |
-| `is_metro` | `boolean` | YES | `false` | — |
-| `is_active` | `boolean` | YES | `true` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_56157_1_not_null`: N/A
-- `2200_56157_2_not_null`: N/A
-- `2200_56157_3_not_null`: N/A
-- `2200_56157_4_not_null`: N/A
-- `normalized_name_format`: CHECK ((normalized_name = lower(TRIM(BOTH FROM normalized_name))))
-- `valid_india_bounds`: CHECK (((lat IS NULL) OR ((lat >= 6.0) AND (lat <= 37.0))))
-- `valid_india_lng`: CHECK (((lng IS NULL) OR ((lng >= 68.0) AND (lng <= 98.0))))
-
-**FOREIGN KEY:**
-- `cities_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
-- `cities_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `cities_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `cities_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)` |
-| `idx_cities_district` | btree | district_id | — | — | `CREATE INDEX idx_cities_district ON public.cities USING btree (district_id)` |
-| `idx_cities_geo` | gist | geo_point | — | — | `CREATE INDEX idx_cities_geo ON public.cities USING gist (geo_point)` |
-| `idx_cities_metro` | btree | is_metro | — | — | `CREATE INDEX idx_cities_metro ON public.cities USING btree (is_metro) WHERE (is_metro = true)` |
-| `idx_cities_name_trgm` | gin | name | — | — | `CREATE INDEX idx_cities_name_trgm ON public.cities USING gin (name gin_trgm_ops)` |
-| `idx_cities_normalized_name` | btree | normalized_name | — | — | `CREATE INDEX idx_cities_normalized_name ON public.cities USING btree (normalized_name)` |
-| `idx_cities_state` | btree | state_id | — | — | `CREATE INDEX idx_cities_state ON public.cities USING btree (state_id)` |
-| `idx_cities_unique_name_state` | btree | normalized_name, state_id | ✓ | — | `CREATE UNIQUE INDEX idx_cities_unique_name_state ON public.cities USING btree (normalized_name, state_id)` |
-
-### Foreign Keys
-
-- `cities_district_id_fkey`:
-  - Columns: `district_id` → `districts(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-- `cities_state_id_fkey`:
-  - Columns: `state_id` → `states(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
-### Triggers
-
-- `sync_city_geo_point`:
-  - When: BEFORE INSERT
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_city_geo_point()
-```
-- `sync_city_geo_point`:
-  - When: BEFORE UPDATE
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_city_geo_point()
-```
 
 ---
 
@@ -1670,9 +1450,7 @@
 
 ---
 
-## `districts`
-
-> Indian districts linked to LGD state codes
+## `messages`
 
 **Statistics:**
 - Rows: ~5
@@ -1983,92 +1761,6 @@
 
 ---
 
-## `pincodes`
-
-> Indian postal codes with geographic links
-
-**Statistics:**
-- Rows: ~0
-- Columns: 10
-- Indexes: 5
-- Foreign Keys: 3
-- Triggers: 2
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `pincode` | `character(6)` | NO | `—` | — |
-| `city_id` | `uuid` | NO | `—` | — |
-| `district_id` | `uuid` | YES | `—` | — |
-| `state_id` | `uuid` | NO | `—` | — |
-| `lat` | `numeric` | YES | `—` | — |
-| `lng` | `numeric` | YES | `—` | — |
-| `geo_point` | `USER-DEFINED` | YES | `—` | — |
-| `delivery_status` | `text` | YES | `—` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_56191_1_not_null`: N/A
-- `2200_56191_2_not_null`: N/A
-- `2200_56191_4_not_null`: N/A
-- `pincodes_delivery_status_check`: CHECK ((delivery_status = ANY (ARRAY['delivery'::text, 'non_delivery'::text])))
-- `valid_pincode`: CHECK ((pincode ~ '^[1-9][0-9]{5}$'::text))
-- `valid_pincode_india_bounds`: CHECK (((lat IS NULL) OR ((lat >= 6.0) AND (lat <= 37.0))))
-
-**FOREIGN KEY:**
-- `pincodes_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE
-- `pincodes_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
-- `pincodes_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `pincodes_pkey`: PRIMARY KEY (pincode)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_pincodes_city` | btree | city_id | — | — | `CREATE INDEX idx_pincodes_city ON public.pincodes USING btree (city_id)` |
-| `idx_pincodes_district` | btree | district_id | — | — | `CREATE INDEX idx_pincodes_district ON public.pincodes USING btree (district_id)` |
-| `idx_pincodes_geo` | gist | geo_point | — | — | `CREATE INDEX idx_pincodes_geo ON public.pincodes USING gist (geo_point)` |
-| `idx_pincodes_state` | btree | state_id | — | — | `CREATE INDEX idx_pincodes_state ON public.pincodes USING btree (state_id)` |
-| `pincodes_pkey` | btree | pincode | ✓ | ✓ | `CREATE UNIQUE INDEX pincodes_pkey ON public.pincodes USING btree (pincode)` |
-
-### Foreign Keys
-
-- `pincodes_city_id_fkey`:
-  - Columns: `city_id` → `cities(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-- `pincodes_district_id_fkey`:
-  - Columns: `district_id` → `districts(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-- `pincodes_state_id_fkey`:
-  - Columns: `state_id` → `states(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
-### Triggers
-
-- `sync_pincode_geo_point`:
-  - When: BEFORE INSERT
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_pincode_geo_point()
-```
-- `sync_pincode_geo_point`:
-  - When: BEFORE UPDATE
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_pincode_geo_point()
-```
-
----
-
 ## `pricing_rules`
 
 > Dynamic pricing rules based on action, region, and user type
@@ -2121,7 +1813,7 @@
 **Statistics:**
 - Rows: ~14
 - Columns: 46
-- Indexes: 7
+- Indexes: 8
 - Foreign Keys: 0
 
 ### Columns
@@ -2182,6 +1874,7 @@
 | `idx_profiles_account_status` | btree | account_status | — |
 | `idx_profiles_is_verified` | btree | is_verified | — |
 | `idx_profiles_rera` | btree | rera_registration_number | — |
+| `idx_profiles_type_verified` | btree | user_type, is_verified | — |
 | `idx_profiles_user_type` | btree | user_type | — |
 | `profiles_email_key` | btree | email | ✓ |
 | `profiles_pkey` | btree | id | ✓ |
@@ -2280,138 +1973,6 @@
 
 ---
 
-## `projects`
-
-**Statistics:**
-- Rows: ~5
-- Columns: 39
-- Indexes: 9
-- Foreign Keys: 5
-- Triggers: 2
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `builder_id` | `uuid` | NO | `—` | — |
-| `name` | `text` | NO | `—` | — |
-| `slug` | `text` | YES | `—` | — |
-| `description` | `text` | YES | `—` | — |
-| `project_type` | `text` | YES | `—` | — |
-| `status` | `text` | YES | `—` | — |
-| `rera_number` | `text` | YES | `—` | — |
-| `location` | `text` | NO | `—` | — |
-| `city` | `text` | NO | `—` | — |
-| `state` | `text` | NO | `—` | — |
-| `locality_id` | `uuid` | YES | `—` | — |
-| `latitude` | `numeric` | YES | `—` | — |
-| `longitude` | `numeric` | YES | `—` | — |
-| `total_units` | `integer` | YES | `—` | — |
-| `available_units` | `integer` | YES | `—` | — |
-| `total_towers` | `integer` | YES | `—` | — |
-| `total_floors` | `integer` | YES | `—` | — |
-| `launch_date` | `date` | YES | `—` | — |
-| `possession_date` | `date` | YES | `—` | — |
-| `price_range_min` | `numeric` | YES | `—` | — |
-| `price_range_max` | `numeric` | YES | `—` | — |
-| `configurations` | `ARRAY` | YES | `—` | — |
-| `area_range_min` | `numeric` | YES | `—` | — |
-| `area_range_max` | `numeric` | YES | `—` | — |
-| `amenities` | `ARRAY` | YES | `—` | — |
-| `images` | `ARRAY` | YES | `—` | — |
-| `brochure_url` | `text` | YES | `—` | — |
-| `video_url` | `text` | YES | `—` | — |
-| `view_count` | `integer` | YES | `0` | — |
-| `inquiry_count` | `integer` | YES | `0` | — |
-| `is_featured` | `boolean` | YES | `false` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-| `city_id` | `uuid` | YES | `—` | — |
-| `district_id` | `uuid` | YES | `—` | — |
-| `state_id` | `uuid` | YES | `—` | — |
-| `geo_point` | `USER-DEFINED` | YES | `—` | — |
-| `geo_quality_score` | `numeric` | YES | `0` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_50835_10_not_null`: N/A
-- `2200_50835_11_not_null`: N/A
-- `2200_50835_1_not_null`: N/A
-- `2200_50835_2_not_null`: N/A
-- `2200_50835_3_not_null`: N/A
-- `2200_50835_9_not_null`: N/A
-- `projects_project_type_check`: CHECK ((project_type = ANY (ARRAY['residential'::text, 'commercial'::text, 'mixed'::text])))
-- `projects_status_check`: CHECK ((status = ANY (ARRAY['upcoming'::text, 'under_construction'::text, 'ready_to_move'::text, 'completed'::text])))
-
-**FOREIGN KEY:**
-- `projects_builder_id_fkey`: FOREIGN KEY (builder_id) REFERENCES builders(id) ON DELETE CASCADE
-- `projects_city_id_fkey`: FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE SET NULL
-- `projects_district_id_fkey`: FOREIGN KEY (district_id) REFERENCES districts(id) ON DELETE SET NULL
-- `projects_locality_id_fkey`: FOREIGN KEY (locality_id) REFERENCES localities(id)
-- `projects_state_id_fkey`: FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE SET NULL
-
-**PRIMARY KEY:**
-- `projects_pkey`: PRIMARY KEY (id)
-
-**UNIQUE:**
-- `projects_slug_key`: UNIQUE (slug)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_projects_builder` | btree | builder_id | — | — | `CREATE INDEX idx_projects_builder ON public.projects USING btree (builder_id)` |
-| `idx_projects_city` | btree | status, city | — | — | `CREATE INDEX idx_projects_city ON public.projects USING btree (city, status)` |
-| `idx_projects_city_new` | btree | city_id | — | — | `CREATE INDEX idx_projects_city_new ON public.projects USING btree (city_id)` |
-| `idx_projects_district` | btree | district_id | — | — | `CREATE INDEX idx_projects_district ON public.projects USING btree (district_id)` |
-| `idx_projects_geo_point` | gist | geo_point | — | — | `CREATE INDEX idx_projects_geo_point ON public.projects USING gist (geo_point)` |
-| `idx_projects_locality` | btree | locality_id | — | — | `CREATE INDEX idx_projects_locality ON public.projects USING btree (locality_id)` |
-| `idx_projects_state` | btree | state_id | — | — | `CREATE INDEX idx_projects_state ON public.projects USING btree (state_id)` |
-| `projects_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX projects_pkey ON public.projects USING btree (id)` |
-| `projects_slug_key` | btree | slug | ✓ | — | `CREATE UNIQUE INDEX projects_slug_key ON public.projects USING btree (slug)` |
-
-### Foreign Keys
-
-- `projects_builder_id_fkey`:
-  - Columns: `builder_id` → `builders(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-- `projects_city_id_fkey`:
-  - Columns: `city_id` → `cities(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-- `projects_district_id_fkey`:
-  - Columns: `district_id` → `districts(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-- `projects_locality_id_fkey`:
-  - Columns: `locality_id` → `localities(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: NO ACTION
-- `projects_state_id_fkey`:
-  - Columns: `state_id` → `states(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-
-### Triggers
-
-- `trigger_update_builder_counts`:
-  - When: AFTER INSERT
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_builder_project_counts()
-```
-- `trigger_update_builder_counts`:
-  - When: AFTER UPDATE
-  - Definition:
-```sql
-  EXECUTE FUNCTION update_builder_project_counts()
-```
-
----
-
 ## `promotional_campaigns`
 
 > Marketing campaigns with regional focus
@@ -2462,7 +2023,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 135
-- Indexes: 42
+- Indexes: 44
 - Foreign Keys: 11
 
 ### Columns
@@ -2634,6 +2195,7 @@
 | `idx_properties_locality` | btree | locality_id | — |
 | `idx_properties_locality_status` | btree | status, locality_id | — |
 | `idx_properties_location_accuracy` | btree | location_accuracy_level | — |
+| `idx_properties_moderation_state` | btree | moderation_state | — |
 | `idx_properties_pid` | btree | pid | — |
 | `idx_properties_pincode_fk` | btree | pincode_fk | — |
 | `idx_properties_price` | btree | price | — |
@@ -2641,6 +2203,7 @@
 | `idx_properties_project` | btree | project_id | — |
 | `idx_properties_property_type` | btree | property_type | — |
 | `idx_properties_search` | btree | property_type, price, city, bedrooms, status | — |
+| `idx_properties_search_composite` | btree | property_type, price, status, city_id | — |
 | `idx_properties_state_new` | btree | state_id | — |
 | `idx_properties_status` | btree | status | — |
 | `idx_properties_updated_at` | btree | updated_at | — |
@@ -2918,192 +2481,6 @@
   - Columns: `uploaded_by` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
-
-### Triggers
-
-- `trigger_ensure_primary_image`:
-  - When: BEFORE INSERT
-  - Definition:
-```sql
-  EXECUTE FUNCTION ensure_primary_image()
-```
-
----
-
-## `property_intelligence_scores`
-
-> AI-powered property scoring system for ranking and recommendation
-
-**Statistics:**
-- Rows: ~0
-- Columns: 41
-- Indexes: 8
-- Foreign Keys: 1
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `property_id` | `uuid` | NO | `—` | — |
-| `overall_score` | `numeric` | NO | `0` | — |
-| `value_score` | `numeric` | YES | `0` | — |
-| `demand_score` | `numeric` | YES | `0` | — |
-| `quality_score` | `numeric` | YES | `0` | — |
-| `location_score` | `numeric` | YES | `0` | — |
-| `view_velocity` | `numeric` | YES | `0` | — |
-| `inquiry_rate` | `numeric` | YES | `0` | — |
-| `favorite_rate` | `numeric` | YES | `0` | — |
-| `contact_reveal_rate` | `numeric` | YES | `0` | — |
-| `site_visit_conversion_rate` | `numeric` | YES | `0` | — |
-| `avg_time_on_listing_seconds` | `integer` | YES | `—` | — |
-| `repeat_view_rate` | `numeric` | YES | `—` | — |
-| `share_count` | `integer` | YES | `0` | — |
-| `comparison_count` | `integer` | YES | `0` | — |
-| `price_competitiveness` | `numeric` | YES | `—` | — |
-| `price_per_sqft_rank` | `integer` | YES | `—` | — |
-| `price_trend` | `text` | YES | `—` | — |
-| `estimated_market_value` | `numeric` | YES | `—` | — |
-| `value_gap_percentage` | `numeric` | YES | `—` | — |
-| `listing_completeness_score` | `numeric` | YES | `—` | — |
-| `image_quality_score` | `numeric` | YES | `—` | — |
-| `description_quality_score` | `numeric` | YES | `—` | — |
-| `verification_score` | `numeric` | YES | `—` | — |
-| `days_on_market` | `integer` | YES | `0` | — |
-| `estimated_days_to_sell` | `integer` | YES | `—` | — |
-| `freshness_score` | `numeric` | YES | `—` | — |
-| `rank_in_locality` | `integer` | YES | `—` | — |
-| `rank_in_city` | `integer` | YES | `—` | — |
-| `similar_properties_count` | `integer` | YES | `—` | — |
-| `better_value_alternatives_count` | `integer` | YES | `—` | — |
-| `is_hot_property` | `boolean` | YES | `false` | — |
-| `hot_property_reasons` | `ARRAY` | YES | `—` | — |
-| `urgency_score` | `numeric` | YES | `0` | — |
-| `investment_score` | `numeric` | YES | `0` | — |
-| `roi_potential` | `numeric` | YES | `—` | — |
-| `appreciation_potential` | `text` | YES | `—` | — |
-| `risk_score` | `numeric` | YES | `0` | — |
-| `risk_factors` | `ARRAY` | YES | `—` | — |
-| `calculated_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_51151_1_not_null`: N/A
-- `2200_51151_2_not_null`: N/A
-- `2200_51151_3_not_null`: N/A
-- `property_intelligence_scores_appreciation_potential_check`: CHECK ((appreciation_potential = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
-- `property_intelligence_scores_price_trend_check`: CHECK ((price_trend = ANY (ARRAY['overpriced'::text, 'fair'::text, 'underpriced'::text, 'great_deal'::text])))
-
-**FOREIGN KEY:**
-- `property_intelligence_scores_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `property_intelligence_scores_pkey`: PRIMARY KEY (id)
-
-**UNIQUE:**
-- `property_intelligence_scores_property_id_key`: UNIQUE (property_id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_property_intel_demand` | btree | demand_score | — | — | `CREATE INDEX idx_property_intel_demand ON public.property_intelligence_scores USING btree (demand_score DESC)` |
-| `idx_property_intel_hot` | btree | is_hot_property | — | — | `CREATE INDEX idx_property_intel_hot ON public.property_intelligence_scores USING btree (is_hot_property) WHERE (is_hot_property = true)` |
-| `idx_property_intel_overall` | btree | overall_score | — | — | `CREATE INDEX idx_property_intel_overall ON public.property_intelligence_scores USING btree (overall_score DESC)` |
-| `idx_property_intel_property` | btree | property_id | — | — | `CREATE INDEX idx_property_intel_property ON public.property_intelligence_scores USING btree (property_id)` |
-| `idx_property_intel_trend` | btree | price_trend | — | — | `CREATE INDEX idx_property_intel_trend ON public.property_intelligence_scores USING btree (price_trend)` |
-| `idx_property_intel_value` | btree | value_score | — | — | `CREATE INDEX idx_property_intel_value ON public.property_intelligence_scores USING btree (value_score DESC)` |
-| `property_intelligence_scores_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_intelligence_scores_pkey ON public.property_intelligence_scores USING btree (id)` |
-| `property_intelligence_scores_property_id_key` | btree | property_id | ✓ | — | `CREATE UNIQUE INDEX property_intelligence_scores_property_id_key ON public.property_intelligence_scores USING btree (property_id)` |
-
-### Foreign Keys
-
-- `property_intelligence_scores_property_id_fkey`:
-  - Columns: `property_id` → `properties(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
----
-
-## `property_leads`
-
-**Statistics:**
-- Rows: ~5
-- Columns: 21
-- Indexes: 4
-- Foreign Keys: 3
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `property_id` | `uuid` | NO | `—` | — |
-| `lead_user_id` | `uuid` | YES | `—` | — |
-| `lead_name` | `text` | YES | `—` | — |
-| `lead_phone` | `text` | NO | `—` | — |
-| `lead_email` | `text` | YES | `—` | — |
-| `lead_type` | `text` | YES | `—` | — |
-| `source` | `text` | YES | `—` | — |
-| `status` | `text` | YES | `'new'::text` | — |
-| `priority` | `text` | YES | `'medium'::text` | — |
-| `assigned_to` | `uuid` | YES | `—` | — |
-| `budget_min` | `numeric` | YES | `—` | — |
-| `budget_max` | `numeric` | YES | `—` | — |
-| `notes` | `text` | YES | `—` | — |
-| `follow_up_date` | `date` | YES | `—` | — |
-| `conversion_probability` | `integer` | YES | `—` | — |
-| `ip_address` | `inet` | YES | `—` | — |
-| `user_agent` | `text` | YES | `—` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `last_contacted_at` | `timestamp with time zone` | YES | `—` | — |
-| `converted_at` | `timestamp with time zone` | YES | `—` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_50664_1_not_null`: N/A
-- `2200_50664_2_not_null`: N/A
-- `2200_50664_5_not_null`: N/A
-- `property_leads_conversion_probability_check`: CHECK (((conversion_probability >= 0) AND (conversion_probability <= 100)))
-- `property_leads_lead_type_check`: CHECK ((lead_type = ANY (ARRAY['site_visit'::text, 'call_request'::text, 'email_inquiry'::text, 'whatsapp'::text, 'contact_view'::text])))
-- `property_leads_priority_check`: CHECK ((priority = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'urgent'::text])))
-- `property_leads_status_check`: CHECK ((status = ANY (ARRAY['new'::text, 'contacted'::text, 'qualified'::text, 'negotiating'::text, 'converted'::text, 'lost'::text])))
-
-**FOREIGN KEY:**
-- `property_leads_assigned_to_fkey`: FOREIGN KEY (assigned_to) REFERENCES profiles(id)
-- `property_leads_lead_user_id_fkey`: FOREIGN KEY (lead_user_id) REFERENCES profiles(id) ON DELETE SET NULL
-- `property_leads_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `property_leads_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_property_leads_assigned` | btree | assigned_to | — | — | `CREATE INDEX idx_property_leads_assigned ON public.property_leads USING btree (assigned_to)` |
-| `idx_property_leads_property` | btree | property_id | — | — | `CREATE INDEX idx_property_leads_property ON public.property_leads USING btree (property_id)` |
-| `idx_property_leads_status` | btree | status, priority | — | — | `CREATE INDEX idx_property_leads_status ON public.property_leads USING btree (status, priority)` |
-| `property_leads_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX property_leads_pkey ON public.property_leads USING btree (id)` |
-
-### Foreign Keys
-
-- `property_leads_assigned_to_fkey`:
-  - Columns: `assigned_to` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: NO ACTION
-- `property_leads_lead_user_id_fkey`:
-  - Columns: `lead_user_id` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-- `property_leads_property_id_fkey`:
-  - Columns: `property_id` → `properties(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
 
 ---
 
@@ -3629,7 +3006,7 @@
 **Statistics:**
 - Rows: ~11
 - Columns: 10
-- Indexes: 5
+- Indexes: 7
 - Foreign Keys: 2
 
 ### Columns
@@ -3651,6 +3028,8 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_property_views_analytics` | btree | property_id, viewed_at | — |
+| `idx_property_views_daily` | btree | property_id, viewed_at | — |
 | `idx_property_views_date` | btree | viewed_at | — |
 | `idx_property_views_property` | btree | property_id | — |
 | `idx_property_views_property_session` | btree | property_id, session_id | — |
@@ -3982,62 +3361,6 @@
 
 ---
 
-## `saved_searches`
-
-**Statistics:**
-- Rows: ~0
-- Columns: 11
-- Indexes: 2
-- Foreign Keys: 1
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `user_id` | `uuid` | NO | `—` | — |
-| `search_name` | `text` | NO | `—` | — |
-| `filters` | `jsonb` | NO | `—` | — |
-| `notification_enabled` | `boolean` | YES | `true` | — |
-| `notification_frequency` | `text` | YES | `'daily'::text` | — |
-| `last_notified_at` | `timestamp with time zone` | YES | `—` | — |
-| `match_count` | `integer` | YES | `0` | — |
-| `is_active` | `boolean` | YES | `true` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_50712_1_not_null`: N/A
-- `2200_50712_2_not_null`: N/A
-- `2200_50712_3_not_null`: N/A
-- `2200_50712_4_not_null`: N/A
-- `saved_searches_notification_frequency_check`: CHECK ((notification_frequency = ANY (ARRAY['instant'::text, 'daily'::text, 'weekly'::text])))
-
-**FOREIGN KEY:**
-- `saved_searches_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `saved_searches_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_saved_searches_user` | btree | user_id, is_active | — | — | `CREATE INDEX idx_saved_searches_user ON public.saved_searches USING btree (user_id, is_active)` |
-| `saved_searches_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX saved_searches_pkey ON public.saved_searches USING btree (id)` |
-
-### Foreign Keys
-
-- `saved_searches_user_id_fkey`:
-  - Columns: `user_id` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
----
-
 ## `search_history`
 
 **Statistics:**
@@ -4356,45 +3679,6 @@
 
 ---
 
-## `system_health_metrics`
-
-**Statistics:**
-- Rows: ~2
-- Columns: 6
-- Indexes: 2
-- Foreign Keys: 0
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `metric_name` | `text` | NO | `—` | — |
-| `metric_value` | `numeric` | NO | `—` | — |
-| `metric_unit` | `text` | YES | `—` | — |
-| `context` | `jsonb` | YES | `—` | — |
-| `recorded_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_56402_1_not_null`: N/A
-- `2200_56402_2_not_null`: N/A
-- `2200_56402_3_not_null`: N/A
-
-**PRIMARY KEY:**
-- `system_health_metrics_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_health_metrics_name` | btree | metric_name, recorded_at | — | — | `CREATE INDEX idx_health_metrics_name ON public.system_health_metrics USING btree (metric_name, recorded_at DESC)` |
-| `system_health_metrics_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX system_health_metrics_pkey ON public.system_health_metrics USING btree (id)` |
-
----
-
 ## `transactions`
 
 > All financial transactions with regional GST tracking
@@ -4618,181 +3902,6 @@
 | `idx_user_engagement_segment` | btree | user_segment | — |
 | `idx_user_engagement_user` | btree | user_id | — |
 | `user_engagement_metrics_pkey` | btree | id | ✓ |
-
-### Foreign Keys
-
-- `user_engagement_metrics_user_id_fkey`:
-  - Columns: `user_id` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-
----
-
-## `undervalued_properties`
-
-> Identifies properties with excellent value - priced below market estimates
-
-**Statistics:**
-- Rows: ~0
-- Columns: 27
-- Indexes: 6
-- Foreign Keys: 2
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `property_id` | `uuid` | NO | `—` | — |
-| `listed_price` | `numeric` | NO | `—` | — |
-| `estimated_market_value` | `numeric` | NO | `—` | — |
-| `undervaluation_amount` | `numeric` | NO | `—` | — |
-| `undervaluation_percentage` | `numeric` | NO | `—` | — |
-| `deal_rating` | `text` | YES | `—` | — |
-| `savings_potential` | `numeric` | YES | `—` | — |
-| `undervaluation_reasons` | `ARRAY` | YES | `—` | — |
-| `confidence_level` | `text` | YES | `—` | — |
-| `comparable_properties_count` | `integer` | YES | `—` | — |
-| `data_quality_score` | `numeric` | YES | `—` | — |
-| `locality_price_trend` | `text` | YES | `—` | — |
-| `time_to_market_correction_days` | `integer` | YES | `—` | — |
-| `competition_level` | `text` | YES | `—` | — |
-| `investment_opportunity_score` | `numeric` | YES | `—` | — |
-| `risk_adjusted_score` | `numeric` | YES | `—` | — |
-| `expected_appreciation_1y_percentage` | `numeric` | YES | `—` | — |
-| `expected_appreciation_3y_percentage` | `numeric` | YES | `—` | — |
-| `discovered_at` | `timestamp with time zone` | YES | `now()` | — |
-| `algorithm_version` | `text` | YES | `—` | — |
-| `manual_verification_status` | `text` | YES | `—` | — |
-| `verified_by` | `uuid` | YES | `—` | — |
-| `alert_sent` | `boolean` | YES | `false` | — |
-| `alert_sent_to_users` | `ARRAY` | YES | `—` | — |
-| `expires_at` | `timestamp with time zone` | YES | `—` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_51419_1_not_null`: N/A
-- `2200_51419_2_not_null`: N/A
-- `2200_51419_3_not_null`: N/A
-- `2200_51419_4_not_null`: N/A
-- `2200_51419_5_not_null`: N/A
-- `2200_51419_6_not_null`: N/A
-- `undervalued_properties_competition_level_check`: CHECK ((competition_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))
-- `undervalued_properties_confidence_level_check`: CHECK ((confidence_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
-- `undervalued_properties_deal_rating_check`: CHECK ((deal_rating = ANY (ARRAY['hidden_gem'::text, 'excellent_value'::text, 'good_value'::text, 'fair_value'::text])))
-- `undervalued_properties_manual_verification_status_check`: CHECK ((manual_verification_status = ANY (ARRAY['pending'::text, 'verified'::text, 'rejected'::text, 'expired'::text])))
-
-**FOREIGN KEY:**
-- `undervalued_properties_property_id_fkey`: FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
-- `undervalued_properties_verified_by_fkey`: FOREIGN KEY (verified_by) REFERENCES profiles(id)
-
-**PRIMARY KEY:**
-- `undervalued_properties_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_undervalued_expires_at` | btree | expires_at | — | — | `CREATE INDEX idx_undervalued_expires_at ON public.undervalued_properties USING btree (expires_at)` |
-| `idx_undervalued_opportunity` | btree | investment_opportunity_score | — | — | `CREATE INDEX idx_undervalued_opportunity ON public.undervalued_properties USING btree (investment_opportunity_score DESC)` |
-| `idx_undervalued_percentage` | btree | undervaluation_percentage | — | — | `CREATE INDEX idx_undervalued_percentage ON public.undervalued_properties USING btree (undervaluation_percentage DESC)` |
-| `idx_undervalued_property` | btree | property_id | — | — | `CREATE INDEX idx_undervalued_property ON public.undervalued_properties USING btree (property_id)` |
-| `idx_undervalued_rating` | btree | deal_rating | — | — | `CREATE INDEX idx_undervalued_rating ON public.undervalued_properties USING btree (deal_rating)` |
-| `undervalued_properties_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX undervalued_properties_pkey ON public.undervalued_properties USING btree (id)` |
-
-### Foreign Keys
-
-- `undervalued_properties_property_id_fkey`:
-  - Columns: `property_id` → `properties(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-- `undervalued_properties_verified_by_fkey`:
-  - Columns: `verified_by` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: NO ACTION
-
----
-
-## `user_engagement_metrics`
-
-> Tracks detailed user behavior and engagement patterns for identifying repeat customers and high-intent users
-
-**Statistics:**
-- Rows: ~0
-- Columns: 36
-- Indexes: 6
-- Foreign Keys: 1
-- Triggers: 0
-
-### Columns
-
-| Column | Type | Nullable | Default | Comment |
-|--------|------|----------|---------|---------|
-| `id` | `uuid` | NO | `gen_random_uuid()` | — |
-| `user_id` | `uuid` | NO | `—` | — |
-| `total_sessions` | `integer` | YES | `0` | — |
-| `total_page_views` | `integer` | YES | `0` | — |
-| `total_property_views` | `integer` | YES | `0` | — |
-| `unique_properties_viewed` | `integer` | YES | `0` | — |
-| `total_searches` | `integer` | YES | `0` | — |
-| `saved_searches_count` | `integer` | YES | `0` | — |
-| `avg_search_frequency_days` | `numeric` | YES | `—` | — |
-| `avg_session_duration_seconds` | `integer` | YES | `—` | — |
-| `avg_properties_per_session` | `numeric` | YES | `—` | — |
-| `property_detail_views` | `integer` | YES | `0` | — |
-| `contact_reveals` | `integer` | YES | `0` | — |
-| `favorites_count` | `integer` | YES | `0` | — |
-| `inquiries_sent` | `integer` | YES | `0` | — |
-| `site_visits_scheduled` | `integer` | YES | `0` | — |
-| `comparisons_made` | `integer` | YES | `0` | — |
-| `properties_listed` | `integer` | YES | `0` | — |
-| `valuation_requests` | `integer` | YES | `0` | — |
-| `documents_uploaded` | `integer` | YES | `0` | — |
-| `engagement_score` | `numeric` | YES | `0` | — |
-| `intent_score` | `numeric` | YES | `0` | — |
-| `user_segment` | `text` | YES | `—` | — |
-| `buying_intent` | `text` | YES | `—` | — |
-| `selling_intent` | `text` | YES | `—` | — |
-| `first_activity_at` | `timestamp with time zone` | YES | `—` | — |
-| `last_activity_at` | `timestamp with time zone` | YES | `—` | — |
-| `most_active_day_of_week` | `integer` | YES | `—` | — |
-| `most_active_hour_of_day` | `integer` | YES | `—` | — |
-| `preferred_locations` | `ARRAY` | YES | `—` | — |
-| `preferred_property_types` | `ARRAY` | YES | `—` | — |
-| `preferred_bhk_types` | `ARRAY` | YES | `—` | — |
-| `budget_range_min` | `numeric` | YES | `—` | — |
-| `budget_range_max` | `numeric` | YES | `—` | — |
-| `created_at` | `timestamp with time zone` | YES | `now()` | — |
-| `updated_at` | `timestamp with time zone` | YES | `now()` | — |
-
-### Constraints
-
-**CHECK:**
-- `2200_51029_1_not_null`: N/A
-- `2200_51029_2_not_null`: N/A
-- `user_engagement_metrics_buying_intent_check`: CHECK ((buying_intent = ANY (ARRAY['none'::text, 'low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
-- `user_engagement_metrics_selling_intent_check`: CHECK ((selling_intent = ANY (ARRAY['none'::text, 'low'::text, 'medium'::text, 'high'::text, 'very_high'::text])))
-- `user_engagement_metrics_user_segment_check`: CHECK ((user_segment = ANY (ARRAY['cold_lead'::text, 'warm_lead'::text, 'hot_lead'::text, 'super_hot'::text, 'active_buyer'::text, 'active_seller'::text, 'investor'::text, 'dormant'::text])))
-
-**FOREIGN KEY:**
-- `user_engagement_metrics_user_id_fkey`: FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE
-
-**PRIMARY KEY:**
-- `user_engagement_metrics_pkey`: PRIMARY KEY (id)
-
-### Indexes
-
-| Name | Type | Columns | Unique | Primary | Definition |
-|------|------|---------|--------|---------|------------|
-| `idx_user_engagement_intent` | btree | buying_intent, selling_intent | — | — | `CREATE INDEX idx_user_engagement_intent ON public.user_engagement_metrics USING btree (buying_intent, selling_intent)` |
-| `idx_user_engagement_last_active` | btree | last_activity_at | — | — | `CREATE INDEX idx_user_engagement_last_active ON public.user_engagement_metrics USING btree (last_activity_at DESC)` |
-| `idx_user_engagement_score` | btree | engagement_score, intent_score | — | — | `CREATE INDEX idx_user_engagement_score ON public.user_engagement_metrics USING btree (engagement_score DESC, intent_score DESC)` |
-| `idx_user_engagement_segment` | btree | user_segment | — | — | `CREATE INDEX idx_user_engagement_segment ON public.user_engagement_metrics USING btree (user_segment)` |
-| `idx_user_engagement_user` | btree | user_id | — | — | `CREATE INDEX idx_user_engagement_user ON public.user_engagement_metrics USING btree (user_id)` |
-| `user_engagement_metrics_pkey` | btree | id | ✓ | ✓ | `CREATE UNIQUE INDEX user_engagement_metrics_pkey ON public.user_engagement_metrics USING btree (id)` |
 
 ### Foreign Keys
 

@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-01-16T07:28:03.204Z
-Total Indexes: 369
+Generated: 2026-01-22T07:23:09.922Z
+Total Indexes: 374
 
 ## All Indexes
 
@@ -158,6 +158,7 @@ Total Indexes: 369
 | `profiles` | `idx_profiles_account_status` | btree | account_status | — |
 | `profiles` | `idx_profiles_is_verified` | btree | is_verified | — |
 | `profiles` | `idx_profiles_rera` | btree | rera_registration_number | — |
+| `profiles` | `idx_profiles_type_verified` | btree | user_type, is_verified | — |
 | `profiles` | `idx_profiles_user_type` | btree | user_type | — |
 | `profiles` | `profiles_email_key` | btree | email | ✓ |
 | `profiles` | `profiles_pkey` | btree | id | ✓ |
@@ -200,6 +201,7 @@ Total Indexes: 369
 | `properties` | `idx_properties_locality` | btree | locality_id | — |
 | `properties` | `idx_properties_locality_status` | btree | status, locality_id | — |
 | `properties` | `idx_properties_location_accuracy` | btree | location_accuracy_level | — |
+| `properties` | `idx_properties_moderation_state` | btree | moderation_state | — |
 | `properties` | `idx_properties_pid` | btree | pid | — |
 | `properties` | `idx_properties_pincode_fk` | btree | pincode_fk | — |
 | `properties` | `idx_properties_price` | btree | price | — |
@@ -207,6 +209,7 @@ Total Indexes: 369
 | `properties` | `idx_properties_project` | btree | project_id | — |
 | `properties` | `idx_properties_property_type` | btree | property_type | — |
 | `properties` | `idx_properties_search` | btree | property_type, price, city, bedrooms, status | — |
+| `properties` | `idx_properties_search_composite` | btree | property_type, price, status, city_id | — |
 | `properties` | `idx_properties_state_new` | btree | state_id | — |
 | `properties` | `idx_properties_status` | btree | status | — |
 | `properties` | `idx_properties_updated_at` | btree | updated_at | — |
@@ -278,6 +281,8 @@ Total Indexes: 369
 | `property_verifications` | `idx_property_verifications_property` | btree | property_id | — |
 | `property_verifications` | `idx_property_verifications_status` | btree | verification_type, status | — |
 | `property_verifications` | `property_verifications_pkey` | btree | id | ✓ |
+| `property_views` | `idx_property_views_analytics` | btree | property_id, viewed_at | — |
+| `property_views` | `idx_property_views_daily` | btree | property_id, viewed_at | — |
 | `property_views` | `idx_property_views_date` | btree | viewed_at | — |
 | `property_views` | `idx_property_views_property` | btree | property_id | — |
 | `property_views` | `idx_property_views_property_session` | btree | property_id, session_id | — |
@@ -433,6 +438,10 @@ Total Indexes: 369
 **Table: `property_repeat_views`, Columns: property_id**
 - `idx_property_repeat_actions` (btree)
 - `idx_property_repeat_property` (btree)
+
+**Table: `property_views`, Columns: property_id, viewed_at**
+- `idx_property_views_analytics` (btree)
+- `idx_property_views_daily` (btree)
 
 **Table: `property_views`, Columns: property_id, session_id**
 - `idx_property_views_property_session` (btree)
