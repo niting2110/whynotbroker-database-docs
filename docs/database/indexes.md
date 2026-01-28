@@ -1,6 +1,6 @@
 # Index Performance Report
 
-Generated: 2026-01-22T07:23:09.922Z
+Generated: 2026-01-28T06:49:46.151Z
 Total Indexes: 374
 
 ## All Indexes

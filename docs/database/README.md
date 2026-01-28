@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-01-22T07:23:09.909Z
-> Schema Hash: `99376feee3e71bcd2382b8a8345467d8`
+> Generated: 2026-01-28T06:49:46.137Z
+> Schema Hash: `0cfaac04512a218be010cc6f93b5c7dc`
 
 ## 📊 Quick Stats
 - **Total Tables:** 80
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1299
 - **Total Relationships:** 142
-- **Total Size:** 76.62 MB
+- **Total Size:** 76.67 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 22/1/2026, 12:53:09 pm IST
+- **Last Updated:** 28/1/2026, 12:19:46 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 8 | ~3,637 | 1.20 MB |  |
+| `admin_audit_logs` | 8 | ~3,833 | 1.26 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 17 | ~0 | 0.02 MB |  |
 | `admin_messages` | 6 | ~0 | 0.03 MB |  |
@@ -129,8 +129,8 @@
 - `_st_3dintersects(geom1 geometry, geom2 geometry)` → boolean
 - `_st_asgml(integer, geometry, integer, integer, text, text)` → text
 - `_st_asx3d(integer, geometry, integer, integer, text)` → text
-- `_st_bestsrid(geography, geography)` → integer
 - `_st_bestsrid(geography)` → integer
+- `_st_bestsrid(geography, geography)` → integer
 - `_st_contains(geom1 geometry, geom2 geometry)` → boolean
 - `_st_containsproperly(geom1 geometry, geom2 geometry)` → boolean
 - `_st_coveredby(geom1 geometry, geom2 geometry)` → boolean
@@ -141,13 +141,13 @@
 - `_st_dfullywithin(geom1 geometry, geom2 geometry, double precision)` → boolean
 - `_st_distancetree(geography, geography)` → double precision
 - `_st_distancetree(geography, geography, double precision, boolean)` → double precision
+- `_st_distanceuncached(geography, geography)` → double precision
 - `_st_distanceuncached(geography, geography, double precision, boolean)` → double precision
 - `_st_distanceuncached(geography, geography, boolean)` → double precision
-- `_st_distanceuncached(geography, geography)` → double precision
-- `_st_dwithin(geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true)` → boolean
 - `_st_dwithin(geom1 geometry, geom2 geometry, double precision)` → boolean
-- `_st_dwithinuncached(geography, geography, double precision)` → boolean
+- `_st_dwithin(geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true)` → boolean
 - `_st_dwithinuncached(geography, geography, double precision, boolean)` → boolean
+- `_st_dwithinuncached(geography, geography, double precision)` → boolean
 - `_st_equals(geom1 geometry, geom2 geometry)` → boolean
 - `_st_expand(geography, double precision)` → geography
 - `_st_geomfromgml(text, integer)` → geometry
@@ -165,8 +165,8 @@
 - `add_credits_to_wallet(p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid)` → boolean
 - `addauth(text)` → boolean
 - `addgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
-- `addgeometrycolumn(table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `addgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
+- `addgeometrycolumn(table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `admin_has_permission(p_permission text)` → boolean
 - `assign_property_to_admin(p_property_id uuid)` → uuid
 - `audit_admin_role_changes()` → trigger
@@ -174,8 +174,8 @@
 - `auto_assign_on_pending()` → trigger
 - `box(geometry)` → box
 - `box(box3d)` → box
-- `box2d(geometry)` → box2d
 - `box2d(box3d)` → box2d
+- `box2d(geometry)` → box2d
 - `box2d_in(cstring)` → box2d
 - `box2d_out(box2d)` → cstring
 - `box2df_in(cstring)` → box2df
@@ -199,9 +199,9 @@
 - `checkauth(text, text, text)` → integer
 - `checkauth(text, text)` → integer
 - `checkauthtrigger()` → trigger
+- `contains_2d(geometry, box2df)` → boolean
 - `contains_2d(box2df, geometry)` → boolean
 - `contains_2d(box2df, box2df)` → boolean
-- `contains_2d(geometry, box2df)` → boolean
 - `create_admin_by_email(p_email text)` → uuid
 - `create_wallet_for_new_user()` → trigger
 - `deactivate_admin(p_admin_email text)` → void
@@ -211,9 +211,9 @@
 - `dropgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(table_name character varying, column_name character varying)` → text
+- `dropgeometrytable(schema_name character varying, table_name character varying)` → text
 - `dropgeometrytable(catalog_name character varying, schema_name character varying, table_name character varying)` → text
 - `dropgeometrytable(table_name character varying)` → text
-- `dropgeometrytable(schema_name character varying, table_name character varying)` → text
 - `enablelongtransactions()` → text
 - `ensure_primary_image()` → trigger
 - `equals(geom1 geometry, geom2 geometry)` → boolean
@@ -227,8 +227,8 @@
 - `generate_property_title(prop_num integer)` → text
 - `geog_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geography(bytea)` → geography
-- `geography(geometry)` → geography
 - `geography(geography, integer, boolean)` → geography
+- `geography(geometry)` → geography
 - `geography_analyze(internal)` → boolean
 - `geography_cmp(geography, geography)` → integer
 - `geography_distance_knn(geography, geography)` → double precision
@@ -261,14 +261,14 @@
 - `geom2d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom3d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom4d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
-- `geometry(box2d)` → geometry
-- `geometry(box3d)` → geometry
-- `geometry(geometry, integer, boolean)` → geometry
-- `geometry(point)` → geometry
-- `geometry(text)` → geometry
 - `geometry(path)` → geometry
 - `geometry(bytea)` → geometry
 - `geometry(polygon)` → geometry
+- `geometry(text)` → geometry
+- `geometry(box3d)` → geometry
+- `geometry(point)` → geometry
+- `geometry(geometry, integer, boolean)` → geometry
+- `geometry(box2d)` → geometry
 - `geometry(geography)` → geometry
 - `geometry_above(geom1 geometry, geom2 geometry)` → boolean
 - `geometry_analyze(internal)` → boolean
@@ -344,12 +344,11 @@
 - `geometry_typmod_out(integer)` → cstring
 - `geometry_within(geom1 geometry, geom2 geometry)` → boolean
 - `geometry_within_nd(geometry, geometry)` → boolean
-- `geometrytype(geography)` → text
 - `geometrytype(geometry)` → text
+- `geometrytype(geography)` → text
 - `geomfromewkb(bytea)` → geometry
 - `geomfromewkt(text)` → geometry
 - `get_admin_context(p_user_id uuid)` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
-- `get_admin_context()` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_admin_region_filter(p_admin_id uuid)` → TABLE(state_id uuid, city_id uuid, locality_id uuid)
 - `get_applicable_coupons(p_user_id uuid, p_region_id uuid)` → TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)
 - `get_current_admin_id()` → uuid

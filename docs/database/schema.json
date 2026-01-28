@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-22T07:23:09.915Z",
+  "generated_at": "2026-01-28T06:49:46.144Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -11,7 +11,7 @@
     "constraints": 713,
     "indexes": 374,
     "relationships": 142,
-    "functions": 826,
+    "functions": 825,
     "extensions": 11
   },
   "tables": [
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 3637,
-      "size_bytes": 1261568,
+      "rows": 3833,
+      "size_bytes": 1318912,
       "details": {
         "columns": [
           {
@@ -244,7 +244,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 3637,
+        "row_count": 3833,
         "column_count": 8
       }
     },
@@ -27064,13 +27064,13 @@
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography, geography",
+      "arguments": "geography",
       "return_type": "integer",
       "function_comment": null
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography",
+      "arguments": "geography, geography",
       "return_type": "integer",
       "function_comment": null
     },
@@ -27136,6 +27136,12 @@
     },
     {
       "function_name": "_st_distanceuncached",
+      "arguments": "geography, geography",
+      "return_type": "double precision",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_distanceuncached",
       "arguments": "geography, geography, double precision, boolean",
       "return_type": "double precision",
       "function_comment": null
@@ -27147,9 +27153,9 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography",
-      "return_type": "double precision",
+      "function_name": "_st_dwithin",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "return_type": "boolean",
       "function_comment": null
     },
     {
@@ -27159,20 +27165,14 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "function_name": "_st_dwithinuncached",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithinuncached",
       "arguments": "geography, geography, double precision",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_dwithinuncached",
-      "arguments": "geography, geography, double precision, boolean",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -27280,15 +27280,15 @@
     },
     {
       "function_name": "addgeometrycolumn",
-      "arguments": "table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
-    },
-    {
-      "function_name": "addgeometrycolumn",
       "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+    },
+    {
+      "function_name": "addgeometrycolumn",
+      "arguments": "table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "admin_has_permission",
@@ -27334,15 +27334,15 @@
     },
     {
       "function_name": "box2d",
-      "arguments": "geometry",
-      "return_type": "box2d",
-      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
-    },
-    {
-      "function_name": "box2d",
       "arguments": "box3d",
       "return_type": "box2d",
       "function_comment": null
+    },
+    {
+      "function_name": "box2d",
+      "arguments": "geometry",
+      "return_type": "box2d",
+      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
     },
     {
       "function_name": "box2d_in",
@@ -27484,6 +27484,12 @@
     },
     {
       "function_name": "contains_2d",
+      "arguments": "geometry, box2df",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "contains_2d",
       "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
@@ -27491,12 +27497,6 @@
     {
       "function_name": "contains_2d",
       "arguments": "box2df, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "contains_2d",
-      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -27556,6 +27556,12 @@
     },
     {
       "function_name": "dropgeometrytable",
+      "arguments": "schema_name character varying, table_name character varying",
+      "return_type": "text",
+      "function_comment": "args: schema_name, table_name - Drops a table and all its references in geometry_columns."
+    },
+    {
+      "function_name": "dropgeometrytable",
       "arguments": "catalog_name character varying, schema_name character varying, table_name character varying",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name - Drops a table and all its references in geometry_columns."
@@ -27565,12 +27571,6 @@
       "arguments": "table_name character varying",
       "return_type": "text",
       "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
-    },
-    {
-      "function_name": "dropgeometrytable",
-      "arguments": "schema_name character varying, table_name character varying",
-      "return_type": "text",
-      "function_comment": "args: schema_name, table_name - Drops a table and all its references in geometry_columns."
     },
     {
       "function_name": "enablelongtransactions",
@@ -27652,13 +27652,13 @@
     },
     {
       "function_name": "geography",
-      "arguments": "geometry",
+      "arguments": "geography, integer, boolean",
       "return_type": "geography",
       "function_comment": null
     },
     {
       "function_name": "geography",
-      "arguments": "geography, integer, boolean",
+      "arguments": "geometry",
       "return_type": "geography",
       "function_comment": null
     },
@@ -27856,36 +27856,6 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "box2d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "box3d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "geometry, integer, boolean",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "point",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
       "arguments": "path",
       "return_type": "geometry",
       "function_comment": null
@@ -27899,6 +27869,36 @@
     {
       "function_name": "geometry",
       "arguments": "polygon",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box3d",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "point",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "geometry, integer, boolean",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box2d",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -28354,15 +28354,15 @@
     },
     {
       "function_name": "geometrytype",
-      "arguments": "geography",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometrytype",
       "arguments": "geometry",
       "return_type": "text",
       "function_comment": "args: geomA - Returns the type of a geometry as text."
+    },
+    {
+      "function_name": "geometrytype",
+      "arguments": "geography",
+      "return_type": "text",
+      "function_comment": null
     },
     {
       "function_name": "geomfromewkb",
@@ -28379,12 +28379,6 @@
     {
       "function_name": "get_admin_context",
       "arguments": "p_user_id uuid",
-      "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
-      "function_comment": null
-    },
-    {
-      "function_name": "get_admin_context",
-      "arguments": "",
       "return_type": "TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)",
       "function_comment": null
     },
