@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-01-28T06:49:46.153Z
+-- Generated: 2026-01-29T07:00:40.990Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs

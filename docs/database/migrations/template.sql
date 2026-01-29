@@ -1,6 +1,6 @@
 -- Database Migration Template
 -- File: migrations/YYYYMMDD_description.sql
--- Generated: 2026-01-28T06:49:46.177Z
+-- Generated: 2026-01-29T07:00:41.006Z
 
 BEGIN;
 
