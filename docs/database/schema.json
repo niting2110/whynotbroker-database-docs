@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-29T07:00:40.982Z",
+  "generated_at": "2026-02-14T06:58:21.333Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 8,
-      "rows": 3851,
+      "rows": 3853,
       "size_bytes": 1318912,
       "details": {
         "columns": [
@@ -244,7 +244,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 3851,
+        "row_count": 3853,
         "column_count": 8
       }
     },
@@ -12872,7 +12872,7 @@
       "comment": null,
       "columns": 135,
       "rows": 5,
-      "size_bytes": 11665408,
+      "size_bytes": 11673600,
       "details": {
         "columns": [
           {
