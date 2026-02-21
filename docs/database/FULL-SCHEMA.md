@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-02-14T06:58:21.330Z
-> Total Tables: 80
+> Auto-generated: 2026-02-21T06:55:07.567Z
+> Total Tables: 89
 > PostgreSQL: 17.6
 
 ---
@@ -472,6 +472,236 @@
   - Columns: `author_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+
+---
+
+## `broker_aadhaar_verifications`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 2
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `status` | `character varying(32)` | NO | `'pending'::character varying` |
+| `masked_aadhaar` | `character varying(32)` | YES | `—` |
+| `otp_expires_at` | `timestamp with time zone` | YES | `—` |
+| `resend_count` | `integer` | YES | `0` |
+| `name` | `character varying(256)` | YES | `—` |
+| `dob` | `date` | YES | `—` |
+| `gender` | `character(1)` | YES | `—` |
+| `address` | `text` | YES | `—` |
+| `photo_available` | `boolean` | YES | `false` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_aadhaar_verifications_pkey` | btree | id | ✓ |
+| `idx_aadhaar_user_id` | btree | user_id | — |
+
+---
+
+## `broker_gps_tracking`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 15
+- Indexes: 4
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `latitude` | `numeric` | NO | `—` |
+| `longitude` | `numeric` | NO | `—` |
+| `accuracy` | `numeric` | YES | `—` |
+| `altitude` | `numeric` | YES | `—` |
+| `address` | `text` | YES | `—` |
+| `activity_type` | `character varying(64)` | YES | `—` |
+| `property_id` | `character varying(64)` | YES | `—` |
+| `within_geofence` | `boolean` | YES | `true` |
+| `distance_from_prop` | `numeric` | YES | `—` |
+| `city_match` | `boolean` | YES | `true` |
+| `suspicious_activity` | `boolean` | YES | `false` |
+| `recorded_at` | `timestamp with time zone` | NO | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_gps_tracking_pkey` | btree | id | ✓ |
+| `idx_gps_property_id` | btree | property_id | — |
+| `idx_gps_recorded_at` | btree | recorded_at | — |
+| `idx_gps_user_id` | btree | user_id | — |
+
+---
+
+## `broker_gst_verifications`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 16
+- Indexes: 2
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `status` | `character varying(32)` | NO | `'pending'::character varying` |
+| `gst_number` | `character varying(15)` | NO | `—` |
+| `business_name` | `character varying(512)` | YES | `—` |
+| `legal_name` | `character varying(512)` | YES | `—` |
+| `trade_name` | `character varying(512)` | YES | `—` |
+| `business_name_match` | `boolean` | YES | `false` |
+| `registration_date` | `date` | YES | `—` |
+| `gst_status` | `character varying(32)` | YES | `'active'::character varying` |
+| `taxpayer_type` | `character varying(64)` | YES | `—` |
+| `state` | `character varying(64)` | YES | `—` |
+| `state_code` | `character varying(4)` | YES | `—` |
+| `principal_place_address` | `text` | YES | `—` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_gst_verifications_pkey` | btree | id | ✓ |
+| `idx_gst_user_id` | btree | user_id | — |
+
+---
+
+## `broker_kyc_documents`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 18
+- Indexes: 3
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `verification_id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `document_type` | `character varying(32)` | NO | `—` |
+| `status` | `character varying(32)` | NO | `'uploaded'::character varying` |
+| `file_size` | `bigint` | YES | `—` |
+| `file_type` | `character varying(64)` | YES | `—` |
+| `storage_url` | `text` | YES | `—` |
+| `thumbnail_url` | `text` | YES | `—` |
+| `document_number` | `character varying(128)` | YES | `—` |
+| `name_matched` | `boolean` | YES | `false` |
+| `tamper_detected` | `boolean` | YES | `false` |
+| `confidence_score` | `numeric` | YES | `0` |
+| `ocr_extracted` | `boolean` | YES | `false` |
+| `uploaded_at` | `timestamp with time zone` | NO | `now()` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_kyc_documents_pkey` | btree | id | ✓ |
+| `idx_kyc_docs_user_id` | btree | user_id | — |
+| `idx_kyc_docs_verification_id` | btree | verification_id | — |
+
+### Foreign Keys
+
+- `broker_kyc_documents_verification_id_fkey`:
+  - Columns: `verification_id` → `broker_kyc_verifications(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `broker_kyc_verifications`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 14
+- Indexes: 3
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `status` | `character varying(32)` | NO | `'initiated'::character varying` |
+| `verification_type` | `character varying(32)` | NO | `'full'::character varying` |
+| `documents_required` | `text` | YES | `—` |
+| `verification_level` | `character varying(32)` | YES | `'none'::character varying` |
+| `verified_by` | `character varying(64)` | YES | `—` |
+| `risk_score` | `integer` | YES | `0` |
+| `confidence_level` | `character varying(32)` | YES | `—` |
+| `started_at` | `timestamp with time zone` | NO | `now()` |
+| `completed_at` | `timestamp with time zone` | YES | `—` |
+| `expires_at` | `timestamp with time zone` | NO | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_kyc_verifications_pkey` | btree | id | ✓ |
+| `idx_kyc_status` | btree | status | — |
+| `idx_kyc_user_id` | btree | user_id | — |
+
+---
+
+## `broker_pan_verifications`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 2
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `character varying(64)` | NO | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `status` | `character varying(32)` | NO | `'pending'::character varying` |
+| `pan_number` | `character varying(10)` | NO | `—` |
+| `name` | `character varying(256)` | YES | `—` |
+| `name_match` | `boolean` | YES | `false` |
+| `dob_match` | `boolean` | YES | `false` |
+| `pan_status` | `character varying(32)` | YES | `'active'::character varying` |
+| `pan_type` | `character varying(32)` | YES | `'individual'::character varying` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `broker_pan_verifications_pkey` | btree | id | ✓ |
+| `idx_pan_user_id` | btree | user_id | — |
 
 ---
 
@@ -1522,7 +1752,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 10
-- Indexes: 1
+- Indexes: 6
 - Foreign Keys: 2
 
 ### Columns
@@ -1544,6 +1774,11 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_moderation_history_action` | btree | action | — |
+| `idx_moderation_history_admin_created_at` | btree | admin_id, created_at | — |
+| `idx_moderation_history_admin_id` | btree | admin_id | — |
+| `idx_moderation_history_created_at_desc` | btree | created_at | — |
+| `idx_moderation_history_property_id` | btree | property_id | — |
 | `moderation_history_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -1813,7 +2048,7 @@
 **Statistics:**
 - Rows: ~14
 - Columns: 46
-- Indexes: 8
+- Indexes: 12
 - Foreign Keys: 0
 
 ### Columns
@@ -1872,8 +2107,12 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_profiles_account_status` | btree | account_status | — |
+| `idx_profiles_created_at_desc` | btree | created_at | — |
+| `idx_profiles_id_role` | btree | id, role | — |
 | `idx_profiles_is_verified` | btree | is_verified | — |
+| `idx_profiles_kyc_status` | btree | kyc_status | — |
 | `idx_profiles_rera` | btree | rera_registration_number | — |
+| `idx_profiles_role` | btree | role | — |
 | `idx_profiles_type_verified` | btree | user_type, is_verified | — |
 | `idx_profiles_user_type` | btree | user_type | — |
 | `profiles_email_key` | btree | email | ✓ |
@@ -2023,7 +2262,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 135
-- Indexes: 44
+- Indexes: 45
 - Foreign Keys: 11
 
 ### Columns
@@ -2206,6 +2445,7 @@
 | `idx_properties_search_composite` | btree | property_type, price, status, city_id | — |
 | `idx_properties_state_new` | btree | state_id | — |
 | `idx_properties_status` | btree | status | — |
+| `idx_properties_status_created_at` | btree | status, created_at | — |
 | `idx_properties_updated_at` | btree | updated_at | — |
 | `idx_properties_user_id` | btree | user_id | — |
 | `idx_properties_user_status` | btree | user_id, status, created_at | — |
@@ -3006,7 +3246,7 @@
 **Statistics:**
 - Rows: ~11
 - Columns: 10
-- Indexes: 7
+- Indexes: 8
 - Foreign Keys: 2
 
 ### Columns
@@ -3033,6 +3273,7 @@
 | `idx_property_views_date` | btree | viewed_at | — |
 | `idx_property_views_property` | btree | property_id | — |
 | `idx_property_views_property_session` | btree | property_id, session_id | — |
+| `idx_property_views_user_id_not_null` | btree | user_id | — |
 | `property_views_pkey` | btree | id | ✓ |
 | `unique_property_session` | btree | property_id, session_id | ✓ |
 
@@ -4047,6 +4288,129 @@
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `verification_documents`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 15
+- Indexes: 5
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `user_id` | `uuid` | NO | `—` |
+| `kyc_id` | `uuid` | YES | `—` |
+| `document_type` | `text` | NO | `—` |
+| `file_path` | `text` | NO | `—` |
+| `file_hash` | `text` | YES | `—` |
+| `file_size` | `integer` | YES | `—` |
+| `mime_type` | `text` | YES | `—` |
+| `status` | `text` | YES | `'pending'::text` |
+| `moderation_notes` | `text` | YES | `—` |
+| `moderated_by` | `uuid` | YES | `—` |
+| `moderated_at` | `timestamp with time zone` | YES | `—` |
+| `metadata` | `jsonb` | YES | `'{}'::jsonb` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+| `updated_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_verification_documents_document_type` | btree | document_type | — |
+| `idx_verification_documents_kyc_id` | btree | kyc_id | — |
+| `idx_verification_documents_status` | btree | status | — |
+| `idx_verification_documents_user_id` | btree | user_id | — |
+| `verification_documents_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `verification_documents_kyc_id_fkey`:
+  - Columns: `kyc_id` → `verification_kyc(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `verification_gps_tracking`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 5
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `user_id` | `uuid` | NO | `—` |
+| `session_id` | `uuid` | NO | `—` |
+| `latitude` | `numeric` | NO | `—` |
+| `longitude` | `numeric` | NO | `—` |
+| `accuracy` | `numeric` | YES | `—` |
+| `altitude` | `numeric` | YES | `—` |
+| `speed` | `numeric` | YES | `—` |
+| `heading` | `numeric` | YES | `—` |
+| `timestamp` | `timestamp with time zone` | NO | `—` |
+| `location_context` | `text` | YES | `—` |
+| `metadata` | `jsonb` | YES | `'{}'::jsonb` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_verification_gps_tracking_location_context` | btree | location_context | — |
+| `idx_verification_gps_tracking_session_id` | btree | session_id | — |
+| `idx_verification_gps_tracking_timestamp` | btree | timestamp | — |
+| `idx_verification_gps_tracking_user_id` | btree | user_id | — |
+| `verification_gps_tracking_pkey` | btree | id | ✓ |
+
+---
+
+## `verification_kyc`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 14
+- Indexes: 4
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `user_id` | `uuid` | NO | `—` |
+| `full_name` | `text` | NO | `—` |
+| `date_of_birth` | `date` | YES | `—` |
+| `id_number` | `text` | YES | `—` |
+| `id_type` | `text` | YES | `—` |
+| `country_of_issue` | `text` | YES | `—` |
+| `status` | `text` | YES | `'pending'::text` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `verified_by` | `uuid` | YES | `—` |
+| `rejection_reason` | `text` | YES | `—` |
+| `metadata` | `jsonb` | YES | `'{}'::jsonb` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+| `updated_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_verification_kyc_status` | btree | status | — |
+| `idx_verification_kyc_user_id` | btree | user_id | — |
+| `idx_verification_kyc_verified_at` | btree | verified_at | — |
+| `verification_kyc_pkey` | btree | id | ✓ |
 
 ---
 

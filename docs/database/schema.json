@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-02-14T06:58:21.333Z",
+  "generated_at": "2026-02-21T06:55:07.569Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 80,
+    "tables": 89,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1299,
-    "constraints": 713,
-    "indexes": 374,
-    "relationships": 142,
+    "columns": 1428,
+    "constraints": 795,
+    "indexes": 415,
+    "relationships": 144,
     "functions": 825,
     "extensions": 11
   },
@@ -2644,6 +2644,1636 @@
         ],
         "row_count": 100,
         "column_count": 17
+      }
+    },
+    {
+      "name": "broker_aadhaar_verifications",
+      "comment": null,
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'pending'::character varying",
+            "ordinal_position": 3,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "masked_aadhaar",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "otp_expires_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resend_count",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": 256,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "dob",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gender",
+            "data_type": "character",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": 1,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "address",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "photo_available",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109621_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109621_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109621_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109621_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_aadhaar_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'otp_sent'::character varying, 'verified'::character varying, 'rejected'::character varying, 'expired'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_aadhaar_verifications_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_aadhaar_verifications_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_aadhaar_verifications_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_aadhaar_verifications_pkey ON public.broker_aadhaar_verifications USING btree (id)"
+          },
+          {
+            "index_name": "idx_aadhaar_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_aadhaar_user_id ON public.broker_aadhaar_verifications USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "broker_gps_tracking",
+      "comment": null,
+      "columns": 15,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "latitude",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 7,
+            "column_comment": null
+          },
+          {
+            "column_name": "longitude",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 7,
+            "column_comment": null
+          },
+          {
+            "column_name": "accuracy",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 8,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "altitude",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "address",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "activity_type",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "property_id",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "within_geofence",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "distance_from_prop",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "city_match",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "true",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "suspicious_activity",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "recorded_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109675_14_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109675_15_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109675_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109675_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109675_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109675_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_gps_tracking_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_gps_tracking_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_gps_tracking_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_gps_tracking_pkey ON public.broker_gps_tracking USING btree (id)"
+          },
+          {
+            "index_name": "idx_gps_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{property_id}",
+            "index_definition": "CREATE INDEX idx_gps_property_id ON public.broker_gps_tracking USING btree (property_id) WHERE (property_id IS NOT NULL)"
+          },
+          {
+            "index_name": "idx_gps_recorded_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{recorded_at}",
+            "index_definition": "CREATE INDEX idx_gps_recorded_at ON public.broker_gps_tracking USING btree (recorded_at DESC)"
+          },
+          {
+            "index_name": "idx_gps_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_gps_user_id ON public.broker_gps_tracking USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 15
+      }
+    },
+    {
+      "name": "broker_gst_verifications",
+      "comment": null,
+      "columns": 16,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'pending'::character varying",
+            "ordinal_position": 3,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_number",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": 15,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "business_name",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": 512,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "legal_name",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": 512,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "trade_name",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": 512,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "business_name_match",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "registration_date",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gst_status",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": "'active'::character varying",
+            "ordinal_position": 10,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "taxpayer_type",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "state",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "state_code",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": 4,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "principal_place_address",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109657_16_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109657_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109657_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109657_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109657_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_gst_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'verified'::character varying, 'rejected'::character varying, 'failed'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_gst_verifications_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_gst_verifications_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_gst_verifications_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_gst_verifications_pkey ON public.broker_gst_verifications USING btree (id)"
+          },
+          {
+            "index_name": "idx_gst_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_gst_user_id ON public.broker_gst_verifications USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 16
+      }
+    },
+    {
+      "name": "broker_kyc_documents",
+      "comment": null,
+      "columns": 18,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verification_id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "document_type",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'uploaded'::character varying",
+            "ordinal_position": 5,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "file_size",
+            "data_type": "bigint",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 64,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "file_type",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "storage_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "thumbnail_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "document_number",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": 128,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name_matched",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "tamper_detected",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "confidence_score",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": 4,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "ocr_extracted",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "uploaded_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109592_15_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_17_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_18_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109592_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_doc_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['uploaded'::character varying, 'processing'::character varying, 'verified'::character varying, 'rejected'::character varying, 'deleted'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_doc_type",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((document_type)::text = ANY ((ARRAY['aadhaar_front'::character varying, 'aadhaar_back'::character varying, 'pan'::character varying, 'photo'::character varying, 'gst'::character varying, 'address_proof'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_kyc_documents_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_kyc_documents_verification_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "verification_id",
+            "definition": "FOREIGN KEY (verification_id) REFERENCES broker_kyc_verifications(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_kyc_documents_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_kyc_documents_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_kyc_documents_pkey ON public.broker_kyc_documents USING btree (id)"
+          },
+          {
+            "index_name": "idx_kyc_docs_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_kyc_docs_user_id ON public.broker_kyc_documents USING btree (user_id)"
+          },
+          {
+            "index_name": "idx_kyc_docs_verification_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{verification_id}",
+            "index_definition": "CREATE INDEX idx_kyc_docs_verification_id ON public.broker_kyc_documents USING btree (verification_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "broker_kyc_documents_verification_id_fkey",
+            "foreign_table_name": "broker_kyc_verifications",
+            "columns": [
+              "verification_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 18
+      }
+    },
+    {
+      "name": "broker_kyc_verifications",
+      "comment": null,
+      "columns": 14,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'initiated'::character varying",
+            "ordinal_position": 3,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verification_type",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'full'::character varying",
+            "ordinal_position": 4,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "documents_required",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verification_level",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": "'none'::character varying",
+            "ordinal_position": 6,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_by",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "risk_score",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": "0",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "confidence_level",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "started_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "completed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "expires_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109570_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_14_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109570_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_kyc_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['initiated'::character varying, 'submitted'::character varying, 'processing'::character varying, 'approved'::character varying, 'rejected'::character varying, 'expired'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_kyc_verifications_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_kyc_verifications_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_kyc_verifications_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_kyc_verifications_pkey ON public.broker_kyc_verifications USING btree (id)"
+          },
+          {
+            "index_name": "idx_kyc_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_kyc_status ON public.broker_kyc_verifications USING btree (status)"
+          },
+          {
+            "index_name": "idx_kyc_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_kyc_user_id ON public.broker_kyc_verifications USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 14
+      }
+    },
+    {
+      "name": "broker_pan_verifications",
+      "comment": null,
+      "columns": 11,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": 64,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": "'pending'::character varying",
+            "ordinal_position": 3,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pan_number",
+            "data_type": "character varying",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": 10,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": 256,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name_match",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "dob_match",
+            "data_type": "boolean",
+            "is_nullable": "YES",
+            "column_default": "false",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pan_status",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": "'active'::character varying",
+            "ordinal_position": 8,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pan_type",
+            "data_type": "character varying",
+            "is_nullable": "YES",
+            "column_default": "'individual'::character varying",
+            "ordinal_position": 9,
+            "character_maximum_length": 32,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109639_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109639_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109639_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109639_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109639_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "chk_pan_status",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'verified'::character varying, 'rejected'::character varying, 'failed'::character varying])::text[])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_pan_verifications_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "broker_pan_verifications_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "broker_pan_verifications_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX broker_pan_verifications_pkey ON public.broker_pan_verifications USING btree (id)"
+          },
+          {
+            "index_name": "idx_pan_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_pan_user_id ON public.broker_pan_verifications USING btree (user_id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 11
       }
     },
     {
@@ -9502,7 +11132,7 @@
       "comment": null,
       "columns": 10,
       "rows": 5,
-      "size_bytes": 385024,
+      "size_bytes": 466944,
       "details": {
         "columns": [
           {
@@ -9682,6 +11312,56 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_moderation_history_action",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{action}",
+            "index_definition": "CREATE INDEX idx_moderation_history_action ON public.moderation_history USING btree (action)"
+          },
+          {
+            "index_name": "idx_moderation_history_admin_created_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id,created_at}",
+            "index_definition": "CREATE INDEX idx_moderation_history_admin_created_at ON public.moderation_history USING btree (admin_id, created_at DESC)"
+          },
+          {
+            "index_name": "idx_moderation_history_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id}",
+            "index_definition": "CREATE INDEX idx_moderation_history_admin_id ON public.moderation_history USING btree (admin_id)"
+          },
+          {
+            "index_name": "idx_moderation_history_created_at_desc",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_moderation_history_created_at_desc ON public.moderation_history USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "idx_moderation_history_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{property_id}",
+            "index_definition": "CREATE INDEX idx_moderation_history_property_id ON public.moderation_history USING btree (property_id)"
+          },
           {
             "index_name": "moderation_history_pkey",
             "index_type": "btree",
@@ -11147,7 +12827,7 @@
       "comment": null,
       "columns": 46,
       "rows": 14,
-      "size_bytes": 172032,
+      "size_bytes": 237568,
       "details": {
         "columns": [
           {
@@ -11734,6 +13414,26 @@
             "index_definition": "CREATE INDEX idx_profiles_account_status ON public.profiles USING btree (account_status) WHERE (account_status = 'active'::text)"
           },
           {
+            "index_name": "idx_profiles_created_at_desc",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_profiles_created_at_desc ON public.profiles USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "idx_profiles_id_role",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id,role}",
+            "index_definition": "CREATE INDEX idx_profiles_id_role ON public.profiles USING btree (id, role)"
+          },
+          {
             "index_name": "idx_profiles_is_verified",
             "index_type": "btree",
             "is_unique": false,
@@ -11744,6 +13444,16 @@
             "index_definition": "CREATE INDEX idx_profiles_is_verified ON public.profiles USING btree (is_verified) WHERE (is_verified = true)"
           },
           {
+            "index_name": "idx_profiles_kyc_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{kyc_status}",
+            "index_definition": "CREATE INDEX idx_profiles_kyc_status ON public.profiles USING btree (kyc_status)"
+          },
+          {
             "index_name": "idx_profiles_rera",
             "index_type": "btree",
             "is_unique": false,
@@ -11752,6 +13462,16 @@
             "is_immediate": true,
             "columns": "{rera_registration_number}",
             "index_definition": "CREATE INDEX idx_profiles_rera ON public.profiles USING btree (rera_registration_number) WHERE (is_rera_registered = true)"
+          },
+          {
+            "index_name": "idx_profiles_role",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{role}",
+            "index_definition": "CREATE INDEX idx_profiles_role ON public.profiles USING btree (role)"
           },
           {
             "index_name": "idx_profiles_type_verified",
@@ -12872,7 +14592,7 @@
       "comment": null,
       "columns": 135,
       "rows": 5,
-      "size_bytes": 11673600,
+      "size_bytes": 11681792,
       "details": {
         "columns": [
           {
@@ -15108,6 +16828,16 @@
             "is_immediate": true,
             "columns": "{status}",
             "index_definition": "CREATE INDEX idx_properties_status ON public.properties USING btree (status)"
+          },
+          {
+            "index_name": "idx_properties_status_created_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status,created_at}",
+            "index_definition": "CREATE INDEX idx_properties_status_created_at ON public.properties USING btree (status, created_at DESC) WHERE (status = 'approved'::text)"
           },
           {
             "index_name": "idx_properties_updated_at",
@@ -20188,7 +21918,7 @@
       "comment": null,
       "columns": 10,
       "rows": 11,
-      "size_bytes": 131072,
+      "size_bytes": 147456,
       "details": {
         "columns": [
           {
@@ -20403,6 +22133,16 @@
             "is_immediate": true,
             "columns": "{property_id,session_id}",
             "index_definition": "CREATE INDEX idx_property_views_property_session ON public.property_views USING btree (property_id, session_id)"
+          },
+          {
+            "index_name": "idx_property_views_user_id_not_null",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_property_views_user_id_not_null ON public.property_views USING btree (user_id) WHERE (user_id IS NOT NULL)"
           },
           {
             "index_name": "property_views_pkey",
@@ -26594,6 +28334,884 @@
       }
     },
     {
+      "name": "verification_documents",
+      "comment": null,
+      "columns": 15,
+      "rows": 0,
+      "size_bytes": 49152,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "kyc_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "document_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "file_path",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "file_hash",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "file_size",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "mime_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'pending'::text",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "moderation_notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "moderated_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "moderated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "metadata",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109719_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109719_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109719_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109719_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_document_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((document_type = ANY (ARRAY['id_front'::text, 'id_back'::text, 'selfie'::text, 'proof_of_address'::text, 'income_proof'::text, 'bank_statement'::text, 'other'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'approved'::text, 'rejected'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_kyc_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "kyc_id",
+            "definition": "FOREIGN KEY (kyc_id) REFERENCES verification_kyc(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_moderated_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "moderated_by",
+            "definition": "FOREIGN KEY (moderated_by) REFERENCES auth.users(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_documents_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_verification_documents_document_type",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{document_type}",
+            "index_definition": "CREATE INDEX idx_verification_documents_document_type ON public.verification_documents USING btree (document_type)"
+          },
+          {
+            "index_name": "idx_verification_documents_kyc_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{kyc_id}",
+            "index_definition": "CREATE INDEX idx_verification_documents_kyc_id ON public.verification_documents USING btree (kyc_id)"
+          },
+          {
+            "index_name": "idx_verification_documents_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_verification_documents_status ON public.verification_documents USING btree (status)"
+          },
+          {
+            "index_name": "idx_verification_documents_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_verification_documents_user_id ON public.verification_documents USING btree (user_id)"
+          },
+          {
+            "index_name": "verification_documents_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX verification_documents_pkey ON public.verification_documents USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "verification_documents_kyc_id_fkey",
+            "foreign_table_name": "verification_kyc",
+            "columns": [
+              "kyc_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "update_verification_documents_updated_at",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_updated_at_column()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 15
+      }
+    },
+    {
+      "name": "verification_gps_tracking",
+      "comment": null,
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 49152,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "session_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "latitude",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 8,
+            "column_comment": null
+          },
+          {
+            "column_name": "longitude",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 11,
+            "numeric_scale": 8,
+            "column_comment": null
+          },
+          {
+            "column_name": "accuracy",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "altitude",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "speed",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "heading",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "timestamp",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "location_context",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "metadata",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109748_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109748_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109748_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109748_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109748_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109748_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_gps_tracking_location_context_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((location_context = ANY (ARRAY['kyc_submission'::text, 'property_viewing'::text, 'agent_meeting'::text, 'document_upload'::text, 'other'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_gps_tracking_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_gps_tracking_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_verification_gps_tracking_location_context",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{location_context}",
+            "index_definition": "CREATE INDEX idx_verification_gps_tracking_location_context ON public.verification_gps_tracking USING btree (location_context)"
+          },
+          {
+            "index_name": "idx_verification_gps_tracking_session_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{session_id}",
+            "index_definition": "CREATE INDEX idx_verification_gps_tracking_session_id ON public.verification_gps_tracking USING btree (session_id)"
+          },
+          {
+            "index_name": "idx_verification_gps_tracking_timestamp",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{timestamp}",
+            "index_definition": "CREATE INDEX idx_verification_gps_tracking_timestamp ON public.verification_gps_tracking USING btree (\"timestamp\")"
+          },
+          {
+            "index_name": "idx_verification_gps_tracking_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_verification_gps_tracking_user_id ON public.verification_gps_tracking USING btree (user_id)"
+          },
+          {
+            "index_name": "verification_gps_tracking_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX verification_gps_tracking_pkey ON public.verification_gps_tracking USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "verification_kyc",
+      "comment": null,
+      "columns": 14,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "full_name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "date_of_birth",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "id_number",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "id_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "country_of_issue",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'pending'::text",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "rejection_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "metadata",
+            "data_type": "jsonb",
+            "is_nullable": "YES",
+            "column_default": "'{}'::jsonb",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_109695_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109695_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_109695_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_id_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((id_type = ANY (ARRAY['passport'::text, 'national_id'::text, 'drivers_license'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'approved'::text, 'rejected'::text, 'expired'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_verified_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "verified_by",
+            "definition": "FOREIGN KEY (verified_by) REFERENCES auth.users(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_verification_kyc_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_verification_kyc_status ON public.verification_kyc USING btree (status)"
+          },
+          {
+            "index_name": "idx_verification_kyc_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_verification_kyc_user_id ON public.verification_kyc USING btree (user_id)"
+          },
+          {
+            "index_name": "idx_verification_kyc_verified_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{verified_at}",
+            "index_definition": "CREATE INDEX idx_verification_kyc_verified_at ON public.verification_kyc USING btree (verified_at)"
+          },
+          {
+            "index_name": "verification_kyc_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX verification_kyc_pkey ON public.verification_kyc USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [
+          {
+            "trigger_name": "update_verification_kyc_updated_at",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_updated_at_column()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 14
+      }
+    },
+    {
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 10,
@@ -32111,6 +34729,14 @@
       ]
     },
     {
+      "fromTable": "broker_kyc_documents",
+      "toTable": "broker_kyc_verifications",
+      "constraint_name": "broker_kyc_documents_verification_id_fkey",
+      "columns": [
+        "verification_id"
+      ]
+    },
+    {
       "fromTable": "campaign_participants",
       "toTable": "promotional_campaigns",
       "constraint_name": "campaign_participants_campaign_id_fkey",
@@ -33060,6 +35686,14 @@
       "constraint_name": "user_regional_preferences_user_id_fkey",
       "columns": [
         "user_id"
+      ]
+    },
+    {
+      "fromTable": "verification_documents",
+      "toTable": "verification_kyc",
+      "constraint_name": "verification_documents_kyc_id_fkey",
+      "columns": [
+        "kyc_id"
       ]
     },
     {

@@ -61,6 +61,7 @@ RETURNING *;
 - `idx_properties_search_composite`: property_type, price, status, city_id
 - `idx_properties_state_new`: state_id
 - `idx_properties_status`: status
+- `idx_properties_status_created_at`: status, created_at
 - `idx_properties_updated_at`: updated_at
 - `idx_properties_user_id`: user_id
 - `idx_properties_user_status`: user_id, status, created_at

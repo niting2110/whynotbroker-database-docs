@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-02-14T06:58:21.371Z
+// Generated: 2026-02-21T06:55:07.593Z
 
 export interface Database {
   admin_audit_logs: {
@@ -164,6 +164,123 @@ export interface Database {
       published_at?: string | Date;
       created_at?: string | Date;
       updated_at?: string | Date;
+    };
+  };
+
+  broker_aadhaar_verifications: {
+    Row: {
+      id: string;
+      user_id: string;
+      status: string;
+      masked_aadhaar?: string;
+      otp_expires_at?: string | Date;
+      resend_count?: number;
+      name?: string;
+      dob?: string | Date;
+      gender?: string;
+      address?: string;
+      photo_available?: boolean;
+      verified_at?: string | Date;
+      created_at: string | Date;
+    };
+  };
+
+  broker_gps_tracking: {
+    Row: {
+      id: string;
+      user_id: string;
+      latitude: number;
+      longitude: number;
+      accuracy?: number;
+      altitude?: number;
+      address?: string;
+      activity_type?: string;
+      property_id?: string;
+      within_geofence?: boolean;
+      distance_from_prop?: number;
+      city_match?: boolean;
+      suspicious_activity?: boolean;
+      recorded_at: string | Date;
+      created_at: string | Date;
+    };
+  };
+
+  broker_gst_verifications: {
+    Row: {
+      id: string;
+      user_id: string;
+      status: string;
+      gst_number: string;
+      business_name?: string;
+      legal_name?: string;
+      trade_name?: string;
+      business_name_match?: boolean;
+      registration_date?: string | Date;
+      gst_status?: string;
+      taxpayer_type?: string;
+      state?: string;
+      state_code?: string;
+      principal_place_address?: string;
+      verified_at?: string | Date;
+      created_at: string | Date;
+    };
+  };
+
+  broker_kyc_documents: {
+    Row: {
+      id: string;
+      verification_id: string;
+      user_id: string;
+      document_type: string;
+      status: string;
+      file_size?: number;
+      file_type?: string;
+      storage_url?: string;
+      thumbnail_url?: string;
+      document_number?: string;
+      name_matched?: boolean;
+      tamper_detected?: boolean;
+      confidence_score?: number;
+      ocr_extracted?: boolean;
+      uploaded_at: string | Date;
+      verified_at?: string | Date;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  broker_kyc_verifications: {
+    Row: {
+      id: string;
+      user_id: string;
+      status: string;
+      verification_type: string;
+      documents_required?: string;
+      verification_level?: string;
+      verified_by?: string;
+      risk_score?: number;
+      confidence_level?: string;
+      started_at: string | Date;
+      completed_at?: string | Date;
+      expires_at: string | Date;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  broker_pan_verifications: {
+    Row: {
+      id: string;
+      user_id: string;
+      status: string;
+      pan_number: string;
+      name?: string;
+      name_match?: boolean;
+      dob_match?: boolean;
+      pan_status?: string;
+      pan_type?: string;
+      verified_at?: string | Date;
+      created_at: string | Date;
     };
   };
 
@@ -1682,6 +1799,63 @@ export interface Database {
       preferred_currency?: string;
       receive_regional_offers?: boolean;
       receive_festival_campaigns?: boolean;
+      updated_at?: string | Date;
+    };
+  };
+
+  verification_documents: {
+    Row: {
+      id: string;
+      user_id: string;
+      kyc_id?: string;
+      document_type: string;
+      file_path: string;
+      file_hash?: string;
+      file_size?: number;
+      mime_type?: string;
+      status?: string;
+      moderation_notes?: string;
+      moderated_by?: string;
+      moderated_at?: string | Date;
+      metadata?: any;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+  };
+
+  verification_gps_tracking: {
+    Row: {
+      id: string;
+      user_id: string;
+      session_id: string;
+      latitude: number;
+      longitude: number;
+      accuracy?: number;
+      altitude?: number;
+      speed?: number;
+      heading?: number;
+      timestamp: string | Date;
+      location_context?: string;
+      metadata?: any;
+      created_at?: string | Date;
+    };
+  };
+
+  verification_kyc: {
+    Row: {
+      id: string;
+      user_id: string;
+      full_name: string;
+      date_of_birth?: string | Date;
+      id_number?: string;
+      id_type?: string;
+      country_of_issue?: string;
+      status?: string;
+      verified_at?: string | Date;
+      verified_by?: string;
+      rejection_reason?: string;
+      metadata?: any;
+      created_at?: string | Date;
       updated_at?: string | Date;
     };
   };

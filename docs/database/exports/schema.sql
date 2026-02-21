@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-02-14T06:58:21.342Z
+-- Generated: 2026-02-21T06:55:07.579Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -164,6 +164,123 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   published_at timestamp with time zone,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_aadhaar_verifications
+CREATE TABLE IF NOT EXISTS broker_aadhaar_verifications (
+  id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  status character varying(32) NOT NULL DEFAULT 'pending'::character varying,
+  masked_aadhaar character varying(32),
+  otp_expires_at timestamp with time zone,
+  resend_count integer DEFAULT 0,
+  name character varying(256),
+  dob date,
+  gender character(1),
+  address text,
+  photo_available boolean DEFAULT false,
+  verified_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_gps_tracking
+CREATE TABLE IF NOT EXISTS broker_gps_tracking (
+  id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  latitude numeric NOT NULL,
+  longitude numeric NOT NULL,
+  accuracy numeric,
+  altitude numeric,
+  address text,
+  activity_type character varying(64),
+  property_id character varying(64),
+  within_geofence boolean DEFAULT true,
+  distance_from_prop numeric,
+  city_match boolean DEFAULT true,
+  suspicious_activity boolean DEFAULT false,
+  recorded_at timestamp with time zone NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_gst_verifications
+CREATE TABLE IF NOT EXISTS broker_gst_verifications (
+  id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  status character varying(32) NOT NULL DEFAULT 'pending'::character varying,
+  gst_number character varying(15) NOT NULL,
+  business_name character varying(512),
+  legal_name character varying(512),
+  trade_name character varying(512),
+  business_name_match boolean DEFAULT false,
+  registration_date date,
+  gst_status character varying(32) DEFAULT 'active'::character varying,
+  taxpayer_type character varying(64),
+  state character varying(64),
+  state_code character varying(4),
+  principal_place_address text,
+  verified_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_kyc_documents
+CREATE TABLE IF NOT EXISTS broker_kyc_documents (
+  id character varying(64) NOT NULL,
+  verification_id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  document_type character varying(32) NOT NULL,
+  status character varying(32) NOT NULL DEFAULT 'uploaded'::character varying,
+  file_size bigint,
+  file_type character varying(64),
+  storage_url text,
+  thumbnail_url text,
+  document_number character varying(128),
+  name_matched boolean DEFAULT false,
+  tamper_detected boolean DEFAULT false,
+  confidence_score numeric DEFAULT 0,
+  ocr_extracted boolean DEFAULT false,
+  uploaded_at timestamp with time zone NOT NULL DEFAULT now(),
+  verified_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_kyc_verifications
+CREATE TABLE IF NOT EXISTS broker_kyc_verifications (
+  id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  status character varying(32) NOT NULL DEFAULT 'initiated'::character varying,
+  verification_type character varying(32) NOT NULL DEFAULT 'full'::character varying,
+  documents_required text,
+  verification_level character varying(32) DEFAULT 'none'::character varying,
+  verified_by character varying(64),
+  risk_score integer DEFAULT 0,
+  confidence_level character varying(32),
+  started_at timestamp with time zone NOT NULL DEFAULT now(),
+  completed_at timestamp with time zone,
+  expires_at timestamp with time zone NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: broker_pan_verifications
+CREATE TABLE IF NOT EXISTS broker_pan_verifications (
+  id character varying(64) NOT NULL,
+  user_id uuid NOT NULL,
+  status character varying(32) NOT NULL DEFAULT 'pending'::character varying,
+  pan_number character varying(10) NOT NULL,
+  name character varying(256),
+  name_match boolean DEFAULT false,
+  dob_match boolean DEFAULT false,
+  pan_status character varying(32) DEFAULT 'active'::character varying,
+  pan_type character varying(32) DEFAULT 'individual'::character varying,
+  verified_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -1684,6 +1801,63 @@ CREATE TABLE IF NOT EXISTS user_regional_preferences (
   receive_festival_campaigns boolean DEFAULT true,
   updated_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (user_id)
+);
+
+-- Table: verification_documents
+CREATE TABLE IF NOT EXISTS verification_documents (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  kyc_id uuid,
+  document_type text NOT NULL,
+  file_path text NOT NULL,
+  file_hash text,
+  file_size integer,
+  mime_type text,
+  status text DEFAULT 'pending'::text,
+  moderation_notes text,
+  moderated_by uuid,
+  moderated_at timestamp with time zone,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: verification_gps_tracking
+CREATE TABLE IF NOT EXISTS verification_gps_tracking (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  session_id uuid NOT NULL,
+  latitude numeric NOT NULL,
+  longitude numeric NOT NULL,
+  accuracy numeric,
+  altitude numeric,
+  speed numeric,
+  heading numeric,
+  timestamp timestamp with time zone NOT NULL,
+  location_context text,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: verification_kyc
+CREATE TABLE IF NOT EXISTS verification_kyc (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  full_name text NOT NULL,
+  date_of_birth date,
+  id_number text,
+  id_type text,
+  country_of_issue text,
+  status text DEFAULT 'pending'::text,
+  verified_at timestamp with time zone,
+  verified_by uuid,
+  rejection_reason text,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
 );
 
 -- Table: wallets

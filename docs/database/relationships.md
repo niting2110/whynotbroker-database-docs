@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 142
-Generated: 2026-02-14T06:58:21.340Z
+Total Relationships: 144
+Generated: 2026-02-21T06:55:07.576Z
 
 ```
 admin_audit_logs:
@@ -65,6 +65,10 @@ appointments:
 blog_posts:
   └─→ profiles (via: blog_posts_author_id_fkey)
       columns: author_id
+
+broker_kyc_documents:
+  └─→ broker_kyc_verifications (via: broker_kyc_documents_verification_id_fkey)
+      columns: verification_id
 
 campaign_participants:
   └─→ promotional_campaigns (via: campaign_participants_campaign_id_fkey)
@@ -411,6 +415,10 @@ user_regional_preferences:
       columns: primary_region_id
   └─→ profiles (via: user_regional_preferences_user_id_fkey)
       columns: user_id
+
+verification_documents:
+  └─→ verification_kyc (via: verification_documents_kyc_id_fkey)
+      columns: kyc_id
 
 wallets:
   └─→ regions (via: wallets_last_transaction_region_id_fkey)

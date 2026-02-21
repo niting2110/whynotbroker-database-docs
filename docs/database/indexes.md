@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-02-14T06:58:21.340Z
-Total Indexes: 374
+Generated: 2026-02-21T06:55:07.576Z
+Total Indexes: 415
 
 ## All Indexes
 
@@ -33,6 +33,22 @@ Total Indexes: 374
 | `blog_posts` | `blog_posts_pid_key` | btree | pid | ✓ |
 | `blog_posts` | `blog_posts_pkey` | btree | id | ✓ |
 | `blog_posts` | `blog_posts_slug_key` | btree | slug | ✓ |
+| `broker_aadhaar_verifications` | `broker_aadhaar_verifications_pkey` | btree | id | ✓ |
+| `broker_aadhaar_verifications` | `idx_aadhaar_user_id` | btree | user_id | — |
+| `broker_gps_tracking` | `broker_gps_tracking_pkey` | btree | id | ✓ |
+| `broker_gps_tracking` | `idx_gps_property_id` | btree | property_id | — |
+| `broker_gps_tracking` | `idx_gps_recorded_at` | btree | recorded_at | — |
+| `broker_gps_tracking` | `idx_gps_user_id` | btree | user_id | — |
+| `broker_gst_verifications` | `broker_gst_verifications_pkey` | btree | id | ✓ |
+| `broker_gst_verifications` | `idx_gst_user_id` | btree | user_id | — |
+| `broker_kyc_documents` | `broker_kyc_documents_pkey` | btree | id | ✓ |
+| `broker_kyc_documents` | `idx_kyc_docs_user_id` | btree | user_id | — |
+| `broker_kyc_documents` | `idx_kyc_docs_verification_id` | btree | verification_id | — |
+| `broker_kyc_verifications` | `broker_kyc_verifications_pkey` | btree | id | ✓ |
+| `broker_kyc_verifications` | `idx_kyc_status` | btree | status | — |
+| `broker_kyc_verifications` | `idx_kyc_user_id` | btree | user_id | — |
+| `broker_pan_verifications` | `broker_pan_verifications_pkey` | btree | id | ✓ |
+| `broker_pan_verifications` | `idx_pan_user_id` | btree | user_id | — |
 | `builders` | `builders_pkey` | btree | id | ✓ |
 | `builders` | `idx_builders_dedup_group` | btree | dedup_group_id | — |
 | `builders` | `idx_builders_name` | btree | name | — |
@@ -137,6 +153,11 @@ Total Indexes: 374
 | `messages` | `idx_messages_property` | btree | property_id | — |
 | `messages` | `idx_messages_sender_receiver` | btree | sender_id, receiver_id | — |
 | `messages` | `messages_pkey` | btree | id | ✓ |
+| `moderation_history` | `idx_moderation_history_action` | btree | action | — |
+| `moderation_history` | `idx_moderation_history_admin_created_at` | btree | admin_id, created_at | — |
+| `moderation_history` | `idx_moderation_history_admin_id` | btree | admin_id | — |
+| `moderation_history` | `idx_moderation_history_created_at_desc` | btree | created_at | — |
+| `moderation_history` | `idx_moderation_history_property_id` | btree | property_id | — |
 | `moderation_history` | `moderation_history_pkey` | btree | id | ✓ |
 | `notification_preferences` | `notification_preferences_pkey` | btree | user_id | ✓ |
 | `notifications` | `idx_notifications_user_unread` | btree | user_id, is_read | — |
@@ -156,8 +177,12 @@ Total Indexes: 374
 | `pricing_rules` | `idx_pricing_rules_region_action` | btree | action, region_id, is_active | — |
 | `pricing_rules` | `pricing_rules_pkey` | btree | id | ✓ |
 | `profiles` | `idx_profiles_account_status` | btree | account_status | — |
+| `profiles` | `idx_profiles_created_at_desc` | btree | created_at | — |
+| `profiles` | `idx_profiles_id_role` | btree | id, role | — |
 | `profiles` | `idx_profiles_is_verified` | btree | is_verified | — |
+| `profiles` | `idx_profiles_kyc_status` | btree | kyc_status | — |
 | `profiles` | `idx_profiles_rera` | btree | rera_registration_number | — |
+| `profiles` | `idx_profiles_role` | btree | role | — |
 | `profiles` | `idx_profiles_type_verified` | btree | user_type, is_verified | — |
 | `profiles` | `idx_profiles_user_type` | btree | user_type | — |
 | `profiles` | `profiles_email_key` | btree | email | ✓ |
@@ -212,6 +237,7 @@ Total Indexes: 374
 | `properties` | `idx_properties_search_composite` | btree | property_type, price, status, city_id | — |
 | `properties` | `idx_properties_state_new` | btree | state_id | — |
 | `properties` | `idx_properties_status` | btree | status | — |
+| `properties` | `idx_properties_status_created_at` | btree | status, created_at | — |
 | `properties` | `idx_properties_updated_at` | btree | updated_at | — |
 | `properties` | `idx_properties_user_id` | btree | user_id | — |
 | `properties` | `idx_properties_user_status` | btree | user_id, status, created_at | — |
@@ -286,6 +312,7 @@ Total Indexes: 374
 | `property_views` | `idx_property_views_date` | btree | viewed_at | — |
 | `property_views` | `idx_property_views_property` | btree | property_id | — |
 | `property_views` | `idx_property_views_property_session` | btree | property_id, session_id | — |
+| `property_views` | `idx_property_views_user_id_not_null` | btree | user_id | — |
 | `property_views` | `property_views_pkey` | btree | id | ✓ |
 | `property_views` | `unique_property_session` | btree | property_id, session_id | ✓ |
 | `property_visits` | `idx_property_visits_property` | btree | property_id, visit_date | — |
@@ -377,6 +404,20 @@ Total Indexes: 374
 | `user_regional_preferences` | `idx_user_prefs_active_regions` | gin | active_regions | — |
 | `user_regional_preferences` | `idx_user_prefs_region` | btree | primary_region_id | — |
 | `user_regional_preferences` | `user_regional_preferences_pkey` | btree | user_id | ✓ |
+| `verification_documents` | `idx_verification_documents_document_type` | btree | document_type | — |
+| `verification_documents` | `idx_verification_documents_kyc_id` | btree | kyc_id | — |
+| `verification_documents` | `idx_verification_documents_status` | btree | status | — |
+| `verification_documents` | `idx_verification_documents_user_id` | btree | user_id | — |
+| `verification_documents` | `verification_documents_pkey` | btree | id | ✓ |
+| `verification_gps_tracking` | `idx_verification_gps_tracking_location_context` | btree | location_context | — |
+| `verification_gps_tracking` | `idx_verification_gps_tracking_session_id` | btree | session_id | — |
+| `verification_gps_tracking` | `idx_verification_gps_tracking_timestamp` | btree | timestamp | — |
+| `verification_gps_tracking` | `idx_verification_gps_tracking_user_id` | btree | user_id | — |
+| `verification_gps_tracking` | `verification_gps_tracking_pkey` | btree | id | ✓ |
+| `verification_kyc` | `idx_verification_kyc_status` | btree | status | — |
+| `verification_kyc` | `idx_verification_kyc_user_id` | btree | user_id | — |
+| `verification_kyc` | `idx_verification_kyc_verified_at` | btree | verified_at | — |
+| `verification_kyc` | `verification_kyc_pkey` | btree | id | ✓ |
 | `wallets` | `idx_wallets_balance` | btree | balance | — |
 | `wallets` | `idx_wallets_user_id` | btree | user_id | — |
 | `wallets` | `wallets_pkey` | btree | id | ✓ |

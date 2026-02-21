@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-02-14T06:58:21.342Z
-Total Issues: 112
-Warnings: 63
-Recommendations: 49
+Generated: 2026-02-21T06:55:07.579Z
+Total Issues: 114
+Warnings: 60
+Recommendations: 54
 
 ## ⚠️ Warnings
 
@@ -36,8 +36,6 @@ Recommendations: 49
 | MEDIUM | `messages` | Foreign key messages_parent_message_id_fkey has no covering index |
 | MEDIUM | `messages` | Foreign key messages_receiver_id_fkey has no covering index |
 | MEDIUM | `messages` | Foreign key messages_sender_id_fkey has no covering index |
-| MEDIUM | `moderation_history` | Foreign key moderation_history_admin_id_fkey has no covering index |
-| MEDIUM | `moderation_history` | Foreign key moderation_history_property_id_fkey has no covering index |
 | MEDIUM | `notifications` | Foreign key notifications_user_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_admin_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_approved_by_fkey has no covering index |
@@ -50,7 +48,6 @@ Recommendations: 49
 | MEDIUM | `property_valuations` | Foreign key property_valuations_property_id_fkey has no covering index |
 | MEDIUM | `property_valuations` | Foreign key property_valuations_validated_by_fkey has no covering index |
 | MEDIUM | `property_verifications` | Foreign key property_verifications_verified_by_fkey has no covering index |
-| MEDIUM | `property_views` | Foreign key property_views_user_id_fkey has no covering index |
 | MEDIUM | `property_visits` | Foreign key property_visits_accompanied_by_fkey has no covering index |
 | MEDIUM | `property_visits` | Foreign key property_visits_property_id_fkey has no covering index |
 | MEDIUM | `referrals` | Foreign key referrals_referred_id_fkey has no covering index |
@@ -85,6 +82,10 @@ Recommendations: 49
 | `admin_regions` | Table missing timestamp columns (created_at, updated_at) |
 | `admin_roles` | Table missing timestamp columns (created_at, updated_at) |
 | `admins` | Table missing timestamp columns (created_at, updated_at) |
+| `broker_aadhaar_verifications` | Table missing timestamp columns (created_at, updated_at) |
+| `broker_gps_tracking` | Table missing timestamp columns (created_at, updated_at) |
+| `broker_gst_verifications` | Table missing timestamp columns (created_at, updated_at) |
+| `broker_pan_verifications` | Table missing timestamp columns (created_at, updated_at) |
 | `campaign_participants` | Table missing timestamp columns (created_at, updated_at) |
 | `coupon_usage` | Table missing timestamp columns (created_at, updated_at) |
 | `hot_properties` | Table missing timestamp columns (created_at, updated_at) |
@@ -126,3 +127,4 @@ Recommendations: 49
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |
+| `verification_gps_tracking` | Table missing timestamp columns (created_at, updated_at) |
