@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 144
-Generated: 2026-02-21T06:55:07.576Z
+Total Relationships: 141
+Generated: 2026-02-27T07:05:05.031Z
 
 ```
 admin_audit_logs:
@@ -328,12 +328,6 @@ regions:
   └─→ regions (via: regions_parent_region_id_fkey)
       columns: parent_region_id
 
-repeat_customer_analytics:
-  └─→ properties (via: repeat_customer_analytics_most_viewed_property_id_fkey)
-      columns: most_viewed_property_id
-  └─→ profiles (via: repeat_customer_analytics_user_id_fkey)
-      columns: user_id
-
 role_permissions:
   └─→ permissions (via: role_permissions_permission_id_fkey)
       columns: permission_id
@@ -391,10 +385,6 @@ undervalued_properties:
       columns: property_id
   └─→ profiles (via: undervalued_properties_verified_by_fkey)
       columns: verified_by
-
-user_engagement_metrics:
-  └─→ profiles (via: user_engagement_metrics_user_id_fkey)
-      columns: user_id
 
 user_favorites:
   └─→ properties (via: user_favorites_property_id_fkey)

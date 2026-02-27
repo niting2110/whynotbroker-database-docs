@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 89
+**Total Tables:** 87
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -75,7 +75,6 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - property_visits (11 columns)
 - referrals (12 columns)
 - regions (15 columns)
-- repeat_customer_analytics (31 columns)
 - role_permissions (2 columns)
 - roles (2 columns)
 - saved_searches (11 columns)
@@ -89,7 +88,6 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - system_health_metrics (6 columns)
 - transactions (31 columns)
 - undervalued_properties (27 columns)
-- user_engagement_metrics (36 columns)
 - user_favorites (4 columns)
 - user_ratings (17 columns)
 - user_regional_preferences (8 columns)

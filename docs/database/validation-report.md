@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2026-02-21T06:55:07.579Z
-Total Issues: 114
-Warnings: 60
+Generated: 2026-02-27T07:05:05.033Z
+Total Issues: 113
+Warnings: 59
 Recommendations: 54
 
 ## ⚠️ Warnings
@@ -51,7 +51,6 @@ Recommendations: 54
 | MEDIUM | `property_visits` | Foreign key property_visits_accompanied_by_fkey has no covering index |
 | MEDIUM | `property_visits` | Foreign key property_visits_property_id_fkey has no covering index |
 | MEDIUM | `referrals` | Foreign key referrals_referred_id_fkey has no covering index |
-| MEDIUM | `repeat_customer_analytics` | Foreign key repeat_customer_analytics_most_viewed_property_id_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_permission_id_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_role_id_fkey has no covering index |
 | MEDIUM | `saved_searches` | Foreign key saved_searches_user_id_fkey has no covering index |

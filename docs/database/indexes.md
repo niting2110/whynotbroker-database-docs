@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-02-21T06:55:07.576Z
-Total Indexes: 415
+Generated: 2026-02-27T07:05:05.031Z
+Total Indexes: 402
 
 ## All Indexes
 
@@ -327,13 +327,6 @@ Total Indexes: 415
 | `regions` | `idx_regions_type` | btree | type | — |
 | `regions` | `regions_code_key` | btree | code | ✓ |
 | `regions` | `regions_pkey` | btree | id | ✓ |
-| `repeat_customer_analytics` | `idx_repeat_churn` | btree | churn_risk_score | — |
-| `repeat_customer_analytics` | `idx_repeat_customer_user` | btree | user_id | — |
-| `repeat_customer_analytics` | `idx_repeat_frequency` | btree | visit_frequency_trend | — |
-| `repeat_customer_analytics` | `idx_repeat_stage` | btree | conversion_funnel_stage | — |
-| `repeat_customer_analytics` | `idx_repeat_visits` | btree | visits_last_30_days | — |
-| `repeat_customer_analytics` | `repeat_customer_analytics_pkey` | btree | id | ✓ |
-| `repeat_customer_analytics` | `repeat_customer_analytics_user_id_key` | btree | user_id | ✓ |
 | `role_permissions` | `role_permissions_pkey` | btree | role_id, permission_id | ✓ |
 | `roles` | `roles_name_key` | btree | name | ✓ |
 | `roles` | `roles_pkey` | btree | id | ✓ |
@@ -386,12 +379,6 @@ Total Indexes: 415
 | `undervalued_properties` | `idx_undervalued_property` | btree | property_id | — |
 | `undervalued_properties` | `idx_undervalued_rating` | btree | deal_rating | — |
 | `undervalued_properties` | `undervalued_properties_pkey` | btree | id | ✓ |
-| `user_engagement_metrics` | `idx_user_engagement_intent` | btree | buying_intent, selling_intent | — |
-| `user_engagement_metrics` | `idx_user_engagement_last_active` | btree | last_activity_at | — |
-| `user_engagement_metrics` | `idx_user_engagement_score` | btree | engagement_score, intent_score | — |
-| `user_engagement_metrics` | `idx_user_engagement_segment` | btree | user_segment | — |
-| `user_engagement_metrics` | `idx_user_engagement_user` | btree | user_id | — |
-| `user_engagement_metrics` | `user_engagement_metrics_pkey` | btree | id | ✓ |
 | `user_favorites` | `idx_user_favorites_property` | btree | property_id | — |
 | `user_favorites` | `idx_user_favorites_property_user` | btree | user_id, property_id | — |
 | `user_favorites` | `idx_user_favorites_user` | btree | user_id | — |
@@ -495,10 +482,6 @@ Total Indexes: 415
 **Table: `regions`, Columns: code**
 - `idx_regions_code` (btree)
 - `regions_code_key` (btree, unique)
-
-**Table: `repeat_customer_analytics`, Columns: user_id**
-- `idx_repeat_customer_user` (btree)
-- `repeat_customer_analytics_user_id_key` (btree, unique)
 
 **Table: `states`, Columns: lgd_code**
 - `idx_states_lgd` (btree)

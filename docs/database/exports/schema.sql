@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-02-21T06:55:07.579Z
+-- Generated: 2026-02-27T07:05:05.033Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1470,42 +1470,6 @@ CREATE TABLE IF NOT EXISTS regions (
   ,PRIMARY KEY (id)
 );
 
--- Table: repeat_customer_analytics
-CREATE TABLE IF NOT EXISTS repeat_customer_analytics (
-  id uuid NOT NULL DEFAULT gen_random_uuid(),
-  user_id uuid NOT NULL,
-  total_visits integer DEFAULT 0,
-  visits_last_7_days integer DEFAULT 0,
-  visits_last_30_days integer DEFAULT 0,
-  visits_last_90_days integer DEFAULT 0,
-  consecutive_days_active integer DEFAULT 0,
-  longest_streak_days integer DEFAULT 0,
-  total_unique_properties_viewed integer DEFAULT 0,
-  properties_viewed_multiple_times integer DEFAULT 0,
-  avg_views_per_property numeric,
-  most_viewed_property_id uuid,
-  most_viewed_property_count integer DEFAULT 0,
-  consistent_search_criteria boolean DEFAULT false,
-  search_criteria_changes integer DEFAULT 0,
-  location_focus_count integer DEFAULT 0,
-  price_range_stability numeric,
-  avg_days_between_visits numeric,
-  visit_frequency_trend text,
-  inquiries_per_property_viewed numeric,
-  conversion_funnel_stage text,
-  is_repeat_customer boolean DEFAULT false,
-  repeat_customer_type text,
-  previous_properties_bought integer DEFAULT 0,
-  previous_properties_sold integer DEFAULT 0,
-  total_transaction_value numeric DEFAULT 0,
-  customer_lifetime_value numeric DEFAULT 0,
-  churn_risk_score numeric DEFAULT 0,
-  reactivation_potential numeric DEFAULT 0,
-  created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
-  ,PRIMARY KEY (id)
-);
-
 -- Table: role_permissions
 CREATE TABLE IF NOT EXISTS role_permissions (
   role_id uuid NOT NULL,
@@ -1715,47 +1679,6 @@ CREATE TABLE IF NOT EXISTS undervalued_properties (
   alert_sent_to_users ARRAY,
   expires_at timestamp with time zone,
   created_at timestamp with time zone DEFAULT now()
-  ,PRIMARY KEY (id)
-);
-
--- Table: user_engagement_metrics
-CREATE TABLE IF NOT EXISTS user_engagement_metrics (
-  id uuid NOT NULL DEFAULT gen_random_uuid(),
-  user_id uuid NOT NULL,
-  total_sessions integer DEFAULT 0,
-  total_page_views integer DEFAULT 0,
-  total_property_views integer DEFAULT 0,
-  unique_properties_viewed integer DEFAULT 0,
-  total_searches integer DEFAULT 0,
-  saved_searches_count integer DEFAULT 0,
-  avg_search_frequency_days numeric,
-  avg_session_duration_seconds integer,
-  avg_properties_per_session numeric,
-  property_detail_views integer DEFAULT 0,
-  contact_reveals integer DEFAULT 0,
-  favorites_count integer DEFAULT 0,
-  inquiries_sent integer DEFAULT 0,
-  site_visits_scheduled integer DEFAULT 0,
-  comparisons_made integer DEFAULT 0,
-  properties_listed integer DEFAULT 0,
-  valuation_requests integer DEFAULT 0,
-  documents_uploaded integer DEFAULT 0,
-  engagement_score numeric DEFAULT 0,
-  intent_score numeric DEFAULT 0,
-  user_segment text,
-  buying_intent text,
-  selling_intent text,
-  first_activity_at timestamp with time zone,
-  last_activity_at timestamp with time zone,
-  most_active_day_of_week integer,
-  most_active_hour_of_day integer,
-  preferred_locations ARRAY,
-  preferred_property_types ARRAY,
-  preferred_bhk_types ARRAY,
-  budget_range_min numeric,
-  budget_range_max numeric,
-  created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

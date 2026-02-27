@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-02-21T06:55:07.593Z
+// Generated: 2026-02-27T07:05:05.045Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1470,42 +1470,6 @@ export interface Database {
     };
   };
 
-  repeat_customer_analytics: {
-    Row: {
-      id: string;
-      user_id: string;
-      total_visits?: number;
-      visits_last_7_days?: number;
-      visits_last_30_days?: number;
-      visits_last_90_days?: number;
-      consecutive_days_active?: number;
-      longest_streak_days?: number;
-      total_unique_properties_viewed?: number;
-      properties_viewed_multiple_times?: number;
-      avg_views_per_property?: number;
-      most_viewed_property_id?: string;
-      most_viewed_property_count?: number;
-      consistent_search_criteria?: boolean;
-      search_criteria_changes?: number;
-      location_focus_count?: number;
-      price_range_stability?: number;
-      avg_days_between_visits?: number;
-      visit_frequency_trend?: string;
-      inquiries_per_property_viewed?: number;
-      conversion_funnel_stage?: string;
-      is_repeat_customer?: boolean;
-      repeat_customer_type?: string;
-      previous_properties_bought?: number;
-      previous_properties_sold?: number;
-      total_transaction_value?: number;
-      customer_lifetime_value?: number;
-      churn_risk_score?: number;
-      reactivation_potential?: number;
-      created_at?: string | Date;
-      updated_at?: string | Date;
-    };
-  };
-
   role_permissions: {
     Row: {
       role_id: string;
@@ -1715,47 +1679,6 @@ export interface Database {
       alert_sent_to_users?: any;
       expires_at?: string | Date;
       created_at?: string | Date;
-    };
-  };
-
-  user_engagement_metrics: {
-    Row: {
-      id: string;
-      user_id: string;
-      total_sessions?: number;
-      total_page_views?: number;
-      total_property_views?: number;
-      unique_properties_viewed?: number;
-      total_searches?: number;
-      saved_searches_count?: number;
-      avg_search_frequency_days?: number;
-      avg_session_duration_seconds?: number;
-      avg_properties_per_session?: number;
-      property_detail_views?: number;
-      contact_reveals?: number;
-      favorites_count?: number;
-      inquiries_sent?: number;
-      site_visits_scheduled?: number;
-      comparisons_made?: number;
-      properties_listed?: number;
-      valuation_requests?: number;
-      documents_uploaded?: number;
-      engagement_score?: number;
-      intent_score?: number;
-      user_segment?: string;
-      buying_intent?: string;
-      selling_intent?: string;
-      first_activity_at?: string | Date;
-      last_activity_at?: string | Date;
-      most_active_day_of_week?: number;
-      most_active_hour_of_day?: number;
-      preferred_locations?: any;
-      preferred_property_types?: any;
-      preferred_bhk_types?: any;
-      budget_range_min?: number;
-      budget_range_max?: number;
-      created_at?: string | Date;
-      updated_at?: string | Date;
     };
   };
 
