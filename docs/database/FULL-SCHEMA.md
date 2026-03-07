@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-02-27T07:05:05.021Z
+> Auto-generated: 2026-03-07T06:54:18.465Z
 > Total Tables: 87
 > PostgreSQL: 17.6
 
@@ -2974,63 +2974,6 @@
 
 ---
 
-## `property_repeat_views`
-
-**Statistics:**
-- Rows: ~0
-- Columns: 21
-- Indexes: 5
-- Foreign Keys: 2
-
-### Columns
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|--------|
-| `id` | `uuid` | NO | `gen_random_uuid()` |
-| `property_id` | `uuid` | NO | `—` |
-| `user_id` | `uuid` | YES | `—` |
-| `session_id` | `text` | YES | `—` |
-| `view_number` | `integer` | NO | `—` |
-| `time_since_last_view_hours` | `numeric` | YES | `—` |
-| `total_time_on_page_seconds` | `integer` | YES | `—` |
-| `scrolled_percentage` | `integer` | YES | `—` |
-| `images_viewed` | `integer` | YES | `—` |
-| `video_played` | `boolean` | YES | `false` |
-| `floor_plan_viewed` | `boolean` | YES | `false` |
-| `amenities_expanded` | `boolean` | YES | `false` |
-| `location_map_interacted` | `boolean` | YES | `false` |
-| `contact_revealed` | `boolean` | YES | `false` |
-| `favorite_added` | `boolean` | YES | `false` |
-| `inquiry_sent` | `boolean` | YES | `false` |
-| `comparison_added` | `boolean` | YES | `false` |
-| `shared` | `boolean` | YES | `false` |
-| `device_type` | `text` | YES | `—` |
-| `referrer_source` | `text` | YES | `—` |
-| `viewed_at` | `timestamp with time zone` | YES | `now()` |
-
-### Indexes
-
-| Name | Type | Columns | Unique |
-|------|------|---------|--------|
-| `idx_property_repeat_actions` | btree | property_id | — |
-| `idx_property_repeat_number` | btree | property_id, user_id, view_number | — |
-| `idx_property_repeat_property` | btree | property_id | — |
-| `idx_property_repeat_user` | btree | user_id | — |
-| `property_repeat_views_pkey` | btree | id | ✓ |
-
-### Foreign Keys
-
-- `property_repeat_views_property_id_fkey`:
-  - Columns: `property_id` → `properties(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: CASCADE
-- `property_repeat_views_user_id_fkey`:
-  - Columns: `user_id` → `profiles(id)`
-  - ON UPDATE: NO ACTION
-  - ON DELETE: SET NULL
-
----
-
 ## `property_reports`
 
 **Statistics:**
@@ -3848,6 +3791,38 @@
 |------|------|---------|--------|
 | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics_pkey` | btree | id | ✓ |
+
+---
+
+## `team_messages`
+
+**Statistics:**
+- Rows: ~3
+- Columns: 8
+- Indexes: 4
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `from_team` | `text` | NO | `—` |
+| `to_team` | `text` | NO | `—` |
+| `message` | `text` | NO | `—` |
+| `response` | `text` | YES | `—` |
+| `responded_at` | `timestamp with time zone` | YES | `—` |
+| `status` | `text` | YES | `'pending'::text` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_team_messages_from_team` | btree | from_team | — |
+| `idx_team_messages_status` | btree | status | — |
+| `idx_team_messages_to_team` | btree | to_team | — |
+| `team_messages_pkey` | btree | id | ✓ |
 
 ---
 

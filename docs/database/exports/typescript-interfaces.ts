@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-02-27T07:05:05.045Z
+// Generated: 2026-03-07T06:54:18.484Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1289,32 +1289,6 @@ export interface Database {
     };
   };
 
-  property_repeat_views: {
-    Row: {
-      id: string;
-      property_id: string;
-      user_id?: string;
-      session_id?: string;
-      view_number: number;
-      time_since_last_view_hours?: number;
-      total_time_on_page_seconds?: number;
-      scrolled_percentage?: number;
-      images_viewed?: number;
-      video_played?: boolean;
-      floor_plan_viewed?: boolean;
-      amenities_expanded?: boolean;
-      location_map_interacted?: boolean;
-      contact_revealed?: boolean;
-      favorite_added?: boolean;
-      inquiry_sent?: boolean;
-      comparison_added?: boolean;
-      shared?: boolean;
-      device_type?: string;
-      referrer_source?: string;
-      viewed_at?: string | Date;
-    };
-  };
-
   property_reports: {
     Row: {
       id: string;
@@ -1611,6 +1585,19 @@ export interface Database {
       metric_unit?: string;
       context?: any;
       recorded_at?: string | Date;
+    };
+  };
+
+  team_messages: {
+    Row: {
+      id: string;
+      from_team: string;
+      to_team: string;
+      message: string;
+      response?: string;
+      responded_at?: string | Date;
+      status?: string;
+      created_at?: string | Date;
     };
   };
 

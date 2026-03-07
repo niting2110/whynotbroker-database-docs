@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 141
-Generated: 2026-02-27T07:05:05.031Z
+Total Relationships: 139
+Generated: 2026-03-07T06:54:18.474Z
 
 ```
 admin_audit_logs:
@@ -271,12 +271,6 @@ property_price_history:
 property_ranking_criteria:
   └─→ properties (via: property_ranking_criteria_property_id_fkey)
       columns: property_id
-
-property_repeat_views:
-  └─→ properties (via: property_repeat_views_property_id_fkey)
-      columns: property_id
-  └─→ profiles (via: property_repeat_views_user_id_fkey)
-      columns: user_id
 
 property_reports:
   └─→ properties (via: property_reports_property_id_fkey)

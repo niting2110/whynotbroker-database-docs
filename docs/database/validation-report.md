@@ -1,6 +1,6 @@
 # Schema Validation Report
 
-Generated: 2026-02-27T07:05:05.033Z
+Generated: 2026-03-07T06:54:18.477Z
 Total Issues: 113
 Warnings: 59
 Recommendations: 54
@@ -109,7 +109,6 @@ Recommendations: 54
 | `property_leads` | Table missing timestamp columns (created_at, updated_at) |
 | `property_price_history` | Table missing timestamp columns (created_at, updated_at) |
 | `property_ranking_criteria` | Table missing timestamp columns (created_at, updated_at) |
-| `property_repeat_views` | Table missing timestamp columns (created_at, updated_at) |
 | `property_reports` | Table missing timestamp columns (created_at, updated_at) |
 | `property_shares` | Table missing timestamp columns (created_at, updated_at) |
 | `property_valuations` | Table missing timestamp columns (created_at, updated_at) |
@@ -123,6 +122,7 @@ Recommendations: 54
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
 | `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |
 | `system_health_metrics` | Table missing timestamp columns (created_at, updated_at) |
+| `team_messages` | Table missing timestamp columns (created_at, updated_at) |
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |

@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-02-27T07:05:05.031Z
-Total Indexes: 402
+Generated: 2026-03-07T06:54:18.475Z
+Total Indexes: 401
 
 ## All Indexes
 
@@ -289,11 +289,6 @@ Total Indexes: 402
 | `property_ranking_criteria` | `idx_ranking_value_percentile` | btree | value_percentile | — |
 | `property_ranking_criteria` | `property_ranking_criteria_pkey` | btree | id | ✓ |
 | `property_ranking_criteria` | `property_ranking_criteria_property_id_key` | btree | property_id | ✓ |
-| `property_repeat_views` | `idx_property_repeat_actions` | btree | property_id | — |
-| `property_repeat_views` | `idx_property_repeat_number` | btree | property_id, user_id, view_number | — |
-| `property_repeat_views` | `idx_property_repeat_property` | btree | property_id | — |
-| `property_repeat_views` | `idx_property_repeat_user` | btree | user_id | — |
-| `property_repeat_views` | `property_repeat_views_pkey` | btree | id | ✓ |
 | `property_reports` | `idx_property_reports_property` | btree | property_id | — |
 | `property_reports` | `idx_property_reports_status` | btree | status | — |
 | `property_reports` | `property_reports_pkey` | btree | id | ✓ |
@@ -361,6 +356,10 @@ Total Indexes: 402
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
+| `team_messages` | `idx_team_messages_from_team` | btree | from_team | — |
+| `team_messages` | `idx_team_messages_status` | btree | status | — |
+| `team_messages` | `idx_team_messages_to_team` | btree | to_team | — |
+| `team_messages` | `team_messages_pkey` | btree | id | ✓ |
 | `transactions` | `idx_transactions_created_at` | btree | created_at | — |
 | `transactions` | `idx_transactions_gateway` | btree | gateway_transaction_id | — |
 | `transactions` | `idx_transactions_invoice` | btree | invoice_number | — |
@@ -462,10 +461,6 @@ Total Indexes: 402
 **Table: `property_ranking_criteria`, Columns: property_id**
 - `idx_ranking_property` (btree)
 - `property_ranking_criteria_property_id_key` (btree, unique)
-
-**Table: `property_repeat_views`, Columns: property_id**
-- `idx_property_repeat_actions` (btree)
-- `idx_property_repeat_property` (btree)
 
 **Table: `property_views`, Columns: property_id, viewed_at**
 - `idx_property_views_analytics` (btree)

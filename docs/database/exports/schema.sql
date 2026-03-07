@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-02-27T07:05:05.033Z
+-- Generated: 2026-03-07T06:54:18.477Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1289,32 +1289,6 @@ CREATE TABLE IF NOT EXISTS property_ranking_criteria (
   ,PRIMARY KEY (id)
 );
 
--- Table: property_repeat_views
-CREATE TABLE IF NOT EXISTS property_repeat_views (
-  id uuid NOT NULL DEFAULT gen_random_uuid(),
-  property_id uuid NOT NULL,
-  user_id uuid,
-  session_id text,
-  view_number integer NOT NULL,
-  time_since_last_view_hours numeric,
-  total_time_on_page_seconds integer,
-  scrolled_percentage integer,
-  images_viewed integer,
-  video_played boolean DEFAULT false,
-  floor_plan_viewed boolean DEFAULT false,
-  amenities_expanded boolean DEFAULT false,
-  location_map_interacted boolean DEFAULT false,
-  contact_revealed boolean DEFAULT false,
-  favorite_added boolean DEFAULT false,
-  inquiry_sent boolean DEFAULT false,
-  comparison_added boolean DEFAULT false,
-  shared boolean DEFAULT false,
-  device_type text,
-  referrer_source text,
-  viewed_at timestamp with time zone DEFAULT now()
-  ,PRIMARY KEY (id)
-);
-
 -- Table: property_reports
 CREATE TABLE IF NOT EXISTS property_reports (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -1611,6 +1585,19 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   metric_unit text,
   context jsonb,
   recorded_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: team_messages
+CREATE TABLE IF NOT EXISTS team_messages (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  from_team text NOT NULL,
+  to_team text NOT NULL,
+  message text NOT NULL,
+  response text,
+  responded_at timestamp with time zone,
+  status text DEFAULT 'pending'::text,
+  created_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

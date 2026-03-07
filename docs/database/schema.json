@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-27T07:05:05.023Z",
+  "generated_at": "2026-03-07T06:54:18.468Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,10 +7,10 @@
     "tables": 87,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1361,
-    "constraints": 779,
-    "indexes": 402,
-    "relationships": 141,
+    "columns": 1348,
+    "constraints": 778,
+    "indexes": 401,
+    "relationships": 139,
     "functions": 825,
     "extensions": 11
   },
@@ -14592,7 +14592,7 @@
       "comment": null,
       "columns": 135,
       "rows": 5,
-      "size_bytes": 11681792,
+      "size_bytes": 11673600,
       "details": {
         "columns": [
           {
@@ -20222,382 +20222,6 @@
       }
     },
     {
-      "name": "property_repeat_views",
-      "comment": null,
-      "columns": 21,
-      "rows": 0,
-      "size_bytes": 49152,
-      "details": {
-        "columns": [
-          {
-            "column_name": "id",
-            "data_type": "uuid",
-            "is_nullable": "NO",
-            "column_default": "gen_random_uuid()",
-            "ordinal_position": 1,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "property_id",
-            "data_type": "uuid",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 2,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "user_id",
-            "data_type": "uuid",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 3,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "session_id",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 4,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "view_number",
-            "data_type": "integer",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 5,
-            "character_maximum_length": null,
-            "numeric_precision": 32,
-            "numeric_scale": 0,
-            "column_comment": null
-          },
-          {
-            "column_name": "time_since_last_view_hours",
-            "data_type": "numeric",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 6,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "total_time_on_page_seconds",
-            "data_type": "integer",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 7,
-            "character_maximum_length": null,
-            "numeric_precision": 32,
-            "numeric_scale": 0,
-            "column_comment": null
-          },
-          {
-            "column_name": "scrolled_percentage",
-            "data_type": "integer",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 8,
-            "character_maximum_length": null,
-            "numeric_precision": 32,
-            "numeric_scale": 0,
-            "column_comment": null
-          },
-          {
-            "column_name": "images_viewed",
-            "data_type": "integer",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 9,
-            "character_maximum_length": null,
-            "numeric_precision": 32,
-            "numeric_scale": 0,
-            "column_comment": null
-          },
-          {
-            "column_name": "video_played",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 10,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "floor_plan_viewed",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 11,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "amenities_expanded",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 12,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "location_map_interacted",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 13,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "contact_revealed",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 14,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "favorite_added",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 15,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "inquiry_sent",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 16,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "comparison_added",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 17,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "shared",
-            "data_type": "boolean",
-            "is_nullable": "YES",
-            "column_default": "false",
-            "ordinal_position": 18,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "device_type",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 19,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "referrer_source",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 20,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "viewed_at",
-            "data_type": "timestamp with time zone",
-            "is_nullable": "YES",
-            "column_default": "now()",
-            "ordinal_position": 21,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          }
-        ],
-        "constraints": [
-          {
-            "constraint_name": "2200_51118_1_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_51118_2_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_51118_5_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "property_repeat_views_device_type_check",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": "CHECK ((device_type = ANY (ARRAY['mobile'::text, 'tablet'::text, 'desktop'::text])))",
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "property_repeat_views_property_id_fkey",
-            "constraint_type": "FOREIGN KEY",
-            "column_name": "property_id",
-            "definition": "FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE",
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "property_repeat_views_user_id_fkey",
-            "constraint_type": "FOREIGN KEY",
-            "column_name": "user_id",
-            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE SET NULL",
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "property_repeat_views_pkey",
-            "constraint_type": "PRIMARY KEY",
-            "column_name": "id",
-            "definition": "PRIMARY KEY (id)",
-            "constraint_comment": null
-          }
-        ],
-        "indexes": [
-          {
-            "index_name": "idx_property_repeat_actions",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{property_id}",
-            "index_definition": "CREATE INDEX idx_property_repeat_actions ON public.property_repeat_views USING btree (property_id) WHERE ((contact_revealed = true) OR (inquiry_sent = true))"
-          },
-          {
-            "index_name": "idx_property_repeat_number",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{property_id,user_id,view_number}",
-            "index_definition": "CREATE INDEX idx_property_repeat_number ON public.property_repeat_views USING btree (property_id, user_id, view_number)"
-          },
-          {
-            "index_name": "idx_property_repeat_property",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{property_id}",
-            "index_definition": "CREATE INDEX idx_property_repeat_property ON public.property_repeat_views USING btree (property_id)"
-          },
-          {
-            "index_name": "idx_property_repeat_user",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{user_id}",
-            "index_definition": "CREATE INDEX idx_property_repeat_user ON public.property_repeat_views USING btree (user_id)"
-          },
-          {
-            "index_name": "property_repeat_views_pkey",
-            "index_type": "btree",
-            "is_unique": true,
-            "is_primary": true,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{id}",
-            "index_definition": "CREATE UNIQUE INDEX property_repeat_views_pkey ON public.property_repeat_views USING btree (id)"
-          }
-        ],
-        "foreign_keys": [
-          {
-            "constraint_name": "property_repeat_views_property_id_fkey",
-            "foreign_table_name": "properties",
-            "columns": [
-              "property_id"
-            ],
-            "foreign_columns": [
-              "id"
-            ],
-            "update_rule": "NO ACTION",
-            "delete_rule": "CASCADE",
-            "comment": null
-          },
-          {
-            "constraint_name": "property_repeat_views_user_id_fkey",
-            "foreign_table_name": "profiles",
-            "columns": [
-              "user_id"
-            ],
-            "foreign_columns": [
-              "id"
-            ],
-            "update_rule": "NO ACTION",
-            "delete_rule": "SET NULL",
-            "comment": null
-          }
-        ],
-        "triggers": [],
-        "row_count": 0,
-        "column_count": 21
-      }
-    },
-    {
       "name": "property_reports",
       "comment": null,
       "columns": 11,
@@ -25293,6 +24917,195 @@
         "triggers": [],
         "row_count": 2,
         "column_count": 6
+      }
+    },
+    {
+      "name": "team_messages",
+      "comment": null,
+      "columns": 8,
+      "rows": 3,
+      "size_bytes": 98304,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "from_team",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "to_team",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "message",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "response",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "responded_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'pending'::text",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_125376_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_125376_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_125376_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_125376_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "team_messages_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'responded'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "team_messages_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_team_messages_from_team",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{from_team}",
+            "index_definition": "CREATE INDEX idx_team_messages_from_team ON public.team_messages USING btree (from_team)"
+          },
+          {
+            "index_name": "idx_team_messages_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_team_messages_status ON public.team_messages USING btree (status)"
+          },
+          {
+            "index_name": "idx_team_messages_to_team",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{to_team}",
+            "index_definition": "CREATE INDEX idx_team_messages_to_team ON public.team_messages USING btree (to_team)"
+          },
+          {
+            "index_name": "team_messages_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX team_messages_pkey ON public.team_messages USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 3,
+        "column_count": 8
       }
     },
     {
@@ -34236,22 +34049,6 @@
       "constraint_name": "property_ranking_criteria_property_id_fkey",
       "columns": [
         "property_id"
-      ]
-    },
-    {
-      "fromTable": "property_repeat_views",
-      "toTable": "properties",
-      "constraint_name": "property_repeat_views_property_id_fkey",
-      "columns": [
-        "property_id"
-      ]
-    },
-    {
-      "fromTable": "property_repeat_views",
-      "toTable": "profiles",
-      "constraint_name": "property_repeat_views_user_id_fkey",
-      "columns": [
-        "user_id"
       ]
     },
     {
