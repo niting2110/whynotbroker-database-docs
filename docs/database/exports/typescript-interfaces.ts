@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-07T06:54:18.484Z
+// Generated: 2026-03-08T06:56:06.737Z
 
 export interface Database {
   admin_audit_logs: {
@@ -737,6 +737,7 @@ export interface Database {
       previous_state?: string;
       new_state?: string;
       created_at: string | Date;
+      case_id?: string;
     };
   };
 
@@ -1232,6 +1233,7 @@ export interface Database {
       created_at?: string | Date;
       last_contacted_at?: string | Date;
       converted_at?: string | Date;
+      case_id?: string;
     };
   };
 
@@ -1373,6 +1375,7 @@ export interface Database {
       cost?: number;
       created_at?: string | Date;
       verified_at?: string | Date;
+      case_id?: string;
     };
   };
 
@@ -1550,6 +1553,7 @@ export interface Database {
       purchase_transaction_id?: string;
       created_at?: string | Date;
       updated_at?: string | Date;
+      case_id?: string;
     };
   };
 
@@ -1588,19 +1592,6 @@ export interface Database {
     };
   };
 
-  team_messages: {
-    Row: {
-      id: string;
-      from_team: string;
-      to_team: string;
-      message: string;
-      response?: string;
-      responded_at?: string | Date;
-      status?: string;
-      created_at?: string | Date;
-    };
-  };
-
   transactions: {
     Row: {
       id: string;
@@ -1634,6 +1625,10 @@ export interface Database {
       lead_id?: string;
       builder_id?: string;
       project_id?: string;
+      case_id?: string;
+      initiated_by?: string;
+      approved_by?: string;
+      reviewed_at?: string | Date;
     };
   };
 
@@ -1767,6 +1762,7 @@ export interface Database {
       metadata?: any;
       created_at?: string | Date;
       updated_at?: string | Date;
+      case_id?: string;
     };
   };
 
@@ -1782,6 +1778,7 @@ export interface Database {
       last_transaction_region_id?: string;
       created_at?: string | Date;
       updated_at?: string | Date;
+      case_id?: string;
     };
   };
 

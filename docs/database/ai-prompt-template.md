@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 87
+**Total Tables:** 86
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -46,7 +46,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - mdm_curation_requests (40 columns)
 - mdm_merge_history (12 columns)
 - messages (21 columns)
-- moderation_history (10 columns)
+- moderation_history (11 columns)
 - notification_preferences (13 columns)
 - notifications (10 columns)
 - overtime_records (8 columns)
@@ -63,13 +63,13 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - property_documents (12 columns)
 - property_images (15 columns)
 - property_intelligence_scores (41 columns)
-- property_leads (21 columns)
+- property_leads (22 columns)
 - property_price_history (7 columns)
 - property_ranking_criteria (37 columns)
 - property_reports (11 columns)
 - property_shares (6 columns)
 - property_valuations (37 columns)
-- property_verifications (13 columns)
+- property_verifications (14 columns)
 - property_views (10 columns)
 - property_visits (11 columns)
 - referrals (12 columns)
@@ -82,19 +82,18 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - spatial_ref_sys (5 columns)
 - states (7 columns)
 - sub_districts (7 columns)
-- subscription_enrollments (13 columns)
+- subscription_enrollments (14 columns)
 - subscription_plans (19 columns)
 - system_health_metrics (6 columns)
-- team_messages (8 columns)
-- transactions (31 columns)
+- transactions (35 columns)
 - undervalued_properties (27 columns)
 - user_favorites (4 columns)
 - user_ratings (17 columns)
 - user_regional_preferences (8 columns)
 - verification_documents (15 columns)
 - verification_gps_tracking (13 columns)
-- verification_kyc (14 columns)
-- wallets (10 columns)
+- verification_kyc (15 columns)
+- wallets (11 columns)
 
 ## Query Patterns
 

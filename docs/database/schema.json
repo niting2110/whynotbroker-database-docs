@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-03-07T06:54:18.468Z",
+  "generated_at": "2026-03-08T06:56:06.708Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 87,
+    "tables": 86,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1348,
-    "constraints": 778,
-    "indexes": 401,
-    "relationships": 139,
+    "columns": 1350,
+    "constraints": 775,
+    "indexes": 399,
+    "relationships": 141,
     "functions": 825,
     "extensions": 11
   },
@@ -878,7 +878,7 @@
       "comment": null,
       "columns": 5,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -977,6 +977,26 @@
             "is_immediate": true,
             "columns": "{id}",
             "index_definition": "CREATE UNIQUE INDEX admin_notices_pkey ON public.admin_notices USING btree (id)"
+          },
+          {
+            "index_name": "idx_admin_notices_active_created",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{is_active,created_at}",
+            "index_definition": "CREATE INDEX idx_admin_notices_active_created ON public.admin_notices USING btree (created_at DESC, is_active) WHERE (is_active = true)"
+          },
+          {
+            "index_name": "idx_admin_notices_admin_active",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_admin_notices_admin_active ON public.admin_notices USING btree (created_at DESC) WHERE (is_active = true)"
           }
         ],
         "foreign_keys": [],
@@ -11130,7 +11150,7 @@
     {
       "name": "moderation_history",
       "comment": null,
-      "columns": 10,
+      "columns": 11,
       "rows": 5,
       "size_bytes": 466944,
       "details": {
@@ -11240,6 +11260,17 @@
             "is_nullable": "NO",
             "column_default": "now()",
             "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -11403,7 +11434,7 @@
         ],
         "triggers": [],
         "row_count": 5,
-        "column_count": 10
+        "column_count": 11
       }
     },
     {
@@ -19070,7 +19101,7 @@
     {
       "name": "property_leads",
       "comment": null,
-      "columns": 21,
+      "columns": 22,
       "rows": 5,
       "size_bytes": 81920,
       "details": {
@@ -19305,6 +19336,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 22,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -19471,7 +19513,7 @@
         ],
         "triggers": [],
         "row_count": 5,
-        "column_count": 21
+        "column_count": 22
       }
     },
     {
@@ -21265,7 +21307,7 @@
     {
       "name": "property_verifications",
       "comment": null,
-      "columns": 13,
+      "columns": 14,
       "rows": 0,
       "size_bytes": 32768,
       "details": {
@@ -21412,6 +21454,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -21534,7 +21587,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 13
+        "column_count": 14
       }
     },
     {
@@ -24072,7 +24125,7 @@
     {
       "name": "subscription_enrollments",
       "comment": null,
-      "columns": 13,
+      "columns": 14,
       "rows": 0,
       "size_bytes": 40960,
       "details": {
@@ -24215,6 +24268,17 @@
             "is_nullable": "YES",
             "column_default": "now()",
             "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -24392,7 +24456,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 13
+        "column_count": 14
       }
     },
     {
@@ -24920,198 +24984,9 @@
       }
     },
     {
-      "name": "team_messages",
-      "comment": null,
-      "columns": 8,
-      "rows": 3,
-      "size_bytes": 98304,
-      "details": {
-        "columns": [
-          {
-            "column_name": "id",
-            "data_type": "uuid",
-            "is_nullable": "NO",
-            "column_default": "gen_random_uuid()",
-            "ordinal_position": 1,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "from_team",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 2,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "to_team",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 3,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "message",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 4,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "response",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 5,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "responded_at",
-            "data_type": "timestamp with time zone",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 6,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "status",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": "'pending'::text",
-            "ordinal_position": 7,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "created_at",
-            "data_type": "timestamp with time zone",
-            "is_nullable": "YES",
-            "column_default": "now()",
-            "ordinal_position": 8,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          }
-        ],
-        "constraints": [
-          {
-            "constraint_name": "2200_125376_1_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_125376_2_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_125376_3_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_125376_4_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "team_messages_status_check",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'responded'::text])))",
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "team_messages_pkey",
-            "constraint_type": "PRIMARY KEY",
-            "column_name": "id",
-            "definition": "PRIMARY KEY (id)",
-            "constraint_comment": null
-          }
-        ],
-        "indexes": [
-          {
-            "index_name": "idx_team_messages_from_team",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{from_team}",
-            "index_definition": "CREATE INDEX idx_team_messages_from_team ON public.team_messages USING btree (from_team)"
-          },
-          {
-            "index_name": "idx_team_messages_status",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{status}",
-            "index_definition": "CREATE INDEX idx_team_messages_status ON public.team_messages USING btree (status)"
-          },
-          {
-            "index_name": "idx_team_messages_to_team",
-            "index_type": "btree",
-            "is_unique": false,
-            "is_primary": false,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{to_team}",
-            "index_definition": "CREATE INDEX idx_team_messages_to_team ON public.team_messages USING btree (to_team)"
-          },
-          {
-            "index_name": "team_messages_pkey",
-            "index_type": "btree",
-            "is_unique": true,
-            "is_primary": true,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{id}",
-            "index_definition": "CREATE UNIQUE INDEX team_messages_pkey ON public.team_messages USING btree (id)"
-          }
-        ],
-        "foreign_keys": [],
-        "triggers": [],
-        "row_count": 3,
-        "column_count": 8
-      }
-    },
-    {
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
-      "columns": 31,
+      "columns": 35,
       "rows": 48,
       "size_bytes": 237568,
       "details": {
@@ -25456,6 +25331,50 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 32,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "initiated_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 33,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "approved_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 34,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "reviewed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 35,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -25502,6 +25421,13 @@
             "constraint_comment": null
           },
           {
+            "constraint_name": "transactions_maker_checker_different",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK (((approved_by IS NULL) OR (initiated_by IS NULL) OR (initiated_by <> approved_by)))",
+            "constraint_comment": null
+          },
+          {
             "constraint_name": "transactions_status_check",
             "constraint_type": "CHECK",
             "column_name": null,
@@ -25516,6 +25442,13 @@
             "constraint_comment": null
           },
           {
+            "constraint_name": "transactions_approved_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "approved_by",
+            "definition": "FOREIGN KEY (approved_by) REFERENCES profiles(id)",
+            "constraint_comment": null
+          },
+          {
             "constraint_name": "transactions_builder_id_fkey",
             "constraint_type": "FOREIGN KEY",
             "column_name": "builder_id",
@@ -25527,6 +25460,13 @@
             "constraint_type": "FOREIGN KEY",
             "column_name": "coupon_id",
             "definition": "FOREIGN KEY (coupon_id) REFERENCES coupons(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "transactions_initiated_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "initiated_by",
+            "definition": "FOREIGN KEY (initiated_by) REFERENCES profiles(id)",
             "constraint_comment": null
           },
           {
@@ -25696,6 +25636,19 @@
         ],
         "foreign_keys": [
           {
+            "constraint_name": "transactions_approved_by_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "approved_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
             "constraint_name": "transactions_builder_id_fkey",
             "foreign_table_name": "builders",
             "columns": [
@@ -25713,6 +25666,19 @@
             "foreign_table_name": "coupons",
             "columns": [
               "coupon_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "transactions_initiated_by_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "initiated_by"
             ],
             "foreign_columns": [
               "id"
@@ -25804,7 +25770,7 @@
           }
         ],
         "row_count": 48,
-        "column_count": 31
+        "column_count": 35
       }
     },
     {
@@ -27692,7 +27658,7 @@
     {
       "name": "verification_kyc",
       "comment": null,
-      "columns": 14,
+      "columns": 15,
       "rows": 0,
       "size_bytes": 40960,
       "details": {
@@ -27850,6 +27816,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -27963,13 +27940,13 @@
           }
         ],
         "row_count": 0,
-        "column_count": 14
+        "column_count": 15
       }
     },
     {
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
-      "columns": 10,
+      "columns": 11,
       "rows": 14,
       "size_bytes": 73728,
       "details": {
@@ -28079,6 +28056,17 @@
             "is_nullable": "YES",
             "column_default": "now()",
             "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "case_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
             "character_maximum_length": null,
             "numeric_precision": null,
             "numeric_scale": null,
@@ -28223,7 +28211,7 @@
           }
         ],
         "row_count": 14,
-        "column_count": 10
+        "column_count": 11
       }
     }
   ],
@@ -34277,6 +34265,14 @@
     },
     {
       "fromTable": "transactions",
+      "toTable": "profiles",
+      "constraint_name": "transactions_approved_by_fkey",
+      "columns": [
+        "approved_by"
+      ]
+    },
+    {
+      "fromTable": "transactions",
       "toTable": "builders",
       "constraint_name": "transactions_builder_id_fkey",
       "columns": [
@@ -34289,6 +34285,14 @@
       "constraint_name": "transactions_coupon_id_fkey",
       "columns": [
         "coupon_id"
+      ]
+    },
+    {
+      "fromTable": "transactions",
+      "toTable": "profiles",
+      "constraint_name": "transactions_initiated_by_fkey",
+      "columns": [
+        "initiated_by"
       ]
     },
     {

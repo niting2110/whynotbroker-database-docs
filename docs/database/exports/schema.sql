@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-07T06:54:18.477Z
+-- Generated: 2026-03-08T06:56:06.718Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -736,7 +736,8 @@ CREATE TABLE IF NOT EXISTS moderation_history (
   checklist jsonb,
   previous_state text,
   new_state text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  case_id text
   ,PRIMARY KEY (id)
 );
 
@@ -1231,7 +1232,8 @@ CREATE TABLE IF NOT EXISTS property_leads (
   user_agent text,
   created_at timestamp with time zone DEFAULT now(),
   last_contacted_at timestamp with time zone,
-  converted_at timestamp with time zone
+  converted_at timestamp with time zone,
+  case_id text
   ,PRIMARY KEY (id)
 );
 
@@ -1372,7 +1374,8 @@ CREATE TABLE IF NOT EXISTS property_verifications (
   valid_until timestamp with time zone,
   cost numeric,
   created_at timestamp with time zone DEFAULT now(),
-  verified_at timestamp with time zone
+  verified_at timestamp with time zone,
+  case_id text
   ,PRIMARY KEY (id)
 );
 
@@ -1549,7 +1552,8 @@ CREATE TABLE IF NOT EXISTS subscription_enrollments (
   auto_renew boolean DEFAULT true,
   purchase_transaction_id uuid,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  case_id text
   ,PRIMARY KEY (id)
 );
 
@@ -1588,19 +1592,6 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   ,PRIMARY KEY (id)
 );
 
--- Table: team_messages
-CREATE TABLE IF NOT EXISTS team_messages (
-  id uuid NOT NULL DEFAULT gen_random_uuid(),
-  from_team text NOT NULL,
-  to_team text NOT NULL,
-  message text NOT NULL,
-  response text,
-  responded_at timestamp with time zone,
-  status text DEFAULT 'pending'::text,
-  created_at timestamp with time zone DEFAULT now()
-  ,PRIMARY KEY (id)
-);
-
 -- Table: transactions
 CREATE TABLE IF NOT EXISTS transactions (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -1633,7 +1624,11 @@ CREATE TABLE IF NOT EXISTS transactions (
   updated_at timestamp with time zone DEFAULT now(),
   lead_id uuid,
   builder_id uuid,
-  project_id uuid
+  project_id uuid,
+  case_id text,
+  initiated_by uuid,
+  approved_by uuid,
+  reviewed_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 
@@ -1766,7 +1761,8 @@ CREATE TABLE IF NOT EXISTS verification_kyc (
   rejection_reason text,
   metadata jsonb DEFAULT '{}'::jsonb,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  case_id text
   ,PRIMARY KEY (id)
 );
 
@@ -1781,7 +1777,8 @@ CREATE TABLE IF NOT EXISTS wallets (
   lifetime_cash_spent numeric DEFAULT 0,
   last_transaction_region_id uuid,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  case_id text
   ,PRIMARY KEY (id)
 );
 

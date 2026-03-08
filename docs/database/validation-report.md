@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-03-07T06:54:18.477Z
-Total Issues: 113
-Warnings: 59
-Recommendations: 54
+Generated: 2026-03-08T06:56:06.718Z
+Total Issues: 114
+Warnings: 61
+Recommendations: 53
 
 ## ⚠️ Warnings
 
@@ -59,8 +59,10 @@ Recommendations: 54
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_purchase_transaction_id_fkey has no covering index |
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_user_id_fkey has no covering index |
 | MEDIUM | `subscription_plans` | Foreign key subscription_plans_region_id_fkey has no covering index |
+| MEDIUM | `transactions` | Foreign key transactions_approved_by_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_builder_id_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_coupon_id_fkey has no covering index |
+| MEDIUM | `transactions` | Foreign key transactions_initiated_by_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_lead_id_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_pricing_rule_id_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_project_id_fkey has no covering index |
@@ -122,7 +124,6 @@ Recommendations: 54
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
 | `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |
 | `system_health_metrics` | Table missing timestamp columns (created_at, updated_at) |
-| `team_messages` | Table missing timestamp columns (created_at, updated_at) |
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |

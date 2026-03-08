@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 139
-Generated: 2026-03-07T06:54:18.474Z
+Total Relationships: 141
+Generated: 2026-03-08T06:56:06.714Z
 
 ```
 admin_audit_logs:
@@ -359,10 +359,14 @@ subscription_plans:
       columns: region_id
 
 transactions:
+  └─→ profiles (via: transactions_approved_by_fkey)
+      columns: approved_by
   └─→ builders (via: transactions_builder_id_fkey)
       columns: builder_id
   └─→ coupons (via: transactions_coupon_id_fkey)
       columns: coupon_id
+  └─→ profiles (via: transactions_initiated_by_fkey)
+      columns: initiated_by
   └─→ property_leads (via: transactions_lead_id_fkey)
       columns: lead_id
   └─→ pricing_rules (via: transactions_pricing_rule_id_fkey)

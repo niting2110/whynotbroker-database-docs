@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-07T06:54:18.465Z
-> Total Tables: 87
+> Auto-generated: 2026-03-08T06:56:06.706Z
+> Total Tables: 86
 > PostgreSQL: 17.6
 
 ---
@@ -179,7 +179,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 5
-- Indexes: 1
+- Indexes: 3
 - Foreign Keys: 0
 
 ### Columns
@@ -197,6 +197,8 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `admin_notices_pkey` | btree | id | ✓ |
+| `idx_admin_notices_active_created` | btree | is_active, created_at | — |
+| `idx_admin_notices_admin_active` | btree | created_at | — |
 
 ---
 
@@ -1751,7 +1753,7 @@
 
 **Statistics:**
 - Rows: ~5
-- Columns: 10
+- Columns: 11
 - Indexes: 6
 - Foreign Keys: 2
 
@@ -1769,6 +1771,7 @@
 | `previous_state` | `text` | YES | `—` |
 | `new_state` | `text` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -2806,7 +2809,7 @@
 
 **Statistics:**
 - Rows: ~5
-- Columns: 21
+- Columns: 22
 - Indexes: 4
 - Foreign Keys: 3
 
@@ -2835,6 +2838,7 @@
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `last_contacted_at` | `timestamp with time zone` | YES | `—` |
 | `converted_at` | `timestamp with time zone` | YES | `—` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -3141,7 +3145,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 13
+- Columns: 14
 - Indexes: 3
 - Foreign Keys: 2
 
@@ -3162,6 +3166,7 @@
 | `cost` | `numeric` | YES | `—` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `verified_at` | `timestamp with time zone` | YES | `—` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -3665,7 +3670,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 13
+- Columns: 14
 - Indexes: 4
 - Foreign Keys: 3
 
@@ -3686,6 +3691,7 @@
 | `purchase_transaction_id` | `uuid` | YES | `—` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `updated_at` | `timestamp with time zone` | YES | `now()` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -3794,47 +3800,15 @@
 
 ---
 
-## `team_messages`
-
-**Statistics:**
-- Rows: ~3
-- Columns: 8
-- Indexes: 4
-- Foreign Keys: 0
-
-### Columns
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|--------|
-| `id` | `uuid` | NO | `gen_random_uuid()` |
-| `from_team` | `text` | NO | `—` |
-| `to_team` | `text` | NO | `—` |
-| `message` | `text` | NO | `—` |
-| `response` | `text` | YES | `—` |
-| `responded_at` | `timestamp with time zone` | YES | `—` |
-| `status` | `text` | YES | `'pending'::text` |
-| `created_at` | `timestamp with time zone` | YES | `now()` |
-
-### Indexes
-
-| Name | Type | Columns | Unique |
-|------|------|---------|--------|
-| `idx_team_messages_from_team` | btree | from_team | — |
-| `idx_team_messages_status` | btree | status | — |
-| `idx_team_messages_to_team` | btree | to_team | — |
-| `team_messages_pkey` | btree | id | ✓ |
-
----
-
 ## `transactions`
 
 > All financial transactions with regional GST tracking
 
 **Statistics:**
 - Rows: ~48
-- Columns: 31
+- Columns: 35
 - Indexes: 12
-- Foreign Keys: 7
+- Foreign Keys: 9
 
 ### Columns
 
@@ -3871,6 +3845,10 @@
 | `lead_id` | `uuid` | YES | `—` |
 | `builder_id` | `uuid` | YES | `—` |
 | `project_id` | `uuid` | YES | `—` |
+| `case_id` | `text` | YES | `—` |
+| `initiated_by` | `uuid` | YES | `—` |
+| `approved_by` | `uuid` | YES | `—` |
+| `reviewed_at` | `timestamp with time zone` | YES | `—` |
 
 ### Indexes
 
@@ -3891,12 +3869,20 @@
 
 ### Foreign Keys
 
+- `transactions_approved_by_fkey`:
+  - Columns: `approved_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 - `transactions_builder_id_fkey`:
   - Columns: `builder_id` → `builders(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
 - `transactions_coupon_id_fkey`:
   - Columns: `coupon_id` → `coupons(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `transactions_initiated_by_fkey`:
+  - Columns: `initiated_by` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
 - `transactions_lead_id_fkey`:
@@ -4215,7 +4201,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 14
+- Columns: 15
 - Indexes: 4
 - Foreign Keys: 0
 
@@ -4237,6 +4223,7 @@
 | `metadata` | `jsonb` | YES | `'{}'::jsonb` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `updated_at` | `timestamp with time zone` | YES | `now()` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -4255,7 +4242,7 @@
 
 **Statistics:**
 - Rows: ~14
-- Columns: 10
+- Columns: 11
 - Indexes: 4
 - Foreign Keys: 2
 
@@ -4273,6 +4260,7 @@
 | `last_transaction_region_id` | `uuid` | YES | `—` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `updated_at` | `timestamp with time zone` | YES | `now()` |
+| `case_id` | `text` | YES | `—` |
 
 ### Indexes
 

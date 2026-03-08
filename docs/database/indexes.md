@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-07T06:54:18.475Z
-Total Indexes: 401
+Generated: 2026-03-08T06:56:06.715Z
+Total Indexes: 399
 
 ## All Indexes
 
@@ -18,6 +18,8 @@ Total Indexes: 401
 | `admin_leaves` | `admin_leaves_pkey` | btree | id | ✓ |
 | `admin_messages` | `admin_messages_pkey` | btree | id | ✓ |
 | `admin_notices` | `admin_notices_pkey` | btree | id | ✓ |
+| `admin_notices` | `idx_admin_notices_active_created` | btree | is_active, created_at | — |
+| `admin_notices` | `idx_admin_notices_admin_active` | btree | created_at | — |
 | `admin_regions` | `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ |
 | `admin_regions` | `admin_regions_pkey` | btree | id | ✓ |
 | `admin_regions` | `idx_admin_regions_admin` | btree | admin_id | — |
@@ -356,10 +358,6 @@ Total Indexes: 401
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
-| `team_messages` | `idx_team_messages_from_team` | btree | from_team | — |
-| `team_messages` | `idx_team_messages_status` | btree | status | — |
-| `team_messages` | `idx_team_messages_to_team` | btree | to_team | — |
-| `team_messages` | `team_messages_pkey` | btree | id | ✓ |
 | `transactions` | `idx_transactions_created_at` | btree | created_at | — |
 | `transactions` | `idx_transactions_gateway` | btree | gateway_transaction_id | — |
 | `transactions` | `idx_transactions_invoice` | btree | invoice_number | — |
