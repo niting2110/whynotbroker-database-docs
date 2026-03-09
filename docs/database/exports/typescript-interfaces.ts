@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-08T06:56:06.737Z
+// Generated: 2026-03-09T07:12:48.644Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1454,10 +1454,36 @@ export interface Database {
     };
   };
 
+  role_platform_access: {
+    Row: {
+      id: string;
+      role_key: string;
+      designation_match?: any;
+      platform: string;
+      access_level: string;
+      access_config: any;
+      exec_order?: number;
+      requires_manual_gate?: boolean;
+      gate_owner?: string;
+      gate_channel?: string;
+      operation_onboard?: string;
+      operation_offboard?: string;
+      is_active?: boolean;
+      approved_by?: string;
+      created_at?: string | Date;
+      updated_at?: string | Date;
+    };
+  };
+
   roles: {
     Row: {
       id: string;
       name: string;
+      slug?: string;
+      category?: string;
+      description?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 
@@ -1589,6 +1615,19 @@ export interface Database {
       metric_unit?: string;
       context?: any;
       recorded_at?: string | Date;
+    };
+  };
+
+  team_messages: {
+    Row: {
+      id: number;
+      from_team: string;
+      to_team: string;
+      message: string;
+      status: string;
+      response?: string;
+      responded_at?: string | Date;
+      created_at?: string | Date;
     };
   };
 

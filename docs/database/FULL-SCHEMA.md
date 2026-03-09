@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-08T06:56:06.706Z
-> Total Tables: 86
+> Auto-generated: 2026-03-09T07:12:48.616Z
+> Total Tables: 88
 > PostgreSQL: 17.6
 
 ---
@@ -3417,12 +3417,51 @@
 
 ---
 
+## `role_platform_access`
+
+**Statistics:**
+- Rows: ~125
+- Columns: 16
+- Indexes: 3
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `role_key` | `text` | NO | `—` |
+| `designation_match` | `ARRAY` | YES | `—` |
+| `platform` | `text` | NO | `—` |
+| `access_level` | `text` | NO | `—` |
+| `access_config` | `jsonb` | NO | `—` |
+| `exec_order` | `smallint` | YES | `10` |
+| `requires_manual_gate` | `boolean` | YES | `false` |
+| `gate_owner` | `text` | YES | `—` |
+| `gate_channel` | `text` | YES | `—` |
+| `operation_onboard` | `text` | YES | `'create'::text` |
+| `operation_offboard` | `text` | YES | `'deactivate'::text` |
+| `is_active` | `boolean` | YES | `true` |
+| `approved_by` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+| `updated_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_rpa_role_key_active` | btree | role_key, is_active | — |
+| `role_platform_access_pkey` | btree | id | ✓ |
+| `role_platform_access_role_key_platform_key` | btree | role_key, platform | ✓ |
+
+---
+
 ## `roles`
 
 **Statistics:**
-- Rows: ~8
-- Columns: 2
-- Indexes: 2
+- Rows: ~37
+- Columns: 7
+- Indexes: 3
 - Foreign Keys: 0
 
 ### Columns
@@ -3431,6 +3470,11 @@
 |--------|------|----------|--------|
 | `id` | `uuid` | NO | `gen_random_uuid()` |
 | `name` | `text` | NO | `—` |
+| `slug` | `text` | YES | `—` |
+| `category` | `text` | YES | `—` |
+| `description` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
 
 ### Indexes
 
@@ -3438,6 +3482,7 @@
 |------|------|---------|--------|
 | `roles_name_key` | btree | name | ✓ |
 | `roles_pkey` | btree | id | ✓ |
+| `roles_slug_key` | btree | slug | ✓ |
 
 ---
 
@@ -3797,6 +3842,35 @@
 |------|------|---------|--------|
 | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics_pkey` | btree | id | ✓ |
+
+---
+
+## `team_messages`
+
+**Statistics:**
+- Rows: ~3
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `bigint` | NO | `nextval('team_messages_id_seq'::regclass)` |
+| `from_team` | `text` | NO | `—` |
+| `to_team` | `text` | NO | `—` |
+| `message` | `text` | NO | `—` |
+| `status` | `text` | NO | `'pending'::text` |
+| `response` | `text` | YES | `—` |
+| `responded_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | YES | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `team_messages_pkey` | btree | id | ✓ |
 
 ---
 

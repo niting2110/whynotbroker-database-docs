@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-08T06:56:06.718Z
+-- Generated: 2026-03-09T07:12:48.629Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1454,10 +1454,36 @@ CREATE TABLE IF NOT EXISTS role_permissions (
   ,PRIMARY KEY (role_id)
 );
 
+-- Table: role_platform_access
+CREATE TABLE IF NOT EXISTS role_platform_access (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  role_key text NOT NULL,
+  designation_match ARRAY,
+  platform text NOT NULL,
+  access_level text NOT NULL,
+  access_config jsonb NOT NULL,
+  exec_order smallint DEFAULT 10,
+  requires_manual_gate boolean DEFAULT false,
+  gate_owner text,
+  gate_channel text,
+  operation_onboard text DEFAULT 'create'::text,
+  operation_offboard text DEFAULT 'deactivate'::text,
+  is_active boolean DEFAULT true,
+  approved_by text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: roles
 CREATE TABLE IF NOT EXISTS roles (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
-  name text NOT NULL
+  name text NOT NULL,
+  slug text,
+  category text,
+  description text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -1589,6 +1615,19 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   metric_unit text,
   context jsonb,
   recorded_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: team_messages
+CREATE TABLE IF NOT EXISTS team_messages (
+  id bigint NOT NULL DEFAULT nextval('team_messages_id_seq'::regclass),
+  from_team text NOT NULL,
+  to_team text NOT NULL,
+  message text NOT NULL,
+  status text NOT NULL DEFAULT 'pending'::text,
+  response text,
+  responded_at timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

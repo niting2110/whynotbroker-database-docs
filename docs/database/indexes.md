@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-08T06:56:06.715Z
-Total Indexes: 399
+Generated: 2026-03-09T07:12:48.627Z
+Total Indexes: 404
 
 ## All Indexes
 
@@ -325,8 +325,12 @@ Total Indexes: 399
 | `regions` | `regions_code_key` | btree | code | ✓ |
 | `regions` | `regions_pkey` | btree | id | ✓ |
 | `role_permissions` | `role_permissions_pkey` | btree | role_id, permission_id | ✓ |
+| `role_platform_access` | `idx_rpa_role_key_active` | btree | role_key, is_active | — |
+| `role_platform_access` | `role_platform_access_pkey` | btree | id | ✓ |
+| `role_platform_access` | `role_platform_access_role_key_platform_key` | btree | role_key, platform | ✓ |
 | `roles` | `roles_name_key` | btree | name | ✓ |
 | `roles` | `roles_pkey` | btree | id | ✓ |
+| `roles` | `roles_slug_key` | btree | slug | ✓ |
 | `saved_searches` | `idx_saved_searches_user` | btree | user_id, is_active | — |
 | `saved_searches` | `saved_searches_pkey` | btree | id | ✓ |
 | `search_history` | `idx_search_history_user` | btree | user_id | — |
@@ -358,6 +362,7 @@ Total Indexes: 399
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
+| `team_messages` | `team_messages_pkey` | btree | id | ✓ |
 | `transactions` | `idx_transactions_created_at` | btree | created_at | — |
 | `transactions` | `idx_transactions_gateway` | btree | gateway_transaction_id | — |
 | `transactions` | `idx_transactions_invoice` | btree | invoice_number | — |
