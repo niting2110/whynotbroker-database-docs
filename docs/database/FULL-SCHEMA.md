@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-09T07:12:48.616Z
+> Auto-generated: 2026-03-10T07:03:05.430Z
 > Total Tables: 88
 > PostgreSQL: 17.6
 
@@ -3848,7 +3848,7 @@
 ## `team_messages`
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~35
 - Columns: 8
 - Indexes: 1
 - Foreign Keys: 0
