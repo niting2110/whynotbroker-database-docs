@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-03-10T07:03:05.425Z
-> Schema Hash: `96b380bc638aaf481f465cc81d66a7a5`
+> Generated: 2026-03-11T07:05:29.341Z
+> Schema Hash: `24f3ad5eb9d0ac38e978ca1a18e7456f`
 
 ## 📊 Quick Stats
 - **Total Tables:** 88
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1379
 - **Total Relationships:** 141
-- **Total Size:** 77.23 MB
+- **Total Size:** 77.25 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 10/3/2026, 12:33:05 pm IST
+- **Last Updated:** 11/3/2026, 12:35:29 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -100,7 +100,7 @@
 | `subscription_enrollments` | 14 | ~0 | 0.04 MB |  |
 | `subscription_plans` | 19 | ~0 | 0.09 MB | "Recurring subscription plans w..." |
 | `system_health_metrics` | 6 | ~2 | 0.05 MB |  |
-| `team_messages` | 8 | ~35 | 0.11 MB |  |
+| `team_messages` | 8 | ~45 | 0.13 MB |  |
 | `transactions` | 35 | ~48 | 0.23 MB | "All financial transactions wit..." |
 | `undervalued_properties` | 27 | ~0 | 0.05 MB | "Identifies properties with exc..." |
 | `user_favorites` | 4 | ~0 | 0.09 MB |  |

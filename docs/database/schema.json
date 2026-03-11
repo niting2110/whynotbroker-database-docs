@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-10T07:03:05.433Z",
+  "generated_at": "2026-03-11T07:05:29.349Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -25362,8 +25362,8 @@
       "name": "team_messages",
       "comment": null,
       "columns": 8,
-      "rows": 35,
-      "size_bytes": 114688,
+      "rows": 45,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -25513,7 +25513,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 35,
+        "row_count": 45,
         "column_count": 8
       }
     },
