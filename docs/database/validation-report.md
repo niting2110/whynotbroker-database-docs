@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-03-12T07:06:53.844Z
-Total Issues: 114
-Warnings: 61
-Recommendations: 53
+Generated: 2026-03-17T07:15:39.952Z
+Total Issues: 148
+Warnings: 82
+Recommendations: 66
 
 ## ⚠️ Warnings
 
@@ -26,6 +26,7 @@ Recommendations: 53
 | MEDIUM | `blog_posts` | Foreign key blog_posts_author_id_fkey has no covering index |
 | MEDIUM | `campaign_participants` | Foreign key campaign_participants_region_id_fkey has no covering index |
 | MEDIUM | `coupon_usage` | Foreign key coupon_usage_region_id_fkey has no covering index |
+| MEDIUM | `home_loan_consent_log` | Foreign key home_loan_consent_log_user_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_admin_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_leave_type_id_fkey has no covering index |
 | MEDIUM | `loan_calculations` | Foreign key loan_calculations_property_id_fkey has no covering index |
@@ -39,6 +40,26 @@ Recommendations: 53
 | MEDIUM | `notifications` | Foreign key notifications_user_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_admin_id_fkey has no covering index |
 | MEDIUM | `overtime_records` | Foreign key overtime_records_approved_by_fkey has no covering index |
+| MEDIUM | `pg_bed` | Foreign key pg_bed_pg_room_id_fkey has no covering index |
+| MEDIUM | `pg_occupancy` | Foreign key pg_occupancy_pg_bed_id_fkey has no covering index |
+| MEDIUM | `pg_occupancy` | Foreign key pg_occupancy_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_occupancy` | Foreign key pg_occupancy_pg_tenant_id_fkey has no covering index |
+| MEDIUM | `pg_occupancy_snapshot` | Foreign key pg_occupancy_snapshot_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_owner_pnl` | Foreign key pg_owner_pnl_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_payment_record` | Foreign key pg_payment_record_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_payment_record` | Foreign key pg_payment_record_pg_tenant_id_fkey has no covering index |
+| MEDIUM | `pg_police_verification` | Foreign key pg_police_verification_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_police_verification` | Foreign key pg_police_verification_pg_tenant_id_fkey has no covering index |
+| MEDIUM | `pg_posting` | Foreign key pg_posting_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_receipt` | Foreign key pg_receipt_pg_payment_record_id_fkey has no covering index |
+| MEDIUM | `pg_rent_agreement` | Foreign key pg_rent_agreement_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_rent_agreement` | Foreign key pg_rent_agreement_pg_tenant_id_fkey has no covering index |
+| MEDIUM | `pg_room` | Foreign key pg_room_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_tenant` | Foreign key pg_tenant_pg_bed_id_fkey has no covering index |
+| MEDIUM | `pg_tenant` | Foreign key pg_tenant_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_tenant` | Foreign key pg_tenant_user_id_fkey has no covering index |
+| MEDIUM | `pg_vacancy_event` | Foreign key pg_vacancy_event_pg_bed_id_fkey has no covering index |
+| MEDIUM | `pg_vacancy_event` | Foreign key pg_vacancy_event_pg_property_id_fkey has no covering index |
 | MEDIUM | `pricing_rules` | Foreign key pricing_rules_region_id_fkey has no covering index |
 | MEDIUM | `properties` | Foreign key properties_last_viewed_by_fkey has no covering index |
 | MEDIUM | `property_leads` | Foreign key property_leads_lead_user_id_fkey has no covering index |
@@ -89,6 +110,7 @@ Recommendations: 53
 | `broker_pan_verifications` | Table missing timestamp columns (created_at, updated_at) |
 | `campaign_participants` | Table missing timestamp columns (created_at, updated_at) |
 | `coupon_usage` | Table missing timestamp columns (created_at, updated_at) |
+| `home_loan_consent_log` | Table missing timestamp columns (created_at, updated_at) |
 | `hot_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `leave_balances` | Table missing timestamp columns (created_at, updated_at) |
 | `leave_types` | Table missing timestamp columns (created_at, updated_at) |
@@ -101,6 +123,17 @@ Recommendations: 53
 | `notifications` | Table missing timestamp columns (created_at, updated_at) |
 | `overtime_records` | Table missing timestamp columns (created_at, updated_at) |
 | `permissions` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_bed` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_occupancy` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_occupancy_snapshot` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_owner_pnl` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_payment_record` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_police_verification` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_receipt` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_rent_agreement` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_room` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_tenant` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_vacancy_event` | Table missing timestamp columns (created_at, updated_at) |
 | `pricing_rules` | Table missing timestamp columns (created_at, updated_at) |
 | `property_amenities` | Table missing timestamp columns (created_at, updated_at) |
 | `property_assignments` | Table missing timestamp columns (created_at, updated_at) |
@@ -128,3 +161,4 @@ Recommendations: 53
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |
 | `verification_gps_tracking` | Table missing timestamp columns (created_at, updated_at) |
+| `waitlist_entries` | Table missing timestamp columns (created_at, updated_at) |

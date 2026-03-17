@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-12T07:06:53.841Z
-Total Indexes: 404
+Generated: 2026-03-17T07:15:39.950Z
+Total Indexes: 434
 
 ## All Indexes
 
@@ -90,6 +90,9 @@ Total Indexes: 404
 | `districts` | `idx_districts_name` | btree | state_id, name | — |
 | `districts` | `idx_districts_name_trgm` | gin | name | — |
 | `districts` | `idx_districts_state` | btree | state_id | — |
+| `home_loan_consent_log` | `home_loan_consent_log_pkey` | btree | id | ✓ |
+| `home_loan_consent_log` | `idx_hlcl_bank_id_given` | btree | bank_id, consent_given_at | — |
+| `home_loan_consent_log` | `idx_hlcl_user_id` | btree | user_id, consent_given_at | — |
 | `hot_properties` | `hot_properties_pkey` | btree | id | ✓ |
 | `hot_properties` | `idx_hot_properties_active` | btree | heat_score, is_currently_hot | — |
 | `hot_properties` | `idx_hot_properties_property` | btree | property_id | — |
@@ -169,6 +172,30 @@ Total Indexes: 404
 | `permissions` | `permissions_id_key` | btree | id | ✓ |
 | `permissions` | `permissions_name_key` | btree | name | ✓ |
 | `permissions` | `permissions_pkey` | btree | id | ✓ |
+| `pg_bed` | `pg_bed_pkey` | btree | id | ✓ |
+| `pg_occupancy` | `pg_occupancy_pkey` | btree | id | ✓ |
+| `pg_occupancy_snapshot` | `pg_occupancy_snapshot_pkey` | btree | id | ✓ |
+| `pg_occupancy_snapshot` | `pg_occupancy_snapshot_unique_date` | btree | pg_property_id, snapshot_date | ✓ |
+| `pg_owner_pnl` | `pg_owner_pnl_pkey` | btree | id | ✓ |
+| `pg_owner_pnl` | `pg_owner_pnl_unique_month` | btree | pg_property_id, snapshot_month | ✓ |
+| `pg_payment_record` | `idx_pg_payment_record_property` | btree | pg_property_id, payment_date | — |
+| `pg_payment_record` | `pg_payment_record_pkey` | btree | id | ✓ |
+| `pg_police_verification` | `pg_police_verification_pkey` | btree | id | ✓ |
+| `pg_posting` | `idx_pg_posting_property` | btree | pg_property_id, status | — |
+| `pg_posting` | `idx_pg_posting_status` | btree | available_from, status | — |
+| `pg_posting` | `pg_posting_pkey` | btree | id | ✓ |
+| `pg_property` | `idx_pg_property_locality` | btree | locality, city | — |
+| `pg_property` | `idx_pg_property_owner` | btree | owner_id | — |
+| `pg_property` | `idx_pg_property_status` | btree | listing_status | — |
+| `pg_property` | `pg_property_pkey` | btree | id | ✓ |
+| `pg_receipt` | `pg_receipt_pkey` | btree | id | ✓ |
+| `pg_receipt` | `pg_receipt_receipt_number_key` | btree | receipt_number | ✓ |
+| `pg_rent_agreement` | `pg_rent_agreement_pkey` | btree | id | ✓ |
+| `pg_room` | `pg_room_pkey` | btree | id | ✓ |
+| `pg_tenant` | `idx_pg_tenant_property` | btree | pg_property_id, status | — |
+| `pg_tenant` | `pg_tenant_pkey` | btree | id | ✓ |
+| `pg_vacancy_event` | `idx_pg_vacancy_event_property` | btree | pg_property_id, created_at | — |
+| `pg_vacancy_event` | `pg_vacancy_event_pkey` | btree | id | ✓ |
 | `pincodes` | `idx_pincodes_city` | btree | city_id | — |
 | `pincodes` | `idx_pincodes_district` | btree | district_id | — |
 | `pincodes` | `idx_pincodes_geo` | gist | geo_point | — |
@@ -407,6 +434,9 @@ Total Indexes: 404
 | `verification_kyc` | `idx_verification_kyc_user_id` | btree | user_id | — |
 | `verification_kyc` | `idx_verification_kyc_verified_at` | btree | verified_at | — |
 | `verification_kyc` | `verification_kyc_pkey` | btree | id | ✓ |
+| `waitlist_entries` | `idx_waitlist_entries_tool_slug` | btree | tool_slug, created_at | — |
+| `waitlist_entries` | `waitlist_entries_email_tool_unique` | btree | email, tool_slug | ✓ |
+| `waitlist_entries` | `waitlist_entries_pkey` | btree | id | ✓ |
 | `wallets` | `idx_wallets_balance` | btree | balance | — |
 | `wallets` | `idx_wallets_user_id` | btree | user_id | — |
 | `wallets` | `wallets_pkey` | btree | id | ✓ |

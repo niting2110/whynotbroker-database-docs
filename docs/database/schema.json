@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-03-12T07:06:53.834Z",
+  "generated_at": "2026-03-17T07:15:39.942Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 88,
+    "tables": 103,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1379,
-    "constraints": 792,
-    "indexes": 404,
-    "relationships": 141,
-    "functions": 827,
+    "columns": 1527,
+    "constraints": 967,
+    "indexes": 434,
+    "relationships": 163,
+    "functions": 828,
     "extensions": 11
   },
   "tables": [
@@ -6587,6 +6587,231 @@
       }
     },
     {
+      "name": "home_loan_consent_log",
+      "comment": null,
+      "columns": 9,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "bank_id",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "purpose",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "consent_given_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "consent_withdrawn_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "ip_address_hash",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "session_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135563_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135563_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135563_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135563_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135563_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135563_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "home_loan_consent_log_purpose_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((purpose = ANY (ARRAY['home_loan_referral'::text, 'dsa_partner_data_share'::text, 'credit_check_consent'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "home_loan_consent_log_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "home_loan_consent_log_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "home_loan_consent_log_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX home_loan_consent_log_pkey ON public.home_loan_consent_log USING btree (id)"
+          },
+          {
+            "index_name": "idx_hlcl_bank_id_given",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{bank_id,consent_given_at}",
+            "index_definition": "CREATE INDEX idx_hlcl_bank_id_given ON public.home_loan_consent_log USING btree (bank_id, consent_given_at)"
+          },
+          {
+            "index_name": "idx_hlcl_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id,consent_given_at}",
+            "index_definition": "CREATE INDEX idx_hlcl_user_id ON public.home_loan_consent_log USING btree (user_id, consent_given_at)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "home_loan_consent_log_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 9
+      }
+    },
+    {
       "name": "hot_properties",
       "comment": "Real-time tracking of trending properties with high demand signals",
       "columns": 25,
@@ -11432,7 +11657,15 @@
             "comment": null
           }
         ],
-        "triggers": [],
+        "triggers": [
+          {
+            "trigger_name": "trg_case_id_immutable_moderation_history",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          }
+        ],
         "row_count": 5,
         "column_count": 11
       }
@@ -12256,6 +12489,3370 @@
         "triggers": [],
         "row_count": 49,
         "column_count": 6
+      }
+    },
+    {
+      "name": "pg_bed",
+      "comment": null,
+      "columns": 7,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_room_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "bed_label",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_available",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "true",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "monthly_rent",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "advance_deposit",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135645_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135645_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135645_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135645_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135645_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135645_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_bed_monthly_rent_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((monthly_rent > (0)::numeric))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_bed_pg_room_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_room_id",
+            "definition": "FOREIGN KEY (pg_room_id) REFERENCES pg_room(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_bed_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_bed_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_bed_pkey ON public.pg_bed USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_bed_pg_room_id_fkey",
+            "foreign_table_name": "pg_room",
+            "columns": [
+              "pg_room_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 7
+      }
+    },
+    {
+      "name": "pg_occupancy",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 8192,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_bed_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_tenant_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "occupied_from",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "occupied_until",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_current",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "true",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135694_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135694_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135694_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135694_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135694_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135694_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pg_bed_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_bed_id",
+            "definition": "FOREIGN KEY (pg_bed_id) REFERENCES pg_bed(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pg_tenant_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_tenant_id",
+            "definition": "FOREIGN KEY (pg_tenant_id) REFERENCES pg_tenant(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_occupancy_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_occupancy_pkey ON public.pg_occupancy USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_occupancy_pg_bed_id_fkey",
+            "foreign_table_name": "pg_bed",
+            "columns": [
+              "pg_bed_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_pg_tenant_id_fkey",
+            "foreign_table_name": "pg_tenant",
+            "columns": [
+              "pg_tenant_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
+      "name": "pg_occupancy_snapshot",
+      "comment": null,
+      "columns": 7,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "snapshot_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": "CURRENT_DATE",
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "total_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "occupied_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "available_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135878_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135878_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_snapshot_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_snapshot_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_snapshot_unique_date",
+            "constraint_type": "UNIQUE",
+            "column_name": "snapshot_date",
+            "definition": "UNIQUE (pg_property_id, snapshot_date)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_occupancy_snapshot_unique_date",
+            "constraint_type": "UNIQUE",
+            "column_name": "pg_property_id",
+            "definition": "UNIQUE (pg_property_id, snapshot_date)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_occupancy_snapshot_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_occupancy_snapshot_pkey ON public.pg_occupancy_snapshot USING btree (id)"
+          },
+          {
+            "index_name": "pg_occupancy_snapshot_unique_date",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,snapshot_date}",
+            "index_definition": "CREATE UNIQUE INDEX pg_occupancy_snapshot_unique_date ON public.pg_occupancy_snapshot USING btree (pg_property_id, snapshot_date)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_occupancy_snapshot_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 7
+      }
+    },
+    {
+      "name": "pg_owner_pnl",
+      "comment": null,
+      "columns": 10,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "snapshot_month",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "total_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "occupied_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "occupancy_rate",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "gross_rent_expected",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 12,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "gross_rent_received",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 12,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "collection_rate",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135859_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135859_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_owner_pnl_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_owner_pnl_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_owner_pnl_unique_month",
+            "constraint_type": "UNIQUE",
+            "column_name": "pg_property_id",
+            "definition": "UNIQUE (pg_property_id, snapshot_month)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_owner_pnl_unique_month",
+            "constraint_type": "UNIQUE",
+            "column_name": "snapshot_month",
+            "definition": "UNIQUE (pg_property_id, snapshot_month)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_owner_pnl_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_owner_pnl_pkey ON public.pg_owner_pnl USING btree (id)"
+          },
+          {
+            "index_name": "pg_owner_pnl_unique_month",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,snapshot_month}",
+            "index_definition": "CREATE UNIQUE INDEX pg_owner_pnl_unique_month ON public.pg_owner_pnl USING btree (pg_property_id, snapshot_month)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_owner_pnl_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 10
+      }
+    },
+    {
+      "name": "pg_payment_record",
+      "comment": null,
+      "columns": 11,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_tenant_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "amount",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "payment_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "payment_month",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "payment_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": "CURRENT_DATE",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "payment_method",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gateway_txn_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135718_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_amount_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((amount > (0)::numeric))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_payment_method_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((payment_method = ANY (ARRAY['cash'::text, 'upi'::text, 'bank_transfer'::text, 'cheque'::text, 'wallet'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_payment_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((payment_type = ANY (ARRAY['rent'::text, 'deposit'::text, 'advance'::text, 'penalty'::text, 'refund'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_pg_tenant_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_tenant_id",
+            "definition": "FOREIGN KEY (pg_tenant_id) REFERENCES pg_tenant(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pg_payment_record_property",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,payment_date}",
+            "index_definition": "CREATE INDEX idx_pg_payment_record_property ON public.pg_payment_record USING btree (pg_property_id, payment_date DESC)"
+          },
+          {
+            "index_name": "pg_payment_record_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_payment_record_pkey ON public.pg_payment_record USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_payment_record_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_pg_tenant_id_fkey",
+            "foreign_table_name": "pg_tenant",
+            "columns": [
+              "pg_tenant_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 11
+      }
+    },
+    {
+      "name": "pg_police_verification",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_tenant_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "submitted_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "verified_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'pending'::text",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "document_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135811_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135811_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135811_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135811_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135811_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_police_verification_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'submitted'::text, 'verified'::text, 'rejected'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_police_verification_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_police_verification_pg_tenant_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_tenant_id",
+            "definition": "FOREIGN KEY (pg_tenant_id) REFERENCES pg_tenant(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_police_verification_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_police_verification_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_police_verification_pkey ON public.pg_police_verification USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_police_verification_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_police_verification_pg_tenant_id_fkey",
+            "foreign_table_name": "pg_tenant",
+            "columns": [
+              "pg_tenant_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
+      "name": "pg_posting",
+      "comment": null,
+      "columns": 18,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "listing_type",
+            "data_type": "USER-DEFINED",
+            "is_nullable": "NO",
+            "column_default": "'PG'::listing_type",
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "title",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "photos",
+            "data_type": "jsonb",
+            "is_nullable": "NO",
+            "column_default": "'[]'::jsonb",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "price_per_bed",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "available_beds",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "available_from",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "posting_pack",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "posting_expires_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'draft'::text",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "rejection_reason",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "boost_active",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "views_count",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "leads_count",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135784_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_14_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_15_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_16_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_17_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_18_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135784_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_posting_pack_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((posting_pack = ANY (ARRAY['free'::text, 'basic'::text, 'featured'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_price_per_bed_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((price_per_bed > (0)::numeric))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'pending_review'::text, 'active'::text, 'rejected'::text, 'expired'::text, 'archived'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pg_posting_property",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,status}",
+            "index_definition": "CREATE INDEX idx_pg_posting_property ON public.pg_posting USING btree (pg_property_id, status)"
+          },
+          {
+            "index_name": "idx_pg_posting_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{available_from,status}",
+            "index_definition": "CREATE INDEX idx_pg_posting_status ON public.pg_posting USING btree (status, available_from)"
+          },
+          {
+            "index_name": "pg_posting_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_posting_pkey ON public.pg_posting USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_posting_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 18
+      }
+    },
+    {
+      "name": "pg_property",
+      "comment": null,
+      "columns": 18,
+      "rows": 0,
+      "size_bytes": 40960,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "owner_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "address_line",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "locality",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "city",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'Bengaluru'::text",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pincode",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "latitude",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 7,
+            "column_comment": null
+          },
+          {
+            "column_name": "longitude",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 7,
+            "column_comment": null
+          },
+          {
+            "column_name": "gender_preference",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'any'::text",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "property_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'pg'::text",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "total_capacity",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "1",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "amenities",
+            "data_type": "jsonb",
+            "is_nullable": "NO",
+            "column_default": "'[]'::jsonb",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "house_rules",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "police_verified",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "listing_status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'draft'::text",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135595_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_15_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_16_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_17_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_18_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135595_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_gender_preference_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((gender_preference = ANY (ARRAY['male'::text, 'female'::text, 'any'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_listing_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((listing_status = ANY (ARRAY['draft'::text, 'pending_review'::text, 'active'::text, 'suspended'::text, 'archived'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_property_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((property_type = ANY (ARRAY['pg'::text, 'hostel'::text, 'boarding_house'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_total_capacity_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((total_capacity > 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_owner_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "owner_id",
+            "definition": "FOREIGN KEY (owner_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_property_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pg_property_locality",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{locality,city}",
+            "index_definition": "CREATE INDEX idx_pg_property_locality ON public.pg_property USING btree (city, locality)"
+          },
+          {
+            "index_name": "idx_pg_property_owner",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{owner_id}",
+            "index_definition": "CREATE INDEX idx_pg_property_owner ON public.pg_property USING btree (owner_id)"
+          },
+          {
+            "index_name": "idx_pg_property_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{listing_status}",
+            "index_definition": "CREATE INDEX idx_pg_property_status ON public.pg_property USING btree (listing_status)"
+          },
+          {
+            "index_name": "pg_property_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_property_pkey ON public.pg_property USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_property_owner_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "owner_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 18
+      }
+    },
+    {
+      "name": "pg_receipt",
+      "comment": null,
+      "columns": 5,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_payment_record_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "receipt_number",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "issued_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pdf_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135742_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135742_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135742_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135742_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_receipt_pg_payment_record_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_payment_record_id",
+            "definition": "FOREIGN KEY (pg_payment_record_id) REFERENCES pg_payment_record(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_receipt_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_receipt_receipt_number_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "receipt_number",
+            "definition": "UNIQUE (receipt_number)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_receipt_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_receipt_pkey ON public.pg_receipt USING btree (id)"
+          },
+          {
+            "index_name": "pg_receipt_receipt_number_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{receipt_number}",
+            "index_definition": "CREATE UNIQUE INDEX pg_receipt_receipt_number_key ON public.pg_receipt USING btree (receipt_number)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_receipt_pg_payment_record_id_fkey",
+            "foreign_table_name": "pg_payment_record",
+            "columns": [
+              "pg_payment_record_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 5
+      }
+    },
+    {
+      "name": "pg_rent_agreement",
+      "comment": null,
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_tenant_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "agreement_start",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "agreement_end",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "monthly_rent",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "deposit_amount",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "notice_period_days",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "30",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "signed_by_owner",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "signed_by_tenant",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "signed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "document_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135833_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135833_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_rent_agreement_monthly_rent_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((monthly_rent > (0)::numeric))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_rent_agreement_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_rent_agreement_pg_tenant_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_tenant_id",
+            "definition": "FOREIGN KEY (pg_tenant_id) REFERENCES pg_tenant(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_rent_agreement_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_rent_agreement_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_rent_agreement_pkey ON public.pg_rent_agreement USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_rent_agreement_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_rent_agreement_pg_tenant_id_fkey",
+            "foreign_table_name": "pg_tenant",
+            "columns": [
+              "pg_tenant_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "pg_room",
+      "comment": null,
+      "columns": 9,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "room_number",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "room_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'shared'::text",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "capacity",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "1",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "floor_number",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "has_attached_bath",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "amenities",
+            "data_type": "jsonb",
+            "is_nullable": "NO",
+            "column_default": "'[]'::jsonb",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135623_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135623_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_room_capacity_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((capacity > 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_room_room_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((room_type = ANY (ARRAY['single'::text, 'double'::text, 'triple'::text, 'shared'::text, 'dormitory'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_room_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_room_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_room_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_room_pkey ON public.pg_room USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_room_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 9
+      }
+    },
+    {
+      "name": "pg_tenant",
+      "comment": null,
+      "columns": 13,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_bed_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "user_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "tenant_name",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "phone",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "emergency_contact",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "id_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "id_verified",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "move_in_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "move_out_date",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'active'::text",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135665_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_13_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135665_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_id_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((id_type = ANY (ARRAY['aadhaar'::text, 'passport'::text, 'dl'::text, 'voter_id'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'vacated'::text, 'notice_period'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_pg_bed_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_bed_id",
+            "definition": "FOREIGN KEY (pg_bed_id) REFERENCES pg_bed(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_user_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "user_id",
+            "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pg_tenant_property",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,status}",
+            "index_definition": "CREATE INDEX idx_pg_tenant_property ON public.pg_tenant USING btree (pg_property_id, status)"
+          },
+          {
+            "index_name": "pg_tenant_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_tenant_pkey ON public.pg_tenant USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_tenant_pg_bed_id_fkey",
+            "foreign_table_name": "pg_bed",
+            "columns": [
+              "pg_bed_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_tenant_user_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "user_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 13
+      }
+    },
+    {
+      "name": "pg_vacancy_event",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_bed_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "event_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "available_from",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "monthly_rent",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "notes",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135762_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135762_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135762_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135762_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135762_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135762_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_vacancy_event_event_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((event_type = ANY (ARRAY['vacancy_opened'::text, 'vacancy_filled'::text, 'vacancy_updated'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_vacancy_event_pg_bed_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_bed_id",
+            "definition": "FOREIGN KEY (pg_bed_id) REFERENCES pg_bed(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_vacancy_event_pg_property_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_property_id",
+            "definition": "FOREIGN KEY (pg_property_id) REFERENCES pg_property(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_vacancy_event_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_pg_vacancy_event_property",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id,created_at}",
+            "index_definition": "CREATE INDEX idx_pg_vacancy_event_property ON public.pg_vacancy_event USING btree (pg_property_id, created_at DESC)"
+          },
+          {
+            "index_name": "pg_vacancy_event_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_vacancy_event_pkey ON public.pg_vacancy_event USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_vacancy_event_pg_bed_id_fkey",
+            "foreign_table_name": "pg_bed",
+            "columns": [
+              "pg_bed_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "pg_vacancy_event_pg_property_id_fkey",
+            "foreign_table_name": "pg_property",
+            "columns": [
+              "pg_property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
       }
     },
     {
@@ -14623,7 +18220,7 @@
       "comment": null,
       "columns": 135,
       "rows": 5,
-      "size_bytes": 11673600,
+      "size_bytes": 11665408,
       "details": {
         "columns": [
           {
@@ -19511,7 +23108,15 @@
             "comment": null
           }
         ],
-        "triggers": [],
+        "triggers": [
+          {
+            "trigger_name": "trg_case_id_immutable_property_leads",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          }
+        ],
         "row_count": 5,
         "column_count": 22
       }
@@ -21585,7 +25190,15 @@
             "comment": null
           }
         ],
-        "triggers": [],
+        "triggers": [
+          {
+            "trigger_name": "trg_case_id_immutable_property_verifications",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          }
+        ],
         "row_count": 0,
         "column_count": 14
       }
@@ -23160,7 +26773,7 @@
       "name": "roles",
       "comment": null,
       "columns": 7,
-      "rows": 37,
+      "rows": 40,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -23327,7 +26940,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 37,
+        "row_count": 40,
         "column_count": 7
       }
     },
@@ -24829,7 +28442,15 @@
             "comment": null
           }
         ],
-        "triggers": [],
+        "triggers": [
+          {
+            "trigger_name": "trg_case_id_immutable_subscription_enrollments",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          }
+        ],
         "row_count": 0,
         "column_count": 14
       }
@@ -26293,6 +29914,13 @@
             "event_manipulation": "UPDATE",
             "action_timing": "AFTER",
             "action_statement": "EXECUTE FUNCTION log_payment_admin_action()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "trg_case_id_immutable_transactions",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
             "trigger_comment": null
           },
           {
@@ -28466,6 +32094,13 @@
         "foreign_keys": [],
         "triggers": [
           {
+            "trigger_name": "trg_case_id_immutable_verification_kyc",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          },
+          {
             "trigger_name": "update_verification_kyc_updated_at",
             "event_manipulation": "UPDATE",
             "action_timing": "BEFORE",
@@ -28475,6 +32110,155 @@
         ],
         "row_count": 0,
         "column_count": 15
+      }
+    },
+    {
+      "name": "waitlist_entries",
+      "comment": null,
+      "columns": 4,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "email",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "tool_slug",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_135541_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135541_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135541_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135541_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "waitlist_entries_email_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((email ~* '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'::text))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "waitlist_entries_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "waitlist_entries_email_tool_unique",
+            "constraint_type": "UNIQUE",
+            "column_name": "tool_slug",
+            "definition": "UNIQUE (email, tool_slug)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "waitlist_entries_email_tool_unique",
+            "constraint_type": "UNIQUE",
+            "column_name": "email",
+            "definition": "UNIQUE (email, tool_slug)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_waitlist_entries_tool_slug",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{tool_slug,created_at}",
+            "index_definition": "CREATE INDEX idx_waitlist_entries_tool_slug ON public.waitlist_entries USING btree (tool_slug, created_at)"
+          },
+          {
+            "index_name": "waitlist_entries_email_tool_unique",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{email,tool_slug}",
+            "index_definition": "CREATE UNIQUE INDEX waitlist_entries_email_tool_unique ON public.waitlist_entries USING btree (email, tool_slug)"
+          },
+          {
+            "index_name": "waitlist_entries_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX waitlist_entries_pkey ON public.waitlist_entries USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 4
       }
     },
     {
@@ -28737,6 +32521,13 @@
         ],
         "triggers": [
           {
+            "trigger_name": "trg_case_id_immutable_wallets",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION prevent_case_id_update()",
+            "trigger_comment": null
+          },
+          {
             "trigger_name": "trigger_update_wallet_timestamp",
             "event_manipulation": "UPDATE",
             "action_timing": "BEFORE",
@@ -28963,13 +32754,13 @@
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography",
+      "arguments": "geography, geography",
       "return_type": "integer",
       "function_comment": null
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography, geography",
+      "arguments": "geography",
       "return_type": "integer",
       "function_comment": null
     },
@@ -28987,25 +32778,25 @@
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geog1 geography, geog2 geography",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_covers",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_covers",
       "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_covers",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -29041,13 +32832,13 @@
     },
     {
       "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "double precision",
       "function_comment": null
     },
     {
       "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography, double precision, boolean",
+      "arguments": "geography, geography",
       "return_type": "double precision",
       "function_comment": null
     },
@@ -29065,13 +32856,13 @@
     },
     {
       "function_name": "_st_dwithinuncached",
-      "arguments": "geography, geography, double precision",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithinuncached",
-      "arguments": "geography, geography, double precision, boolean",
+      "arguments": "geography, geography, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -29179,15 +32970,15 @@
     },
     {
       "function_name": "addgeometrycolumn",
-      "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
-    },
-    {
-      "function_name": "addgeometrycolumn",
       "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+    },
+    {
+      "function_name": "addgeometrycolumn",
+      "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "admin_has_permission",
@@ -29221,14 +33012,20 @@
     },
     {
       "function_name": "box",
-      "arguments": "box3d",
+      "arguments": "geometry",
       "return_type": "box",
       "function_comment": null
     },
     {
       "function_name": "box",
-      "arguments": "geometry",
+      "arguments": "box3d",
       "return_type": "box",
+      "function_comment": null
+    },
+    {
+      "function_name": "box2d",
+      "arguments": "box3d",
+      "return_type": "box2d",
       "function_comment": null
     },
     {
@@ -29236,12 +33033,6 @@
       "arguments": "geometry",
       "return_type": "box2d",
       "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
-    },
-    {
-      "function_name": "box2d",
-      "arguments": "box3d",
-      "return_type": "box2d",
-      "function_comment": null
     },
     {
       "function_name": "box2d_in",
@@ -29305,13 +33096,13 @@
     },
     {
       "function_name": "bytea",
-      "arguments": "geography",
+      "arguments": "geometry",
       "return_type": "bytea",
       "function_comment": null
     },
     {
       "function_name": "bytea",
-      "arguments": "geometry",
+      "arguments": "geography",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -29383,12 +33174,6 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "geometry, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "contains_2d",
       "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
@@ -29396,6 +33181,12 @@
     {
       "function_name": "contains_2d",
       "arguments": "box2df, box2df",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "contains_2d",
+      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -29437,15 +33228,15 @@
     },
     {
       "function_name": "dropgeometrycolumn",
-      "arguments": "table_name character varying, column_name character varying",
-      "return_type": "text",
-      "function_comment": "args: table_name, column_name - Removes a geometry column from a spatial table."
-    },
-    {
-      "function_name": "dropgeometrycolumn",
       "arguments": "schema_name character varying, table_name character varying, column_name character varying",
       "return_type": "text",
       "function_comment": "args: schema_name, table_name, column_name - Removes a geometry column from a spatial table."
+    },
+    {
+      "function_name": "dropgeometrycolumn",
+      "arguments": "table_name character varying, column_name character varying",
+      "return_type": "text",
+      "function_comment": "args: table_name, column_name - Removes a geometry column from a spatial table."
     },
     {
       "function_name": "dropgeometrycolumn",
@@ -29551,13 +33342,13 @@
     },
     {
       "function_name": "geography",
-      "arguments": "geometry",
+      "arguments": "bytea",
       "return_type": "geography",
       "function_comment": null
     },
     {
       "function_name": "geography",
-      "arguments": "bytea",
+      "arguments": "geometry",
       "return_type": "geography",
       "function_comment": null
     },
@@ -29755,37 +33546,13 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "box2d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "box3d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "geometry, integer, boolean",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "bytea",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
       "arguments": "geography",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "polygon",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -29803,7 +33570,31 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "polygon",
+      "arguments": "geometry, integer, boolean",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "bytea",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box3d",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box2d",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -30583,18 +34374,6 @@
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, text, timestamp without time zone",
-      "return_type": "integer",
-      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
-    },
-    {
-      "function_name": "lockrow",
-      "arguments": "text, text, text, text",
-      "return_type": "integer",
-      "function_comment": null
-    },
-    {
-      "function_name": "lockrow",
       "arguments": "text, text, text",
       "return_type": "integer",
       "function_comment": "args: a_table_name, a_row_key, an_auth_token - Sets lock/authorization for a row in a table."
@@ -30604,6 +34383,18 @@
       "arguments": "text, text, text, timestamp without time zone",
       "return_type": "integer",
       "function_comment": "args: a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
+    },
+    {
+      "function_name": "lockrow",
+      "arguments": "text, text, text, text",
+      "return_type": "integer",
+      "function_comment": null
+    },
+    {
+      "function_name": "lockrow",
+      "arguments": "text, text, text, text, timestamp without time zone",
+      "return_type": "integer",
+      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
     },
     {
       "function_name": "log_admin_creation",
@@ -30637,6 +34428,12 @@
     },
     {
       "function_name": "overlaps_2d",
+      "arguments": "box2df, box2df",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "overlaps_2d",
       "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
@@ -30648,12 +34445,6 @@
       "function_comment": null
     },
     {
-      "function_name": "overlaps_2d",
-      "arguments": "box2df, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
       "function_name": "overlaps_geog",
       "arguments": "geography, gidx",
       "return_type": "boolean",
@@ -30661,13 +34452,13 @@
     },
     {
       "function_name": "overlaps_geog",
-      "arguments": "gidx, gidx",
+      "arguments": "gidx, geography",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "overlaps_geog",
-      "arguments": "gidx, geography",
+      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -30703,12 +34494,6 @@
     },
     {
       "function_name": "pgis_asflatgeobuf_transfn",
-      "arguments": "internal, anyelement, boolean, text",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asflatgeobuf_transfn",
       "arguments": "internal, anyelement, boolean",
       "return_type": "internal",
       "function_comment": null
@@ -30720,6 +34505,12 @@
       "function_comment": null
     },
     {
+      "function_name": "pgis_asflatgeobuf_transfn",
+      "arguments": "internal, anyelement, boolean, text",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
       "function_name": "pgis_asgeobuf_finalfn",
       "arguments": "internal",
       "return_type": "bytea",
@@ -30727,13 +34518,13 @@
     },
     {
       "function_name": "pgis_asgeobuf_transfn",
-      "arguments": "internal, anyelement",
+      "arguments": "internal, anyelement, text",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_asgeobuf_transfn",
-      "arguments": "internal, anyelement, text",
+      "arguments": "internal, anyelement",
       "return_type": "internal",
       "function_comment": null
     },
@@ -30763,6 +34554,12 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
+      "arguments": "internal, anyelement, text, integer",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asmvt_transfn",
       "arguments": "internal, anyelement",
       "return_type": "internal",
       "function_comment": null
@@ -30781,13 +34578,13 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer",
+      "arguments": "internal, anyelement, text",
       "return_type": "internal",
       "function_comment": null
     },
     {
-      "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text",
+      "function_name": "pgis_geometry_accum_transfn",
+      "arguments": "internal, geometry",
       "return_type": "internal",
       "function_comment": null
     },
@@ -30800,12 +34597,6 @@
     {
       "function_name": "pgis_geometry_accum_transfn",
       "arguments": "internal, geometry, double precision",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_geometry_accum_transfn",
-      "arguments": "internal, geometry",
       "return_type": "internal",
       "function_comment": null
     },
@@ -30865,13 +34656,13 @@
     },
     {
       "function_name": "pgis_geometry_union_parallel_transfn",
-      "arguments": "internal, geometry, double precision",
+      "arguments": "internal, geometry",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_geometry_union_parallel_transfn",
-      "arguments": "internal, geometry",
+      "arguments": "internal, geometry, double precision",
       "return_type": "internal",
       "function_comment": null
     },
@@ -30889,15 +34680,15 @@
     },
     {
       "function_name": "populate_geometry_columns",
-      "arguments": "tbl_oid oid, use_typmod boolean DEFAULT true",
-      "return_type": "integer",
-      "function_comment": "args: relation_oid, use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
-    },
-    {
-      "function_name": "populate_geometry_columns",
       "arguments": "use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
+    },
+    {
+      "function_name": "populate_geometry_columns",
+      "arguments": "tbl_oid oid, use_typmod boolean DEFAULT true",
+      "return_type": "integer",
+      "function_comment": "args: relation_oid, use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
     },
     {
       "function_name": "postgis_addbbox",
@@ -31096,6 +34887,12 @@
       "arguments": "",
       "return_type": "text",
       "function_comment": "Returns the version number of the internal Wagyu library."
+    },
+    {
+      "function_name": "prevent_case_id_update",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
     },
     {
       "function_name": "process_credit_purchase",
@@ -31303,15 +35100,21 @@
     },
     {
       "function_name": "st_angle",
+      "arguments": "line1 geometry, line2 geometry",
+      "return_type": "double precision",
+      "function_comment": "args: line1, line2 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
+    },
+    {
+      "function_name": "st_angle",
       "arguments": "pt1 geometry, pt2 geometry, pt3 geometry, pt4 geometry DEFAULT '0101000000000000000000F87F000000000000F87F'::geometry",
       "return_type": "double precision",
       "function_comment": "args: point1, point2, point3, point4 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
     },
     {
-      "function_name": "st_angle",
-      "arguments": "line1 geometry, line2 geometry",
+      "function_name": "st_area",
+      "arguments": "text",
       "return_type": "double precision",
-      "function_comment": "args: line1, line2 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
+      "function_comment": null
     },
     {
       "function_name": "st_area",
@@ -31326,12 +35129,6 @@
       "function_comment": "args: geog, use_spheroid=true - Returns the area of a polygonal geometry."
     },
     {
-      "function_name": "st_area",
-      "arguments": "text",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
       "function_name": "st_area2d",
       "arguments": "geometry",
       "return_type": "double precision",
@@ -31339,7 +35136,7 @@
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geography, text",
+      "arguments": "geometry",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -31351,7 +35148,7 @@
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geometry",
+      "arguments": "geography, text",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -31369,26 +35166,14 @@
     },
     {
       "function_name": "st_asewkb",
-      "arguments": "geometry",
-      "return_type": "bytea",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkb",
       "arguments": "geometry, text",
       "return_type": "bytea",
       "function_comment": null
     },
     {
-      "function_name": "st_asewkt",
-      "arguments": "geography, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkt",
-      "arguments": "text",
-      "return_type": "text",
+      "function_name": "st_asewkb",
+      "arguments": "geometry",
+      "return_type": "bytea",
       "function_comment": null
     },
     {
@@ -31410,6 +35195,18 @@
       "function_comment": null
     },
     {
+      "function_name": "st_asewkt",
+      "arguments": "geography, integer",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asewkt",
+      "arguments": "text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
       "function_name": "st_asgeojson",
       "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8",
       "return_type": "text",
@@ -31423,19 +35220,31 @@
     },
     {
       "function_name": "st_asgeojson",
-      "arguments": "text",
+      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgeojson",
-      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgml",
       "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
       "return_type": "text",
       "function_comment": null
     },
@@ -31448,18 +35257,6 @@
     {
       "function_name": "st_asgml",
       "arguments": "version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
@@ -31477,12 +35274,6 @@
     },
     {
       "function_name": "st_askml",
-      "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_askml",
       "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text",
       "return_type": "text",
       "function_comment": null
@@ -31490,6 +35281,12 @@
     {
       "function_name": "st_askml",
       "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 15, nprefix text DEFAULT ''::text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_askml",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
@@ -31513,7 +35310,7 @@
     },
     {
       "function_name": "st_assvg",
-      "arguments": "geog geography, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
@@ -31525,25 +35322,13 @@
     },
     {
       "function_name": "st_assvg",
-      "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_astext",
-      "arguments": "geography, integer",
+      "arguments": "geog geography, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_astext",
       "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_astext",
-      "arguments": "geometry",
       "return_type": "text",
       "function_comment": null
     },
@@ -31555,7 +35340,19 @@
     },
     {
       "function_name": "st_astext",
+      "arguments": "geometry",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_astext",
       "arguments": "geography",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_astext",
+      "arguments": "geography, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -31579,13 +35376,13 @@
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
@@ -31621,14 +35418,20 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geom geometry, radius double precision, quadsegs integer",
-      "return_type": "geometry",
+      "arguments": "geography, double precision, integer",
+      "return_type": "geography",
       "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
     },
     {
       "function_name": "st_buffer",
-      "arguments": "text, double precision, integer",
-      "return_type": "geometry",
+      "arguments": "geography, double precision, text",
+      "return_type": "geography",
+      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "geography, double precision",
+      "return_type": "geography",
       "function_comment": null
     },
     {
@@ -31639,33 +35442,27 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "text, double precision",
+      "arguments": "geom geometry, radius double precision, quadsegs integer",
       "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "geography, double precision, text",
-      "return_type": "geography",
-      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters - Computes a geometry covering all points within a given distance from a geometry."
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "geography, double precision, integer",
-      "return_type": "geography",
       "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "geography, double precision",
-      "return_type": "geography",
-      "function_comment": null
     },
     {
       "function_name": "st_buffer",
       "arguments": "geom geometry, radius double precision, options text DEFAULT ''::text",
       "return_type": "geometry",
       "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters = ' - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "text, double precision, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "text, double precision",
+      "return_type": "geometry",
+      "function_comment": null
     },
     {
       "function_name": "st_buildarea",
@@ -31675,15 +35472,15 @@
     },
     {
       "function_name": "st_centroid",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_centroid",
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: g1 - Returns the geometric center of a geometry."
+    },
+    {
+      "function_name": "st_centroid",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
     },
     {
       "function_name": "st_centroid",
@@ -31735,27 +35532,27 @@
     },
     {
       "function_name": "st_collect",
-      "arguments": "geometry[]",
-      "return_type": "geometry",
-      "function_comment": "args: g1_array - Creates a GeometryCollection or Multi* geometry from a set of geometries."
-    },
-    {
-      "function_name": "st_collect",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
       "function_comment": "args: g1, g2 - Creates a GeometryCollection or Multi* geometry from a set of geometries."
     },
     {
-      "function_name": "st_collectionextract",
-      "arguments": "geometry, integer",
+      "function_name": "st_collect",
+      "arguments": "geometry[]",
       "return_type": "geometry",
-      "function_comment": "args: collection, type - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
+      "function_comment": "args: g1_array - Creates a GeometryCollection or Multi* geometry from a set of geometries."
     },
     {
       "function_name": "st_collectionextract",
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: collection - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
+    },
+    {
+      "function_name": "st_collectionextract",
+      "arguments": "geometry, integer",
+      "return_type": "geometry",
+      "function_comment": "args: collection, type - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
     },
     {
       "function_name": "st_collectionhomogenize",
@@ -31831,13 +35628,13 @@
     },
     {
       "function_name": "st_covers",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "st_covers",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -31897,15 +35694,15 @@
     },
     {
       "function_name": "st_distance",
-      "arguments": "text, text",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_distance",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": "args: g1, g2 - Returns the distance between two geometry or geography values."
+    },
+    {
+      "function_name": "st_distance",
+      "arguments": "text, text",
+      "return_type": "double precision",
+      "function_comment": null
     },
     {
       "function_name": "st_distance",
@@ -31975,13 +35772,13 @@
     },
     {
       "function_name": "st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "arguments": "geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "st_dwithin",
-      "arguments": "geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -32005,9 +35802,9 @@
     },
     {
       "function_name": "st_estimatedextent",
-      "arguments": "text, text",
+      "arguments": "text, text, text",
       "return_type": "box2d",
-      "function_comment": "args: table_name, geocolumn_name - Returns the estimated extent of a spatial table."
+      "function_comment": "args: schema_name, table_name, geocolumn_name - Returns the estimated extent of a spatial table."
     },
     {
       "function_name": "st_estimatedextent",
@@ -32017,9 +35814,33 @@
     },
     {
       "function_name": "st_estimatedextent",
-      "arguments": "text, text, text",
+      "arguments": "text, text",
       "return_type": "box2d",
-      "function_comment": "args: schema_name, table_name, geocolumn_name - Returns the estimated extent of a spatial table."
+      "function_comment": "args: table_name, geocolumn_name - Returns the estimated extent of a spatial table."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box box2d, dx double precision, dy double precision",
+      "return_type": "box2d",
+      "function_comment": "args: box, dx, dy - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
+      "return_type": "box3d",
+      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box3d, double precision",
+      "return_type": "box3d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box2d, double precision",
+      "return_type": "box2d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_expand",
@@ -32032,30 +35853,6 @@
       "arguments": "geometry, double precision",
       "return_type": "geometry",
       "function_comment": "args: geom, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box3d, double precision",
-      "return_type": "box3d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
-      "return_type": "box3d",
-      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box box2d, dx double precision, dy double precision",
-      "return_type": "box2d",
-      "function_comment": "args: box, dx, dy - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box2d, double precision",
-      "return_type": "box2d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_exteriorring",
@@ -32071,13 +35868,13 @@
     },
     {
       "function_name": "st_findextent",
-      "arguments": "text, text",
+      "arguments": "text, text, text",
       "return_type": "box2d",
       "function_comment": null
     },
     {
       "function_name": "st_findextent",
-      "arguments": "text, text, text",
+      "arguments": "text, text",
       "return_type": "box2d",
       "function_comment": null
     },
@@ -32251,13 +36048,13 @@
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32293,6 +36090,12 @@
     },
     {
       "function_name": "st_geomfromgeojson",
+      "arguments": "jsonb",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_geomfromgeojson",
       "arguments": "json",
       "return_type": "geometry",
       "function_comment": null
@@ -32300,12 +36103,6 @@
     {
       "function_name": "st_geomfromgeojson",
       "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromgeojson",
-      "arguments": "jsonb",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32335,13 +36132,13 @@
     },
     {
       "function_name": "st_geomfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geomfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32353,25 +36150,25 @@
     },
     {
       "function_name": "st_geomfromwkb",
-      "arguments": "bytea, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromwkb",
       "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_gmltosql",
-      "arguments": "text, integer",
+      "function_name": "st_geomfromwkb",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_gmltosql",
       "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_gmltosql",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32383,15 +36180,15 @@
     },
     {
       "function_name": "st_hausdorffdistance",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "double precision",
-      "function_comment": "args: g1, g2 - Returns the Hausdorff distance between two geometries."
-    },
-    {
-      "function_name": "st_hausdorffdistance",
       "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "double precision",
       "function_comment": "args: g1, g2, densifyFrac - Returns the Hausdorff distance between two geometries."
+    },
+    {
+      "function_name": "st_hausdorffdistance",
+      "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "double precision",
+      "function_comment": "args: g1, g2 - Returns the Hausdorff distance between two geometries."
     },
     {
       "function_name": "st_hexagon",
@@ -32437,12 +36234,6 @@
     },
     {
       "function_name": "st_intersects",
-      "arguments": "text, text",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_intersects",
       "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
@@ -32450,6 +36241,12 @@
     {
       "function_name": "st_intersects",
       "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_intersects",
+      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -32497,15 +36294,15 @@
     },
     {
       "function_name": "st_isvalid",
-      "arguments": "geometry",
-      "return_type": "boolean",
-      "function_comment": "args: g - Tests if a geometry is well-formed in 2D."
-    },
-    {
-      "function_name": "st_isvalid",
       "arguments": "geometry, integer",
       "return_type": "boolean",
       "function_comment": "args: g, flags - Tests if a geometry is well-formed in 2D."
+    },
+    {
+      "function_name": "st_isvalid",
+      "arguments": "geometry",
+      "return_type": "boolean",
+      "function_comment": "args: g - Tests if a geometry is well-formed in 2D."
     },
     {
       "function_name": "st_isvaliddetail",
@@ -32515,27 +36312,21 @@
     },
     {
       "function_name": "st_isvalidreason",
-      "arguments": "geometry, integer",
-      "return_type": "text",
-      "function_comment": "args: geomA, flags - Returns text stating if a geometry is valid, or a reason for invalidity."
-    },
-    {
-      "function_name": "st_isvalidreason",
       "arguments": "geometry",
       "return_type": "text",
       "function_comment": "args: geomA - Returns text stating if a geometry is valid, or a reason for invalidity."
+    },
+    {
+      "function_name": "st_isvalidreason",
+      "arguments": "geometry, integer",
+      "return_type": "text",
+      "function_comment": "args: geomA, flags - Returns text stating if a geometry is valid, or a reason for invalidity."
     },
     {
       "function_name": "st_isvalidtrajectory",
       "arguments": "geometry",
       "return_type": "boolean",
       "function_comment": "args: line - Tests if the geometry is a valid trajectory."
-    },
-    {
-      "function_name": "st_length",
-      "arguments": "text",
-      "return_type": "double precision",
-      "function_comment": null
     },
     {
       "function_name": "st_length",
@@ -32548,6 +36339,12 @@
       "arguments": "geometry",
       "return_type": "double precision",
       "function_comment": "args: a_2dlinestring - Returns the 2D length of a linear geometry."
+    },
+    {
+      "function_name": "st_length",
+      "arguments": "text",
+      "return_type": "double precision",
+      "function_comment": null
     },
     {
       "function_name": "st_length2d",
@@ -32593,13 +36390,13 @@
     },
     {
       "function_name": "st_linefromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linefromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32635,25 +36432,25 @@
     },
     {
       "function_name": "st_linemerge",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: amultilinestring - Return the lines formed by sewing together a MultiLineString."
-    },
-    {
-      "function_name": "st_linemerge",
       "arguments": "geometry, boolean",
       "return_type": "geometry",
       "function_comment": "args: amultilinestring, directed - Return the lines formed by sewing together a MultiLineString."
     },
     {
+      "function_name": "st_linemerge",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: amultilinestring - Return the lines formed by sewing together a MultiLineString."
+    },
+    {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32749,27 +36546,27 @@
     },
     {
       "function_name": "st_makepolygon",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
-    },
-    {
-      "function_name": "st_makepolygon",
       "arguments": "geometry, geometry[]",
       "return_type": "geometry",
       "function_comment": "args: outerlinestring, interiorlinestrings - Creates a Polygon from a shell and optional list of holes."
     },
     {
-      "function_name": "st_makevalid",
+      "function_name": "st_makepolygon",
       "arguments": "geometry",
       "return_type": "geometry",
-      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
+      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
     },
     {
       "function_name": "st_makevalid",
       "arguments": "geom geometry, params text",
       "return_type": "geometry",
       "function_comment": "args: input, params - Attempts to make an invalid geometry valid without losing vertices."
+    },
+    {
+      "function_name": "st_makevalid",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
     },
     {
       "function_name": "st_maxdistance",
@@ -32839,25 +36636,25 @@
     },
     {
       "function_name": "st_mpointfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpointfromtext",
-      "arguments": "text, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_mpointfromwkb",
-      "arguments": "bytea",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpointfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_mpointfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32875,13 +36672,13 @@
     },
     {
       "function_name": "st_mpolyfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpolyfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32899,13 +36696,13 @@
     },
     {
       "function_name": "st_multilinestringfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_multilinestringfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -32917,13 +36714,13 @@
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33061,25 +36858,19 @@
     },
     {
       "function_name": "st_point",
-      "arguments": "double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: x, y - Creates a Point with X, Y and SRID values."
-    },
-    {
-      "function_name": "st_point",
       "arguments": "double precision, double precision, srid integer",
       "return_type": "geometry",
       "function_comment": "args: x, y, srid=unknown - Creates a Point with X, Y and SRID values."
     },
     {
-      "function_name": "st_pointfromgeohash",
-      "arguments": "text, integer DEFAULT NULL::integer",
+      "function_name": "st_point",
+      "arguments": "double precision, double precision",
       "return_type": "geometry",
-      "function_comment": null
+      "function_comment": "args: x, y - Creates a Point with X, Y and SRID values."
     },
     {
-      "function_name": "st_pointfromtext",
-      "arguments": "text, integer",
+      "function_name": "st_pointfromgeohash",
+      "arguments": "text, integer DEFAULT NULL::integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33090,14 +36881,20 @@
       "function_comment": null
     },
     {
-      "function_name": "st_pointfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_pointfromtext",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_pointfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_pointfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33145,13 +36942,13 @@
     },
     {
       "function_name": "st_polyfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polyfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33187,13 +36984,13 @@
     },
     {
       "function_name": "st_polygonfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polygonfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33265,12 +37062,6 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
-    },
-    {
-      "function_name": "st_rotate",
       "arguments": "geometry, double precision, geometry",
       "return_type": "geometry",
       "function_comment": "args: geomA, rotRadians, pointOrigin - Rotates a geometry about an origin point."
@@ -33280,6 +37071,12 @@
       "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
+    },
+    {
+      "function_name": "st_rotate",
+      "arguments": "geometry, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotatex",
@@ -33301,12 +37098,6 @@
     },
     {
       "function_name": "st_scale",
-      "arguments": "geometry, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, XFactor, YFactor - Scales a geometry by given factors."
-    },
-    {
-      "function_name": "st_scale",
       "arguments": "geometry, geometry, origin geometry",
       "return_type": "geometry",
       "function_comment": "args: geom, factor, origin - Scales a geometry by given factors."
@@ -33324,6 +37115,12 @@
       "function_comment": "args: geom, factor - Scales a geometry by given factors."
     },
     {
+      "function_name": "st_scale",
+      "arguments": "geometry, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, XFactor, YFactor - Scales a geometry by given factors."
+    },
+    {
       "function_name": "st_scroll",
       "arguments": "geometry, geometry",
       "return_type": "geometry",
@@ -33331,15 +37128,15 @@
     },
     {
       "function_name": "st_segmentize",
-      "arguments": "geog geography, max_segment_length double precision",
-      "return_type": "geography",
-      "function_comment": "args: geog, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
-    },
-    {
-      "function_name": "st_segmentize",
       "arguments": "geometry, double precision",
       "return_type": "geometry",
       "function_comment": "args: geom, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
+    },
+    {
+      "function_name": "st_segmentize",
+      "arguments": "geog geography, max_segment_length double precision",
+      "return_type": "geography",
+      "function_comment": "args: geog, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
     },
     {
       "function_name": "st_seteffectivearea",
@@ -33355,15 +37152,15 @@
     },
     {
       "function_name": "st_setsrid",
-      "arguments": "geom geometry, srid integer",
-      "return_type": "geometry",
-      "function_comment": "args: geom, srid - Set the SRID on a geometry."
-    },
-    {
-      "function_name": "st_setsrid",
       "arguments": "geog geography, srid integer",
       "return_type": "geography",
       "function_comment": null
+    },
+    {
+      "function_name": "st_setsrid",
+      "arguments": "geom geometry, srid integer",
+      "return_type": "geometry",
+      "function_comment": "args: geom, srid - Set the SRID on a geometry."
     },
     {
       "function_name": "st_sharedpaths",
@@ -33421,15 +37218,9 @@
     },
     {
       "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision, double precision, double precision, double precision",
+      "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, originX, originY, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
-    },
-    {
-      "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+      "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_snaptogrid",
@@ -33439,9 +37230,15 @@
     },
     {
       "function_name": "st_snaptogrid",
-      "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
+      "arguments": "geometry, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
+      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+    },
+    {
+      "function_name": "st_snaptogrid",
+      "arguments": "geometry, double precision, double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, originX, originY, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_split",
@@ -33463,15 +37260,15 @@
     },
     {
       "function_name": "st_srid",
-      "arguments": "geom geometry",
-      "return_type": "integer",
-      "function_comment": "args: g1 - Returns the spatial reference identifier for a geometry."
-    },
-    {
-      "function_name": "st_srid",
       "arguments": "geog geography",
       "return_type": "integer",
       "function_comment": null
+    },
+    {
+      "function_name": "st_srid",
+      "arguments": "geom geometry",
+      "return_type": "integer",
+      "function_comment": "args: g1 - Returns the spatial reference identifier for a geometry."
     },
     {
       "function_name": "st_startpoint",
@@ -33535,15 +37332,15 @@
     },
     {
       "function_name": "st_transform",
-      "arguments": "geom geometry, to_proj text",
-      "return_type": "geometry",
-      "function_comment": "args: geom, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
-    },
-    {
-      "function_name": "st_transform",
       "arguments": "geom geometry, from_proj text, to_srid integer",
       "return_type": "geometry",
       "function_comment": "args: geom, from_proj, to_srid - Return a new geometry with coordinates transformed to a different spatial reference system."
+    },
+    {
+      "function_name": "st_transform",
+      "arguments": "geom geometry, to_proj text",
+      "return_type": "geometry",
+      "function_comment": "args: geom, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_transform",
@@ -34102,6 +37899,14 @@
       ]
     },
     {
+      "fromTable": "home_loan_consent_log",
+      "toTable": "profiles",
+      "constraint_name": "home_loan_consent_log_user_id_fkey",
+      "columns": [
+        "user_id"
+      ]
+    },
+    {
       "fromTable": "hot_properties",
       "toTable": "properties",
       "constraint_name": "hot_properties_property_id_fkey",
@@ -34299,6 +38104,174 @@
       "constraint_name": "overtime_records_approved_by_fkey",
       "columns": [
         "approved_by"
+      ]
+    },
+    {
+      "fromTable": "pg_bed",
+      "toTable": "pg_room",
+      "constraint_name": "pg_bed_pg_room_id_fkey",
+      "columns": [
+        "pg_room_id"
+      ]
+    },
+    {
+      "fromTable": "pg_occupancy",
+      "toTable": "pg_bed",
+      "constraint_name": "pg_occupancy_pg_bed_id_fkey",
+      "columns": [
+        "pg_bed_id"
+      ]
+    },
+    {
+      "fromTable": "pg_occupancy",
+      "toTable": "pg_property",
+      "constraint_name": "pg_occupancy_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_occupancy",
+      "toTable": "pg_tenant",
+      "constraint_name": "pg_occupancy_pg_tenant_id_fkey",
+      "columns": [
+        "pg_tenant_id"
+      ]
+    },
+    {
+      "fromTable": "pg_occupancy_snapshot",
+      "toTable": "pg_property",
+      "constraint_name": "pg_occupancy_snapshot_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_owner_pnl",
+      "toTable": "pg_property",
+      "constraint_name": "pg_owner_pnl_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_payment_record",
+      "toTable": "pg_property",
+      "constraint_name": "pg_payment_record_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_payment_record",
+      "toTable": "pg_tenant",
+      "constraint_name": "pg_payment_record_pg_tenant_id_fkey",
+      "columns": [
+        "pg_tenant_id"
+      ]
+    },
+    {
+      "fromTable": "pg_police_verification",
+      "toTable": "pg_property",
+      "constraint_name": "pg_police_verification_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_police_verification",
+      "toTable": "pg_tenant",
+      "constraint_name": "pg_police_verification_pg_tenant_id_fkey",
+      "columns": [
+        "pg_tenant_id"
+      ]
+    },
+    {
+      "fromTable": "pg_posting",
+      "toTable": "pg_property",
+      "constraint_name": "pg_posting_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_property",
+      "toTable": "profiles",
+      "constraint_name": "pg_property_owner_id_fkey",
+      "columns": [
+        "owner_id"
+      ]
+    },
+    {
+      "fromTable": "pg_receipt",
+      "toTable": "pg_payment_record",
+      "constraint_name": "pg_receipt_pg_payment_record_id_fkey",
+      "columns": [
+        "pg_payment_record_id"
+      ]
+    },
+    {
+      "fromTable": "pg_rent_agreement",
+      "toTable": "pg_property",
+      "constraint_name": "pg_rent_agreement_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_rent_agreement",
+      "toTable": "pg_tenant",
+      "constraint_name": "pg_rent_agreement_pg_tenant_id_fkey",
+      "columns": [
+        "pg_tenant_id"
+      ]
+    },
+    {
+      "fromTable": "pg_room",
+      "toTable": "pg_property",
+      "constraint_name": "pg_room_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_tenant",
+      "toTable": "pg_bed",
+      "constraint_name": "pg_tenant_pg_bed_id_fkey",
+      "columns": [
+        "pg_bed_id"
+      ]
+    },
+    {
+      "fromTable": "pg_tenant",
+      "toTable": "pg_property",
+      "constraint_name": "pg_tenant_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_tenant",
+      "toTable": "profiles",
+      "constraint_name": "pg_tenant_user_id_fkey",
+      "columns": [
+        "user_id"
+      ]
+    },
+    {
+      "fromTable": "pg_vacancy_event",
+      "toTable": "pg_bed",
+      "constraint_name": "pg_vacancy_event_pg_bed_id_fkey",
+      "columns": [
+        "pg_bed_id"
+      ]
+    },
+    {
+      "fromTable": "pg_vacancy_event",
+      "toTable": "pg_property",
+      "constraint_name": "pg_vacancy_event_pg_property_id_fkey",
+      "columns": [
+        "pg_property_id"
       ]
     },
     {

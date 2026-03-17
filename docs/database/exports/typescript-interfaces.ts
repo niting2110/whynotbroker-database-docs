@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-12T07:06:53.856Z
+// Generated: 2026-03-17T07:15:39.976Z
 
 export interface Database {
   admin_audit_logs: {
@@ -426,6 +426,20 @@ export interface Database {
     };
   };
 
+  home_loan_consent_log: {
+    Row: {
+      id: string;
+      user_id: string;
+      bank_id: string;
+      purpose: string;
+      consent_given_at: string | Date;
+      consent_withdrawn_at?: string | Date;
+      ip_address_hash?: string;
+      session_id?: string;
+      created_at: string | Date;
+    };
+  };
+
   hot_properties: {
     Row: {
       id: string;
@@ -795,6 +809,206 @@ export interface Database {
       action: any;
       scope: any;
       usage_condition?: string;
+    };
+  };
+
+  pg_bed: {
+    Row: {
+      id: string;
+      pg_room_id: string;
+      bed_label?: string;
+      is_available: boolean;
+      monthly_rent: number;
+      advance_deposit: number;
+      created_at: string | Date;
+    };
+  };
+
+  pg_occupancy: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      pg_bed_id: string;
+      pg_tenant_id?: string;
+      occupied_from: string | Date;
+      occupied_until?: string | Date;
+      is_current: boolean;
+      created_at: string | Date;
+    };
+  };
+
+  pg_occupancy_snapshot: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      snapshot_date: string | Date;
+      total_beds: number;
+      occupied_beds: number;
+      available_beds: number;
+      created_at: string | Date;
+    };
+  };
+
+  pg_owner_pnl: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      snapshot_month: string | Date;
+      total_beds: number;
+      occupied_beds: number;
+      occupancy_rate?: number;
+      gross_rent_expected: number;
+      gross_rent_received: number;
+      collection_rate?: number;
+      created_at: string | Date;
+    };
+  };
+
+  pg_payment_record: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      pg_tenant_id: string;
+      amount: number;
+      payment_type: string;
+      payment_month?: string | Date;
+      payment_date: string | Date;
+      payment_method?: string;
+      gateway_txn_id?: string;
+      notes?: string;
+      created_at: string | Date;
+    };
+  };
+
+  pg_police_verification: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      pg_tenant_id: string;
+      submitted_at: string | Date;
+      verified_at?: string | Date;
+      status: string;
+      document_url?: string;
+      notes?: string;
+    };
+  };
+
+  pg_posting: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      listing_type: any;
+      title: string;
+      description?: string;
+      photos: any;
+      price_per_bed: number;
+      available_beds: number;
+      available_from: string | Date;
+      posting_pack?: string;
+      posting_expires_at?: string | Date;
+      status: string;
+      rejection_reason?: string;
+      boost_active: boolean;
+      views_count: number;
+      leads_count: number;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  pg_property: {
+    Row: {
+      id: string;
+      owner_id: string;
+      name: string;
+      address_line: string;
+      locality: string;
+      city: string;
+      pincode?: string;
+      latitude?: number;
+      longitude?: number;
+      gender_preference: string;
+      property_type: string;
+      total_capacity: number;
+      amenities: any;
+      house_rules?: string;
+      police_verified: boolean;
+      listing_status: string;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  pg_receipt: {
+    Row: {
+      id: string;
+      pg_payment_record_id: string;
+      receipt_number: string;
+      issued_at: string | Date;
+      pdf_url?: string;
+    };
+  };
+
+  pg_rent_agreement: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      pg_tenant_id: string;
+      agreement_start: string | Date;
+      agreement_end?: string | Date;
+      monthly_rent: number;
+      deposit_amount: number;
+      notice_period_days: number;
+      signed_by_owner: boolean;
+      signed_by_tenant: boolean;
+      signed_at?: string | Date;
+      document_url?: string;
+      created_at: string | Date;
+    };
+  };
+
+  pg_room: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      room_number?: string;
+      room_type: string;
+      capacity: number;
+      floor_number?: number;
+      has_attached_bath: boolean;
+      amenities: any;
+      created_at: string | Date;
+    };
+  };
+
+  pg_tenant: {
+    Row: {
+      id: string;
+      pg_property_id: string;
+      pg_bed_id?: string;
+      user_id?: string;
+      tenant_name: string;
+      phone?: string;
+      emergency_contact?: string;
+      id_type?: string;
+      id_verified: boolean;
+      move_in_date: string | Date;
+      move_out_date?: string | Date;
+      status: string;
+      created_at: string | Date;
+    };
+  };
+
+  pg_vacancy_event: {
+    Row: {
+      id: string;
+      pg_bed_id: string;
+      pg_property_id: string;
+      event_type: string;
+      available_from: string | Date;
+      monthly_rent?: number;
+      notes?: string;
+      created_at: string | Date;
     };
   };
 
@@ -1802,6 +2016,15 @@ export interface Database {
       created_at?: string | Date;
       updated_at?: string | Date;
       case_id?: string;
+    };
+  };
+
+  waitlist_entries: {
+    Row: {
+      id: string;
+      email: string;
+      tool_slug: string;
+      created_at: string | Date;
     };
   };
 

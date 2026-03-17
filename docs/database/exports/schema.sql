@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-12T07:06:53.844Z
+-- Generated: 2026-03-17T07:15:39.953Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -426,6 +426,20 @@ CREATE TABLE IF NOT EXISTS districts (
   ,PRIMARY KEY (id)
 );
 
+-- Table: home_loan_consent_log
+CREATE TABLE IF NOT EXISTS home_loan_consent_log (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  bank_id text NOT NULL,
+  purpose text NOT NULL,
+  consent_given_at timestamp with time zone NOT NULL DEFAULT now(),
+  consent_withdrawn_at timestamp with time zone,
+  ip_address_hash text,
+  session_id text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: hot_properties
 CREATE TABLE IF NOT EXISTS hot_properties (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -795,6 +809,206 @@ CREATE TABLE IF NOT EXISTS permissions (
   action USER-DEFINED NOT NULL,
   scope USER-DEFINED NOT NULL,
   usage_condition text
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_bed
+CREATE TABLE IF NOT EXISTS pg_bed (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_room_id uuid NOT NULL,
+  bed_label text,
+  is_available boolean NOT NULL DEFAULT true,
+  monthly_rent numeric NOT NULL,
+  advance_deposit numeric NOT NULL DEFAULT 0,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_occupancy
+CREATE TABLE IF NOT EXISTS pg_occupancy (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  pg_bed_id uuid NOT NULL,
+  pg_tenant_id uuid,
+  occupied_from date NOT NULL,
+  occupied_until date,
+  is_current boolean NOT NULL DEFAULT true,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_occupancy_snapshot
+CREATE TABLE IF NOT EXISTS pg_occupancy_snapshot (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  snapshot_date date NOT NULL DEFAULT CURRENT_DATE,
+  total_beds integer NOT NULL DEFAULT 0,
+  occupied_beds integer NOT NULL DEFAULT 0,
+  available_beds integer NOT NULL DEFAULT 0,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_owner_pnl
+CREATE TABLE IF NOT EXISTS pg_owner_pnl (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  snapshot_month date NOT NULL,
+  total_beds integer NOT NULL DEFAULT 0,
+  occupied_beds integer NOT NULL DEFAULT 0,
+  occupancy_rate numeric,
+  gross_rent_expected numeric NOT NULL DEFAULT 0,
+  gross_rent_received numeric NOT NULL DEFAULT 0,
+  collection_rate numeric,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_payment_record
+CREATE TABLE IF NOT EXISTS pg_payment_record (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  pg_tenant_id uuid NOT NULL,
+  amount numeric NOT NULL,
+  payment_type text NOT NULL,
+  payment_month date,
+  payment_date date NOT NULL DEFAULT CURRENT_DATE,
+  payment_method text,
+  gateway_txn_id text,
+  notes text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_police_verification
+CREATE TABLE IF NOT EXISTS pg_police_verification (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  pg_tenant_id uuid NOT NULL,
+  submitted_at timestamp with time zone NOT NULL DEFAULT now(),
+  verified_at timestamp with time zone,
+  status text NOT NULL DEFAULT 'pending'::text,
+  document_url text,
+  notes text
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_posting
+CREATE TABLE IF NOT EXISTS pg_posting (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  listing_type USER-DEFINED NOT NULL DEFAULT 'PG'::listing_type,
+  title text NOT NULL,
+  description text,
+  photos jsonb NOT NULL DEFAULT '[]'::jsonb,
+  price_per_bed numeric NOT NULL,
+  available_beds integer NOT NULL DEFAULT 0,
+  available_from date NOT NULL,
+  posting_pack text,
+  posting_expires_at timestamp with time zone,
+  status text NOT NULL DEFAULT 'draft'::text,
+  rejection_reason text,
+  boost_active boolean NOT NULL DEFAULT false,
+  views_count integer NOT NULL DEFAULT 0,
+  leads_count integer NOT NULL DEFAULT 0,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_property
+CREATE TABLE IF NOT EXISTS pg_property (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  owner_id uuid NOT NULL,
+  name text NOT NULL,
+  address_line text NOT NULL,
+  locality text NOT NULL,
+  city text NOT NULL DEFAULT 'Bengaluru'::text,
+  pincode text,
+  latitude numeric,
+  longitude numeric,
+  gender_preference text NOT NULL DEFAULT 'any'::text,
+  property_type text NOT NULL DEFAULT 'pg'::text,
+  total_capacity integer NOT NULL DEFAULT 1,
+  amenities jsonb NOT NULL DEFAULT '[]'::jsonb,
+  house_rules text,
+  police_verified boolean NOT NULL DEFAULT false,
+  listing_status text NOT NULL DEFAULT 'draft'::text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_receipt
+CREATE TABLE IF NOT EXISTS pg_receipt (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_payment_record_id uuid NOT NULL,
+  receipt_number text NOT NULL,
+  issued_at timestamp with time zone NOT NULL DEFAULT now(),
+  pdf_url text
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_rent_agreement
+CREATE TABLE IF NOT EXISTS pg_rent_agreement (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  pg_tenant_id uuid NOT NULL,
+  agreement_start date NOT NULL,
+  agreement_end date,
+  monthly_rent numeric NOT NULL,
+  deposit_amount numeric NOT NULL DEFAULT 0,
+  notice_period_days integer NOT NULL DEFAULT 30,
+  signed_by_owner boolean NOT NULL DEFAULT false,
+  signed_by_tenant boolean NOT NULL DEFAULT false,
+  signed_at timestamp with time zone,
+  document_url text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_room
+CREATE TABLE IF NOT EXISTS pg_room (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  room_number text,
+  room_type text NOT NULL DEFAULT 'shared'::text,
+  capacity integer NOT NULL DEFAULT 1,
+  floor_number integer,
+  has_attached_bath boolean NOT NULL DEFAULT false,
+  amenities jsonb NOT NULL DEFAULT '[]'::jsonb,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_tenant
+CREATE TABLE IF NOT EXISTS pg_tenant (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_property_id uuid NOT NULL,
+  pg_bed_id uuid,
+  user_id uuid,
+  tenant_name text NOT NULL,
+  phone text,
+  emergency_contact text,
+  id_type text,
+  id_verified boolean NOT NULL DEFAULT false,
+  move_in_date date NOT NULL,
+  move_out_date date,
+  status text NOT NULL DEFAULT 'active'::text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: pg_vacancy_event
+CREATE TABLE IF NOT EXISTS pg_vacancy_event (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_bed_id uuid NOT NULL,
+  pg_property_id uuid NOT NULL,
+  event_type text NOT NULL,
+  available_from date NOT NULL,
+  monthly_rent numeric,
+  notes text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -1802,6 +2016,15 @@ CREATE TABLE IF NOT EXISTS verification_kyc (
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
   case_id text
+  ,PRIMARY KEY (id)
+);
+
+-- Table: waitlist_entries
+CREATE TABLE IF NOT EXISTS waitlist_entries (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  email text NOT NULL,
+  tool_slug text NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

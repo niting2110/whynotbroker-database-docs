@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 88
+**Total Tables:** 103
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -32,6 +32,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - coupons (23 columns)
 - credit_packages (17 columns)
 - districts (7 columns)
+- home_loan_consent_log (9 columns)
 - hot_properties (25 columns)
 - leave_balances (6 columns)
 - leave_types (6 columns)
@@ -51,6 +52,19 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - notifications (10 columns)
 - overtime_records (8 columns)
 - permissions (6 columns)
+- pg_bed (7 columns)
+- pg_occupancy (8 columns)
+- pg_occupancy_snapshot (7 columns)
+- pg_owner_pnl (10 columns)
+- pg_payment_record (11 columns)
+- pg_police_verification (8 columns)
+- pg_posting (18 columns)
+- pg_property (18 columns)
+- pg_receipt (5 columns)
+- pg_rent_agreement (13 columns)
+- pg_room (9 columns)
+- pg_tenant (13 columns)
+- pg_vacancy_event (8 columns)
 - pincodes (10 columns)
 - pricing_rules (14 columns)
 - profiles (46 columns)
@@ -95,6 +109,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - verification_documents (15 columns)
 - verification_gps_tracking (13 columns)
 - verification_kyc (15 columns)
+- waitlist_entries (4 columns)
 - wallets (11 columns)
 
 ## Query Patterns

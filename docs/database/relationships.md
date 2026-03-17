@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 141
-Generated: 2026-03-12T07:06:53.841Z
+Total Relationships: 163
+Generated: 2026-03-17T07:15:39.950Z
 
 ```
 admin_audit_logs:
@@ -100,6 +100,10 @@ districts:
   └─→ states (via: districts_state_id_fkey)
       columns: state_id
 
+home_loan_consent_log:
+  └─→ profiles (via: home_loan_consent_log_user_id_fkey)
+      columns: user_id
+
 hot_properties:
   └─→ properties (via: hot_properties_property_id_fkey)
       columns: property_id
@@ -173,6 +177,74 @@ overtime_records:
       columns: admin_id
   └─→ admins (via: overtime_records_approved_by_fkey)
       columns: approved_by
+
+pg_bed:
+  └─→ pg_room (via: pg_bed_pg_room_id_fkey)
+      columns: pg_room_id
+
+pg_occupancy:
+  └─→ pg_bed (via: pg_occupancy_pg_bed_id_fkey)
+      columns: pg_bed_id
+  └─→ pg_property (via: pg_occupancy_pg_property_id_fkey)
+      columns: pg_property_id
+  └─→ pg_tenant (via: pg_occupancy_pg_tenant_id_fkey)
+      columns: pg_tenant_id
+
+pg_occupancy_snapshot:
+  └─→ pg_property (via: pg_occupancy_snapshot_pg_property_id_fkey)
+      columns: pg_property_id
+
+pg_owner_pnl:
+  └─→ pg_property (via: pg_owner_pnl_pg_property_id_fkey)
+      columns: pg_property_id
+
+pg_payment_record:
+  └─→ pg_property (via: pg_payment_record_pg_property_id_fkey)
+      columns: pg_property_id
+  └─→ pg_tenant (via: pg_payment_record_pg_tenant_id_fkey)
+      columns: pg_tenant_id
+
+pg_police_verification:
+  └─→ pg_property (via: pg_police_verification_pg_property_id_fkey)
+      columns: pg_property_id
+  └─→ pg_tenant (via: pg_police_verification_pg_tenant_id_fkey)
+      columns: pg_tenant_id
+
+pg_posting:
+  └─→ pg_property (via: pg_posting_pg_property_id_fkey)
+      columns: pg_property_id
+
+pg_property:
+  └─→ profiles (via: pg_property_owner_id_fkey)
+      columns: owner_id
+
+pg_receipt:
+  └─→ pg_payment_record (via: pg_receipt_pg_payment_record_id_fkey)
+      columns: pg_payment_record_id
+
+pg_rent_agreement:
+  └─→ pg_property (via: pg_rent_agreement_pg_property_id_fkey)
+      columns: pg_property_id
+  └─→ pg_tenant (via: pg_rent_agreement_pg_tenant_id_fkey)
+      columns: pg_tenant_id
+
+pg_room:
+  └─→ pg_property (via: pg_room_pg_property_id_fkey)
+      columns: pg_property_id
+
+pg_tenant:
+  └─→ pg_bed (via: pg_tenant_pg_bed_id_fkey)
+      columns: pg_bed_id
+  └─→ pg_property (via: pg_tenant_pg_property_id_fkey)
+      columns: pg_property_id
+  └─→ profiles (via: pg_tenant_user_id_fkey)
+      columns: user_id
+
+pg_vacancy_event:
+  └─→ pg_bed (via: pg_vacancy_event_pg_bed_id_fkey)
+      columns: pg_bed_id
+  └─→ pg_property (via: pg_vacancy_event_pg_property_id_fkey)
+      columns: pg_property_id
 
 pincodes:
   └─→ cities (via: pincodes_city_id_fkey)

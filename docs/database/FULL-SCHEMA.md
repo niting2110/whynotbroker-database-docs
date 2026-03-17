@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-12T07:06:53.833Z
-> Total Tables: 88
+> Auto-generated: 2026-03-17T07:15:39.940Z
+> Total Tables: 103
 > PostgreSQL: 17.6
 
 ---
@@ -1059,6 +1059,45 @@
 
 ---
 
+## `home_loan_consent_log`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 9
+- Indexes: 3
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `user_id` | `uuid` | NO | `—` |
+| `bank_id` | `text` | NO | `—` |
+| `purpose` | `text` | NO | `—` |
+| `consent_given_at` | `timestamp with time zone` | NO | `now()` |
+| `consent_withdrawn_at` | `timestamp with time zone` | YES | `—` |
+| `ip_address_hash` | `text` | YES | `—` |
+| `session_id` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `home_loan_consent_log_pkey` | btree | id | ✓ |
+| `idx_hlcl_bank_id_given` | btree | bank_id, consent_given_at | — |
+| `idx_hlcl_user_id` | btree | user_id, consent_given_at | — |
+
+### Foreign Keys
+
+- `home_loan_consent_log_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `hot_properties`
 
 > Real-time tracking of trending properties with high demand signals
@@ -1944,6 +1983,548 @@
 | `permissions_id_key` | btree | id | ✓ |
 | `permissions_name_key` | btree | name | ✓ |
 | `permissions_pkey` | btree | id | ✓ |
+
+---
+
+## `pg_bed`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 7
+- Indexes: 1
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_room_id` | `uuid` | NO | `—` |
+| `bed_label` | `text` | YES | `—` |
+| `is_available` | `boolean` | NO | `true` |
+| `monthly_rent` | `numeric` | NO | `—` |
+| `advance_deposit` | `numeric` | NO | `0` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_bed_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_bed_pg_room_id_fkey`:
+  - Columns: `pg_room_id` → `pg_room(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_occupancy`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 3
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `pg_bed_id` | `uuid` | NO | `—` |
+| `pg_tenant_id` | `uuid` | YES | `—` |
+| `occupied_from` | `date` | NO | `—` |
+| `occupied_until` | `date` | YES | `—` |
+| `is_current` | `boolean` | NO | `true` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_occupancy_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_occupancy_pg_bed_id_fkey`:
+  - Columns: `pg_bed_id` → `pg_bed(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `pg_occupancy_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_occupancy_pg_tenant_id_fkey`:
+  - Columns: `pg_tenant_id` → `pg_tenant(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `pg_occupancy_snapshot`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 7
+- Indexes: 2
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `snapshot_date` | `date` | NO | `CURRENT_DATE` |
+| `total_beds` | `integer` | NO | `0` |
+| `occupied_beds` | `integer` | NO | `0` |
+| `available_beds` | `integer` | NO | `0` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_occupancy_snapshot_pkey` | btree | id | ✓ |
+| `pg_occupancy_snapshot_unique_date` | btree | pg_property_id, snapshot_date | ✓ |
+
+### Foreign Keys
+
+- `pg_occupancy_snapshot_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_owner_pnl`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 10
+- Indexes: 2
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `snapshot_month` | `date` | NO | `—` |
+| `total_beds` | `integer` | NO | `0` |
+| `occupied_beds` | `integer` | NO | `0` |
+| `occupancy_rate` | `numeric` | YES | `—` |
+| `gross_rent_expected` | `numeric` | NO | `0` |
+| `gross_rent_received` | `numeric` | NO | `0` |
+| `collection_rate` | `numeric` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_owner_pnl_pkey` | btree | id | ✓ |
+| `pg_owner_pnl_unique_month` | btree | pg_property_id, snapshot_month | ✓ |
+
+### Foreign Keys
+
+- `pg_owner_pnl_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_payment_record`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 2
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `pg_tenant_id` | `uuid` | NO | `—` |
+| `amount` | `numeric` | NO | `—` |
+| `payment_type` | `text` | NO | `—` |
+| `payment_month` | `date` | YES | `—` |
+| `payment_date` | `date` | NO | `CURRENT_DATE` |
+| `payment_method` | `text` | YES | `—` |
+| `gateway_txn_id` | `text` | YES | `—` |
+| `notes` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_pg_payment_record_property` | btree | pg_property_id, payment_date | — |
+| `pg_payment_record_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_payment_record_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_payment_record_pg_tenant_id_fkey`:
+  - Columns: `pg_tenant_id` → `pg_tenant(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `pg_police_verification`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `pg_tenant_id` | `uuid` | NO | `—` |
+| `submitted_at` | `timestamp with time zone` | NO | `now()` |
+| `verified_at` | `timestamp with time zone` | YES | `—` |
+| `status` | `text` | NO | `'pending'::text` |
+| `document_url` | `text` | YES | `—` |
+| `notes` | `text` | YES | `—` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_police_verification_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_police_verification_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_police_verification_pg_tenant_id_fkey`:
+  - Columns: `pg_tenant_id` → `pg_tenant(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `pg_posting`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 18
+- Indexes: 3
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `listing_type` | `USER-DEFINED` | NO | `'PG'::listing_type` |
+| `title` | `text` | NO | `—` |
+| `description` | `text` | YES | `—` |
+| `photos` | `jsonb` | NO | `'[]'::jsonb` |
+| `price_per_bed` | `numeric` | NO | `—` |
+| `available_beds` | `integer` | NO | `0` |
+| `available_from` | `date` | NO | `—` |
+| `posting_pack` | `text` | YES | `—` |
+| `posting_expires_at` | `timestamp with time zone` | YES | `—` |
+| `status` | `text` | NO | `'draft'::text` |
+| `rejection_reason` | `text` | YES | `—` |
+| `boost_active` | `boolean` | NO | `false` |
+| `views_count` | `integer` | NO | `0` |
+| `leads_count` | `integer` | NO | `0` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_pg_posting_property` | btree | pg_property_id, status | — |
+| `idx_pg_posting_status` | btree | available_from, status | — |
+| `pg_posting_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_posting_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_property`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 18
+- Indexes: 4
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `owner_id` | `uuid` | NO | `—` |
+| `name` | `text` | NO | `—` |
+| `address_line` | `text` | NO | `—` |
+| `locality` | `text` | NO | `—` |
+| `city` | `text` | NO | `'Bengaluru'::text` |
+| `pincode` | `text` | YES | `—` |
+| `latitude` | `numeric` | YES | `—` |
+| `longitude` | `numeric` | YES | `—` |
+| `gender_preference` | `text` | NO | `'any'::text` |
+| `property_type` | `text` | NO | `'pg'::text` |
+| `total_capacity` | `integer` | NO | `1` |
+| `amenities` | `jsonb` | NO | `'[]'::jsonb` |
+| `house_rules` | `text` | YES | `—` |
+| `police_verified` | `boolean` | NO | `false` |
+| `listing_status` | `text` | NO | `'draft'::text` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_pg_property_locality` | btree | locality, city | — |
+| `idx_pg_property_owner` | btree | owner_id | — |
+| `idx_pg_property_status` | btree | listing_status | — |
+| `pg_property_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_property_owner_id_fkey`:
+  - Columns: `owner_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_receipt`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 5
+- Indexes: 2
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_payment_record_id` | `uuid` | NO | `—` |
+| `receipt_number` | `text` | NO | `—` |
+| `issued_at` | `timestamp with time zone` | NO | `now()` |
+| `pdf_url` | `text` | YES | `—` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_receipt_pkey` | btree | id | ✓ |
+| `pg_receipt_receipt_number_key` | btree | receipt_number | ✓ |
+
+### Foreign Keys
+
+- `pg_receipt_pg_payment_record_id_fkey`:
+  - Columns: `pg_payment_record_id` → `pg_payment_record(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_rent_agreement`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 1
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `pg_tenant_id` | `uuid` | NO | `—` |
+| `agreement_start` | `date` | NO | `—` |
+| `agreement_end` | `date` | YES | `—` |
+| `monthly_rent` | `numeric` | NO | `—` |
+| `deposit_amount` | `numeric` | NO | `0` |
+| `notice_period_days` | `integer` | NO | `30` |
+| `signed_by_owner` | `boolean` | NO | `false` |
+| `signed_by_tenant` | `boolean` | NO | `false` |
+| `signed_at` | `timestamp with time zone` | YES | `—` |
+| `document_url` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_rent_agreement_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_rent_agreement_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_rent_agreement_pg_tenant_id_fkey`:
+  - Columns: `pg_tenant_id` → `pg_tenant(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `pg_room`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 9
+- Indexes: 1
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `room_number` | `text` | YES | `—` |
+| `room_type` | `text` | NO | `'shared'::text` |
+| `capacity` | `integer` | NO | `1` |
+| `floor_number` | `integer` | YES | `—` |
+| `has_attached_bath` | `boolean` | NO | `false` |
+| `amenities` | `jsonb` | NO | `'[]'::jsonb` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_room_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_room_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_tenant`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 2
+- Foreign Keys: 3
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `pg_bed_id` | `uuid` | YES | `—` |
+| `user_id` | `uuid` | YES | `—` |
+| `tenant_name` | `text` | NO | `—` |
+| `phone` | `text` | YES | `—` |
+| `emergency_contact` | `text` | YES | `—` |
+| `id_type` | `text` | YES | `—` |
+| `id_verified` | `boolean` | NO | `false` |
+| `move_in_date` | `date` | NO | `—` |
+| `move_out_date` | `date` | YES | `—` |
+| `status` | `text` | NO | `'active'::text` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_pg_tenant_property` | btree | pg_property_id, status | — |
+| `pg_tenant_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_tenant_pg_bed_id_fkey`:
+  - Columns: `pg_bed_id` → `pg_bed(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+- `pg_tenant_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_tenant_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
+
+---
+
+## `pg_vacancy_event`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 2
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_bed_id` | `uuid` | NO | `—` |
+| `pg_property_id` | `uuid` | NO | `—` |
+| `event_type` | `text` | NO | `—` |
+| `available_from` | `date` | NO | `—` |
+| `monthly_rent` | `numeric` | YES | `—` |
+| `notes` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_pg_vacancy_event_property` | btree | pg_property_id, created_at | — |
+| `pg_vacancy_event_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `pg_vacancy_event_pg_bed_id_fkey`:
+  - Columns: `pg_bed_id` → `pg_bed(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `pg_vacancy_event_pg_property_id_fkey`:
+  - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -3459,7 +4040,7 @@
 ## `roles`
 
 **Statistics:**
-- Rows: ~37
+- Rows: ~40
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -4307,6 +4888,33 @@
 | `idx_verification_kyc_user_id` | btree | user_id | — |
 | `idx_verification_kyc_verified_at` | btree | verified_at | — |
 | `verification_kyc_pkey` | btree | id | ✓ |
+
+---
+
+## `waitlist_entries`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 4
+- Indexes: 3
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `email` | `text` | NO | `—` |
+| `tool_slug` | `text` | NO | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_waitlist_entries_tool_slug` | btree | tool_slug, created_at | — |
+| `waitlist_entries_email_tool_unique` | btree | email, tool_slug | ✓ |
+| `waitlist_entries_pkey` | btree | id | ✓ |
 
 ---
 
