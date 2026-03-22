@@ -46,6 +46,7 @@ RETURNING *;
 - `idx_properties_geo_quality`: geo_quality_score
 - `idx_properties_khata`: khata_type
 - `idx_properties_last_verified`: last_verified_at
+- `idx_properties_last_viewed_by`: last_viewed_by
 - `idx_properties_listing_type`: listing_type
 - `idx_properties_locality`: locality_id
 - `idx_properties_locality_status`: status, locality_id

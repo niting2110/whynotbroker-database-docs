@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-18T07:13:53.561Z
-> Total Tables: 103
+> Auto-generated: 2026-03-22T07:01:06.019Z
+> Total Tables: 102
 > PostgreSQL: 17.6
 
 ---
@@ -8,10 +8,10 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~3,854
-- Columns: 8
-- Indexes: 7
-- Foreign Keys: 1
+- Rows: ~3,866
+- Columns: 9
+- Indexes: 8
+- Foreign Keys: 2
 
 ### Columns
 
@@ -25,6 +25,7 @@
 | `details` | `text` | YES | `—` |
 | `ip_address` | `inet` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `timezone('utc'::text, now())` |
+| `region_id` | `uuid` | YES | `—` |
 
 ### Indexes
 
@@ -35,6 +36,7 @@
 | `idx_admin_audit_logs_admin_created` | btree | admin_id, created_at | — |
 | `idx_admin_audit_logs_admin_id` | btree | admin_id | — |
 | `idx_admin_audit_logs_created_at` | btree | created_at | — |
+| `idx_admin_audit_logs_region_id` | btree | region_id | — |
 | `idx_audit_admin_id` | btree | admin_id | — |
 | `idx_audit_created_at` | btree | created_at | — |
 
@@ -44,6 +46,10 @@
   - Columns: `admin_id` → `admins(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
+- `admin_audit_logs_region_id_fkey`:
+  - Columns: `region_id` → `regions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 
 ---
 
@@ -52,7 +58,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 4
-- Indexes: 1
+- Indexes: 2
 - Foreign Keys: 1
 
 ### Columns
@@ -69,6 +75,7 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `admin_chat_pkey` | btree | id | ✓ |
+| `idx_admin_chat_admin_id` | btree | admin_id | — |
 
 ### Foreign Keys
 
@@ -84,7 +91,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 17
-- Indexes: 1
+- Indexes: 5
 - Foreign Keys: 4
 
 ### Columns
@@ -114,6 +121,10 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `admin_leaves_pkey` | btree | id | ✓ |
+| `idx_admin_leaves_admin_id` | btree | admin_id | — |
+| `idx_admin_leaves_approved_by_id` | btree | approved_by_id | — |
+| `idx_admin_leaves_backup_admin_id` | btree | backup_admin_id | — |
+| `idx_admin_leaves_leave_type_id` | btree | leave_type_id | — |
 
 ### Foreign Keys
 
@@ -141,7 +152,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 6
-- Indexes: 1
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -160,6 +171,8 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `admin_messages_pkey` | btree | id | ✓ |
+| `idx_admin_messages_receiver_id` | btree | receiver_id | — |
+| `idx_admin_messages_sender_id` | btree | sender_id | — |
 
 ### Foreign Keys
 
@@ -207,7 +220,7 @@
 **Statistics:**
 - Rows: ~2
 - Columns: 6
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 3
 
 ### Columns
@@ -228,6 +241,7 @@
 | `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ |
 | `admin_regions_pkey` | btree | id | ✓ |
 | `idx_admin_regions_admin` | btree | admin_id | — |
+| `idx_admin_regions_assigned_by` | btree | assigned_by | — |
 | `idx_admin_regions_region` | btree | region_id | — |
 
 ### Foreign Keys
@@ -251,7 +265,7 @@
 
 **Statistics:**
 - Rows: ~8
-- Columns: 2
+- Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
 
@@ -261,6 +275,7 @@
 |--------|------|----------|--------|
 | `admin_id` | `uuid` | NO | `—` |
 | `role_id` | `uuid` | NO | `—` |
+| `can_publish` | `boolean` | NO | `false` |
 
 ### Indexes
 
@@ -321,7 +336,7 @@
 **Statistics:**
 - Rows: ~13
 - Columns: 20
-- Indexes: 3
+- Indexes: 4
 - Foreign Keys: 2
 
 ### Columns
@@ -356,6 +371,7 @@
 | `admins_email_key` | btree | email | ✓ |
 | `admins_pkey` | btree | id | ✓ |
 | `admins_user_id_key` | btree | user_id | ✓ |
+| `idx_admins_reporting_manager_id` | btree | reporting_manager_id | — |
 
 ### Foreign Keys
 
@@ -375,7 +391,7 @@
 **Statistics:**
 - Rows: ~6
 - Columns: 18
-- Indexes: 3
+- Indexes: 6
 - Foreign Keys: 4
 
 ### Columns
@@ -406,8 +422,11 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `appointments_pkey` | btree | id | ✓ |
+| `idx_appointments_buyer_id` | btree | buyer_id | — |
+| `idx_appointments_cancelled_by` | btree | cancelled_by | — |
 | `idx_appointments_date_status` | btree | appointment_date, status | — |
 | `idx_appointments_property` | btree | property_id | — |
+| `idx_appointments_seller_id` | btree | seller_id | — |
 
 ### Foreign Keys
 
@@ -435,7 +454,7 @@
 **Statistics:**
 - Rows: ~100
 - Columns: 17
-- Indexes: 3
+- Indexes: 4
 - Foreign Keys: 1
 
 ### Columns
@@ -467,6 +486,7 @@
 | `blog_posts_pid_key` | btree | pid | ✓ |
 | `blog_posts_pkey` | btree | id | ✓ |
 | `blog_posts_slug_key` | btree | slug | ✓ |
+| `idx_blog_posts_author_id` | btree | author_id | — |
 
 ### Foreign Keys
 
@@ -767,7 +787,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 9
-- Indexes: 5
+- Indexes: 6
 - Foreign Keys: 2
 
 ### Columns
@@ -792,6 +812,7 @@
 | `campaign_participants_pkey` | btree | id | ✓ |
 | `idx_campaign_participants_campaign` | btree | campaign_id | — |
 | `idx_campaign_participants_completed` | btree | is_completed | — |
+| `idx_campaign_participants_region_id` | btree | region_id | — |
 | `idx_campaign_participants_user` | btree | user_id | — |
 
 ### Foreign Keys
@@ -869,7 +890,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 9
-- Indexes: 5
+- Indexes: 6
 - Foreign Keys: 2
 
 ### Columns
@@ -893,6 +914,7 @@
 | `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ |
 | `coupon_usage_pkey` | btree | id | ✓ |
 | `idx_coupon_usage_coupon` | btree | coupon_id | — |
+| `idx_coupon_usage_region_id` | btree | region_id | — |
 | `idx_coupon_usage_transaction` | btree | transaction_id | — |
 | `idx_coupon_usage_user` | btree | user_id | — |
 
@@ -1228,7 +1250,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 13
-- Indexes: 2
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -1253,6 +1275,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_loan_calculations_property_id` | btree | property_id | — |
 | `idx_loan_calculations_user` | btree | user_id | — |
 | `loan_calculations_pkey` | btree | id | ✓ |
 
@@ -1726,7 +1749,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 21
-- Indexes: 3
+- Indexes: 5
 - Foreign Keys: 5
 
 ### Columns
@@ -1759,6 +1782,8 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_messages_lead_id` | btree | lead_id | — |
+| `idx_messages_parent_message_id` | btree | parent_message_id | — |
 | `idx_messages_property` | btree | property_id | — |
 | `idx_messages_sender_receiver` | btree | sender_id, receiver_id | — |
 | `messages_pkey` | btree | id | ✓ |
@@ -1921,7 +1946,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 8
-- Indexes: 1
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -1941,6 +1966,8 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_overtime_records_admin_id` | btree | admin_id | — |
+| `idx_overtime_records_approved_by` | btree | approved_by | — |
 | `overtime_records_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -1959,7 +1986,7 @@
 ## `permissions`
 
 **Statistics:**
-- Rows: ~49
+- Rows: ~63
 - Columns: 6
 - Indexes: 4
 - Foreign Keys: 0
@@ -1991,7 +2018,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 7
-- Indexes: 1
+- Indexes: 2
 - Foreign Keys: 1
 
 ### Columns
@@ -2010,6 +2037,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_bed_pg_room_id` | btree | pg_room_id | — |
 | `pg_bed_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2026,7 +2054,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 8
-- Indexes: 1
+- Indexes: 4
 - Foreign Keys: 3
 
 ### Columns
@@ -2046,6 +2074,9 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_occupancy_pg_bed_id` | btree | pg_bed_id | — |
+| `idx_pg_occupancy_pg_property_id` | btree | pg_property_id | — |
+| `idx_pg_occupancy_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_occupancy_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2145,7 +2176,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 11
-- Indexes: 2
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -2168,6 +2199,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_payment_record_pg_tenant_id` | btree | pg_tenant_id | — |
 | `idx_pg_payment_record_property` | btree | pg_property_id, payment_date | — |
 | `pg_payment_record_pkey` | btree | id | ✓ |
 
@@ -2189,7 +2221,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 8
-- Indexes: 1
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -2209,6 +2241,8 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_police_verification_pg_property_id` | btree | pg_property_id | — |
+| `idx_pg_police_verification_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_police_verification_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2326,7 +2360,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 5
-- Indexes: 2
+- Indexes: 3
 - Foreign Keys: 1
 
 ### Columns
@@ -2343,6 +2377,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_receipt_pg_payment_record_id` | btree | pg_payment_record_id | — |
 | `pg_receipt_pkey` | btree | id | ✓ |
 | `pg_receipt_receipt_number_key` | btree | receipt_number | ✓ |
 
@@ -2360,7 +2395,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 13
-- Indexes: 1
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -2385,6 +2420,8 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_rent_agreement_pg_property_id` | btree | pg_property_id | — |
+| `idx_pg_rent_agreement_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_rent_agreement_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2405,7 +2442,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 9
-- Indexes: 1
+- Indexes: 2
 - Foreign Keys: 1
 
 ### Columns
@@ -2426,6 +2463,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_room_pg_property_id` | btree | pg_property_id | — |
 | `pg_room_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2442,7 +2480,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 13
-- Indexes: 2
+- Indexes: 4
 - Foreign Keys: 3
 
 ### Columns
@@ -2467,7 +2505,9 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_tenant_pg_bed_id` | btree | pg_bed_id | — |
 | `idx_pg_tenant_property` | btree | pg_property_id, status | — |
+| `idx_pg_tenant_user_id` | btree | user_id | — |
 | `pg_tenant_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -2492,7 +2532,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 8
-- Indexes: 2
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -2512,6 +2552,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_pg_vacancy_event_pg_bed_id` | btree | pg_bed_id | — |
 | `idx_pg_vacancy_event_property` | btree | pg_property_id, created_at | — |
 | `pg_vacancy_event_pkey` | btree | id | ✓ |
 
@@ -2846,7 +2887,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 135
-- Indexes: 45
+- Indexes: 46
 - Foreign Keys: 11
 
 ### Columns
@@ -3014,6 +3055,7 @@
 | `idx_properties_geo_quality` | btree | geo_quality_score | — |
 | `idx_properties_khata` | btree | khata_type | — |
 | `idx_properties_last_verified` | btree | last_verified_at | — |
+| `idx_properties_last_viewed_by` | btree | last_viewed_by | — |
 | `idx_properties_listing_type` | btree | listing_type | — |
 | `idx_properties_locality` | btree | locality_id | — |
 | `idx_properties_locality_status` | btree | status, locality_id | — |
@@ -3391,7 +3433,7 @@
 **Statistics:**
 - Rows: ~5
 - Columns: 22
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 3
 
 ### Columns
@@ -3426,6 +3468,7 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_property_leads_assigned` | btree | assigned_to | — |
+| `idx_property_leads_lead_user_id` | btree | lead_user_id | — |
 | `idx_property_leads_property` | btree | property_id | — |
 | `idx_property_leads_status` | btree | status, priority | — |
 | `property_leads_pkey` | btree | id | ✓ |
@@ -3564,7 +3607,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 11
-- Indexes: 3
+- Indexes: 5
 - Foreign Keys: 3
 
 ### Columns
@@ -3588,6 +3631,8 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_property_reports_property` | btree | property_id | — |
+| `idx_property_reports_reported_by` | btree | reported_by | — |
+| `idx_property_reports_reviewed_by` | btree | reviewed_by | — |
 | `idx_property_reports_status` | btree | status | — |
 | `property_reports_pkey` | btree | id | ✓ |
 
@@ -3613,7 +3658,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 6
-- Indexes: 2
+- Indexes: 3
 - Foreign Keys: 2
 
 ### Columns
@@ -3632,6 +3677,7 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_property_shares_property` | btree | property_id | — |
+| `idx_property_shares_shared_by` | btree | shared_by | — |
 | `property_shares_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -3654,7 +3700,7 @@
 **Statistics:**
 - Rows: ~3
 - Columns: 37
-- Indexes: 5
+- Indexes: 6
 - Foreign Keys: 2
 
 ### Columns
@@ -3703,6 +3749,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_property_valuations_validated_by` | btree | validated_by | — |
 | `idx_valuations_confidence` | btree | confidence_score | — |
 | `idx_valuations_date` | btree | valuation_date | — |
 | `idx_valuations_method` | btree | valuation_method | — |
@@ -3727,7 +3774,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 14
-- Indexes: 3
+- Indexes: 4
 - Foreign Keys: 2
 
 ### Columns
@@ -3755,6 +3802,7 @@
 |------|------|---------|--------|
 | `idx_property_verifications_property` | btree | property_id | — |
 | `idx_property_verifications_status` | btree | verification_type, status | — |
+| `idx_property_verifications_verified_by` | btree | verified_by | — |
 | `property_verifications_pkey` | btree | id | ✓ |
 
 ### Foreign Keys
@@ -3824,7 +3872,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 11
-- Indexes: 3
+- Indexes: 4
 - Foreign Keys: 3
 
 ### Columns
@@ -3847,6 +3895,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_property_visits_accompanied_by` | btree | accompanied_by | — |
 | `idx_property_visits_property` | btree | property_id, visit_date | — |
 | `idx_property_visits_visitor` | btree | visitor_id | — |
 | `property_visits_pkey` | btree | id | ✓ |
@@ -3873,7 +3922,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 12
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 2
 
 ### Columns
@@ -3898,6 +3947,7 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_referrals_code` | btree | referral_code | — |
+| `idx_referrals_referred_id` | btree | referred_id | — |
 | `idx_referrals_referrer` | btree | referrer_id | — |
 | `referrals_pkey` | btree | id | ✓ |
 | `referrals_referral_code_key` | btree | referral_code | ✓ |
@@ -4151,7 +4201,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 9
-- Indexes: 4
+- Indexes: 6
 - Foreign Keys: 2
 
 ### Columns
@@ -4174,6 +4224,8 @@
 |------|------|---------|--------|
 | `idx_security_flags_admin_email` | btree | admin_email | — |
 | `idx_security_flags_created_at` | btree | created_at | — |
+| `idx_security_flags_flagged_by` | btree | flagged_by | — |
+| `idx_security_flags_resolved_by` | btree | resolved_by | — |
 | `idx_security_flags_status` | btree | status | — |
 | `security_flags_pkey` | btree | id | ✓ |
 
@@ -4297,7 +4349,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 14
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 3
 
 ### Columns
@@ -4323,6 +4375,7 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_subscription_enrollments_purchase_transaction_id` | btree | purchase_transaction_id | — |
 | `idx_subscriptions_expires` | btree | expires_at | — |
 | `idx_subscriptions_plan` | btree | plan_id | — |
 | `idx_subscriptions_user` | btree | user_id, status | — |
@@ -4352,7 +4405,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 19
-- Indexes: 5
+- Indexes: 6
 - Foreign Keys: 1
 
 ### Columns
@@ -4385,6 +4438,7 @@
 |------|------|---------|--------|
 | `idx_subscription_plans_active` | btree | is_active, display_order | — |
 | `idx_subscription_plans_code` | btree | plan_code | — |
+| `idx_subscription_plans_region_id` | btree | region_id | — |
 | `idx_subscription_plans_user_type` | btree | user_type | — |
 | `subscription_plans_pkey` | btree | id | ✓ |
 | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
@@ -4426,35 +4480,6 @@
 
 ---
 
-## `team_messages`
-
-**Statistics:**
-- Rows: ~47
-- Columns: 8
-- Indexes: 1
-- Foreign Keys: 0
-
-### Columns
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|--------|
-| `id` | `bigint` | NO | `nextval('team_messages_id_seq'::regclass)` |
-| `from_team` | `text` | NO | `—` |
-| `to_team` | `text` | NO | `—` |
-| `message` | `text` | NO | `—` |
-| `status` | `text` | NO | `'pending'::text` |
-| `response` | `text` | YES | `—` |
-| `responded_at` | `timestamp with time zone` | YES | `—` |
-| `created_at` | `timestamp with time zone` | YES | `now()` |
-
-### Indexes
-
-| Name | Type | Columns | Unique |
-|------|------|---------|--------|
-| `team_messages_pkey` | btree | id | ✓ |
-
----
-
 ## `transactions`
 
 > All financial transactions with regional GST tracking
@@ -4462,7 +4487,7 @@
 **Statistics:**
 - Rows: ~48
 - Columns: 35
-- Indexes: 12
+- Indexes: 19
 - Foreign Keys: 9
 
 ### Columns
@@ -4509,9 +4534,16 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_transactions_approved_by` | btree | approved_by | — |
+| `idx_transactions_builder_id` | btree | builder_id | — |
+| `idx_transactions_coupon_id` | btree | coupon_id | — |
 | `idx_transactions_created_at` | btree | created_at | — |
 | `idx_transactions_gateway` | btree | gateway_transaction_id | — |
+| `idx_transactions_initiated_by` | btree | initiated_by | — |
 | `idx_transactions_invoice` | btree | invoice_number | — |
+| `idx_transactions_lead_id` | btree | lead_id | — |
+| `idx_transactions_pricing_rule_id` | btree | pricing_rule_id | — |
+| `idx_transactions_project_id` | btree | project_id | — |
 | `idx_transactions_region` | btree | region_id, created_at | — |
 | `idx_transactions_status` | btree | status, created_at | — |
 | `idx_transactions_type` | btree | type, created_at | — |
@@ -4570,7 +4602,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 27
-- Indexes: 6
+- Indexes: 7
 - Foreign Keys: 2
 
 ### Columns
@@ -4612,6 +4644,7 @@
 | `idx_undervalued_expires_at` | btree | expires_at | — |
 | `idx_undervalued_opportunity` | btree | investment_opportunity_score | — |
 | `idx_undervalued_percentage` | btree | undervaluation_percentage | — |
+| `idx_undervalued_properties_verified_by` | btree | verified_by | — |
 | `idx_undervalued_property` | btree | property_id | — |
 | `idx_undervalued_rating` | btree | deal_rating | — |
 | `undervalued_properties_pkey` | btree | id | ✓ |
@@ -4772,7 +4805,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 15
-- Indexes: 5
+- Indexes: 6
 - Foreign Keys: 1
 
 ### Columns
@@ -4801,6 +4834,7 @@
 |------|------|---------|--------|
 | `idx_verification_documents_document_type` | btree | document_type | — |
 | `idx_verification_documents_kyc_id` | btree | kyc_id | — |
+| `idx_verification_documents_moderated_by` | btree | moderated_by | — |
 | `idx_verification_documents_status` | btree | status | — |
 | `idx_verification_documents_user_id` | btree | user_id | — |
 | `verification_documents_pkey` | btree | id | ✓ |
@@ -4857,7 +4891,7 @@
 **Statistics:**
 - Rows: ~0
 - Columns: 15
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 0
 
 ### Columns
@@ -4887,6 +4921,7 @@
 | `idx_verification_kyc_status` | btree | status | — |
 | `idx_verification_kyc_user_id` | btree | user_id | — |
 | `idx_verification_kyc_verified_at` | btree | verified_at | — |
+| `idx_verification_kyc_verified_by` | btree | verified_by | — |
 | `verification_kyc_pkey` | btree | id | ✓ |
 
 ---
@@ -4925,7 +4960,7 @@
 **Statistics:**
 - Rows: ~14
 - Columns: 11
-- Indexes: 4
+- Indexes: 5
 - Foreign Keys: 2
 
 ### Columns
@@ -4949,6 +4984,7 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `idx_wallets_balance` | btree | balance | — |
+| `idx_wallets_last_transaction_region_id` | btree | last_transaction_region_id | — |
 | `idx_wallets_user_id` | btree | user_id | — |
 | `wallets_pkey` | btree | id | ✓ |
 | `wallets_user_id_key` | btree | user_id | ✓ |

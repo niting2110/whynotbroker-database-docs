@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-18T07:13:53.597Z
+// Generated: 2026-03-22T07:01:06.041Z
 
 export interface Database {
   admin_audit_logs: {
@@ -12,6 +12,7 @@ export interface Database {
       details?: string;
       ip_address?: any;
       created_at: string | Date;
+      region_id?: string;
     };
   };
 
@@ -82,6 +83,7 @@ export interface Database {
     Row: {
       admin_id: string;
       role_id: string;
+      can_publish: boolean;
     };
   };
 
@@ -1829,19 +1831,6 @@ export interface Database {
       metric_unit?: string;
       context?: any;
       recorded_at?: string | Date;
-    };
-  };
-
-  team_messages: {
-    Row: {
-      id: number;
-      from_team: string;
-      to_team: string;
-      message: string;
-      status: string;
-      response?: string;
-      responded_at?: string | Date;
-      created_at?: string | Date;
     };
   };
 

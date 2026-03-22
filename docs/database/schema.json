@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-03-18T07:13:53.562Z",
+  "generated_at": "2026-03-22T07:01:06.021Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 103,
+    "tables": 102,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1527,
-    "constraints": 967,
-    "indexes": 434,
-    "relationships": 163,
-    "functions": 830,
-    "extensions": 11
+    "columns": 1521,
+    "constraints": 964,
+    "indexes": 492,
+    "relationships": 164,
+    "functions": 831,
+    "extensions": 10
   },
   "tables": [
     {
       "name": "admin_audit_logs",
       "comment": null,
-      "columns": 8,
-      "rows": 3854,
-      "size_bytes": 1318912,
+      "columns": 9,
+      "rows": 3866,
+      "size_bytes": 1384448,
       "details": {
         "columns": [
           {
@@ -110,6 +110,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "region_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -146,6 +157,13 @@
             "constraint_type": "FOREIGN KEY",
             "column_name": "admin_id",
             "definition": "FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "admin_audit_logs_region_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "region_id",
+            "definition": "FOREIGN KEY (region_id) REFERENCES regions(id)",
             "constraint_comment": null
           },
           {
@@ -208,6 +226,16 @@
             "index_definition": "CREATE INDEX idx_admin_audit_logs_created_at ON public.admin_audit_logs USING btree (created_at DESC)"
           },
           {
+            "index_name": "idx_admin_audit_logs_region_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id}",
+            "index_definition": "CREATE INDEX idx_admin_audit_logs_region_id ON public.admin_audit_logs USING btree (region_id)"
+          },
+          {
             "index_name": "idx_audit_admin_id",
             "index_type": "btree",
             "is_unique": false,
@@ -241,11 +269,24 @@
             "update_rule": "NO ACTION",
             "delete_rule": "SET NULL",
             "comment": null
+          },
+          {
+            "constraint_name": "admin_audit_logs_region_id_fkey",
+            "foreign_table_name": "regions",
+            "columns": [
+              "region_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
           }
         ],
         "triggers": [],
-        "row_count": 3854,
-        "column_count": 8
+        "row_count": 3866,
+        "column_count": 9
       }
     },
     {
@@ -253,7 +294,7 @@
       "comment": null,
       "columns": 4,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 24576,
       "details": {
         "columns": [
           {
@@ -341,6 +382,16 @@
             "is_immediate": true,
             "columns": "{id}",
             "index_definition": "CREATE UNIQUE INDEX admin_chat_pkey ON public.admin_chat USING btree (id)"
+          },
+          {
+            "index_name": "idx_admin_chat_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id}",
+            "index_definition": "CREATE INDEX idx_admin_chat_admin_id ON public.admin_chat USING btree (admin_id)"
           }
         ],
         "foreign_keys": [
@@ -368,7 +419,7 @@
       "comment": null,
       "columns": 17,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -641,6 +692,46 @@
             "is_immediate": true,
             "columns": "{id}",
             "index_definition": "CREATE UNIQUE INDEX admin_leaves_pkey ON public.admin_leaves USING btree (id)"
+          },
+          {
+            "index_name": "idx_admin_leaves_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id}",
+            "index_definition": "CREATE INDEX idx_admin_leaves_admin_id ON public.admin_leaves USING btree (admin_id)"
+          },
+          {
+            "index_name": "idx_admin_leaves_approved_by_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{approved_by_id}",
+            "index_definition": "CREATE INDEX idx_admin_leaves_approved_by_id ON public.admin_leaves USING btree (approved_by_id)"
+          },
+          {
+            "index_name": "idx_admin_leaves_backup_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{backup_admin_id}",
+            "index_definition": "CREATE INDEX idx_admin_leaves_backup_admin_id ON public.admin_leaves USING btree (backup_admin_id)"
+          },
+          {
+            "index_name": "idx_admin_leaves_leave_type_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{leave_type_id}",
+            "index_definition": "CREATE INDEX idx_admin_leaves_leave_type_id ON public.admin_leaves USING btree (leave_type_id)"
           }
         ],
         "foreign_keys": [
@@ -707,7 +798,7 @@
       "comment": null,
       "columns": 6,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -838,6 +929,26 @@
             "is_immediate": true,
             "columns": "{id}",
             "index_definition": "CREATE UNIQUE INDEX admin_messages_pkey ON public.admin_messages USING btree (id)"
+          },
+          {
+            "index_name": "idx_admin_messages_receiver_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{receiver_id}",
+            "index_definition": "CREATE INDEX idx_admin_messages_receiver_id ON public.admin_messages USING btree (receiver_id)"
+          },
+          {
+            "index_name": "idx_admin_messages_sender_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{sender_id}",
+            "index_definition": "CREATE INDEX idx_admin_messages_sender_id ON public.admin_messages USING btree (sender_id)"
           }
         ],
         "foreign_keys": [
@@ -1010,7 +1121,7 @@
       "comment": null,
       "columns": 6,
       "rows": 2,
-      "size_bytes": 81920,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -1191,6 +1302,16 @@
             "index_definition": "CREATE INDEX idx_admin_regions_admin ON public.admin_regions USING btree (admin_id)"
           },
           {
+            "index_name": "idx_admin_regions_assigned_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{assigned_by}",
+            "index_definition": "CREATE INDEX idx_admin_regions_assigned_by ON public.admin_regions USING btree (assigned_by)"
+          },
+          {
             "index_name": "idx_admin_regions_region",
             "index_type": "btree",
             "is_unique": false,
@@ -1250,7 +1371,7 @@
     {
       "name": "admin_roles",
       "comment": null,
-      "columns": 2,
+      "columns": 3,
       "rows": 8,
       "size_bytes": 24576,
       "details": {
@@ -1276,6 +1397,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "can_publish",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "OI-Q04 RBAC_ACCESS_MATRIX_ADMIN v0.4: publish gate for admin_content_publisher.\n   TRUE = admin can publish blog posts (e.g. T10 Content Lead).\n   FALSE = draft/edit only (e.g. T12 Blog Writer).\n   Go API enforcement only. Not RLS. T5 ruling 2026-03-18."
           }
         ],
         "constraints": [
@@ -1288,6 +1420,13 @@
           },
           {
             "constraint_name": "2200_39751_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_39751_3_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
@@ -1310,14 +1449,14 @@
           {
             "constraint_name": "admin_roles_pkey",
             "constraint_type": "PRIMARY KEY",
-            "column_name": "admin_id",
+            "column_name": "role_id",
             "definition": "PRIMARY KEY (admin_id, role_id)",
             "constraint_comment": null
           },
           {
             "constraint_name": "admin_roles_pkey",
             "constraint_type": "PRIMARY KEY",
-            "column_name": "role_id",
+            "column_name": "admin_id",
             "definition": "PRIMARY KEY (admin_id, role_id)",
             "constraint_comment": null
           }
@@ -1372,7 +1511,7 @@
           }
         ],
         "row_count": 8,
-        "column_count": 2
+        "column_count": 3
       }
     },
     {
@@ -1563,7 +1702,7 @@
       "comment": null,
       "columns": 20,
       "rows": 13,
-      "size_bytes": 98304,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -1896,6 +2035,16 @@
             "is_immediate": true,
             "columns": "{user_id}",
             "index_definition": "CREATE UNIQUE INDEX admins_user_id_key ON public.admins USING btree (user_id)"
+          },
+          {
+            "index_name": "idx_admins_reporting_manager_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{reporting_manager_id}",
+            "index_definition": "CREATE INDEX idx_admins_reporting_manager_id ON public.admins USING btree (reporting_manager_id)"
           }
         ],
         "foreign_keys": [
@@ -1944,7 +2093,7 @@
       "comment": null,
       "columns": 18,
       "rows": 6,
-      "size_bytes": 65536,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -2251,6 +2400,26 @@
             "index_definition": "CREATE UNIQUE INDEX appointments_pkey ON public.appointments USING btree (id)"
           },
           {
+            "index_name": "idx_appointments_buyer_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{buyer_id}",
+            "index_definition": "CREATE INDEX idx_appointments_buyer_id ON public.appointments USING btree (buyer_id)"
+          },
+          {
+            "index_name": "idx_appointments_cancelled_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{cancelled_by}",
+            "index_definition": "CREATE INDEX idx_appointments_cancelled_by ON public.appointments USING btree (cancelled_by)"
+          },
+          {
             "index_name": "idx_appointments_date_status",
             "index_type": "btree",
             "is_unique": false,
@@ -2269,6 +2438,16 @@
             "is_immediate": true,
             "columns": "{property_id}",
             "index_definition": "CREATE INDEX idx_appointments_property ON public.appointments USING btree (property_id)"
+          },
+          {
+            "index_name": "idx_appointments_seller_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{seller_id}",
+            "index_definition": "CREATE INDEX idx_appointments_seller_id ON public.appointments USING btree (seller_id)"
           }
         ],
         "foreign_keys": [
@@ -2343,7 +2522,7 @@
       "comment": null,
       "columns": 17,
       "rows": 100,
-      "size_bytes": 106496,
+      "size_bytes": 122880,
       "details": {
         "columns": [
           {
@@ -2636,6 +2815,16 @@
             "is_immediate": true,
             "columns": "{slug}",
             "index_definition": "CREATE UNIQUE INDEX blog_posts_slug_key ON public.blog_posts USING btree (slug)"
+          },
+          {
+            "index_name": "idx_blog_posts_author_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{author_id}",
+            "index_definition": "CREATE INDEX idx_blog_posts_author_id ON public.blog_posts USING btree (author_id)"
           }
         ],
         "foreign_keys": [
@@ -4706,7 +4895,7 @@
       "comment": "Track user participation in campaigns",
       "columns": 9,
       "rows": 0,
-      "size_bytes": 49152,
+      "size_bytes": 57344,
       "details": {
         "columns": [
           {
@@ -4907,6 +5096,16 @@
             "is_immediate": true,
             "columns": "{is_completed}",
             "index_definition": "CREATE INDEX idx_campaign_participants_completed ON public.campaign_participants USING btree (is_completed)"
+          },
+          {
+            "index_name": "idx_campaign_participants_region_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id}",
+            "index_definition": "CREATE INDEX idx_campaign_participants_region_id ON public.campaign_participants USING btree (region_id)"
           },
           {
             "index_name": "idx_campaign_participants_user",
@@ -5330,7 +5529,7 @@
       "comment": "Track coupon redemptions by users",
       "columns": 9,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -5549,6 +5748,16 @@
             "is_immediate": true,
             "columns": "{coupon_id}",
             "index_definition": "CREATE INDEX idx_coupon_usage_coupon ON public.coupon_usage USING btree (coupon_id)"
+          },
+          {
+            "index_name": "idx_coupon_usage_region_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id}",
+            "index_definition": "CREATE INDEX idx_coupon_usage_region_id ON public.coupon_usage USING btree (region_id)"
           },
           {
             "index_name": "idx_coupon_usage_transaction",
@@ -7535,7 +7744,7 @@
       "comment": null,
       "columns": 13,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -7755,6 +7964,16 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_loan_calculations_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{property_id}",
+            "index_definition": "CREATE INDEX idx_loan_calculations_property_id ON public.loan_calculations USING btree (property_id)"
+          },
           {
             "index_name": "idx_loan_calculations_user",
             "index_type": "btree",
@@ -10947,7 +11166,7 @@
       "comment": null,
       "columns": 21,
       "rows": 5,
-      "size_bytes": 65536,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -11269,6 +11488,26 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_messages_lead_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{lead_id}",
+            "index_definition": "CREATE INDEX idx_messages_lead_id ON public.messages USING btree (lead_id)"
+          },
+          {
+            "index_name": "idx_messages_parent_message_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{parent_message_id}",
+            "index_definition": "CREATE INDEX idx_messages_parent_message_id ON public.messages USING btree (parent_message_id)"
+          },
           {
             "index_name": "idx_messages_property",
             "index_type": "btree",
@@ -12109,7 +12348,7 @@
       "comment": null,
       "columns": 8,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -12247,6 +12486,26 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_overtime_records_admin_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{admin_id}",
+            "index_definition": "CREATE INDEX idx_overtime_records_admin_id ON public.overtime_records USING btree (admin_id)"
+          },
+          {
+            "index_name": "idx_overtime_records_approved_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{approved_by}",
+            "index_definition": "CREATE INDEX idx_overtime_records_approved_by ON public.overtime_records USING btree (approved_by)"
+          },
+          {
             "index_name": "overtime_records_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -12294,7 +12553,7 @@
       "name": "permissions",
       "comment": null,
       "columns": 6,
-      "rows": 49,
+      "rows": 63,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -12495,7 +12754,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 49,
+        "row_count": 63,
         "column_count": 6
       }
     },
@@ -12504,7 +12763,7 @@
       "comment": null,
       "columns": 7,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 24576,
       "details": {
         "columns": [
           {
@@ -12652,6 +12911,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_bed_pg_room_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_room_id}",
+            "index_definition": "CREATE INDEX idx_pg_bed_pg_room_id ON public.pg_bed USING btree (pg_room_id)"
+          },
+          {
             "index_name": "pg_bed_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -12687,7 +12956,7 @@
       "comment": null,
       "columns": 8,
       "rows": 0,
-      "size_bytes": 8192,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -12852,6 +13121,36 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_pg_occupancy_pg_bed_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_bed_id}",
+            "index_definition": "CREATE INDEX idx_pg_occupancy_pg_bed_id ON public.pg_occupancy USING btree (pg_bed_id)"
+          },
+          {
+            "index_name": "idx_pg_occupancy_pg_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id}",
+            "index_definition": "CREATE INDEX idx_pg_occupancy_pg_property_id ON public.pg_occupancy USING btree (pg_property_id)"
+          },
+          {
+            "index_name": "idx_pg_occupancy_pg_tenant_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_tenant_id}",
+            "index_definition": "CREATE INDEX idx_pg_occupancy_pg_tenant_id ON public.pg_occupancy USING btree (pg_tenant_id)"
+          },
           {
             "index_name": "pg_occupancy_pkey",
             "index_type": "btree",
@@ -13368,7 +13667,7 @@
       "comment": null,
       "columns": 11,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -13588,6 +13887,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_payment_record_pg_tenant_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_tenant_id}",
+            "index_definition": "CREATE INDEX idx_pg_payment_record_pg_tenant_id ON public.pg_payment_record USING btree (pg_tenant_id)"
+          },
+          {
             "index_name": "idx_pg_payment_record_property",
             "index_type": "btree",
             "is_unique": false,
@@ -13646,7 +13955,7 @@
       "comment": null,
       "columns": 8,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -13804,6 +14113,26 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_pg_police_verification_pg_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id}",
+            "index_definition": "CREATE INDEX idx_pg_police_verification_pg_property_id ON public.pg_police_verification USING btree (pg_property_id)"
+          },
+          {
+            "index_name": "idx_pg_police_verification_pg_tenant_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_tenant_id}",
+            "index_definition": "CREATE INDEX idx_pg_police_verification_pg_tenant_id ON public.pg_police_verification USING btree (pg_tenant_id)"
+          },
           {
             "index_name": "pg_police_verification_pkey",
             "index_type": "btree",
@@ -14152,6 +14481,13 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_listing_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((listing_type = ANY (ARRAY['PG'::listing_type, 'FLATMATE'::listing_type, 'ROOMMATE'::listing_type])))",
             "constraint_comment": null
           },
           {
@@ -14658,7 +14994,7 @@
       "comment": null,
       "columns": 5,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -14770,6 +15106,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_receipt_pg_payment_record_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_payment_record_id}",
+            "index_definition": "CREATE INDEX idx_pg_receipt_pg_payment_record_id ON public.pg_receipt USING btree (pg_payment_record_id)"
+          },
+          {
             "index_name": "pg_receipt_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -14815,7 +15161,7 @@
       "comment": null,
       "columns": 13,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -15064,6 +15410,26 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_rent_agreement_pg_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id}",
+            "index_definition": "CREATE INDEX idx_pg_rent_agreement_pg_property_id ON public.pg_rent_agreement USING btree (pg_property_id)"
+          },
+          {
+            "index_name": "idx_pg_rent_agreement_pg_tenant_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_tenant_id}",
+            "index_definition": "CREATE INDEX idx_pg_rent_agreement_pg_tenant_id ON public.pg_rent_agreement USING btree (pg_tenant_id)"
+          },
+          {
             "index_name": "pg_rent_agreement_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -15112,7 +15478,7 @@
       "comment": null,
       "columns": 9,
       "rows": 0,
-      "size_bytes": 16384,
+      "size_bytes": 24576,
       "details": {
         "columns": [
           {
@@ -15296,6 +15662,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_room_pg_property_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_property_id}",
+            "index_definition": "CREATE INDEX idx_pg_room_pg_property_id ON public.pg_room USING btree (pg_property_id)"
+          },
+          {
             "index_name": "pg_room_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -15331,7 +15707,7 @@
       "comment": null,
       "columns": 13,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -15573,6 +15949,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_pg_tenant_pg_bed_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_bed_id}",
+            "index_definition": "CREATE INDEX idx_pg_tenant_pg_bed_id ON public.pg_tenant USING btree (pg_bed_id)"
+          },
+          {
             "index_name": "idx_pg_tenant_property",
             "index_type": "btree",
             "is_unique": false,
@@ -15581,6 +15967,16 @@
             "is_immediate": true,
             "columns": "{pg_property_id,status}",
             "index_definition": "CREATE INDEX idx_pg_tenant_property ON public.pg_tenant USING btree (pg_property_id, status)"
+          },
+          {
+            "index_name": "idx_pg_tenant_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{user_id}",
+            "index_definition": "CREATE INDEX idx_pg_tenant_user_id ON public.pg_tenant USING btree (user_id)"
           },
           {
             "index_name": "pg_tenant_pkey",
@@ -15644,7 +16040,7 @@
       "comment": null,
       "columns": 8,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -15809,6 +16205,16 @@
           }
         ],
         "indexes": [
+          {
+            "index_name": "idx_pg_vacancy_event_pg_bed_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_bed_id}",
+            "index_definition": "CREATE INDEX idx_pg_vacancy_event_pg_bed_id ON public.pg_vacancy_event USING btree (pg_bed_id)"
+          },
           {
             "index_name": "idx_pg_vacancy_event_property",
             "index_type": "btree",
@@ -18228,7 +18634,7 @@
       "comment": null,
       "columns": 135,
       "rows": 5,
-      "size_bytes": 11665408,
+      "size_bytes": 11681792,
       "details": {
         "columns": [
           {
@@ -20314,6 +20720,16 @@
             "is_immediate": true,
             "columns": "{last_verified_at}",
             "index_definition": "CREATE INDEX idx_properties_last_verified ON public.properties USING btree (last_verified_at DESC NULLS LAST)"
+          },
+          {
+            "index_name": "idx_properties_last_viewed_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{last_viewed_by}",
+            "index_definition": "CREATE INDEX idx_properties_last_viewed_by ON public.properties USING btree (last_viewed_by)"
           },
           {
             "index_name": "idx_properties_listing_type",
@@ -22708,7 +23124,7 @@
       "comment": null,
       "columns": 22,
       "rows": 5,
-      "size_bytes": 81920,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -23043,6 +23459,16 @@
             "is_immediate": true,
             "columns": "{assigned_to}",
             "index_definition": "CREATE INDEX idx_property_leads_assigned ON public.property_leads USING btree (assigned_to)"
+          },
+          {
+            "index_name": "idx_property_leads_lead_user_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{lead_user_id}",
+            "index_definition": "CREATE INDEX idx_property_leads_lead_user_id ON public.property_leads USING btree (lead_user_id)"
           },
           {
             "index_name": "idx_property_leads_property",
@@ -23881,7 +24307,7 @@
       "comment": null,
       "columns": 11,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -24090,6 +24516,26 @@
             "index_definition": "CREATE INDEX idx_property_reports_property ON public.property_reports USING btree (property_id)"
           },
           {
+            "index_name": "idx_property_reports_reported_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{reported_by}",
+            "index_definition": "CREATE INDEX idx_property_reports_reported_by ON public.property_reports USING btree (reported_by)"
+          },
+          {
+            "index_name": "idx_property_reports_reviewed_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{reviewed_by}",
+            "index_definition": "CREATE INDEX idx_property_reports_reviewed_by ON public.property_reports USING btree (reviewed_by)"
+          },
+          {
             "index_name": "idx_property_reports_status",
             "index_type": "btree",
             "is_unique": false,
@@ -24161,7 +24607,7 @@
       "comment": null,
       "columns": 6,
       "rows": 0,
-      "size_bytes": 24576,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -24294,6 +24740,16 @@
             "index_definition": "CREATE INDEX idx_property_shares_property ON public.property_shares USING btree (property_id)"
           },
           {
+            "index_name": "idx_property_shares_shared_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{shared_by}",
+            "index_definition": "CREATE INDEX idx_property_shares_shared_by ON public.property_shares USING btree (shared_by)"
+          },
+          {
             "index_name": "property_shares_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -24342,7 +24798,7 @@
       "comment": "Automated and manual property valuation tracking",
       "columns": 37,
       "rows": 3,
-      "size_bytes": 98304,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -24834,6 +25290,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_property_valuations_validated_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{validated_by}",
+            "index_definition": "CREATE INDEX idx_property_valuations_validated_by ON public.property_valuations USING btree (validated_by)"
+          },
+          {
             "index_name": "idx_valuations_confidence",
             "index_type": "btree",
             "is_unique": false,
@@ -24922,7 +25388,7 @@
       "comment": null,
       "columns": 14,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -25158,6 +25624,16 @@
             "is_immediate": true,
             "columns": "{verification_type,status}",
             "index_definition": "CREATE INDEX idx_property_verifications_status ON public.property_verifications USING btree (status, verification_type)"
+          },
+          {
+            "index_name": "idx_property_verifications_verified_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{verified_by}",
+            "index_definition": "CREATE INDEX idx_property_verifications_verified_by ON public.property_verifications USING btree (verified_by)"
           },
           {
             "index_name": "property_verifications_pkey",
@@ -25501,7 +25977,7 @@
       "comment": null,
       "columns": 11,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -25700,6 +26176,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_property_visits_accompanied_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{accompanied_by}",
+            "index_definition": "CREATE INDEX idx_property_visits_accompanied_by ON public.property_visits USING btree (accompanied_by)"
+          },
+          {
             "index_name": "idx_property_visits_property",
             "index_type": "btree",
             "is_unique": false,
@@ -25781,7 +26267,7 @@
       "comment": null,
       "columns": 12,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -25992,6 +26478,16 @@
             "is_immediate": true,
             "columns": "{referral_code}",
             "index_definition": "CREATE INDEX idx_referrals_code ON public.referrals USING btree (referral_code)"
+          },
+          {
+            "index_name": "idx_referrals_referred_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{referred_id}",
+            "index_definition": "CREATE INDEX idx_referrals_referred_id ON public.referrals USING btree (referred_id)"
           },
           {
             "index_name": "idx_referrals_referrer",
@@ -27349,7 +27845,7 @@
       "comment": "Tracks flagged admin activities for security review",
       "columns": 9,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 57344,
       "details": {
         "columns": [
           {
@@ -27544,6 +28040,26 @@
             "is_immediate": true,
             "columns": "{created_at}",
             "index_definition": "CREATE INDEX idx_security_flags_created_at ON public.security_flags USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "idx_security_flags_flagged_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{flagged_by}",
+            "index_definition": "CREATE INDEX idx_security_flags_flagged_by ON public.security_flags USING btree (flagged_by)"
+          },
+          {
+            "index_name": "idx_security_flags_resolved_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{resolved_by}",
+            "index_definition": "CREATE INDEX idx_security_flags_resolved_by ON public.security_flags USING btree (resolved_by)"
           },
           {
             "index_name": "idx_security_flags_status",
@@ -28123,7 +28639,7 @@
       "comment": null,
       "columns": 14,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -28369,6 +28885,16 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_subscription_enrollments_purchase_transaction_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{purchase_transaction_id}",
+            "index_definition": "CREATE INDEX idx_subscription_enrollments_purchase_transaction_id ON public.subscription_enrollments USING btree (purchase_transaction_id)"
+          },
+          {
             "index_name": "idx_subscriptions_expires",
             "index_type": "btree",
             "is_unique": false,
@@ -28468,7 +28994,7 @@
       "comment": "Recurring subscription plans with regional features",
       "columns": 19,
       "rows": 0,
-      "size_bytes": 98304,
+      "size_bytes": 106496,
       "details": {
         "columns": [
           {
@@ -28782,6 +29308,16 @@
             "index_definition": "CREATE INDEX idx_subscription_plans_code ON public.subscription_plans USING btree (plan_code)"
           },
           {
+            "index_name": "idx_subscription_plans_region_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{region_id}",
+            "index_definition": "CREATE INDEX idx_subscription_plans_region_id ON public.subscription_plans USING btree (region_id)"
+          },
+          {
             "index_name": "idx_subscription_plans_user_type",
             "index_type": "btree",
             "is_unique": false,
@@ -28988,170 +29524,11 @@
       }
     },
     {
-      "name": "team_messages",
-      "comment": null,
-      "columns": 8,
-      "rows": 47,
-      "size_bytes": 131072,
-      "details": {
-        "columns": [
-          {
-            "column_name": "id",
-            "data_type": "bigint",
-            "is_nullable": "NO",
-            "column_default": "nextval('team_messages_id_seq'::regclass)",
-            "ordinal_position": 1,
-            "character_maximum_length": null,
-            "numeric_precision": 64,
-            "numeric_scale": 0,
-            "column_comment": null
-          },
-          {
-            "column_name": "from_team",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 2,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "to_team",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 3,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "message",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": null,
-            "ordinal_position": 4,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "status",
-            "data_type": "text",
-            "is_nullable": "NO",
-            "column_default": "'pending'::text",
-            "ordinal_position": 5,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "response",
-            "data_type": "text",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 6,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "responded_at",
-            "data_type": "timestamp with time zone",
-            "is_nullable": "YES",
-            "column_default": null,
-            "ordinal_position": 7,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          },
-          {
-            "column_name": "created_at",
-            "data_type": "timestamp with time zone",
-            "is_nullable": "YES",
-            "column_default": "now()",
-            "ordinal_position": 8,
-            "character_maximum_length": null,
-            "numeric_precision": null,
-            "numeric_scale": null,
-            "column_comment": null
-          }
-        ],
-        "constraints": [
-          {
-            "constraint_name": "2200_127659_1_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_127659_2_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_127659_3_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_127659_4_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "2200_127659_5_not_null",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": null,
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "team_messages_pkey",
-            "constraint_type": "PRIMARY KEY",
-            "column_name": "id",
-            "definition": "PRIMARY KEY (id)",
-            "constraint_comment": null
-          }
-        ],
-        "indexes": [
-          {
-            "index_name": "team_messages_pkey",
-            "index_type": "btree",
-            "is_unique": true,
-            "is_primary": true,
-            "is_exclusion": false,
-            "is_immediate": true,
-            "columns": "{id}",
-            "index_definition": "CREATE UNIQUE INDEX team_messages_pkey ON public.team_messages USING btree (id)"
-          }
-        ],
-        "foreign_keys": [],
-        "triggers": [],
-        "row_count": 47,
-        "column_count": 8
-      }
-    },
-    {
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
       "rows": 48,
-      "size_bytes": 237568,
+      "size_bytes": 352256,
       "details": {
         "columns": [
           {
@@ -29677,6 +30054,36 @@
         ],
         "indexes": [
           {
+            "index_name": "idx_transactions_approved_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{approved_by}",
+            "index_definition": "CREATE INDEX idx_transactions_approved_by ON public.transactions USING btree (approved_by)"
+          },
+          {
+            "index_name": "idx_transactions_builder_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{builder_id}",
+            "index_definition": "CREATE INDEX idx_transactions_builder_id ON public.transactions USING btree (builder_id)"
+          },
+          {
+            "index_name": "idx_transactions_coupon_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{coupon_id}",
+            "index_definition": "CREATE INDEX idx_transactions_coupon_id ON public.transactions USING btree (coupon_id)"
+          },
+          {
             "index_name": "idx_transactions_created_at",
             "index_type": "btree",
             "is_unique": false,
@@ -29697,6 +30104,16 @@
             "index_definition": "CREATE INDEX idx_transactions_gateway ON public.transactions USING btree (gateway_transaction_id) WHERE (gateway_transaction_id IS NOT NULL)"
           },
           {
+            "index_name": "idx_transactions_initiated_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{initiated_by}",
+            "index_definition": "CREATE INDEX idx_transactions_initiated_by ON public.transactions USING btree (initiated_by)"
+          },
+          {
             "index_name": "idx_transactions_invoice",
             "index_type": "btree",
             "is_unique": false,
@@ -29705,6 +30122,36 @@
             "is_immediate": true,
             "columns": "{invoice_number}",
             "index_definition": "CREATE INDEX idx_transactions_invoice ON public.transactions USING btree (invoice_number) WHERE (invoice_generated = true)"
+          },
+          {
+            "index_name": "idx_transactions_lead_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{lead_id}",
+            "index_definition": "CREATE INDEX idx_transactions_lead_id ON public.transactions USING btree (lead_id)"
+          },
+          {
+            "index_name": "idx_transactions_pricing_rule_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pricing_rule_id}",
+            "index_definition": "CREATE INDEX idx_transactions_pricing_rule_id ON public.transactions USING btree (pricing_rule_id)"
+          },
+          {
+            "index_name": "idx_transactions_project_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{project_id}",
+            "index_definition": "CREATE INDEX idx_transactions_project_id ON public.transactions USING btree (project_id)"
           },
           {
             "index_name": "idx_transactions_region",
@@ -29948,7 +30395,7 @@
       "comment": "Identifies properties with excellent value - priced below market estimates",
       "columns": 27,
       "rows": 0,
-      "size_bytes": 57344,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -30372,6 +30819,16 @@
             "is_immediate": true,
             "columns": "{undervaluation_percentage}",
             "index_definition": "CREATE INDEX idx_undervalued_percentage ON public.undervalued_properties USING btree (undervaluation_percentage DESC)"
+          },
+          {
+            "index_name": "idx_undervalued_properties_verified_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{verified_by}",
+            "index_definition": "CREATE INDEX idx_undervalued_properties_verified_by ON public.undervalued_properties USING btree (verified_by)"
           },
           {
             "index_name": "idx_undervalued_property",
@@ -31229,7 +31686,7 @@
       "comment": null,
       "columns": 15,
       "rows": 0,
-      "size_bytes": 49152,
+      "size_bytes": 57344,
       "details": {
         "columns": [
           {
@@ -31490,6 +31947,16 @@
             "is_immediate": true,
             "columns": "{kyc_id}",
             "index_definition": "CREATE INDEX idx_verification_documents_kyc_id ON public.verification_documents USING btree (kyc_id)"
+          },
+          {
+            "index_name": "idx_verification_documents_moderated_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{moderated_by}",
+            "index_definition": "CREATE INDEX idx_verification_documents_moderated_by ON public.verification_documents USING btree (moderated_by)"
           },
           {
             "index_name": "idx_verification_documents_status",
@@ -31830,7 +32297,7 @@
       "comment": null,
       "columns": 15,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -32089,6 +32556,16 @@
             "index_definition": "CREATE INDEX idx_verification_kyc_verified_at ON public.verification_kyc USING btree (verified_at)"
           },
           {
+            "index_name": "idx_verification_kyc_verified_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{verified_by}",
+            "index_definition": "CREATE INDEX idx_verification_kyc_verified_by ON public.verification_kyc USING btree (verified_by)"
+          },
+          {
             "index_name": "verification_kyc_pkey",
             "index_type": "btree",
             "is_unique": true,
@@ -32274,7 +32751,7 @@
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
       "rows": 14,
-      "size_bytes": 73728,
+      "size_bytes": 90112,
       "details": {
         "columns": [
           {
@@ -32469,6 +32946,16 @@
             "index_definition": "CREATE INDEX idx_wallets_balance ON public.wallets USING btree (balance) WHERE (balance > 0)"
           },
           {
+            "index_name": "idx_wallets_last_transaction_region_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{last_transaction_region_id}",
+            "index_definition": "CREATE INDEX idx_wallets_last_transaction_region_id ON public.wallets USING btree (last_transaction_region_id)"
+          },
+          {
             "index_name": "idx_wallets_user_id",
             "index_type": "btree",
             "is_unique": false,
@@ -32636,19 +33123,11 @@
       "view_comment": null
     }
   ],
-  "sequences": [
-    {
-      "sequence_name": "team_messages_id_seq"
-    }
-  ],
+  "sequences": [],
   "extensions": [
     {
       "extname": "pg_cron",
       "extversion": "1.6.4"
-    },
-    {
-      "extname": "pg_graphql",
-      "extversion": "1.5.11"
     },
     {
       "extname": "pg_net",
@@ -32762,13 +33241,13 @@
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography",
+      "arguments": "geography, geography",
       "return_type": "integer",
       "function_comment": null
     },
     {
       "function_name": "_st_bestsrid",
-      "arguments": "geography, geography",
+      "arguments": "geography",
       "return_type": "integer",
       "function_comment": null
     },
@@ -32786,25 +33265,25 @@
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_covers",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_covers",
       "arguments": "geog1 geography, geog2 geography",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_covers",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -32822,18 +33301,12 @@
     },
     {
       "function_name": "_st_distancetree",
-      "arguments": "geography, geography",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_distancetree",
       "arguments": "geography, geography, double precision, boolean",
       "return_type": "double precision",
       "function_comment": null
     },
     {
-      "function_name": "_st_distanceuncached",
+      "function_name": "_st_distancetree",
       "arguments": "geography, geography",
       "return_type": "double precision",
       "function_comment": null
@@ -32851,9 +33324,9 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
-      "return_type": "boolean",
+      "function_name": "_st_distanceuncached",
+      "arguments": "geography, geography",
+      "return_type": "double precision",
       "function_comment": null
     },
     {
@@ -32863,14 +33336,20 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_dwithinuncached",
-      "arguments": "geography, geography, double precision",
+      "function_name": "_st_dwithin",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithinuncached",
       "arguments": "geography, geography, double precision, boolean",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_dwithinuncached",
+      "arguments": "geography, geography, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -32972,6 +33451,12 @@
     },
     {
       "function_name": "addgeometrycolumn",
+      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+    },
+    {
+      "function_name": "addgeometrycolumn",
       "arguments": "table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
@@ -32981,12 +33466,6 @@
       "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
-    },
-    {
-      "function_name": "addgeometrycolumn",
-      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "admin_has_permission",
@@ -33032,15 +33511,15 @@
     },
     {
       "function_name": "box2d",
-      "arguments": "geometry",
-      "return_type": "box2d",
-      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
-    },
-    {
-      "function_name": "box2d",
       "arguments": "box3d",
       "return_type": "box2d",
       "function_comment": null
+    },
+    {
+      "function_name": "box2d",
+      "arguments": "geometry",
+      "return_type": "box2d",
+      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
     },
     {
       "function_name": "box2d_in",
@@ -33068,15 +33547,15 @@
     },
     {
       "function_name": "box3d",
-      "arguments": "box2d",
-      "return_type": "box3d",
-      "function_comment": null
-    },
-    {
-      "function_name": "box3d",
       "arguments": "geometry",
       "return_type": "box3d",
       "function_comment": "args: geom - Returns a BOX3D representing the 3D extent of a geometry."
+    },
+    {
+      "function_name": "box3d",
+      "arguments": "box2d",
+      "return_type": "box3d",
+      "function_comment": null
     },
     {
       "function_name": "box3d_in",
@@ -33164,15 +33643,15 @@
     },
     {
       "function_name": "checkauth",
-      "arguments": "text, text",
-      "return_type": "integer",
-      "function_comment": "args: a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
-    },
-    {
-      "function_name": "checkauth",
       "arguments": "text, text, text",
       "return_type": "integer",
       "function_comment": "args: a_schema_name, a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
+    },
+    {
+      "function_name": "checkauth",
+      "arguments": "text, text",
+      "return_type": "integer",
+      "function_comment": "args: a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
     },
     {
       "function_name": "checkauthtrigger",
@@ -33182,7 +33661,7 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "box2df, geometry",
+      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -33194,7 +33673,7 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "geometry, box2df",
+      "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -33560,7 +34039,19 @@
     },
     {
       "function_name": "geometry",
+      "arguments": "geography",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
       "arguments": "box3d",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "polygon",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33578,7 +34069,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "geography",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -33590,25 +34081,13 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "box2d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
       "arguments": "geometry, integer, boolean",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "geometry",
-      "arguments": "polygon",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "bytea",
+      "arguments": "box2d",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -34058,15 +34537,15 @@
     },
     {
       "function_name": "geometrytype",
-      "arguments": "geometry",
-      "return_type": "text",
-      "function_comment": "args: geomA - Returns the type of a geometry as text."
-    },
-    {
-      "function_name": "geometrytype",
       "arguments": "geography",
       "return_type": "text",
       "function_comment": null
+    },
+    {
+      "function_name": "geometrytype",
+      "arguments": "geometry",
+      "return_type": "text",
+      "function_comment": "args: geomA - Returns the type of a geometry as text."
     },
     {
       "function_name": "geomfromewkb",
@@ -34388,9 +34867,9 @@
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, text, timestamp without time zone",
+      "arguments": "text, text, text, text",
       "return_type": "integer",
-      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
+      "function_comment": null
     },
     {
       "function_name": "lockrow",
@@ -34406,9 +34885,9 @@
     },
     {
       "function_name": "lockrow",
-      "arguments": "text, text, text, text",
+      "arguments": "text, text, text, text, timestamp without time zone",
       "return_type": "integer",
-      "function_comment": null
+      "function_comment": "args: a_schema_name, a_table_name, a_row_key, an_auth_token, expire_dt - Sets lock/authorization for a row in a table."
     },
     {
       "function_name": "log_admin_creation",
@@ -34442,12 +34921,6 @@
     },
     {
       "function_name": "overlaps_2d",
-      "arguments": "geometry, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "overlaps_2d",
       "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
@@ -34459,8 +34932,14 @@
       "function_comment": null
     },
     {
+      "function_name": "overlaps_2d",
+      "arguments": "geometry, box2df",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
       "function_name": "overlaps_geog",
-      "arguments": "gidx, gidx",
+      "arguments": "gidx, geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -34472,13 +34951,13 @@
     },
     {
       "function_name": "overlaps_geog",
-      "arguments": "gidx, geography",
+      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "overlaps_nd",
-      "arguments": "gidx, gidx",
+      "arguments": "gidx, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -34490,7 +34969,7 @@
     },
     {
       "function_name": "overlaps_nd",
-      "arguments": "gidx, geometry",
+      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -34508,12 +34987,6 @@
     },
     {
       "function_name": "pgis_asflatgeobuf_transfn",
-      "arguments": "internal, anyelement, boolean, text",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asflatgeobuf_transfn",
       "arguments": "internal, anyelement",
       "return_type": "internal",
       "function_comment": null
@@ -34521,6 +34994,12 @@
     {
       "function_name": "pgis_asflatgeobuf_transfn",
       "arguments": "internal, anyelement, boolean",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asflatgeobuf_transfn",
+      "arguments": "internal, anyelement, boolean, text",
       "return_type": "internal",
       "function_comment": null
     },
@@ -34568,7 +35047,19 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
+      "arguments": "internal, anyelement, text",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asmvt_transfn",
       "arguments": "internal, anyelement",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asmvt_transfn",
+      "arguments": "internal, anyelement, text, integer, text, text",
       "return_type": "internal",
       "function_comment": null
     },
@@ -34585,26 +35076,14 @@
       "function_comment": null
     },
     {
-      "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer, text, text",
+      "function_name": "pgis_geometry_accum_transfn",
+      "arguments": "internal, geometry, double precision, integer",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_geometry_accum_transfn",
       "arguments": "internal, geometry",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_geometry_accum_transfn",
-      "arguments": "internal, geometry, double precision, integer",
       "return_type": "internal",
       "function_comment": null
     },
@@ -34670,13 +35149,13 @@
     },
     {
       "function_name": "pgis_geometry_union_parallel_transfn",
-      "arguments": "internal, geometry",
+      "arguments": "internal, geometry, double precision",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_geometry_union_parallel_transfn",
-      "arguments": "internal, geometry, double precision",
+      "arguments": "internal, geometry",
       "return_type": "internal",
       "function_comment": null
     },
@@ -35096,15 +35575,15 @@
     },
     {
       "function_name": "st_addpoint",
-      "arguments": "geom1 geometry, geom2 geometry, integer",
-      "return_type": "geometry",
-      "function_comment": "args: linestring, point, position = -1 - Add a point to a LineString."
-    },
-    {
-      "function_name": "st_addpoint",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
       "function_comment": "args: linestring, point - Add a point to a LineString."
+    },
+    {
+      "function_name": "st_addpoint",
+      "arguments": "geom1 geometry, geom2 geometry, integer",
+      "return_type": "geometry",
+      "function_comment": "args: linestring, point, position = -1 - Add a point to a LineString."
     },
     {
       "function_name": "st_affine",
@@ -35138,15 +35617,15 @@
     },
     {
       "function_name": "st_area",
-      "arguments": "text",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_area",
       "arguments": "geometry",
       "return_type": "double precision",
       "function_comment": "args: g1 - Returns the area of a polygonal geometry."
+    },
+    {
+      "function_name": "st_area",
+      "arguments": "text",
+      "return_type": "double precision",
+      "function_comment": null
     },
     {
       "function_name": "st_area2d",
@@ -35156,7 +35635,7 @@
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geography",
+      "arguments": "geometry, text",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -35168,7 +35647,7 @@
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geometry, text",
+      "arguments": "geography",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -35198,13 +35677,7 @@
     },
     {
       "function_name": "st_asewkt",
-      "arguments": "geometry, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkt",
-      "arguments": "geography",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
@@ -35216,7 +35689,7 @@
     },
     {
       "function_name": "st_asewkt",
-      "arguments": "text",
+      "arguments": "geography",
       "return_type": "text",
       "function_comment": null
     },
@@ -35227,8 +35700,14 @@
       "function_comment": null
     },
     {
+      "function_name": "st_asewkt",
+      "arguments": "geometry, integer",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
       "function_name": "st_asgeojson",
-      "arguments": "text",
+      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
       "return_type": "text",
       "function_comment": null
     },
@@ -35240,13 +35719,25 @@
     },
     {
       "function_name": "st_asgeojson",
-      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgeojson",
-      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
+      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
+      "arguments": "version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text",
       "return_type": "text",
       "function_comment": null
     },
@@ -35264,31 +35755,19 @@
     },
     {
       "function_name": "st_asgml",
-      "arguments": "geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
       "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgml",
-      "arguments": "version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_ashexewkb",
-      "arguments": "geometry, text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_ashexewkb",
       "arguments": "geometry",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_ashexewkb",
+      "arguments": "geometry, text",
       "return_type": "text",
       "function_comment": null
     },
@@ -35330,6 +35809,12 @@
     },
     {
       "function_name": "st_assvg",
+      "arguments": "geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_assvg",
       "arguments": "text",
       "return_type": "text",
       "function_comment": null
@@ -35341,20 +35826,14 @@
       "function_comment": null
     },
     {
-      "function_name": "st_assvg",
-      "arguments": "geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_astext",
-      "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
       "function_name": "st_astext",
       "arguments": "geometry, integer",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_astext",
+      "arguments": "geography, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -35366,13 +35845,13 @@
     },
     {
       "function_name": "st_astext",
-      "arguments": "geography",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_astext",
-      "arguments": "geography, integer",
+      "arguments": "geography",
       "return_type": "text",
       "function_comment": null
     },
@@ -35438,9 +35917,15 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "text, double precision",
+      "arguments": "geography, double precision, integer",
+      "return_type": "geography",
+      "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "geom geometry, radius double precision, quadsegs integer",
       "return_type": "geometry",
-      "function_comment": null
+      "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
     },
     {
       "function_name": "st_buffer",
@@ -35450,14 +35935,20 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geography, double precision, integer",
-      "return_type": "geography",
-      "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
+      "arguments": "text, double precision",
+      "return_type": "geometry",
+      "function_comment": null
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geography, double precision",
-      "return_type": "geography",
+      "arguments": "text, double precision, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "text, double precision, text",
+      "return_type": "geometry",
       "function_comment": null
     },
     {
@@ -35468,20 +35959,8 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "text, double precision, text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "geom geometry, radius double precision, quadsegs integer",
-      "return_type": "geometry",
-      "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "text, double precision, integer",
-      "return_type": "geometry",
+      "arguments": "geography, double precision",
+      "return_type": "geography",
       "function_comment": null
     },
     {
@@ -35489,6 +35968,12 @@
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: geom - Creates a polygonal geometry formed by the linework of a geometry."
+    },
+    {
+      "function_name": "st_centroid",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
     },
     {
       "function_name": "st_centroid",
@@ -35501,12 +35986,6 @@
       "arguments": "geography, use_spheroid boolean DEFAULT true",
       "return_type": "geography",
       "function_comment": "args: g1, use_spheroid=true - Returns the geometric center of a geometry."
-    },
-    {
-      "function_name": "st_centroid",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
     },
     {
       "function_name": "st_chaikinsmoothing",
@@ -35552,15 +36031,15 @@
     },
     {
       "function_name": "st_collect",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "geometry",
-      "function_comment": "args: g1, g2 - Creates a GeometryCollection or Multi* geometry from a set of geometries."
-    },
-    {
-      "function_name": "st_collect",
       "arguments": "geometry[]",
       "return_type": "geometry",
       "function_comment": "args: g1_array - Creates a GeometryCollection or Multi* geometry from a set of geometries."
+    },
+    {
+      "function_name": "st_collect",
+      "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "geometry",
+      "function_comment": "args: g1, g2 - Creates a GeometryCollection or Multi* geometry from a set of geometries."
     },
     {
       "function_name": "st_collectionextract",
@@ -35582,12 +36061,6 @@
     },
     {
       "function_name": "st_combinebbox",
-      "arguments": "box3d, box3d",
-      "return_type": "box3d",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_combinebbox",
       "arguments": "box2d, geometry",
       "return_type": "box2d",
       "function_comment": null
@@ -35595,6 +36068,12 @@
     {
       "function_name": "st_combinebbox",
       "arguments": "box3d, geometry",
+      "return_type": "box3d",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_combinebbox",
+      "arguments": "box3d, box3d",
       "return_type": "box3d",
       "function_comment": null
     },
@@ -35630,6 +36109,12 @@
     },
     {
       "function_name": "st_coveredby",
+      "arguments": "text, text",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_coveredby",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
@@ -35641,12 +36126,6 @@
       "function_comment": null
     },
     {
-      "function_name": "st_coveredby",
-      "arguments": "text, text",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
       "function_name": "st_covers",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
@@ -35654,13 +36133,13 @@
     },
     {
       "function_name": "st_covers",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "st_covers",
-      "arguments": "text, text",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -35828,32 +36307,20 @@
     },
     {
       "function_name": "st_estimatedextent",
-      "arguments": "text, text, text",
-      "return_type": "box2d",
-      "function_comment": "args: schema_name, table_name, geocolumn_name - Returns the estimated extent of a spatial table."
-    },
-    {
-      "function_name": "st_estimatedextent",
       "arguments": "text, text, text, boolean",
       "return_type": "box2d",
       "function_comment": "args: schema_name, table_name, geocolumn_name, parent_only - Returns the estimated extent of a spatial table."
     },
     {
-      "function_name": "st_expand",
-      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
-      "return_type": "box3d",
-      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
+      "function_name": "st_estimatedextent",
+      "arguments": "text, text, text",
+      "return_type": "box2d",
+      "function_comment": "args: schema_name, table_name, geocolumn_name - Returns the estimated extent of a spatial table."
     },
     {
       "function_name": "st_expand",
       "arguments": "box3d, double precision",
       "return_type": "box3d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box2d, double precision",
-      "return_type": "box2d",
       "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
@@ -35873,6 +36340,18 @@
       "arguments": "geometry, double precision",
       "return_type": "geometry",
       "function_comment": "args: geom, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box2d, double precision",
+      "return_type": "box2d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
+      "return_type": "box3d",
+      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_exteriorring",
@@ -35996,15 +36475,15 @@
     },
     {
       "function_name": "st_generatepoints",
-      "arguments": "area geometry, npoints integer, seed integer",
-      "return_type": "geometry",
-      "function_comment": "args: g, npoints, seed - Generates random points contained in a Polygon or MultiPolygon."
-    },
-    {
-      "function_name": "st_generatepoints",
       "arguments": "area geometry, npoints integer",
       "return_type": "geometry",
       "function_comment": "args: g, npoints - Generates random points contained in a Polygon or MultiPolygon."
+    },
+    {
+      "function_name": "st_generatepoints",
+      "arguments": "area geometry, npoints integer, seed integer",
+      "return_type": "geometry",
+      "function_comment": "args: g, npoints, seed - Generates random points contained in a Polygon or MultiPolygon."
     },
     {
       "function_name": "st_geogfromtext",
@@ -36026,13 +36505,13 @@
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geom geometry, maxchars integer DEFAULT 0",
+      "arguments": "geog geography, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geog geography, maxchars integer DEFAULT 0",
+      "arguments": "geom geometry, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
@@ -36068,13 +36547,13 @@
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geometryfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36110,7 +36589,7 @@
     },
     {
       "function_name": "st_geomfromgeojson",
-      "arguments": "text",
+      "arguments": "json",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36122,19 +36601,19 @@
     },
     {
       "function_name": "st_geomfromgeojson",
-      "arguments": "json",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromgml",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_geomfromgml",
       "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_geomfromgml",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36236,6 +36715,12 @@
     },
     {
       "function_name": "st_intersection",
+      "arguments": "geography, geography",
+      "return_type": "geography",
+      "function_comment": "args: geogA, geogB - Computes a geometry representing the shared portion of geometries A and B."
+    },
+    {
+      "function_name": "st_intersection",
       "arguments": "text, text",
       "return_type": "geometry",
       "function_comment": null
@@ -36247,14 +36732,8 @@
       "function_comment": "args: geomA, geomB, gridSize = -1 - Computes a geometry representing the shared portion of geometries A and B."
     },
     {
-      "function_name": "st_intersection",
-      "arguments": "geography, geography",
-      "return_type": "geography",
-      "function_comment": "args: geogA, geogB - Computes a geometry representing the shared portion of geometries A and B."
-    },
-    {
       "function_name": "st_intersects",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -36266,7 +36745,7 @@
     },
     {
       "function_name": "st_intersects",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -36332,15 +36811,15 @@
     },
     {
       "function_name": "st_isvalidreason",
-      "arguments": "geometry, integer",
-      "return_type": "text",
-      "function_comment": "args: geomA, flags - Returns text stating if a geometry is valid, or a reason for invalidity."
-    },
-    {
-      "function_name": "st_isvalidreason",
       "arguments": "geometry",
       "return_type": "text",
       "function_comment": "args: geomA - Returns text stating if a geometry is valid, or a reason for invalidity."
+    },
+    {
+      "function_name": "st_isvalidreason",
+      "arguments": "geometry, integer",
+      "return_type": "text",
+      "function_comment": "args: geomA, flags - Returns text stating if a geometry is valid, or a reason for invalidity."
     },
     {
       "function_name": "st_isvalidtrajectory",
@@ -36422,13 +36901,13 @@
     },
     {
       "function_name": "st_linefromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linefromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36452,15 +36931,15 @@
     },
     {
       "function_name": "st_linemerge",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: amultilinestring - Return the lines formed by sewing together a MultiLineString."
-    },
-    {
-      "function_name": "st_linemerge",
       "arguments": "geometry, boolean",
       "return_type": "geometry",
       "function_comment": "args: amultilinestring, directed - Return the lines formed by sewing together a MultiLineString."
+    },
+    {
+      "function_name": "st_linemerge",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: amultilinestring - Return the lines formed by sewing together a MultiLineString."
     },
     {
       "function_name": "st_linestringfromwkb",
@@ -36530,21 +37009,21 @@
     },
     {
       "function_name": "st_makeline",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "geometry",
-      "function_comment": "args: geom1, geom2 - Creates a LineString from Point, MultiPoint, or LineString geometries."
-    },
-    {
-      "function_name": "st_makeline",
       "arguments": "geometry[]",
       "return_type": "geometry",
       "function_comment": "args: geoms_array - Creates a LineString from Point, MultiPoint, or LineString geometries."
     },
     {
-      "function_name": "st_makepoint",
-      "arguments": "double precision, double precision, double precision",
+      "function_name": "st_makeline",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
-      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
+      "function_comment": "args: geom1, geom2 - Creates a LineString from Point, MultiPoint, or LineString geometries."
+    },
+    {
+      "function_name": "st_makepoint",
+      "arguments": "double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: x, y - Creates a 2D, 3DZ or 4D Point."
     },
     {
       "function_name": "st_makepoint",
@@ -36554,9 +37033,9 @@
     },
     {
       "function_name": "st_makepoint",
-      "arguments": "double precision, double precision",
+      "arguments": "double precision, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: x, y - Creates a 2D, 3DZ or 4D Point."
+      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
     },
     {
       "function_name": "st_makepointm",
@@ -36566,27 +37045,27 @@
     },
     {
       "function_name": "st_makepolygon",
-      "arguments": "geometry, geometry[]",
-      "return_type": "geometry",
-      "function_comment": "args: outerlinestring, interiorlinestrings - Creates a Polygon from a shell and optional list of holes."
-    },
-    {
-      "function_name": "st_makepolygon",
       "arguments": "geometry",
       "return_type": "geometry",
       "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
     },
     {
-      "function_name": "st_makevalid",
-      "arguments": "geometry",
+      "function_name": "st_makepolygon",
+      "arguments": "geometry, geometry[]",
       "return_type": "geometry",
-      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
+      "function_comment": "args: outerlinestring, interiorlinestrings - Creates a Polygon from a shell and optional list of holes."
     },
     {
       "function_name": "st_makevalid",
       "arguments": "geom geometry, params text",
       "return_type": "geometry",
       "function_comment": "args: input, params - Attempts to make an invalid geometry valid without losing vertices."
+    },
+    {
+      "function_name": "st_makevalid",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
     },
     {
       "function_name": "st_maxdistance",
@@ -36668,25 +37147,25 @@
     },
     {
       "function_name": "st_mpointfromwkb",
-      "arguments": "bytea, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_mpointfromwkb",
       "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_mpolyfromtext",
-      "arguments": "text, integer",
+      "function_name": "st_mpointfromwkb",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpolyfromtext",
       "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_mpolyfromtext",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36734,13 +37213,13 @@
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36860,15 +37339,15 @@
     },
     {
       "function_name": "st_perimeter",
-      "arguments": "geometry",
-      "return_type": "double precision",
-      "function_comment": "args: g1 - Returns the length of the boundary of a polygonal geometry or geography."
-    },
-    {
-      "function_name": "st_perimeter",
       "arguments": "geog geography, use_spheroid boolean DEFAULT true",
       "return_type": "double precision",
       "function_comment": "args: geog, use_spheroid=true - Returns the length of the boundary of a polygonal geometry or geography."
+    },
+    {
+      "function_name": "st_perimeter",
+      "arguments": "geometry",
+      "return_type": "double precision",
+      "function_comment": "args: g1 - Returns the length of the boundary of a polygonal geometry or geography."
     },
     {
       "function_name": "st_perimeter2d",
@@ -36878,15 +37357,15 @@
     },
     {
       "function_name": "st_point",
-      "arguments": "double precision, double precision, srid integer",
-      "return_type": "geometry",
-      "function_comment": "args: x, y, srid=unknown - Creates a Point with X, Y and SRID values."
-    },
-    {
-      "function_name": "st_point",
       "arguments": "double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: x, y - Creates a Point with X, Y and SRID values."
+    },
+    {
+      "function_name": "st_point",
+      "arguments": "double precision, double precision, srid integer",
+      "return_type": "geometry",
+      "function_comment": "args: x, y, srid=unknown - Creates a Point with X, Y and SRID values."
     },
     {
       "function_name": "st_pointfromgeohash",
@@ -36896,13 +37375,13 @@
     },
     {
       "function_name": "st_pointfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_pointfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -36992,25 +37471,25 @@
     },
     {
       "function_name": "st_polygonfromtext",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_polygonfromtext",
       "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_polygonfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_polygonfromtext",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polygonfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_polygonfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -37040,8 +37519,8 @@
     },
     {
       "function_name": "st_relate",
-      "arguments": "geom1 geometry, geom2 geometry, integer",
-      "return_type": "text",
+      "arguments": "geom1 geometry, geom2 geometry, text",
+      "return_type": "boolean",
       "function_comment": null
     },
     {
@@ -37052,8 +37531,8 @@
     },
     {
       "function_name": "st_relate",
-      "arguments": "geom1 geometry, geom2 geometry, text",
-      "return_type": "boolean",
+      "arguments": "geom1 geometry, geom2 geometry, integer",
+      "return_type": "text",
       "function_comment": null
     },
     {
@@ -37082,9 +37561,9 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision, double precision, double precision",
+      "arguments": "geometry, double precision, geometry",
       "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
+      "function_comment": "args: geomA, rotRadians, pointOrigin - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotate",
@@ -37094,9 +37573,9 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision, geometry",
+      "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians, pointOrigin - Rotates a geometry about an origin point."
+      "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotatex",
@@ -37118,27 +37597,27 @@
     },
     {
       "function_name": "st_scale",
-      "arguments": "geometry, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, XFactor, YFactor - Scales a geometry by given factors."
-    },
-    {
-      "function_name": "st_scale",
       "arguments": "geometry, geometry",
       "return_type": "geometry",
       "function_comment": "args: geom, factor - Scales a geometry by given factors."
     },
     {
       "function_name": "st_scale",
-      "arguments": "geometry, geometry, origin geometry",
+      "arguments": "geometry, double precision, double precision",
       "return_type": "geometry",
-      "function_comment": "args: geom, factor, origin - Scales a geometry by given factors."
+      "function_comment": "args: geomA, XFactor, YFactor - Scales a geometry by given factors."
     },
     {
       "function_name": "st_scale",
       "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, XFactor, YFactor, ZFactor - Scales a geometry by given factors."
+    },
+    {
+      "function_name": "st_scale",
+      "arguments": "geometry, geometry, origin geometry",
+      "return_type": "geometry",
+      "function_comment": "args: geom, factor, origin - Scales a geometry by given factors."
     },
     {
       "function_name": "st_scroll",
@@ -37148,15 +37627,15 @@
     },
     {
       "function_name": "st_segmentize",
-      "arguments": "geog geography, max_segment_length double precision",
-      "return_type": "geography",
-      "function_comment": "args: geog, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
-    },
-    {
-      "function_name": "st_segmentize",
       "arguments": "geometry, double precision",
       "return_type": "geometry",
       "function_comment": "args: geom, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
+    },
+    {
+      "function_name": "st_segmentize",
+      "arguments": "geog geography, max_segment_length double precision",
+      "return_type": "geography",
+      "function_comment": "args: geog, max_segment_length - Return a modified geometry/geography having no segment longer than the given distance."
     },
     {
       "function_name": "st_seteffectivearea",
@@ -37202,15 +37681,15 @@
     },
     {
       "function_name": "st_simplify",
-      "arguments": "geometry, double precision, boolean",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, tolerance, preserveCollapsed - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
-    },
-    {
-      "function_name": "st_simplify",
       "arguments": "geometry, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, tolerance - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
+    },
+    {
+      "function_name": "st_simplify",
+      "arguments": "geometry, double precision, boolean",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, tolerance, preserveCollapsed - Returns a simplified version of a geometry, using the Douglas-Peucker algorithm."
     },
     {
       "function_name": "st_simplifypolygonhull",
@@ -37238,6 +37717,12 @@
     },
     {
       "function_name": "st_snaptogrid",
+      "arguments": "geometry, double precision, double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, originX, originY, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+    },
+    {
+      "function_name": "st_snaptogrid",
       "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
@@ -37253,12 +37738,6 @@
       "arguments": "geometry, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
-    },
-    {
-      "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision, double precision, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, originX, originY, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_split",
@@ -37346,27 +37825,27 @@
     },
     {
       "function_name": "st_transform",
-      "arguments": "geom geometry, from_proj text, to_proj text",
-      "return_type": "geometry",
-      "function_comment": "args: geom, from_proj, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
-    },
-    {
-      "function_name": "st_transform",
       "arguments": "geom geometry, from_proj text, to_srid integer",
       "return_type": "geometry",
       "function_comment": "args: geom, from_proj, to_srid - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_transform",
-      "arguments": "geometry, integer",
+      "arguments": "geom geometry, from_proj text, to_proj text",
       "return_type": "geometry",
-      "function_comment": "args: g1, srid - Return a new geometry with coordinates transformed to a different spatial reference system."
+      "function_comment": "args: geom, from_proj, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_transform",
       "arguments": "geom geometry, to_proj text",
       "return_type": "geometry",
       "function_comment": "args: geom, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
+    },
+    {
+      "function_name": "st_transform",
+      "arguments": "geometry, integer",
+      "return_type": "geometry",
+      "function_comment": "args: g1, srid - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_translate",
@@ -37400,9 +37879,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geom1 geometry, geom2 geometry, gridsize double precision",
       "return_type": "geometry",
-      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1, g2, gridSize - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_union",
@@ -37412,9 +37891,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geom1 geometry, geom2 geometry, gridsize double precision",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
-      "function_comment": "args: g1, g2, gridSize - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_voronoilines",
@@ -37622,21 +38101,27 @@
     },
     {
       "function_name": "updategeometrysrid",
-      "arguments": "catalogn_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer",
-      "return_type": "text",
-      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
-    },
-    {
-      "function_name": "updategeometrysrid",
       "arguments": "character varying, character varying, character varying, integer",
       "return_type": "text",
       "function_comment": "args: schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
+    },
+    {
+      "function_name": "updategeometrysrid",
+      "arguments": "catalogn_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer",
+      "return_type": "text",
+      "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
     },
     {
       "function_name": "validate_coupon",
       "arguments": "p_coupon_code text, p_user_id uuid, p_region_id uuid, p_purchase_amount numeric",
       "return_type": "TABLE(is_valid boolean, discount_amount numeric, message text, coupon_id uuid)",
       "function_comment": "Validate coupon code and calculate discount"
+    },
+    {
+      "function_name": "withdraw_home_loan_consent",
+      "arguments": "p_consent_id uuid, p_user_id uuid",
+      "return_type": "void",
+      "function_comment": null
     },
     {
       "function_name": "word_similarity",
@@ -37676,6 +38161,14 @@
       "constraint_name": "admin_audit_logs_admin_id_fkey",
       "columns": [
         "admin_id"
+      ]
+    },
+    {
+      "fromTable": "admin_audit_logs",
+      "toTable": "regions",
+      "constraint_name": "admin_audit_logs_region_id_fkey",
+      "columns": [
+        "region_id"
       ]
     },
     {

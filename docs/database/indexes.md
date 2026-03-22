@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-18T07:13:53.570Z
-Total Indexes: 434
+Generated: 2026-03-22T07:01:06.028Z
+Total Indexes: 492
 
 ## All Indexes
 
@@ -12,29 +12,43 @@ Total Indexes: 434
 | `admin_audit_logs` | `idx_admin_audit_logs_admin_created` | btree | admin_id, created_at | — |
 | `admin_audit_logs` | `idx_admin_audit_logs_admin_id` | btree | admin_id | — |
 | `admin_audit_logs` | `idx_admin_audit_logs_created_at` | btree | created_at | — |
+| `admin_audit_logs` | `idx_admin_audit_logs_region_id` | btree | region_id | — |
 | `admin_audit_logs` | `idx_audit_admin_id` | btree | admin_id | — |
 | `admin_audit_logs` | `idx_audit_created_at` | btree | created_at | — |
 | `admin_chat` | `admin_chat_pkey` | btree | id | ✓ |
+| `admin_chat` | `idx_admin_chat_admin_id` | btree | admin_id | — |
 | `admin_leaves` | `admin_leaves_pkey` | btree | id | ✓ |
+| `admin_leaves` | `idx_admin_leaves_admin_id` | btree | admin_id | — |
+| `admin_leaves` | `idx_admin_leaves_approved_by_id` | btree | approved_by_id | — |
+| `admin_leaves` | `idx_admin_leaves_backup_admin_id` | btree | backup_admin_id | — |
+| `admin_leaves` | `idx_admin_leaves_leave_type_id` | btree | leave_type_id | — |
 | `admin_messages` | `admin_messages_pkey` | btree | id | ✓ |
+| `admin_messages` | `idx_admin_messages_receiver_id` | btree | receiver_id | — |
+| `admin_messages` | `idx_admin_messages_sender_id` | btree | sender_id | — |
 | `admin_notices` | `admin_notices_pkey` | btree | id | ✓ |
 | `admin_notices` | `idx_admin_notices_active_created` | btree | is_active, created_at | — |
 | `admin_notices` | `idx_admin_notices_admin_active` | btree | created_at | — |
 | `admin_regions` | `admin_regions_admin_id_region_id_key` | btree | admin_id, region_id | ✓ |
 | `admin_regions` | `admin_regions_pkey` | btree | id | ✓ |
 | `admin_regions` | `idx_admin_regions_admin` | btree | admin_id | — |
+| `admin_regions` | `idx_admin_regions_assigned_by` | btree | assigned_by | — |
 | `admin_regions` | `idx_admin_regions_region` | btree | region_id | — |
 | `admin_roles` | `admin_roles_pkey` | btree | admin_id, role_id | ✓ |
 | `admin_users` | `admin_users_pkey` | btree | id | ✓ |
 | `admins` | `admins_email_key` | btree | email | ✓ |
 | `admins` | `admins_pkey` | btree | id | ✓ |
 | `admins` | `admins_user_id_key` | btree | user_id | ✓ |
+| `admins` | `idx_admins_reporting_manager_id` | btree | reporting_manager_id | — |
 | `appointments` | `appointments_pkey` | btree | id | ✓ |
+| `appointments` | `idx_appointments_buyer_id` | btree | buyer_id | — |
+| `appointments` | `idx_appointments_cancelled_by` | btree | cancelled_by | — |
 | `appointments` | `idx_appointments_date_status` | btree | appointment_date, status | — |
 | `appointments` | `idx_appointments_property` | btree | property_id | — |
+| `appointments` | `idx_appointments_seller_id` | btree | seller_id | — |
 | `blog_posts` | `blog_posts_pid_key` | btree | pid | ✓ |
 | `blog_posts` | `blog_posts_pkey` | btree | id | ✓ |
 | `blog_posts` | `blog_posts_slug_key` | btree | slug | ✓ |
+| `blog_posts` | `idx_blog_posts_author_id` | btree | author_id | — |
 | `broker_aadhaar_verifications` | `broker_aadhaar_verifications_pkey` | btree | id | ✓ |
 | `broker_aadhaar_verifications` | `idx_aadhaar_user_id` | btree | user_id | — |
 | `broker_gps_tracking` | `broker_gps_tracking_pkey` | btree | id | ✓ |
@@ -60,6 +74,7 @@ Total Indexes: 434
 | `campaign_participants` | `campaign_participants_pkey` | btree | id | ✓ |
 | `campaign_participants` | `idx_campaign_participants_campaign` | btree | campaign_id | — |
 | `campaign_participants` | `idx_campaign_participants_completed` | btree | is_completed | — |
+| `campaign_participants` | `idx_campaign_participants_region_id` | btree | region_id | — |
 | `campaign_participants` | `idx_campaign_participants_user` | btree | user_id | — |
 | `cities` | `cities_pkey` | btree | id | ✓ |
 | `cities` | `idx_cities_district` | btree | district_id | — |
@@ -72,6 +87,7 @@ Total Indexes: 434
 | `coupon_usage` | `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ |
 | `coupon_usage` | `coupon_usage_pkey` | btree | id | ✓ |
 | `coupon_usage` | `idx_coupon_usage_coupon` | btree | coupon_id | — |
+| `coupon_usage` | `idx_coupon_usage_region_id` | btree | region_id | — |
 | `coupon_usage` | `idx_coupon_usage_transaction` | btree | transaction_id | — |
 | `coupon_usage` | `idx_coupon_usage_user` | btree | user_id | — |
 | `coupons` | `coupons_code_key` | btree | code | ✓ |
@@ -101,6 +117,7 @@ Total Indexes: 434
 | `leave_balances` | `leave_balances_admin_id_leave_type_id_year_key` | btree | admin_id, leave_type_id, year | ✓ |
 | `leave_balances` | `leave_balances_pkey` | btree | id | ✓ |
 | `leave_types` | `leave_types_pkey` | btree | id | ✓ |
+| `loan_calculations` | `idx_loan_calculations_property_id` | btree | property_id | — |
 | `loan_calculations` | `idx_loan_calculations_user` | btree | user_id | — |
 | `loan_calculations` | `loan_calculations_pkey` | btree | id | ✓ |
 | `localities` | `idx_localities_city_new` | btree | city_id | — |
@@ -155,6 +172,8 @@ Total Indexes: 434
 | `mdm_merge_history` | `idx_mdm_merge_executed` | btree | executed_at | — |
 | `mdm_merge_history` | `idx_mdm_merge_source` | btree | source_entity_id, entity_type | — |
 | `mdm_merge_history` | `mdm_merge_history_pkey` | btree | id | ✓ |
+| `messages` | `idx_messages_lead_id` | btree | lead_id | — |
+| `messages` | `idx_messages_parent_message_id` | btree | parent_message_id | — |
 | `messages` | `idx_messages_property` | btree | property_id | — |
 | `messages` | `idx_messages_sender_receiver` | btree | sender_id, receiver_id | — |
 | `messages` | `messages_pkey` | btree | id | ✓ |
@@ -167,19 +186,28 @@ Total Indexes: 434
 | `notification_preferences` | `notification_preferences_pkey` | btree | user_id | ✓ |
 | `notifications` | `idx_notifications_user_unread` | btree | user_id, is_read | — |
 | `notifications` | `notifications_pkey` | btree | id | ✓ |
+| `overtime_records` | `idx_overtime_records_admin_id` | btree | admin_id | — |
+| `overtime_records` | `idx_overtime_records_approved_by` | btree | approved_by | — |
 | `overtime_records` | `overtime_records_pkey` | btree | id | ✓ |
 | `permissions` | `permission_unique` | btree | domain, action, scope | ✓ |
 | `permissions` | `permissions_id_key` | btree | id | ✓ |
 | `permissions` | `permissions_name_key` | btree | name | ✓ |
 | `permissions` | `permissions_pkey` | btree | id | ✓ |
+| `pg_bed` | `idx_pg_bed_pg_room_id` | btree | pg_room_id | — |
 | `pg_bed` | `pg_bed_pkey` | btree | id | ✓ |
+| `pg_occupancy` | `idx_pg_occupancy_pg_bed_id` | btree | pg_bed_id | — |
+| `pg_occupancy` | `idx_pg_occupancy_pg_property_id` | btree | pg_property_id | — |
+| `pg_occupancy` | `idx_pg_occupancy_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_occupancy` | `pg_occupancy_pkey` | btree | id | ✓ |
 | `pg_occupancy_snapshot` | `pg_occupancy_snapshot_pkey` | btree | id | ✓ |
 | `pg_occupancy_snapshot` | `pg_occupancy_snapshot_unique_date` | btree | pg_property_id, snapshot_date | ✓ |
 | `pg_owner_pnl` | `pg_owner_pnl_pkey` | btree | id | ✓ |
 | `pg_owner_pnl` | `pg_owner_pnl_unique_month` | btree | pg_property_id, snapshot_month | ✓ |
+| `pg_payment_record` | `idx_pg_payment_record_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_payment_record` | `idx_pg_payment_record_property` | btree | pg_property_id, payment_date | — |
 | `pg_payment_record` | `pg_payment_record_pkey` | btree | id | ✓ |
+| `pg_police_verification` | `idx_pg_police_verification_pg_property_id` | btree | pg_property_id | — |
+| `pg_police_verification` | `idx_pg_police_verification_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_police_verification` | `pg_police_verification_pkey` | btree | id | ✓ |
 | `pg_posting` | `idx_pg_posting_property` | btree | pg_property_id, status | — |
 | `pg_posting` | `idx_pg_posting_status` | btree | available_from, status | — |
@@ -188,12 +216,19 @@ Total Indexes: 434
 | `pg_property` | `idx_pg_property_owner` | btree | owner_id | — |
 | `pg_property` | `idx_pg_property_status` | btree | listing_status | — |
 | `pg_property` | `pg_property_pkey` | btree | id | ✓ |
+| `pg_receipt` | `idx_pg_receipt_pg_payment_record_id` | btree | pg_payment_record_id | — |
 | `pg_receipt` | `pg_receipt_pkey` | btree | id | ✓ |
 | `pg_receipt` | `pg_receipt_receipt_number_key` | btree | receipt_number | ✓ |
+| `pg_rent_agreement` | `idx_pg_rent_agreement_pg_property_id` | btree | pg_property_id | — |
+| `pg_rent_agreement` | `idx_pg_rent_agreement_pg_tenant_id` | btree | pg_tenant_id | — |
 | `pg_rent_agreement` | `pg_rent_agreement_pkey` | btree | id | ✓ |
+| `pg_room` | `idx_pg_room_pg_property_id` | btree | pg_property_id | — |
 | `pg_room` | `pg_room_pkey` | btree | id | ✓ |
+| `pg_tenant` | `idx_pg_tenant_pg_bed_id` | btree | pg_bed_id | — |
 | `pg_tenant` | `idx_pg_tenant_property` | btree | pg_property_id, status | — |
+| `pg_tenant` | `idx_pg_tenant_user_id` | btree | user_id | — |
 | `pg_tenant` | `pg_tenant_pkey` | btree | id | ✓ |
+| `pg_vacancy_event` | `idx_pg_vacancy_event_pg_bed_id` | btree | pg_bed_id | — |
 | `pg_vacancy_event` | `idx_pg_vacancy_event_property` | btree | pg_property_id, created_at | — |
 | `pg_vacancy_event` | `pg_vacancy_event_pkey` | btree | id | ✓ |
 | `pincodes` | `idx_pincodes_city` | btree | city_id | — |
@@ -251,6 +286,7 @@ Total Indexes: 434
 | `properties` | `idx_properties_geo_quality` | btree | geo_quality_score | — |
 | `properties` | `idx_properties_khata` | btree | khata_type | — |
 | `properties` | `idx_properties_last_verified` | btree | last_verified_at | — |
+| `properties` | `idx_properties_last_viewed_by` | btree | last_viewed_by | — |
 | `properties` | `idx_properties_listing_type` | btree | listing_type | — |
 | `properties` | `idx_properties_locality` | btree | locality_id | — |
 | `properties` | `idx_properties_locality_status` | btree | status, locality_id | — |
@@ -305,6 +341,7 @@ Total Indexes: 434
 | `property_intelligence_scores` | `property_intelligence_scores_pkey` | btree | id | ✓ |
 | `property_intelligence_scores` | `property_intelligence_scores_property_id_key` | btree | property_id | ✓ |
 | `property_leads` | `idx_property_leads_assigned` | btree | assigned_to | — |
+| `property_leads` | `idx_property_leads_lead_user_id` | btree | lead_user_id | — |
 | `property_leads` | `idx_property_leads_property` | btree | property_id | — |
 | `property_leads` | `idx_property_leads_status` | btree | status, priority | — |
 | `property_leads` | `property_leads_pkey` | btree | id | ✓ |
@@ -319,10 +356,14 @@ Total Indexes: 434
 | `property_ranking_criteria` | `property_ranking_criteria_pkey` | btree | id | ✓ |
 | `property_ranking_criteria` | `property_ranking_criteria_property_id_key` | btree | property_id | ✓ |
 | `property_reports` | `idx_property_reports_property` | btree | property_id | — |
+| `property_reports` | `idx_property_reports_reported_by` | btree | reported_by | — |
+| `property_reports` | `idx_property_reports_reviewed_by` | btree | reviewed_by | — |
 | `property_reports` | `idx_property_reports_status` | btree | status | — |
 | `property_reports` | `property_reports_pkey` | btree | id | ✓ |
 | `property_shares` | `idx_property_shares_property` | btree | property_id | — |
+| `property_shares` | `idx_property_shares_shared_by` | btree | shared_by | — |
 | `property_shares` | `property_shares_pkey` | btree | id | ✓ |
+| `property_valuations` | `idx_property_valuations_validated_by` | btree | validated_by | — |
 | `property_valuations` | `idx_valuations_confidence` | btree | confidence_score | — |
 | `property_valuations` | `idx_valuations_date` | btree | valuation_date | — |
 | `property_valuations` | `idx_valuations_method` | btree | valuation_method | — |
@@ -330,6 +371,7 @@ Total Indexes: 434
 | `property_valuations` | `property_valuations_pkey` | btree | id | ✓ |
 | `property_verifications` | `idx_property_verifications_property` | btree | property_id | — |
 | `property_verifications` | `idx_property_verifications_status` | btree | verification_type, status | — |
+| `property_verifications` | `idx_property_verifications_verified_by` | btree | verified_by | — |
 | `property_verifications` | `property_verifications_pkey` | btree | id | ✓ |
 | `property_views` | `idx_property_views_analytics` | btree | property_id, viewed_at | — |
 | `property_views` | `idx_property_views_daily` | btree | property_id, viewed_at | — |
@@ -339,10 +381,12 @@ Total Indexes: 434
 | `property_views` | `idx_property_views_user_id_not_null` | btree | user_id | — |
 | `property_views` | `property_views_pkey` | btree | id | ✓ |
 | `property_views` | `unique_property_session` | btree | property_id, session_id | ✓ |
+| `property_visits` | `idx_property_visits_accompanied_by` | btree | accompanied_by | — |
 | `property_visits` | `idx_property_visits_property` | btree | property_id, visit_date | — |
 | `property_visits` | `idx_property_visits_visitor` | btree | visitor_id | — |
 | `property_visits` | `property_visits_pkey` | btree | id | ✓ |
 | `referrals` | `idx_referrals_code` | btree | referral_code | — |
+| `referrals` | `idx_referrals_referred_id` | btree | referred_id | — |
 | `referrals` | `idx_referrals_referrer` | btree | referrer_id | — |
 | `referrals` | `referrals_pkey` | btree | id | ✓ |
 | `referrals` | `referrals_referral_code_key` | btree | referral_code | ✓ |
@@ -364,6 +408,8 @@ Total Indexes: 434
 | `search_history` | `search_history_pkey` | btree | id | ✓ |
 | `security_flags` | `idx_security_flags_admin_email` | btree | admin_email | — |
 | `security_flags` | `idx_security_flags_created_at` | btree | created_at | — |
+| `security_flags` | `idx_security_flags_flagged_by` | btree | flagged_by | — |
+| `security_flags` | `idx_security_flags_resolved_by` | btree | resolved_by | — |
 | `security_flags` | `idx_security_flags_status` | btree | status | — |
 | `security_flags` | `security_flags_pkey` | btree | id | ✓ |
 | `spatial_ref_sys` | `spatial_ref_sys_pkey` | btree | srid | ✓ |
@@ -378,21 +424,29 @@ Total Indexes: 434
 | `sub_districts` | `idx_sub_districts_name_trgm` | gin | name | — |
 | `sub_districts` | `sub_districts_lgd_code_key` | btree | lgd_code | ✓ |
 | `sub_districts` | `sub_districts_pkey` | btree | id | ✓ |
+| `subscription_enrollments` | `idx_subscription_enrollments_purchase_transaction_id` | btree | purchase_transaction_id | — |
 | `subscription_enrollments` | `idx_subscriptions_expires` | btree | expires_at | — |
 | `subscription_enrollments` | `idx_subscriptions_plan` | btree | plan_id | — |
 | `subscription_enrollments` | `idx_subscriptions_user` | btree | user_id, status | — |
 | `subscription_enrollments` | `subscription_enrollments_pkey` | btree | id | ✓ |
 | `subscription_plans` | `idx_subscription_plans_active` | btree | is_active, display_order | — |
 | `subscription_plans` | `idx_subscription_plans_code` | btree | plan_code | — |
+| `subscription_plans` | `idx_subscription_plans_region_id` | btree | region_id | — |
 | `subscription_plans` | `idx_subscription_plans_user_type` | btree | user_type | — |
 | `subscription_plans` | `subscription_plans_pkey` | btree | id | ✓ |
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
-| `team_messages` | `team_messages_pkey` | btree | id | ✓ |
+| `transactions` | `idx_transactions_approved_by` | btree | approved_by | — |
+| `transactions` | `idx_transactions_builder_id` | btree | builder_id | — |
+| `transactions` | `idx_transactions_coupon_id` | btree | coupon_id | — |
 | `transactions` | `idx_transactions_created_at` | btree | created_at | — |
 | `transactions` | `idx_transactions_gateway` | btree | gateway_transaction_id | — |
+| `transactions` | `idx_transactions_initiated_by` | btree | initiated_by | — |
 | `transactions` | `idx_transactions_invoice` | btree | invoice_number | — |
+| `transactions` | `idx_transactions_lead_id` | btree | lead_id | — |
+| `transactions` | `idx_transactions_pricing_rule_id` | btree | pricing_rule_id | — |
+| `transactions` | `idx_transactions_project_id` | btree | project_id | — |
 | `transactions` | `idx_transactions_region` | btree | region_id, created_at | — |
 | `transactions` | `idx_transactions_status` | btree | status, created_at | — |
 | `transactions` | `idx_transactions_type` | btree | type, created_at | — |
@@ -405,6 +459,7 @@ Total Indexes: 434
 | `undervalued_properties` | `idx_undervalued_expires_at` | btree | expires_at | — |
 | `undervalued_properties` | `idx_undervalued_opportunity` | btree | investment_opportunity_score | — |
 | `undervalued_properties` | `idx_undervalued_percentage` | btree | undervaluation_percentage | — |
+| `undervalued_properties` | `idx_undervalued_properties_verified_by` | btree | verified_by | — |
 | `undervalued_properties` | `idx_undervalued_property` | btree | property_id | — |
 | `undervalued_properties` | `idx_undervalued_rating` | btree | deal_rating | — |
 | `undervalued_properties` | `undervalued_properties_pkey` | btree | id | ✓ |
@@ -422,6 +477,7 @@ Total Indexes: 434
 | `user_regional_preferences` | `user_regional_preferences_pkey` | btree | user_id | ✓ |
 | `verification_documents` | `idx_verification_documents_document_type` | btree | document_type | — |
 | `verification_documents` | `idx_verification_documents_kyc_id` | btree | kyc_id | — |
+| `verification_documents` | `idx_verification_documents_moderated_by` | btree | moderated_by | — |
 | `verification_documents` | `idx_verification_documents_status` | btree | status | — |
 | `verification_documents` | `idx_verification_documents_user_id` | btree | user_id | — |
 | `verification_documents` | `verification_documents_pkey` | btree | id | ✓ |
@@ -433,11 +489,13 @@ Total Indexes: 434
 | `verification_kyc` | `idx_verification_kyc_status` | btree | status | — |
 | `verification_kyc` | `idx_verification_kyc_user_id` | btree | user_id | — |
 | `verification_kyc` | `idx_verification_kyc_verified_at` | btree | verified_at | — |
+| `verification_kyc` | `idx_verification_kyc_verified_by` | btree | verified_by | — |
 | `verification_kyc` | `verification_kyc_pkey` | btree | id | ✓ |
 | `waitlist_entries` | `idx_waitlist_entries_tool_slug` | btree | tool_slug, created_at | — |
 | `waitlist_entries` | `waitlist_entries_email_tool_unique` | btree | email, tool_slug | ✓ |
 | `waitlist_entries` | `waitlist_entries_pkey` | btree | id | ✓ |
 | `wallets` | `idx_wallets_balance` | btree | balance | — |
+| `wallets` | `idx_wallets_last_transaction_region_id` | btree | last_transaction_region_id | — |
 | `wallets` | `idx_wallets_user_id` | btree | user_id | — |
 | `wallets` | `wallets_pkey` | btree | id | ✓ |
 | `wallets` | `wallets_user_id_key` | btree | user_id | ✓ |

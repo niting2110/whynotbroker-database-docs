@@ -4,17 +4,17 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 103
+**Total Tables:** 102
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
-- admin_audit_logs (8 columns)
+- admin_audit_logs (9 columns)
 - admin_chat (4 columns)
 - admin_leaves (17 columns)
 - admin_messages (6 columns)
 - admin_notices (5 columns)
 - admin_regions (6 columns)
-- admin_roles (2 columns)
+- admin_roles (3 columns)
 - admin_users (7 columns)
 - admins (20 columns)
 - appointments (18 columns)
@@ -100,7 +100,6 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - subscription_enrollments (14 columns)
 - subscription_plans (19 columns)
 - system_health_metrics (6 columns)
-- team_messages (8 columns)
 - transactions (35 columns)
 - undervalued_properties (27 columns)
 - user_favorites (4 columns)

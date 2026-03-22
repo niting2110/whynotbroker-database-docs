@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-18T07:13:53.572Z
+-- Generated: 2026-03-22T07:01:06.030Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS admin_audit_logs (
   entity_id character varying(100),
   details text,
   ip_address inet,
-  created_at timestamp with time zone NOT NULL DEFAULT timezone('utc'::text, now())
+  created_at timestamp with time zone NOT NULL DEFAULT timezone('utc'::text, now()),
+  region_id uuid
   ,PRIMARY KEY (id)
 );
 
@@ -81,8 +82,9 @@ CREATE TABLE IF NOT EXISTS admin_regions (
 -- Table: admin_roles
 CREATE TABLE IF NOT EXISTS admin_roles (
   admin_id uuid NOT NULL,
-  role_id uuid NOT NULL
-  ,PRIMARY KEY (admin_id)
+  role_id uuid NOT NULL,
+  can_publish boolean NOT NULL DEFAULT false
+  ,PRIMARY KEY (role_id)
 );
 
 -- Table: admin_users
@@ -1829,19 +1831,6 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   metric_unit text,
   context jsonb,
   recorded_at timestamp with time zone DEFAULT now()
-  ,PRIMARY KEY (id)
-);
-
--- Table: team_messages
-CREATE TABLE IF NOT EXISTS team_messages (
-  id bigint NOT NULL DEFAULT nextval('team_messages_id_seq'::regclass),
-  from_team text NOT NULL,
-  to_team text NOT NULL,
-  message text NOT NULL,
-  status text NOT NULL DEFAULT 'pending'::text,
-  response text,
-  responded_at timestamp with time zone,
-  created_at timestamp with time zone DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
