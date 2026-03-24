@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-23T07:23:50.115Z",
+  "generated_at": "2026-03-24T07:15:17.850Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -8,7 +8,7 @@
     "views": 19,
     "materialized_views": 2,
     "columns": 1521,
-    "constraints": 965,
+    "constraints": 964,
     "indexes": 492,
     "relationships": 164,
     "functions": 833,
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 3866,
+      "rows": 3907,
       "size_bytes": 1384448,
       "details": {
         "columns": [
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 3866,
+        "row_count": 3907,
         "column_count": 9
       }
     },
@@ -29986,13 +29986,6 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'processing'::text, 'succeeded'::text, 'failed'::text, 'cancelled'::text, 'refunded'::text, 'pending_approval'::text, 'approved'::text, 'rejected'::text])))",
-            "constraint_comment": null
-          },
-          {
-            "constraint_name": "transactions_status_phase1_check",
-            "constraint_type": "CHECK",
-            "column_name": null,
-            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'processing'::text, 'succeeded'::text, 'failed'::text, 'cancelled'::text, 'refunded'::text])))",
             "constraint_comment": null
           },
           {
