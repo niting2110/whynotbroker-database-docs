@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-03-24T07:15:17.843Z
-> Schema Hash: `9a79fbdeca3f1a05953554b485b21ce3`
+> Generated: 2026-03-25T07:14:01.553Z
+> Schema Hash: `38523fdec7b3bb8bcbbb88996db70113`
 
 ## 📊 Quick Stats
 - **Total Tables:** 102
 - **Total Views:** 19
 - **Total Materialized Views:** 2
-- **Total Columns:** 1521
+- **Total Columns:** 1522
 - **Total Relationships:** 164
-- **Total Size:** 78.11 MB
+- **Total Size:** 78.32 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 24/3/2026, 12:45:17 pm IST
+- **Last Updated:** 25/3/2026, 12:44:01 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~3,907 | 1.32 MB |  |
+| `admin_audit_logs` | 9 | ~4,565 | 1.53 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 17 | ~0 | 0.05 MB |  |
 | `admin_messages` | 6 | ~0 | 0.05 MB |  |
@@ -66,7 +66,7 @@
 | `notifications` | 10 | ~16 | 0.05 MB |  |
 | `overtime_records` | 8 | ~0 | 0.03 MB |  |
 | `permissions` | 6 | ~63 | 0.08 MB |  |
-| `pg_bed` | 7 | ~0 | 0.02 MB |  |
+| `pg_bed` | 8 | ~0 | 0.02 MB |  |
 | `pg_occupancy` | 8 | ~0 | 0.03 MB |  |
 | `pg_occupancy_snapshot` | 7 | ~0 | 0.02 MB |  |
 | `pg_owner_pnl` | 10 | ~0 | 0.02 MB |  |

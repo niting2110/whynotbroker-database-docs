@@ -403,5 +403,20 @@
       "functions": 833,
       "extensions": 10
     }
+  },
+  {
+    "timestamp": "2026-03-25T07:14:01.590Z",
+    "schema_hash": "38523fdec7b3bb8bcbbb88996db70113",
+    "statistics": {
+      "tables": 102,
+      "views": 19,
+      "materialized_views": 2,
+      "columns": 1522,
+      "constraints": 965,
+      "indexes": 492,
+      "relationships": 164,
+      "functions": 833,
+      "extensions": 10
+    }
   }
 ]

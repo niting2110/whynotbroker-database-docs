@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-24T07:15:17.874Z
+// Generated: 2026-03-25T07:14:01.587Z
 
 export interface Database {
   admin_audit_logs: {
@@ -823,6 +823,7 @@ export interface Database {
       monthly_rent: number;
       advance_deposit: number;
       created_at: string | Date;
+      food_charge?: number;
     };
   };
 

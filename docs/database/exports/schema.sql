@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-24T07:15:17.861Z
+-- Generated: 2026-03-25T07:14:01.573Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -822,7 +822,8 @@ CREATE TABLE IF NOT EXISTS pg_bed (
   is_available boolean NOT NULL DEFAULT true,
   monthly_rent numeric NOT NULL,
   advance_deposit numeric NOT NULL DEFAULT 0,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  food_charge numeric
   ,PRIMARY KEY (id)
 );
 

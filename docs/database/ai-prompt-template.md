@@ -52,7 +52,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - notifications (10 columns)
 - overtime_records (8 columns)
 - permissions (6 columns)
-- pg_bed (7 columns)
+- pg_bed (8 columns)
 - pg_occupancy (8 columns)
 - pg_occupancy_snapshot (7 columns)
 - pg_owner_pnl (10 columns)

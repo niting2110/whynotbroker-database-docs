@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-24T07:15:17.848Z
+> Auto-generated: 2026-03-25T07:14:01.559Z
 > Total Tables: 102
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~3,907
+- Rows: ~4,565
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -2017,7 +2017,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 7
+- Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
 
@@ -2032,6 +2032,7 @@
 | `monthly_rent` | `numeric` | NO | `—` |
 | `advance_deposit` | `numeric` | NO | `0` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `food_charge` | `numeric` | YES | `—` |
 
 ### Indexes
 
