@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T07:20:36.717Z",
+  "generated_at": "2026-03-30T07:55:59.822Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -11,7 +11,7 @@
     "constraints": 965,
     "indexes": 492,
     "relationships": 164,
-    "functions": 833,
+    "functions": 834,
     "extensions": 10
   },
   "tables": [
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 6284,
+      "rows": 6286,
       "size_bytes": 2310144,
       "details": {
         "columns": [
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6284,
+        "row_count": 6286,
         "column_count": 9
       }
     },
@@ -33297,18 +33297,12 @@
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_coveredby",
-      "arguments": "geog1 geography, geog2 geography",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_covers",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
@@ -33316,6 +33310,12 @@
     {
       "function_name": "_st_covers",
       "arguments": "geog1 geography, geog2 geography",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_covers",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -33345,6 +33345,12 @@
     },
     {
       "function_name": "_st_distanceuncached",
+      "arguments": "geography, geography, double precision, boolean",
+      "return_type": "double precision",
+      "function_comment": null
+    },
+    {
+      "function_name": "_st_distanceuncached",
       "arguments": "geography, geography, boolean",
       "return_type": "double precision",
       "function_comment": null
@@ -33356,9 +33362,9 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_distanceuncached",
-      "arguments": "geography, geography, double precision, boolean",
-      "return_type": "double precision",
+      "function_name": "_st_dwithin",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "return_type": "boolean",
       "function_comment": null
     },
     {
@@ -33368,20 +33374,14 @@
       "function_comment": null
     },
     {
-      "function_name": "_st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "function_name": "_st_dwithinuncached",
+      "arguments": "geography, geography, double precision, boolean",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "_st_dwithinuncached",
       "arguments": "geography, geography, double precision",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "_st_dwithinuncached",
-      "arguments": "geography, geography, double precision, boolean",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -33543,15 +33543,15 @@
     },
     {
       "function_name": "box2d",
-      "arguments": "geometry",
-      "return_type": "box2d",
-      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
-    },
-    {
-      "function_name": "box2d",
       "arguments": "box3d",
       "return_type": "box2d",
       "function_comment": null
+    },
+    {
+      "function_name": "box2d",
+      "arguments": "geometry",
+      "return_type": "box2d",
+      "function_comment": "args: geom - Returns a BOX2D representing the 2D extent of a geometry."
     },
     {
       "function_name": "box2d_in",
@@ -33579,15 +33579,15 @@
     },
     {
       "function_name": "box3d",
-      "arguments": "box2d",
-      "return_type": "box3d",
-      "function_comment": null
-    },
-    {
-      "function_name": "box3d",
       "arguments": "geometry",
       "return_type": "box3d",
       "function_comment": "args: geom - Returns a BOX3D representing the 3D extent of a geometry."
+    },
+    {
+      "function_name": "box3d",
+      "arguments": "box2d",
+      "return_type": "box3d",
+      "function_comment": null
     },
     {
       "function_name": "box3d_in",
@@ -33615,13 +33615,13 @@
     },
     {
       "function_name": "bytea",
-      "arguments": "geography",
+      "arguments": "geometry",
       "return_type": "bytea",
       "function_comment": null
     },
     {
       "function_name": "bytea",
-      "arguments": "geometry",
+      "arguments": "geography",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -33765,12 +33765,6 @@
     },
     {
       "function_name": "dropgeometrytable",
-      "arguments": "schema_name character varying, table_name character varying",
-      "return_type": "text",
-      "function_comment": "args: schema_name, table_name - Drops a table and all its references in geometry_columns."
-    },
-    {
-      "function_name": "dropgeometrytable",
       "arguments": "table_name character varying",
       "return_type": "text",
       "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
@@ -33780,6 +33774,12 @@
       "arguments": "catalog_name character varying, schema_name character varying, table_name character varying",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name - Drops a table and all its references in geometry_columns."
+    },
+    {
+      "function_name": "dropgeometrytable",
+      "arguments": "schema_name character varying, table_name character varying",
+      "return_type": "text",
+      "function_comment": "args: schema_name, table_name - Drops a table and all its references in geometry_columns."
     },
     {
       "function_name": "enablelongtransactions",
@@ -33867,12 +33867,6 @@
     },
     {
       "function_name": "geography",
-      "arguments": "bytea",
-      "return_type": "geography",
-      "function_comment": null
-    },
-    {
-      "function_name": "geography",
       "arguments": "geography, integer, boolean",
       "return_type": "geography",
       "function_comment": null
@@ -33880,6 +33874,12 @@
     {
       "function_name": "geography",
       "arguments": "geometry",
+      "return_type": "geography",
+      "function_comment": null
+    },
+    {
+      "function_name": "geography",
+      "arguments": "bytea",
       "return_type": "geography",
       "function_comment": null
     },
@@ -34077,7 +34077,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "bytea",
+      "arguments": "box3d",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -34113,12 +34113,6 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "box3d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
       "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
@@ -34126,6 +34120,12 @@
     {
       "function_name": "geometry",
       "arguments": "geography",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -34575,15 +34575,15 @@
     },
     {
       "function_name": "geometrytype",
-      "arguments": "geography",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometrytype",
       "arguments": "geometry",
       "return_type": "text",
       "function_comment": "args: geomA - Returns the type of a geometry as text."
+    },
+    {
+      "function_name": "geometrytype",
+      "arguments": "geography",
+      "return_type": "text",
+      "function_comment": null
     },
     {
       "function_name": "geomfromewkb",
@@ -34614,6 +34614,12 @@
       "arguments": "p_user_id uuid, p_region_id uuid",
       "return_type": "TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)",
       "function_comment": "Get all valid coupons for user in specific region"
+    },
+    {
+      "function_name": "get_auth_uid",
+      "arguments": "",
+      "return_type": "uuid",
+      "function_comment": "SECURITY DEFINER wrapper for auth.uid(). Use in RLS policies instead of auth.uid() directly to avoid initplan re-evaluation per row. STABLE = evaluated once per query. Created M5 2026-03-28 (PERF-SEC-01)."
     },
     {
       "function_name": "get_current_admin_id",
