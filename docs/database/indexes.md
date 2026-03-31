@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-30T07:55:59.830Z
-Total Indexes: 492
+Generated: 2026-03-31T07:41:14.763Z
+Total Indexes: 500
 
 ## All Indexes
 
@@ -84,6 +84,11 @@ Total Indexes: 492
 | `cities` | `idx_cities_normalized_name` | btree | normalized_name | — |
 | `cities` | `idx_cities_state` | btree | state_id | — |
 | `cities` | `idx_cities_unique_name_state` | btree | normalized_name, state_id | ✓ |
+| `comm_deferred` | `comm_deferred_pkey` | btree | id | ✓ |
+| `comm_deferred` | `comm_deferred_retry_idx` | btree | retry_at | — |
+| `commission_events` | `commission_events_partner_idx` | btree | partner_id | — |
+| `commission_events` | `commission_events_pkey` | btree | id | ✓ |
+| `commission_events` | `commission_events_transaction_idx` | btree | transaction_id | — |
 | `coupon_usage` | `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ |
 | `coupon_usage` | `coupon_usage_pkey` | btree | id | ✓ |
 | `coupon_usage` | `idx_coupon_usage_coupon` | btree | coupon_id | — |
@@ -117,6 +122,7 @@ Total Indexes: 492
 | `leave_balances` | `leave_balances_admin_id_leave_type_id_year_key` | btree | admin_id, leave_type_id, year | ✓ |
 | `leave_balances` | `leave_balances_pkey` | btree | id | ✓ |
 | `leave_types` | `leave_types_pkey` | btree | id | ✓ |
+| `lending_partners` | `lending_partners_pkey` | btree | id | ✓ |
 | `loan_calculations` | `idx_loan_calculations_property_id` | btree | property_id | — |
 | `loan_calculations` | `idx_loan_calculations_user` | btree | user_id | — |
 | `loan_calculations` | `loan_calculations_pkey` | btree | id | ✓ |
@@ -390,6 +396,8 @@ Total Indexes: 492
 | `referrals` | `idx_referrals_referrer` | btree | referrer_id | — |
 | `referrals` | `referrals_pkey` | btree | id | ✓ |
 | `referrals` | `referrals_referral_code_key` | btree | referral_code | ✓ |
+| `refund_request` | `refund_request_pkey` | btree | id | ✓ |
+| `refund_request` | `refund_request_transaction_idx` | btree | transaction_id | — |
 | `regions` | `idx_regions_code` | btree | code | — |
 | `regions` | `idx_regions_parent` | btree | parent_region_id | — |
 | `regions` | `idx_regions_type` | btree | type | — |

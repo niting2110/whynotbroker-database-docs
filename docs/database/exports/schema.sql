@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-30T07:55:59.832Z
+-- Generated: 2026-03-31T07:41:14.765Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -352,6 +352,40 @@ CREATE TABLE IF NOT EXISTS cities (
   ,PRIMARY KEY (id)
 );
 
+-- Table: comm_deferred
+CREATE TABLE IF NOT EXISTS comm_deferred (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  recipient_id uuid NOT NULL,
+  event_category text NOT NULL,
+  payload jsonb NOT NULL,
+  risk_score numeric NOT NULL,
+  retry_count integer NOT NULL DEFAULT 0,
+  retry_at timestamp with time zone NOT NULL,
+  ttl_expires_at timestamp with time zone NOT NULL,
+  status text NOT NULL DEFAULT 'pending'::text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: commission_events
+CREATE TABLE IF NOT EXISTS commission_events (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  transaction_id uuid NOT NULL,
+  partner_id uuid,
+  user_id uuid NOT NULL,
+  property_id uuid,
+  loan_amount numeric NOT NULL,
+  commission_rate_snap numeric NOT NULL,
+  commission_amount numeric NOT NULL,
+  status text NOT NULL DEFAULT 'pending'::text,
+  reversal_reason text,
+  case_id text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: coupon_usage
 CREATE TABLE IF NOT EXISTS coupon_usage (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -438,7 +472,8 @@ CREATE TABLE IF NOT EXISTS home_loan_consent_log (
   consent_withdrawn_at timestamp with time zone,
   ip_address_hash text,
   session_id text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  partner_id uuid
   ,PRIMARY KEY (id)
 );
 
@@ -491,6 +526,24 @@ CREATE TABLE IF NOT EXISTS leave_types (
   color_code text,
   max_days integer DEFAULT 12,
   is_active boolean DEFAULT true
+  ,PRIMARY KEY (id)
+);
+
+-- Table: lending_partners
+CREATE TABLE IF NOT EXISTS lending_partners (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  dsa_reference text,
+  is_active boolean NOT NULL DEFAULT false,
+  credential_state text NOT NULL DEFAULT 'stub'::text,
+  health_check_url text,
+  escalation_contact_name text,
+  escalation_contact_phone text,
+  escalation_contact_email text,
+  commission_rate_percent numeric,
+  data_processing_agreement_date date,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -879,7 +932,11 @@ CREATE TABLE IF NOT EXISTS pg_payment_record (
   payment_method text,
   gateway_txn_id text,
   notes text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  rent_due_date date,
+  reminder_d3_sent_at timestamp with time zone,
+  reminder_d8_sent_at timestamp with time zone,
+  reminder_d15_sent_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 
@@ -915,7 +972,8 @@ CREATE TABLE IF NOT EXISTS pg_posting (
   views_count integer NOT NULL DEFAULT 0,
   leads_count integer NOT NULL DEFAULT 0,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
-  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  last_confirmed_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 
@@ -998,7 +1056,12 @@ CREATE TABLE IF NOT EXISTS pg_tenant (
   move_in_date date NOT NULL,
   move_out_date date,
   status text NOT NULL DEFAULT 'active'::text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  rent_amount numeric,
+  rent_due_day integer,
+  payment_status text NOT NULL DEFAULT 'pending'::text,
+  lease_end_date date,
+  whatsapp_opt_in boolean NOT NULL DEFAULT false
   ,PRIMARY KEY (id)
 );
 
@@ -1011,7 +1074,8 @@ CREATE TABLE IF NOT EXISTS pg_vacancy_event (
   available_from date NOT NULL,
   monthly_rent numeric,
   notes text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  created_pg_posting_id uuid
   ,PRIMARY KEY (id)
 );
 
@@ -1641,6 +1705,23 @@ CREATE TABLE IF NOT EXISTS referrals (
   credited_at timestamp with time zone,
   created_at timestamp with time zone DEFAULT now(),
   converted_at timestamp with time zone
+  ,PRIMARY KEY (id)
+);
+
+-- Table: refund_request
+CREATE TABLE IF NOT EXISTS refund_request (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  transaction_id uuid NOT NULL,
+  requested_by uuid NOT NULL,
+  amount numeric NOT NULL,
+  reason text NOT NULL,
+  status text NOT NULL DEFAULT 'pending_approval'::text,
+  reviewed_by uuid,
+  reviewed_at timestamp with time zone,
+  review_note text,
+  case_id text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

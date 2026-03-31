@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-30T07:55:59.820Z
-> Total Tables: 102
+> Auto-generated: 2026-03-31T07:41:14.752Z
+> Total Tables: 106
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~6,286
+- Rows: ~6,287
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -883,6 +883,94 @@
 
 ---
 
+## `comm_deferred`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 11
+- Indexes: 2
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `recipient_id` | `uuid` | NO | `—` |
+| `event_category` | `text` | NO | `—` |
+| `payload` | `jsonb` | NO | `—` |
+| `risk_score` | `numeric` | NO | `—` |
+| `retry_count` | `integer` | NO | `0` |
+| `retry_at` | `timestamp with time zone` | NO | `—` |
+| `ttl_expires_at` | `timestamp with time zone` | NO | `—` |
+| `status` | `text` | NO | `'pending'::text` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `comm_deferred_pkey` | btree | id | ✓ |
+| `comm_deferred_retry_idx` | btree | retry_at | — |
+
+---
+
+## `commission_events`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 3
+- Foreign Keys: 4
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `transaction_id` | `uuid` | NO | `—` |
+| `partner_id` | `uuid` | YES | `—` |
+| `user_id` | `uuid` | NO | `—` |
+| `property_id` | `uuid` | YES | `—` |
+| `loan_amount` | `numeric` | NO | `—` |
+| `commission_rate_snap` | `numeric` | NO | `—` |
+| `commission_amount` | `numeric` | NO | `—` |
+| `status` | `text` | NO | `'pending'::text` |
+| `reversal_reason` | `text` | YES | `—` |
+| `case_id` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `commission_events_partner_idx` | btree | partner_id | — |
+| `commission_events_pkey` | btree | id | ✓ |
+| `commission_events_transaction_idx` | btree | transaction_id | — |
+
+### Foreign Keys
+
+- `commission_events_partner_id_fkey`:
+  - Columns: `partner_id` → `lending_partners(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `commission_events_property_id_fkey`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `commission_events_transaction_id_fkey`:
+  - Columns: `transaction_id` → `transactions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: RESTRICT
+- `commission_events_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: RESTRICT
+
+---
+
 ## `coupon_usage`
 
 > Track coupon redemptions by users
@@ -1085,9 +1173,9 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 9
+- Columns: 10
 - Indexes: 3
-- Foreign Keys: 1
+- Foreign Keys: 2
 
 ### Columns
 
@@ -1102,6 +1190,7 @@
 | `ip_address_hash` | `text` | YES | `—` |
 | `session_id` | `text` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `partner_id` | `uuid` | YES | `—` |
 
 ### Indexes
 
@@ -1113,6 +1202,10 @@
 
 ### Foreign Keys
 
+- `hlcl_partner_id_fk`:
+  - Columns: `partner_id` → `lending_partners(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `home_loan_consent_log_user_id_fkey`:
   - Columns: `user_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
@@ -1242,6 +1335,40 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `leave_types_pkey` | btree | id | ✓ |
+
+---
+
+## `lending_partners`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 13
+- Indexes: 1
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `name` | `text` | NO | `—` |
+| `dsa_reference` | `text` | YES | `—` |
+| `is_active` | `boolean` | NO | `false` |
+| `credential_state` | `text` | NO | `'stub'::text` |
+| `health_check_url` | `text` | YES | `—` |
+| `escalation_contact_name` | `text` | YES | `—` |
+| `escalation_contact_phone` | `text` | YES | `—` |
+| `escalation_contact_email` | `text` | YES | `—` |
+| `commission_rate_percent` | `numeric` | YES | `—` |
+| `data_processing_agreement_date` | `date` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `lending_partners_pkey` | btree | id | ✓ |
 
 ---
 
@@ -2176,7 +2303,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 11
+- Columns: 15
 - Indexes: 3
 - Foreign Keys: 2
 
@@ -2195,6 +2322,10 @@
 | `gateway_txn_id` | `text` | YES | `—` |
 | `notes` | `text` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `rent_due_date` | `date` | YES | `—` |
+| `reminder_d3_sent_at` | `timestamp with time zone` | YES | `—` |
+| `reminder_d8_sent_at` | `timestamp with time zone` | YES | `—` |
+| `reminder_d15_sent_at` | `timestamp with time zone` | YES | `—` |
 
 ### Indexes
 
@@ -2263,7 +2394,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 18
+- Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
 
@@ -2289,6 +2420,7 @@
 | `leads_count` | `integer` | NO | `0` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
 | `updated_at` | `timestamp with time zone` | NO | `now()` |
+| `last_confirmed_at` | `timestamp with time zone` | YES | `—` |
 
 ### Indexes
 
@@ -2480,7 +2612,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 13
+- Columns: 18
 - Indexes: 4
 - Foreign Keys: 3
 
@@ -2501,6 +2633,11 @@
 | `move_out_date` | `date` | YES | `—` |
 | `status` | `text` | NO | `'active'::text` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `rent_amount` | `numeric` | YES | `—` |
+| `rent_due_day` | `integer` | YES | `—` |
+| `payment_status` | `text` | NO | `'pending'::text` |
+| `lease_end_date` | `date` | YES | `—` |
+| `whatsapp_opt_in` | `boolean` | NO | `false` |
 
 ### Indexes
 
@@ -2532,9 +2669,9 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 8
+- Columns: 9
 - Indexes: 3
-- Foreign Keys: 2
+- Foreign Keys: 3
 
 ### Columns
 
@@ -2548,6 +2685,7 @@
 | `monthly_rent` | `numeric` | YES | `—` |
 | `notes` | `text` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
+| `created_pg_posting_id` | `uuid` | YES | `—` |
 
 ### Indexes
 
@@ -2567,6 +2705,10 @@
   - Columns: `pg_property_id` → `pg_property(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+- `pgve_created_pg_posting_id_fk`:
+  - Columns: `created_pg_posting_id` → `pg_posting(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ---
 
@@ -3963,6 +4105,55 @@
   - Columns: `referrer_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `refund_request`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 12
+- Indexes: 2
+- Foreign Keys: 3
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `transaction_id` | `uuid` | NO | `—` |
+| `requested_by` | `uuid` | NO | `—` |
+| `amount` | `numeric` | NO | `—` |
+| `reason` | `text` | NO | `—` |
+| `status` | `text` | NO | `'pending_approval'::text` |
+| `reviewed_by` | `uuid` | YES | `—` |
+| `reviewed_at` | `timestamp with time zone` | YES | `—` |
+| `review_note` | `text` | YES | `—` |
+| `case_id` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `refund_request_pkey` | btree | id | ✓ |
+| `refund_request_transaction_idx` | btree | transaction_id | — |
+
+### Foreign Keys
+
+- `refund_request_requested_by_fkey`:
+  - Columns: `requested_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: RESTRICT
+- `refund_request_reviewed_by_fkey`:
+  - Columns: `reviewed_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `refund_request_transaction_id_fkey`:
+  - Columns: `transaction_id` → `transactions(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: RESTRICT
 
 ---
 

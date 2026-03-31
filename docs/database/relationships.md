@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 164
-Generated: 2026-03-30T07:55:59.830Z
+Total Relationships: 173
+Generated: 2026-03-31T07:41:14.762Z
 
 ```
 admin_audit_logs:
@@ -84,6 +84,16 @@ cities:
   └─→ states (via: cities_state_id_fkey)
       columns: state_id
 
+commission_events:
+  └─→ lending_partners (via: commission_events_partner_id_fkey)
+      columns: partner_id
+  └─→ properties (via: commission_events_property_id_fkey)
+      columns: property_id
+  └─→ transactions (via: commission_events_transaction_id_fkey)
+      columns: transaction_id
+  └─→ profiles (via: commission_events_user_id_fkey)
+      columns: user_id
+
 coupon_usage:
   └─→ coupons (via: coupon_usage_coupon_id_fkey)
       columns: coupon_id
@@ -103,6 +113,8 @@ districts:
       columns: state_id
 
 home_loan_consent_log:
+  └─→ lending_partners (via: hlcl_partner_id_fk)
+      columns: partner_id
   └─→ profiles (via: home_loan_consent_log_user_id_fkey)
       columns: user_id
 
@@ -247,6 +259,8 @@ pg_vacancy_event:
       columns: pg_bed_id
   └─→ pg_property (via: pg_vacancy_event_pg_property_id_fkey)
       columns: pg_property_id
+  └─→ pg_posting (via: pgve_created_pg_posting_id_fk)
+      columns: created_pg_posting_id
 
 pincodes:
   └─→ cities (via: pincodes_city_id_fkey)
@@ -391,6 +405,14 @@ referrals:
       columns: referred_id
   └─→ profiles (via: referrals_referrer_id_fkey)
       columns: referrer_id
+
+refund_request:
+  └─→ profiles (via: refund_request_requested_by_fkey)
+      columns: requested_by
+  └─→ profiles (via: refund_request_reviewed_by_fkey)
+      columns: reviewed_by
+  └─→ transactions (via: refund_request_transaction_id_fkey)
+      columns: transaction_id
 
 regions:
   └─→ regions (via: regions_parent_region_id_fkey)

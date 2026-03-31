@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-30T07:55:59.844Z
+// Generated: 2026-03-31T07:41:14.771Z
 
 export interface Database {
   admin_audit_logs: {
@@ -352,6 +352,40 @@ export interface Database {
     };
   };
 
+  comm_deferred: {
+    Row: {
+      id: string;
+      recipient_id: string;
+      event_category: string;
+      payload: any;
+      risk_score: number;
+      retry_count: number;
+      retry_at: string | Date;
+      ttl_expires_at: string | Date;
+      status: string;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  commission_events: {
+    Row: {
+      id: string;
+      transaction_id: string;
+      partner_id?: string;
+      user_id: string;
+      property_id?: string;
+      loan_amount: number;
+      commission_rate_snap: number;
+      commission_amount: number;
+      status: string;
+      reversal_reason?: string;
+      case_id?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
   coupon_usage: {
     Row: {
       id: string;
@@ -439,6 +473,7 @@ export interface Database {
       ip_address_hash?: string;
       session_id?: string;
       created_at: string | Date;
+      partner_id?: string;
     };
   };
 
@@ -491,6 +526,24 @@ export interface Database {
       color_code?: string;
       max_days?: number;
       is_active?: boolean;
+    };
+  };
+
+  lending_partners: {
+    Row: {
+      id: string;
+      name: string;
+      dsa_reference?: string;
+      is_active: boolean;
+      credential_state: string;
+      health_check_url?: string;
+      escalation_contact_name?: string;
+      escalation_contact_phone?: string;
+      escalation_contact_email?: string;
+      commission_rate_percent?: number;
+      data_processing_agreement_date?: string | Date;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 
@@ -880,6 +933,10 @@ export interface Database {
       gateway_txn_id?: string;
       notes?: string;
       created_at: string | Date;
+      rent_due_date?: string | Date;
+      reminder_d3_sent_at?: string | Date;
+      reminder_d8_sent_at?: string | Date;
+      reminder_d15_sent_at?: string | Date;
     };
   };
 
@@ -916,6 +973,7 @@ export interface Database {
       leads_count: number;
       created_at: string | Date;
       updated_at: string | Date;
+      last_confirmed_at?: string | Date;
     };
   };
 
@@ -999,6 +1057,11 @@ export interface Database {
       move_out_date?: string | Date;
       status: string;
       created_at: string | Date;
+      rent_amount?: number;
+      rent_due_day?: number;
+      payment_status: string;
+      lease_end_date?: string | Date;
+      whatsapp_opt_in: boolean;
     };
   };
 
@@ -1012,6 +1075,7 @@ export interface Database {
       monthly_rent?: number;
       notes?: string;
       created_at: string | Date;
+      created_pg_posting_id?: string;
     };
   };
 
@@ -1641,6 +1705,23 @@ export interface Database {
       credited_at?: string | Date;
       created_at?: string | Date;
       converted_at?: string | Date;
+    };
+  };
+
+  refund_request: {
+    Row: {
+      id: string;
+      transaction_id: string;
+      requested_by: string;
+      amount: number;
+      reason: string;
+      status: string;
+      reviewed_by?: string;
+      reviewed_at?: string | Date;
+      review_note?: string;
+      case_id?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 

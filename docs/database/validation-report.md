@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2026-03-30T07:55:59.832Z
-Total Issues: 91
-Warnings: 26
+Generated: 2026-03-31T07:41:14.765Z
+Total Issues: 97
+Warnings: 32
 Recommendations: 65
 
 ## ⚠️ Warnings
@@ -11,6 +11,9 @@ Recommendations: 65
 |----------|-------|-------|
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
+| MEDIUM | `commission_events` | Foreign key commission_events_property_id_fkey has no covering index |
+| MEDIUM | `commission_events` | Foreign key commission_events_user_id_fkey has no covering index |
+| MEDIUM | `home_loan_consent_log` | Foreign key hlcl_partner_id_fk has no covering index |
 | MEDIUM | `home_loan_consent_log` | Foreign key home_loan_consent_log_user_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_admin_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_leave_type_id_fkey has no covering index |
@@ -26,9 +29,12 @@ Recommendations: 65
 | MEDIUM | `pg_posting` | Foreign key pg_posting_pg_property_id_fkey has no covering index |
 | MEDIUM | `pg_tenant` | Foreign key pg_tenant_pg_property_id_fkey has no covering index |
 | MEDIUM | `pg_vacancy_event` | Foreign key pg_vacancy_event_pg_property_id_fkey has no covering index |
+| MEDIUM | `pg_vacancy_event` | Foreign key pgve_created_pg_posting_id_fk has no covering index |
 | MEDIUM | `pricing_rules` | Foreign key pricing_rules_region_id_fkey has no covering index |
 | MEDIUM | `property_valuations` | Foreign key property_valuations_property_id_fkey has no covering index |
 | MEDIUM | `property_visits` | Foreign key property_visits_property_id_fkey has no covering index |
+| MEDIUM | `refund_request` | Foreign key refund_request_requested_by_fkey has no covering index |
+| MEDIUM | `refund_request` | Foreign key refund_request_reviewed_by_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_permission_id_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_role_id_fkey has no covering index |
 | MEDIUM | `saved_searches` | Foreign key saved_searches_user_id_fkey has no covering index |
