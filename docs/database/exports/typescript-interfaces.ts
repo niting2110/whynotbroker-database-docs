@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-03-31T07:41:14.771Z
+// Generated: 2026-04-01T07:45:43.763Z
 
 export interface Database {
   admin_audit_logs: {
@@ -459,6 +459,23 @@ export interface Database {
       is_active?: boolean;
       created_at?: string | Date;
       updated_at?: string | Date;
+    };
+  };
+
+  enquiries: {
+    Row: {
+      id: string;
+      pg_posting_id?: string;
+      seeker_profile_id: string;
+      move_in_date: string | Date;
+      duration_months: number;
+      room_preference?: string;
+      message?: string;
+      status: string;
+      status_updated_at?: string | Date;
+      status_updated_by?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 
@@ -937,6 +954,7 @@ export interface Database {
       reminder_d3_sent_at?: string | Date;
       reminder_d8_sent_at?: string | Date;
       reminder_d15_sent_at?: string | Date;
+      gst_status: string;
     };
   };
 
@@ -1007,6 +1025,11 @@ export interface Database {
       receipt_number: string;
       issued_at: string | Date;
       pdf_url?: string;
+      payment_period?: string;
+      payment_mode?: string;
+      upi_reference?: string;
+      gst_status: string;
+      owner_display_name?: string;
     };
   };
 
@@ -1039,6 +1062,19 @@ export interface Database {
       has_attached_bath: boolean;
       amenities: any;
       created_at: string | Date;
+    };
+  };
+
+  pg_seeker_preferences: {
+    Row: {
+      profile_id: string;
+      preferred_city?: string;
+      preferred_localities?: any;
+      gender_policy?: string;
+      max_budget?: number;
+      move_in_window?: string;
+      sharing_preference?: string;
+      updated_at: string | Date;
     };
   };
 
@@ -1782,6 +1818,15 @@ export interface Database {
       description?: string;
       created_at: string | Date;
       updated_at: string | Date;
+    };
+  };
+
+  saved_listings: {
+    Row: {
+      id: string;
+      profile_id: string;
+      property_id: string;
+      saved_at: string | Date;
     };
   };
 

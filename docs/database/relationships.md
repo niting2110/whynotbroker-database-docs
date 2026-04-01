@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 173
-Generated: 2026-03-31T07:41:14.762Z
+Total Relationships: 179
+Generated: 2026-04-01T07:45:43.746Z
 
 ```
 admin_audit_logs:
@@ -111,6 +111,14 @@ credit_packages:
 districts:
   └─→ states (via: districts_state_id_fkey)
       columns: state_id
+
+enquiries:
+  └─→ pg_posting (via: enquiries_pg_posting_fk)
+      columns: pg_posting_id
+  └─→ profiles (via: enquiries_seeker_fk)
+      columns: seeker_profile_id
+  └─→ profiles (via: enquiries_status_updated_by_fk)
+      columns: status_updated_by
 
 home_loan_consent_log:
   └─→ lending_partners (via: hlcl_partner_id_fk)
@@ -245,6 +253,10 @@ pg_rent_agreement:
 pg_room:
   └─→ pg_property (via: pg_room_pg_property_id_fkey)
       columns: pg_property_id
+
+pg_seeker_preferences:
+  └─→ profiles (via: pgsp_profile_fk)
+      columns: profile_id
 
 pg_tenant:
   └─→ pg_bed (via: pg_tenant_pg_bed_id_fkey)
@@ -423,6 +435,12 @@ role_permissions:
       columns: permission_id
   └─→ roles (via: role_permissions_role_id_fkey)
       columns: role_id
+
+saved_listings:
+  └─→ profiles (via: saved_listings_profile_fk)
+      columns: profile_id
+  └─→ properties (via: saved_listings_property_fk)
+      columns: property_id
 
 saved_searches:
   └─→ profiles (via: saved_searches_user_id_fkey)

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-03-31T07:41:14.755Z",
+  "generated_at": "2026-04-01T07:45:43.738Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 106,
+    "tables": 109,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1583,
-    "constraints": 1029,
-    "indexes": 500,
-    "relationships": 173,
+    "columns": 1613,
+    "constraints": 1063,
+    "indexes": 509,
+    "relationships": 179,
     "functions": 834,
     "extensions": 10
   },
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 6287,
+      "rows": 6298,
       "size_bytes": 2310144,
       "details": {
         "columns": [
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6287,
+        "row_count": 6298,
         "column_count": 9
       }
     },
@@ -1701,7 +1701,7 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 13,
+      "rows": 24,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -2084,7 +2084,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 13,
+        "row_count": 24,
         "column_count": 20
       }
     },
@@ -6895,7 +6895,7 @@
       "name": "credit_packages",
       "comment": "Pre-paid credit packages with regional pricing variations",
       "columns": 17,
-      "rows": 0,
+      "rows": 1,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -7201,7 +7201,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 1,
         "column_count": 17
       }
     },
@@ -7429,6 +7429,335 @@
         "triggers": [],
         "row_count": 0,
         "column_count": 7
+      }
+    },
+    {
+      "name": "enquiries",
+      "comment": null,
+      "columns": 12,
+      "rows": 5,
+      "size_bytes": 81920,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "pg_posting_id",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "seeker_profile_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "move_in_date",
+            "data_type": "date",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "duration_months",
+            "data_type": "smallint",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 16,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "room_preference",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "message",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'new'::text",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status_updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status_updated_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_146559_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146559_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_duration_months_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((duration_months > 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_message_length",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((char_length(message) <= 1000))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['new'::text, 'viewed'::text, 'responded'::text, 'closed'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_pg_posting_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "pg_posting_id",
+            "definition": "FOREIGN KEY (pg_posting_id) REFERENCES pg_posting(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_seeker_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "seeker_profile_id",
+            "definition": "FOREIGN KEY (seeker_profile_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_status_updated_by_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "status_updated_by",
+            "definition": "FOREIGN KEY (status_updated_by) REFERENCES profiles(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "enquiries_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "enquiries_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX enquiries_pkey ON public.enquiries USING btree (id)"
+          },
+          {
+            "index_name": "enquiries_posting_idx",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{pg_posting_id}",
+            "index_definition": "CREATE INDEX enquiries_posting_idx ON public.enquiries USING btree (pg_posting_id) WHERE (pg_posting_id IS NOT NULL)"
+          },
+          {
+            "index_name": "enquiries_seeker_idx",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{seeker_profile_id}",
+            "index_definition": "CREATE INDEX enquiries_seeker_idx ON public.enquiries USING btree (seeker_profile_id)"
+          },
+          {
+            "index_name": "enquiries_status_idx",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status,created_at}",
+            "index_definition": "CREATE INDEX enquiries_status_idx ON public.enquiries USING btree (status, created_at)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "enquiries_pg_posting_fk",
+            "foreign_table_name": "pg_posting",
+            "columns": [
+              "pg_posting_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          },
+          {
+            "constraint_name": "enquiries_seeker_fk",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "seeker_profile_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "enquiries_status_updated_by_fk",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "status_updated_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 5,
+        "column_count": 12
       }
     },
     {
@@ -14599,7 +14928,7 @@
     {
       "name": "pg_payment_record",
       "comment": null,
-      "columns": 15,
+      "columns": 16,
       "rows": 0,
       "size_bytes": 32768,
       "details": {
@@ -14768,11 +15097,29 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "gst_status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'taxable'::text",
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "GST classification per T41 E13-SPEC-B: exempt if rent_amount<=20000 AND continuous_stay>=90 days; taxable otherwise. Computed by Go API at payment record creation/update. Default taxable."
           }
         ],
         "constraints": [
           {
             "constraint_name": "2200_135718_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135718_16_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
@@ -14825,6 +15172,13 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": "CHECK ((amount > (0)::numeric))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_payment_record_gst_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((gst_status = ANY (ARRAY['exempt'::text, 'taxable'::text])))",
             "constraint_comment": null
           },
           {
@@ -14925,7 +15279,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 15
+        "column_count": 16
       }
     },
     {
@@ -15159,8 +15513,8 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -15563,7 +15917,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 19
       }
     },
@@ -15571,8 +15925,8 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 0,
-      "size_bytes": 40960,
+      "rows": 5,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -15974,14 +16328,14 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 18
       }
     },
     {
       "name": "pg_receipt",
       "comment": null,
-      "columns": 5,
+      "columns": 10,
       "rows": 0,
       "size_bytes": 32768,
       "details": {
@@ -16040,6 +16394,61 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "payment_period",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Rental period snapshot at issuance time, e.g. \"March 2026\"."
+          },
+          {
+            "column_name": "payment_mode",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Payment method at issuance: UPI/Cash/Bank Transfer/Cheque."
+          },
+          {
+            "column_name": "upi_reference",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "UPI transaction ID or UTR number. NULL for non-UPI payments."
+          },
+          {
+            "column_name": "gst_status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'taxable'::text",
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Snapshot of GST status at time of receipt issuance. Sourced from pg_payment_record.gst_status."
+          },
+          {
+            "column_name": "owner_display_name",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Owner display name snapshot at receipt issuance time."
           }
         ],
         "constraints": [
@@ -16069,6 +16478,20 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_135742_9_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_receipt_gst_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((gst_status = ANY (ARRAY['exempt'::text, 'taxable'::text])))",
             "constraint_comment": null
           },
           {
@@ -16142,7 +16565,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 5
+        "column_count": 10
       }
     },
     {
@@ -16689,6 +17112,186 @@
         "triggers": [],
         "row_count": 0,
         "column_count": 9
+      }
+    },
+    {
+      "name": "pg_seeker_preferences",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "profile_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "preferred_city",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "preferred_localities",
+            "data_type": "ARRAY",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "gender_policy",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "max_budget",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
+          },
+          {
+            "column_name": "move_in_window",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "sharing_preference",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_146540_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146540_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pgsp_budget_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((max_budget > 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pgsp_gender_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((gender_policy = ANY (ARRAY['male'::text, 'female'::text, 'any'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pgsp_sharing_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((sharing_preference = ANY (ARRAY['single'::text, 'double'::text, 'triple'::text, 'any'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pgsp_profile_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "profile_id",
+            "definition": "FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_seeker_preferences_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "profile_id",
+            "definition": "PRIMARY KEY (profile_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_seeker_preferences_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{profile_id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_seeker_preferences_pkey ON public.pg_seeker_preferences USING btree (profile_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pgsp_profile_fk",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "profile_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
       }
     },
     {
@@ -17978,8 +18581,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 46,
-      "rows": 14,
-      "size_bytes": 237568,
+      "rows": 55,
+      "size_bytes": 245760,
       "details": {
         "columns": [
           {
@@ -18693,7 +19296,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 14,
+        "row_count": 55,
         "column_count": 46
       }
     },
@@ -28875,6 +29478,199 @@
       }
     },
     {
+      "name": "saved_listings",
+      "comment": null,
+      "columns": 4,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "profile_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "property_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "saved_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_146515_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146515_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146515_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_146515_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "saved_listings_profile_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "profile_id",
+            "definition": "FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "saved_listings_property_fk",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "property_id",
+            "definition": "FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "saved_listings_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "saved_listings_unique",
+            "constraint_type": "UNIQUE",
+            "column_name": "property_id",
+            "definition": "UNIQUE (profile_id, property_id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "saved_listings_unique",
+            "constraint_type": "UNIQUE",
+            "column_name": "profile_id",
+            "definition": "UNIQUE (profile_id, property_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "saved_listings_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX saved_listings_pkey ON public.saved_listings USING btree (id)"
+          },
+          {
+            "index_name": "saved_listings_profile_idx",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{profile_id}",
+            "index_definition": "CREATE INDEX saved_listings_profile_idx ON public.saved_listings USING btree (profile_id)"
+          },
+          {
+            "index_name": "saved_listings_property_idx",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{property_id}",
+            "index_definition": "CREATE INDEX saved_listings_property_idx ON public.saved_listings USING btree (property_id)"
+          },
+          {
+            "index_name": "saved_listings_unique",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{profile_id,property_id}",
+            "index_definition": "CREATE UNIQUE INDEX saved_listings_unique ON public.saved_listings USING btree (profile_id, property_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "saved_listings_profile_fk",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "profile_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "saved_listings_property_fk",
+            "foreign_table_name": "properties",
+            "columns": [
+              "property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 4
+      }
+    },
+    {
       "name": "saved_searches",
       "comment": null,
       "columns": 11,
@@ -30953,7 +31749,7 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 48,
+      "rows": 49,
       "size_bytes": 352256,
       "details": {
         "columns": [
@@ -31812,7 +32608,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 48,
+        "row_count": 49,
         "column_count": 35
       }
     },
@@ -34176,8 +34972,8 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 14,
-      "size_bytes": 90112,
+      "rows": 54,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -34456,7 +35252,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 14,
+        "row_count": 54,
         "column_count": 11
       }
     }
@@ -39888,6 +40684,30 @@
       ]
     },
     {
+      "fromTable": "enquiries",
+      "toTable": "pg_posting",
+      "constraint_name": "enquiries_pg_posting_fk",
+      "columns": [
+        "pg_posting_id"
+      ]
+    },
+    {
+      "fromTable": "enquiries",
+      "toTable": "profiles",
+      "constraint_name": "enquiries_seeker_fk",
+      "columns": [
+        "seeker_profile_id"
+      ]
+    },
+    {
+      "fromTable": "enquiries",
+      "toTable": "profiles",
+      "constraint_name": "enquiries_status_updated_by_fk",
+      "columns": [
+        "status_updated_by"
+      ]
+    },
+    {
       "fromTable": "home_loan_consent_log",
       "toTable": "lending_partners",
       "constraint_name": "hlcl_partner_id_fk",
@@ -40229,6 +41049,14 @@
       "constraint_name": "pg_room_pg_property_id_fkey",
       "columns": [
         "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_seeker_preferences",
+      "toTable": "profiles",
+      "constraint_name": "pgsp_profile_fk",
+      "columns": [
+        "profile_id"
       ]
     },
     {
@@ -40741,6 +41569,22 @@
       "constraint_name": "role_permissions_role_id_fkey",
       "columns": [
         "role_id"
+      ]
+    },
+    {
+      "fromTable": "saved_listings",
+      "toTable": "profiles",
+      "constraint_name": "saved_listings_profile_fk",
+      "columns": [
+        "profile_id"
+      ]
+    },
+    {
+      "fromTable": "saved_listings",
+      "toTable": "properties",
+      "constraint_name": "saved_listings_property_fk",
+      "columns": [
+        "property_id"
       ]
     },
     {

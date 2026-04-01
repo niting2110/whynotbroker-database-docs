@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-03-31T07:41:14.763Z
-Total Indexes: 500
+Generated: 2026-04-01T07:45:43.747Z
+Total Indexes: 509
 
 ## All Indexes
 
@@ -111,6 +111,10 @@ Total Indexes: 500
 | `districts` | `idx_districts_name` | btree | state_id, name | — |
 | `districts` | `idx_districts_name_trgm` | gin | name | — |
 | `districts` | `idx_districts_state` | btree | state_id | — |
+| `enquiries` | `enquiries_pkey` | btree | id | ✓ |
+| `enquiries` | `enquiries_posting_idx` | btree | pg_posting_id | — |
+| `enquiries` | `enquiries_seeker_idx` | btree | seeker_profile_id | — |
+| `enquiries` | `enquiries_status_idx` | btree | status, created_at | — |
 | `home_loan_consent_log` | `home_loan_consent_log_pkey` | btree | id | ✓ |
 | `home_loan_consent_log` | `idx_hlcl_bank_id_given` | btree | bank_id, consent_given_at | — |
 | `home_loan_consent_log` | `idx_hlcl_user_id` | btree | user_id, consent_given_at | — |
@@ -230,6 +234,7 @@ Total Indexes: 500
 | `pg_rent_agreement` | `pg_rent_agreement_pkey` | btree | id | ✓ |
 | `pg_room` | `idx_pg_room_pg_property_id` | btree | pg_property_id | — |
 | `pg_room` | `pg_room_pkey` | btree | id | ✓ |
+| `pg_seeker_preferences` | `pg_seeker_preferences_pkey` | btree | profile_id | ✓ |
 | `pg_tenant` | `idx_pg_tenant_pg_bed_id` | btree | pg_bed_id | — |
 | `pg_tenant` | `idx_pg_tenant_property` | btree | pg_property_id, status | — |
 | `pg_tenant` | `idx_pg_tenant_user_id` | btree | user_id | — |
@@ -410,6 +415,10 @@ Total Indexes: 500
 | `roles` | `roles_name_key` | btree | name | ✓ |
 | `roles` | `roles_pkey` | btree | id | ✓ |
 | `roles` | `roles_slug_key` | btree | slug | ✓ |
+| `saved_listings` | `saved_listings_pkey` | btree | id | ✓ |
+| `saved_listings` | `saved_listings_profile_idx` | btree | profile_id | — |
+| `saved_listings` | `saved_listings_property_idx` | btree | property_id | — |
+| `saved_listings` | `saved_listings_unique` | btree | profile_id, property_id | ✓ |
 | `saved_searches` | `idx_saved_searches_user` | btree | user_id, is_active | — |
 | `saved_searches` | `saved_searches_pkey` | btree | id | ✓ |
 | `search_history` | `idx_search_history_user` | btree | user_id | — |

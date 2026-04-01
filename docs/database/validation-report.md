@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-03-31T07:41:14.765Z
-Total Issues: 97
-Warnings: 32
-Recommendations: 65
+Generated: 2026-04-01T07:45:43.749Z
+Total Issues: 100
+Warnings: 33
+Recommendations: 67
 
 ## ⚠️ Warnings
 
@@ -13,6 +13,7 @@ Recommendations: 65
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
 | MEDIUM | `commission_events` | Foreign key commission_events_property_id_fkey has no covering index |
 | MEDIUM | `commission_events` | Foreign key commission_events_user_id_fkey has no covering index |
+| MEDIUM | `enquiries` | Foreign key enquiries_status_updated_by_fk has no covering index |
 | MEDIUM | `home_loan_consent_log` | Foreign key hlcl_partner_id_fk has no covering index |
 | MEDIUM | `home_loan_consent_log` | Foreign key home_loan_consent_log_user_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_admin_id_fkey has no covering index |
@@ -82,6 +83,7 @@ Recommendations: 65
 | `pg_receipt` | Table missing timestamp columns (created_at, updated_at) |
 | `pg_rent_agreement` | Table missing timestamp columns (created_at, updated_at) |
 | `pg_room` | Table missing timestamp columns (created_at, updated_at) |
+| `pg_seeker_preferences` | Table missing timestamp columns (created_at, updated_at) |
 | `pg_tenant` | Table missing timestamp columns (created_at, updated_at) |
 | `pg_vacancy_event` | Table missing timestamp columns (created_at, updated_at) |
 | `pricing_rules` | Table missing timestamp columns (created_at, updated_at) |
@@ -102,6 +104,7 @@ Recommendations: 65
 | `property_visits` | Table missing timestamp columns (created_at, updated_at) |
 | `referrals` | Table missing timestamp columns (created_at, updated_at) |
 | `role_permissions` | Table missing timestamp columns (created_at, updated_at) |
+| `saved_listings` | Table missing timestamp columns (created_at, updated_at) |
 | `search_history` | Table missing timestamp columns (created_at, updated_at) |
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
 | `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |

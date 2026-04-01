@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-03-31T07:41:14.765Z
+-- Generated: 2026-04-01T07:45:43.749Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -459,6 +459,23 @@ CREATE TABLE IF NOT EXISTS districts (
   is_active boolean DEFAULT true,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: enquiries
+CREATE TABLE IF NOT EXISTS enquiries (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  pg_posting_id uuid,
+  seeker_profile_id uuid NOT NULL,
+  move_in_date date NOT NULL,
+  duration_months smallint NOT NULL,
+  room_preference text,
+  message text,
+  status text NOT NULL DEFAULT 'new'::text,
+  status_updated_at timestamp with time zone,
+  status_updated_by uuid,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 
@@ -936,7 +953,8 @@ CREATE TABLE IF NOT EXISTS pg_payment_record (
   rent_due_date date,
   reminder_d3_sent_at timestamp with time zone,
   reminder_d8_sent_at timestamp with time zone,
-  reminder_d15_sent_at timestamp with time zone
+  reminder_d15_sent_at timestamp with time zone,
+  gst_status text NOT NULL DEFAULT 'taxable'::text
   ,PRIMARY KEY (id)
 );
 
@@ -1006,7 +1024,12 @@ CREATE TABLE IF NOT EXISTS pg_receipt (
   pg_payment_record_id uuid NOT NULL,
   receipt_number text NOT NULL,
   issued_at timestamp with time zone NOT NULL DEFAULT now(),
-  pdf_url text
+  pdf_url text,
+  payment_period text,
+  payment_mode text,
+  upi_reference text,
+  gst_status text NOT NULL DEFAULT 'taxable'::text,
+  owner_display_name text
   ,PRIMARY KEY (id)
 );
 
@@ -1040,6 +1063,19 @@ CREATE TABLE IF NOT EXISTS pg_room (
   amenities jsonb NOT NULL DEFAULT '[]'::jsonb,
   created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
+);
+
+-- Table: pg_seeker_preferences
+CREATE TABLE IF NOT EXISTS pg_seeker_preferences (
+  profile_id uuid NOT NULL,
+  preferred_city text,
+  preferred_localities ARRAY,
+  gender_policy text,
+  max_budget integer,
+  move_in_window text,
+  sharing_preference text,
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (profile_id)
 );
 
 -- Table: pg_tenant
@@ -1782,6 +1818,15 @@ CREATE TABLE IF NOT EXISTS roles (
   description text,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: saved_listings
+CREATE TABLE IF NOT EXISTS saved_listings (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  profile_id uuid NOT NULL,
+  property_id uuid NOT NULL,
+  saved_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

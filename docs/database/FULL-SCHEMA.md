@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-03-31T07:41:14.752Z
-> Total Tables: 106
+> Auto-generated: 2026-04-01T07:45:43.736Z
+> Total Tables: 109
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~6,287
+- Rows: ~6,298
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -334,7 +334,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~13
+- Rows: ~24
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -1083,7 +1083,7 @@
 > Pre-paid credit packages with regional pricing variations
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~1
 - Columns: 17
 - Indexes: 3
 - Foreign Keys: 1
@@ -1166,6 +1166,57 @@
   - Columns: `state_id` → `states(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
+
+---
+
+## `enquiries`
+
+**Statistics:**
+- Rows: ~5
+- Columns: 12
+- Indexes: 4
+- Foreign Keys: 3
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `pg_posting_id` | `uuid` | YES | `—` |
+| `seeker_profile_id` | `uuid` | NO | `—` |
+| `move_in_date` | `date` | NO | `—` |
+| `duration_months` | `smallint` | NO | `—` |
+| `room_preference` | `text` | YES | `—` |
+| `message` | `text` | YES | `—` |
+| `status` | `text` | NO | `'new'::text` |
+| `status_updated_at` | `timestamp with time zone` | YES | `—` |
+| `status_updated_by` | `uuid` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `enquiries_pkey` | btree | id | ✓ |
+| `enquiries_posting_idx` | btree | pg_posting_id | — |
+| `enquiries_seeker_idx` | btree | seeker_profile_id | — |
+| `enquiries_status_idx` | btree | status, created_at | — |
+
+### Foreign Keys
+
+- `enquiries_pg_posting_fk`:
+  - Columns: `pg_posting_id` → `pg_posting(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `enquiries_seeker_fk`:
+  - Columns: `seeker_profile_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `enquiries_status_updated_by_fk`:
+  - Columns: `status_updated_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ---
 
@@ -2303,7 +2354,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 15
+- Columns: 16
 - Indexes: 3
 - Foreign Keys: 2
 
@@ -2326,6 +2377,7 @@
 | `reminder_d3_sent_at` | `timestamp with time zone` | YES | `—` |
 | `reminder_d8_sent_at` | `timestamp with time zone` | YES | `—` |
 | `reminder_d15_sent_at` | `timestamp with time zone` | YES | `—` |
+| `gst_status` | `text` | NO | `'taxable'::text` |
 
 ### Indexes
 
@@ -2393,7 +2445,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2442,7 +2494,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -2492,7 +2544,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 5
+- Columns: 10
 - Indexes: 3
 - Foreign Keys: 1
 
@@ -2505,6 +2557,11 @@
 | `receipt_number` | `text` | NO | `—` |
 | `issued_at` | `timestamp with time zone` | NO | `now()` |
 | `pdf_url` | `text` | YES | `—` |
+| `payment_period` | `text` | YES | `—` |
+| `payment_mode` | `text` | YES | `—` |
+| `upi_reference` | `text` | YES | `—` |
+| `gst_status` | `text` | NO | `'taxable'::text` |
+| `owner_display_name` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -2603,6 +2660,42 @@
 
 - `pg_room_pg_property_id_fkey`:
   - Columns: `pg_property_id` → `pg_property(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
+## `pg_seeker_preferences`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `profile_id` | `uuid` | NO | `—` |
+| `preferred_city` | `text` | YES | `—` |
+| `preferred_localities` | `ARRAY` | YES | `—` |
+| `gender_policy` | `text` | YES | `—` |
+| `max_budget` | `integer` | YES | `—` |
+| `move_in_window` | `text` | YES | `—` |
+| `sharing_preference` | `text` | YES | `—` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_seeker_preferences_pkey` | btree | profile_id | ✓ |
+
+### Foreign Keys
+
+- `pgsp_profile_fk`:
+  - Columns: `profile_id` → `profiles(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: CASCADE
 
@@ -2814,7 +2907,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~14
+- Rows: ~55
 - Columns: 46
 - Indexes: 12
 - Foreign Keys: 0
@@ -4309,6 +4402,45 @@
 
 ---
 
+## `saved_listings`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 4
+- Indexes: 4
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `profile_id` | `uuid` | NO | `—` |
+| `property_id` | `uuid` | NO | `—` |
+| `saved_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `saved_listings_pkey` | btree | id | ✓ |
+| `saved_listings_profile_idx` | btree | profile_id | — |
+| `saved_listings_property_idx` | btree | property_id | — |
+| `saved_listings_unique` | btree | profile_id, property_id | ✓ |
+
+### Foreign Keys
+
+- `saved_listings_profile_fk`:
+  - Columns: `profile_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `saved_listings_property_fk`:
+  - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `saved_searches`
 
 **Statistics:**
@@ -4677,7 +4809,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~48
+- Rows: ~49
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5150,7 +5282,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~14
+- Rows: ~54
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2
