@@ -64,7 +64,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - pg_police_verification (8 columns)
 - pg_posting (19 columns)
 - pg_property (18 columns)
-- pg_receipt (10 columns)
+- pg_receipt (11 columns)
 - pg_rent_agreement (13 columns)
 - pg_room (9 columns)
 - pg_seeker_preferences (8 columns)

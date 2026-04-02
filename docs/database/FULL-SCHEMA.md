@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-01T07:45:43.736Z
+> Auto-generated: 2026-04-02T07:25:33.881Z
 > Total Tables: 109
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~6,298
+- Rows: ~6,483
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -264,7 +264,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~61
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -334,7 +334,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~24
+- Rows: ~156
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -919,7 +919,7 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~26
 - Columns: 13
 - Indexes: 3
 - Foreign Keys: 4
@@ -1172,7 +1172,7 @@
 ## `enquiries`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~78
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -2445,7 +2445,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~78
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2494,7 +2494,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~78
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -2544,7 +2544,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 10
+- Columns: 11
 - Indexes: 3
 - Foreign Keys: 1
 
@@ -2562,6 +2562,7 @@
 | `upi_reference` | `text` | YES | `—` |
 | `gst_status` | `text` | NO | `'taxable'::text` |
 | `owner_display_name` | `text` | YES | `—` |
+| `owner_pan_stub` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -2907,7 +2908,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~55
+- Rows: ~581
 - Columns: 46
 - Indexes: 12
 - Foreign Keys: 0
@@ -4204,7 +4205,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~42
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4302,7 +4303,7 @@
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~76
+- Rows: ~77
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -4375,7 +4376,7 @@
 ## `roles`
 
 **Statistics:**
-- Rows: ~40
+- Rows: ~41
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -4809,7 +4810,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~49
+- Rows: ~143
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5282,7 +5283,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~54
+- Rows: ~580
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

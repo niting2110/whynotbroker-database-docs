@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-01T07:45:43.763Z
+// Generated: 2026-04-02T07:25:33.909Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1030,6 +1030,7 @@ export interface Database {
       upi_reference?: string;
       gst_status: string;
       owner_display_name?: string;
+      owner_pan_stub?: string;
     };
   };
 

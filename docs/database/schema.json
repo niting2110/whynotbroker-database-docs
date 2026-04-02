@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-01T07:45:43.738Z",
+  "generated_at": "2026-04-02T07:25:33.883Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,7 +7,7 @@
     "tables": 109,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1613,
+    "columns": 1614,
     "constraints": 1063,
     "indexes": 509,
     "relationships": 179,
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 6298,
-      "size_bytes": 2310144,
+      "rows": 6483,
+      "size_bytes": 2359296,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6298,
+        "row_count": 6483,
         "column_count": 9
       }
     },
@@ -1372,7 +1372,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 8,
+      "rows": 61,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -1510,7 +1510,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 8,
+        "row_count": 61,
         "column_count": 3
       }
     },
@@ -1701,8 +1701,8 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 24,
-      "size_bytes": 114688,
+      "rows": 156,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -2084,7 +2084,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 24,
+        "row_count": 156,
         "column_count": 20
       }
     },
@@ -5793,8 +5793,8 @@
       "name": "commission_events",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 26,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -6156,7 +6156,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 26,
         "column_count": 13
       }
     },
@@ -7435,8 +7435,8 @@
       "name": "enquiries",
       "comment": null,
       "columns": 12,
-      "rows": 5,
-      "size_bytes": 81920,
+      "rows": 78,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -7756,7 +7756,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 78,
         "column_count": 12
       }
     },
@@ -15513,8 +15513,8 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 5,
-      "size_bytes": 65536,
+      "rows": 78,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -15917,7 +15917,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 78,
         "column_count": 19
       }
     },
@@ -15925,8 +15925,8 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 5,
-      "size_bytes": 81920,
+      "rows": 78,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -16328,14 +16328,14 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 78,
         "column_count": 18
       }
     },
     {
       "name": "pg_receipt",
       "comment": null,
-      "columns": 10,
+      "columns": 11,
       "rows": 0,
       "size_bytes": 32768,
       "details": {
@@ -16449,6 +16449,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": "Owner display name snapshot at receipt issuance time."
+          },
+          {
+            "column_name": "owner_pan_stub",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "PAN snapshot at receipt issuance time. A7 stub — NULL until owner adds PAN. Written only when annual rent > Rs1 lakh/tenant. 7-year retention per Income Tax Act (separate from 12-month pdf_url retention per ESC-007). NEVER returned unmasked in API responses."
           }
         ],
         "constraints": [
@@ -16565,7 +16576,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 10
+        "column_count": 11
       }
     },
     {
@@ -18581,8 +18592,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 46,
-      "rows": 55,
-      "size_bytes": 245760,
+      "rows": 581,
+      "size_bytes": 483328,
       "details": {
         "columns": [
           {
@@ -19296,7 +19307,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 55,
+        "row_count": 581,
         "column_count": 46
       }
     },
@@ -28270,8 +28281,8 @@
       "name": "refund_request",
       "comment": null,
       "columns": 12,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 42,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -28578,7 +28589,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 42,
         "column_count": 12
       }
     },
@@ -28897,7 +28908,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 76,
+      "rows": 77,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -29009,7 +29020,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 76,
+        "row_count": 77,
         "column_count": 2
       }
     },
@@ -29306,7 +29317,7 @@
       "name": "roles",
       "comment": null,
       "columns": 7,
-      "rows": 40,
+      "rows": 41,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -29473,7 +29484,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 40,
+        "row_count": 41,
         "column_count": 7
       }
     },
@@ -31749,8 +31760,8 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 49,
-      "size_bytes": 352256,
+      "rows": 143,
+      "size_bytes": 368640,
       "details": {
         "columns": [
           {
@@ -32608,7 +32619,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 49,
+        "row_count": 143,
         "column_count": 35
       }
     },
@@ -34972,8 +34983,8 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 54,
-      "size_bytes": 131072,
+      "rows": 580,
+      "size_bytes": 270336,
       "details": {
         "columns": [
           {
@@ -35252,7 +35263,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 54,
+        "row_count": 580,
         "column_count": 11
       }
     }

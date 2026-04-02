@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-01T07:45:43.749Z
+-- Generated: 2026-04-02T07:25:33.895Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1029,7 +1029,8 @@ CREATE TABLE IF NOT EXISTS pg_receipt (
   payment_mode text,
   upi_reference text,
   gst_status text NOT NULL DEFAULT 'taxable'::text,
-  owner_display_name text
+  owner_display_name text,
+  owner_pan_stub text
   ,PRIMARY KEY (id)
 );
 
