@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-02T07:25:33.881Z
-> Total Tables: 109
+> Auto-generated: 2026-04-06T07:57:12.059Z
+> Total Tables: 110
 > PostgreSQL: 17.6
 
 ---
@@ -2491,6 +2491,45 @@
 
 ---
 
+## `pg_posting_packs`
+
+> E13 posting credit balance for PG owners. One row per profile. postings_remaining decremented atomically on pg_posting creation.
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 2
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `profile_id` | `uuid` | NO | `—` |
+| `postings_remaining` | `integer` | NO | `0` |
+| `last_pack_type` | `text` | YES | `—` |
+| `last_purchased_at` | `timestamp with time zone` | YES | `—` |
+| `last_order_id` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `pg_posting_packs_pkey` | btree | id | ✓ |
+| `pg_posting_packs_profile_unique` | btree | profile_id | ✓ |
+
+### Foreign Keys
+
+- `pg_posting_packs_profile_id_fkey`:
+  - Columns: `profile_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+
+---
+
 ## `pg_property`
 
 **Statistics:**
@@ -2706,7 +2745,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 18
+- Columns: 20
 - Indexes: 4
 - Foreign Keys: 3
 
@@ -2732,6 +2771,8 @@
 | `payment_status` | `text` | NO | `'pending'::text` |
 | `lease_end_date` | `date` | YES | `—` |
 | `whatsapp_opt_in` | `boolean` | NO | `false` |
+| `ndc_url` | `text` | YES | `—` |
+| `deposit_photo_url` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -4376,7 +4417,7 @@
 ## `roles`
 
 **Statistics:**
-- Rows: ~41
+- Rows: ~40
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0

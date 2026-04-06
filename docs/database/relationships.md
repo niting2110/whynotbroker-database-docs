@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 179
-Generated: 2026-04-02T07:25:33.891Z
+Total Relationships: 180
+Generated: 2026-04-06T07:57:12.069Z
 
 ```
 admin_audit_logs:
@@ -235,6 +235,10 @@ pg_police_verification:
 pg_posting:
   └─→ pg_property (via: pg_posting_pg_property_id_fkey)
       columns: pg_property_id
+
+pg_posting_packs:
+  └─→ profiles (via: pg_posting_packs_profile_id_fkey)
+      columns: profile_id
 
 pg_property:
   └─→ profiles (via: pg_property_owner_id_fkey)

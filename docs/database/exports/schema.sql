@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-02T07:25:33.895Z
+-- Generated: 2026-04-06T07:57:12.072Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -995,6 +995,19 @@ CREATE TABLE IF NOT EXISTS pg_posting (
   ,PRIMARY KEY (id)
 );
 
+-- Table: pg_posting_packs
+CREATE TABLE IF NOT EXISTS pg_posting_packs (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  profile_id uuid NOT NULL,
+  postings_remaining integer NOT NULL DEFAULT 0,
+  last_pack_type text,
+  last_purchased_at timestamp with time zone,
+  last_order_id text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: pg_property
 CREATE TABLE IF NOT EXISTS pg_property (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -1098,7 +1111,9 @@ CREATE TABLE IF NOT EXISTS pg_tenant (
   rent_due_day integer,
   payment_status text NOT NULL DEFAULT 'pending'::text,
   lease_end_date date,
-  whatsapp_opt_in boolean NOT NULL DEFAULT false
+  whatsapp_opt_in boolean NOT NULL DEFAULT false,
+  ndc_url text,
+  deposit_photo_url text
   ,PRIMARY KEY (id)
 );
 

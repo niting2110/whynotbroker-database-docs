@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-04-02T07:25:33.883Z",
+  "generated_at": "2026-04-06T07:57:12.061Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 109,
+    "tables": 110,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1614,
-    "constraints": 1063,
-    "indexes": 509,
-    "relationships": 179,
+    "columns": 1624,
+    "constraints": 1073,
+    "indexes": 511,
+    "relationships": 180,
     "functions": 834,
     "extensions": 10
   },
@@ -15922,6 +15922,217 @@
       }
     },
     {
+      "name": "pg_posting_packs",
+      "comment": "E13 posting credit balance for PG owners. One row per profile. postings_remaining decremented atomically on pg_posting creation.",
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 24576,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "profile_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "postings_remaining",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": "Active posting slots available. CHECK >= 0 prevents negative balance. Incremented on Razorpay pack purchase webhook. Decremented on pg_listing creation."
+          },
+          {
+            "column_name": "last_pack_type",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "last_purchased_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "last_order_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Razorpay order_id of last purchase — used for webhook idempotency deduplication."
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_151150_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_151150_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_151150_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_151150_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_151150_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_packs_last_pack_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((last_pack_type = ANY (ARRAY['starter'::text, 'standard'::text, 'premium'::text, 'pro'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_packs_postings_remaining_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((postings_remaining >= 0))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_packs_profile_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "profile_id",
+            "definition": "FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_packs_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "pg_posting_packs_profile_unique",
+            "constraint_type": "UNIQUE",
+            "column_name": "profile_id",
+            "definition": "UNIQUE (profile_id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "pg_posting_packs_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_posting_packs_pkey ON public.pg_posting_packs USING btree (id)"
+          },
+          {
+            "index_name": "pg_posting_packs_profile_unique",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{profile_id}",
+            "index_definition": "CREATE UNIQUE INDEX pg_posting_packs_profile_unique ON public.pg_posting_packs USING btree (profile_id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "pg_posting_packs_profile_id_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "profile_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
       "name": "pg_property",
       "comment": null,
       "columns": 18,
@@ -17308,7 +17519,7 @@
     {
       "name": "pg_tenant",
       "comment": null,
-      "columns": 18,
+      "columns": 20,
       "rows": 0,
       "size_bytes": 40960,
       "details": {
@@ -17510,6 +17721,28 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "ndc_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "R2 URL of No Dues Certificate PDF — generated at tenant offboarding (E13 MVP)"
+          },
+          {
+            "column_name": "deposit_photo_url",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 20,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "R2 URL of deposit/room condition photo — optional at onboarding (E13 MVP, A7 stub)"
           }
         ],
         "constraints": [
@@ -17725,7 +17958,7 @@
         ],
         "triggers": [],
         "row_count": 0,
-        "column_count": 18
+        "column_count": 20
       }
     },
     {
@@ -29317,7 +29550,7 @@
       "name": "roles",
       "comment": null,
       "columns": 7,
-      "rows": 41,
+      "rows": 40,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -29484,7 +29717,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 41,
+        "row_count": 40,
         "column_count": 7
       }
     },
@@ -41020,6 +41253,14 @@
       "constraint_name": "pg_posting_pg_property_id_fkey",
       "columns": [
         "pg_property_id"
+      ]
+    },
+    {
+      "fromTable": "pg_posting_packs",
+      "toTable": "profiles",
+      "constraint_name": "pg_posting_packs_profile_id_fkey",
+      "columns": [
+        "profile_id"
       ]
     },
     {

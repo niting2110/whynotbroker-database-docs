@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-02T07:25:33.892Z
-Total Indexes: 509
+Generated: 2026-04-06T07:57:12.070Z
+Total Indexes: 511
 
 ## All Indexes
 
@@ -222,6 +222,8 @@ Total Indexes: 509
 | `pg_posting` | `idx_pg_posting_property` | btree | pg_property_id, status | — |
 | `pg_posting` | `idx_pg_posting_status` | btree | available_from, status | — |
 | `pg_posting` | `pg_posting_pkey` | btree | id | ✓ |
+| `pg_posting_packs` | `pg_posting_packs_pkey` | btree | id | ✓ |
+| `pg_posting_packs` | `pg_posting_packs_profile_unique` | btree | profile_id | ✓ |
 | `pg_property` | `idx_pg_property_locality` | btree | locality, city | — |
 | `pg_property` | `idx_pg_property_owner` | btree | owner_id | — |
 | `pg_property` | `idx_pg_property_status` | btree | listing_status | — |

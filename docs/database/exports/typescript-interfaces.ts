@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-02T07:25:33.909Z
+// Generated: 2026-04-06T07:57:12.085Z
 
 export interface Database {
   admin_audit_logs: {
@@ -995,6 +995,19 @@ export interface Database {
     };
   };
 
+  pg_posting_packs: {
+    Row: {
+      id: string;
+      profile_id: string;
+      postings_remaining: number;
+      last_pack_type?: string;
+      last_purchased_at?: string | Date;
+      last_order_id?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
   pg_property: {
     Row: {
       id: string;
@@ -1099,6 +1112,8 @@ export interface Database {
       payment_status: string;
       lease_end_date?: string | Date;
       whatsapp_opt_in: boolean;
+      ndc_url?: string;
+      deposit_photo_url?: string;
     };
   };
 

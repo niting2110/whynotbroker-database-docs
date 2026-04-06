@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 109
+**Total Tables:** 110
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -63,12 +63,13 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - pg_payment_record (16 columns)
 - pg_police_verification (8 columns)
 - pg_posting (19 columns)
+- pg_posting_packs (8 columns)
 - pg_property (18 columns)
 - pg_receipt (11 columns)
 - pg_rent_agreement (13 columns)
 - pg_room (9 columns)
 - pg_seeker_preferences (8 columns)
-- pg_tenant (18 columns)
+- pg_tenant (20 columns)
 - pg_vacancy_event (9 columns)
 - pincodes (10 columns)
 - pricing_rules (14 columns)
