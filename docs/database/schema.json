@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-06T07:57:12.061Z",
+  "generated_at": "2026-04-07T07:44:47.564Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,9 +7,9 @@
     "tables": 110,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1624,
+    "columns": 1626,
     "constraints": 1073,
-    "indexes": 511,
+    "indexes": 512,
     "relationships": 180,
     "functions": 834,
     "extensions": 10
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 6483,
-      "size_bytes": 2359296,
+      "rows": 6497,
+      "size_bytes": 2375680,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6483,
+        "row_count": 6497,
         "column_count": 9
       }
     },
@@ -1372,7 +1372,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 61,
+      "rows": 66,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -1510,7 +1510,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 61,
+        "row_count": 66,
         "column_count": 3
       }
     },
@@ -1701,7 +1701,7 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 156,
+      "rows": 165,
       "size_bytes": 131072,
       "details": {
         "columns": [
@@ -2084,7 +2084,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 156,
+        "row_count": 165,
         "column_count": 20
       }
     },
@@ -5792,9 +5792,9 @@
     {
       "name": "commission_events",
       "comment": null,
-      "columns": 13,
-      "rows": 26,
-      "size_bytes": 65536,
+      "columns": 15,
+      "rows": 28,
+      "size_bytes": 73728,
       "details": {
         "columns": [
           {
@@ -5939,6 +5939,28 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "loan_application_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Bank loan application reference ID — used for webhook idempotency (§34.1). Nullable; NULL for non-loan commission events."
+          },
+          {
+            "column_name": "disbursal_date",
+            "data_type": "date",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Date of loan disbursal as reported by lending partner webhook."
           }
         ],
         "constraints": [
@@ -6099,6 +6121,16 @@
             "is_immediate": true,
             "columns": "{transaction_id}",
             "index_definition": "CREATE INDEX commission_events_transaction_idx ON public.commission_events USING btree (transaction_id)"
+          },
+          {
+            "index_name": "idx_commission_events_loan_application_id",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{loan_application_id}",
+            "index_definition": "CREATE UNIQUE INDEX idx_commission_events_loan_application_id ON public.commission_events USING btree (loan_application_id) WHERE (loan_application_id IS NOT NULL)"
           }
         ],
         "foreign_keys": [
@@ -6156,8 +6188,8 @@
           }
         ],
         "triggers": [],
-        "row_count": 26,
-        "column_count": 13
+        "row_count": 28,
+        "column_count": 15
       }
     },
     {
@@ -7435,7 +7467,7 @@
       "name": "enquiries",
       "comment": null,
       "columns": 12,
-      "rows": 78,
+      "rows": 83,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -7756,7 +7788,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 78,
+        "row_count": 83,
         "column_count": 12
       }
     },
@@ -15513,7 +15545,7 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 78,
+      "rows": 83,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -15917,7 +15949,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 78,
+        "row_count": 83,
         "column_count": 19
       }
     },
@@ -16136,7 +16168,7 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 78,
+      "rows": 83,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -16539,7 +16571,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 78,
+        "row_count": 83,
         "column_count": 18
       }
     },
@@ -18825,8 +18857,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 46,
-      "rows": 581,
-      "size_bytes": 483328,
+      "rows": 617,
+      "size_bytes": 491520,
       "details": {
         "columns": [
           {
@@ -19540,7 +19572,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 581,
+        "row_count": 617,
         "column_count": 46
       }
     },
@@ -28514,7 +28546,7 @@
       "name": "refund_request",
       "comment": null,
       "columns": 12,
-      "rows": 42,
+      "rows": 45,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -28822,7 +28854,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 42,
+        "row_count": 45,
         "column_count": 12
       }
     },
@@ -29141,7 +29173,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 77,
+      "rows": 79,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -29253,7 +29285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 77,
+        "row_count": 79,
         "column_count": 2
       }
     },
@@ -29550,7 +29582,7 @@
       "name": "roles",
       "comment": null,
       "columns": 7,
-      "rows": 40,
+      "rows": 39,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -29717,7 +29749,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 40,
+        "row_count": 39,
         "column_count": 7
       }
     },
@@ -31459,8 +31491,8 @@
       "name": "subscription_plans",
       "comment": "Recurring subscription plans with regional features",
       "columns": 19,
-      "rows": 0,
-      "size_bytes": 106496,
+      "rows": 3,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -31852,7 +31884,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 3,
         "column_count": 19
       }
     },
@@ -31993,8 +32025,8 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 143,
-      "size_bytes": 368640,
+      "rows": 150,
+      "size_bytes": 417792,
       "details": {
         "columns": [
           {
@@ -32852,7 +32884,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 143,
+        "row_count": 150,
         "column_count": 35
       }
     },
@@ -35216,8 +35248,8 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 580,
-      "size_bytes": 270336,
+      "rows": 616,
+      "size_bytes": 286720,
       "details": {
         "columns": [
           {
@@ -35496,7 +35528,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 580,
+        "row_count": 616,
         "column_count": 11
       }
     }

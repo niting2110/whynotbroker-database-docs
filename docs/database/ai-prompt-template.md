@@ -29,7 +29,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - campaign_participants (9 columns)
 - cities (14 columns)
 - comm_deferred (11 columns)
-- commission_events (13 columns)
+- commission_events (15 columns)
 - coupon_usage (9 columns)
 - coupons (23 columns)
 - credit_packages (17 columns)

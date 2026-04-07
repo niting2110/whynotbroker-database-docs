@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-06T07:57:12.059Z
+> Auto-generated: 2026-04-07T07:44:47.562Z
 > Total Tables: 110
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~6,483
+- Rows: ~6,497
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -264,7 +264,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~61
+- Rows: ~66
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -334,7 +334,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~156
+- Rows: ~165
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -919,9 +919,9 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~26
-- Columns: 13
-- Indexes: 3
+- Rows: ~28
+- Columns: 15
+- Indexes: 4
 - Foreign Keys: 4
 
 ### Columns
@@ -941,6 +941,8 @@
 | `case_id` | `text` | YES | `—` |
 | `created_at` | `timestamp with time zone` | NO | `now()` |
 | `updated_at` | `timestamp with time zone` | NO | `now()` |
+| `loan_application_id` | `text` | YES | `—` |
+| `disbursal_date` | `date` | YES | `—` |
 
 ### Indexes
 
@@ -949,6 +951,7 @@
 | `commission_events_partner_idx` | btree | partner_id | — |
 | `commission_events_pkey` | btree | id | ✓ |
 | `commission_events_transaction_idx` | btree | transaction_id | — |
+| `idx_commission_events_loan_application_id` | btree | loan_application_id | ✓ |
 
 ### Foreign Keys
 
@@ -1172,7 +1175,7 @@
 ## `enquiries`
 
 **Statistics:**
-- Rows: ~78
+- Rows: ~83
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -2445,7 +2448,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~78
+- Rows: ~83
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2533,7 +2536,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~78
+- Rows: ~83
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -2949,7 +2952,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~581
+- Rows: ~617
 - Columns: 46
 - Indexes: 12
 - Foreign Keys: 0
@@ -4246,7 +4249,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~42
+- Rows: ~45
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4344,7 +4347,7 @@
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~77
+- Rows: ~79
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -4417,7 +4420,7 @@
 ## `roles`
 
 **Statistics:**
-- Rows: ~40
+- Rows: ~39
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -4769,7 +4772,7 @@
 > Recurring subscription plans with regional features
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~3
 - Columns: 19
 - Indexes: 6
 - Foreign Keys: 1
@@ -4851,7 +4854,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~143
+- Rows: ~150
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5324,7 +5327,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~580
+- Rows: ~616
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

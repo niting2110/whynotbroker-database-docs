@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-06T07:57:12.085Z
+// Generated: 2026-04-07T07:44:47.591Z
 
 export interface Database {
   admin_audit_logs: {
@@ -383,6 +383,8 @@ export interface Database {
       case_id?: string;
       created_at: string | Date;
       updated_at: string | Date;
+      loan_application_id?: string;
+      disbursal_date?: string | Date;
     };
   };
 
