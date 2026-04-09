@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-08T07:48:07.417Z
+-- Generated: 2026-04-09T07:50:42.386Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1964,7 +1964,11 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
   is_active boolean DEFAULT true,
   display_order integer DEFAULT 0,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  intro_price_inr numeric,
+  intro_price_active boolean NOT NULL DEFAULT false,
+  plan_category text,
+  tier text
   ,PRIMARY KEY (id)
 );
 

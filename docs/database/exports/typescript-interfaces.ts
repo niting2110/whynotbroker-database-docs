@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-08T07:48:07.427Z
+// Generated: 2026-04-09T07:50:42.398Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1965,6 +1965,10 @@ export interface Database {
       display_order?: number;
       created_at?: string | Date;
       updated_at?: string | Date;
+      intro_price_inr?: number;
+      intro_price_active: boolean;
+      plan_category?: string;
+      tier?: string;
     };
   };
 

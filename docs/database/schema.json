@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-08T07:48:07.406Z",
+  "generated_at": "2026-04-09T07:50:42.374Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,8 +7,8 @@
     "tables": 110,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1626,
-    "constraints": 1073,
+    "columns": 1630,
+    "constraints": 1075,
     "indexes": 512,
     "relationships": 180,
     "functions": 834,
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 7199,
-      "size_bytes": 2613248,
+      "rows": 8075,
+      "size_bytes": 2891776,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7199,
+        "row_count": 8075,
         "column_count": 9
       }
     },
@@ -18566,8 +18566,8 @@
       "name": "pricing_rules",
       "comment": "Dynamic pricing rules based on action, region, and user type",
       "columns": 14,
-      "rows": 0,
-      "size_bytes": 81920,
+      "rows": 31,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -18751,7 +18751,7 @@
             "constraint_name": "pricing_rules_user_type_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'all'::text])))",
+            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'pg_owner'::text, 'builder'::text, 'all'::text])))",
             "constraint_comment": null
           },
           {
@@ -18849,7 +18849,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 31,
         "column_count": 14
       }
     },
@@ -29173,7 +29173,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 79,
+      "rows": 84,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -29285,7 +29285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 79,
+        "row_count": 84,
         "column_count": 2
       }
     },
@@ -31490,9 +31490,9 @@
     {
       "name": "subscription_plans",
       "comment": "Recurring subscription plans with regional features",
-      "columns": 19,
-      "rows": 3,
-      "size_bytes": 114688,
+      "columns": 23,
+      "rows": 22,
+      "size_bytes": 147456,
       "details": {
         "columns": [
           {
@@ -31703,6 +31703,50 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "intro_price_inr",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 20,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Launch intro price in INR. NULL = no intro price configured. Only applied when intro_price_active = true."
+          },
+          {
+            "column_name": "intro_price_active",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 21,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Toggle for intro pricing. false = base_price is charged. true = intro_price_inr is charged."
+          },
+          {
+            "column_name": "plan_category",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 22,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Plan grouping category for Admin Portal filtering. Values: broker_sale, broker_rent, pg_owner, property_owner, builder_e3_l1, builder_e3_l2."
+          },
+          {
+            "column_name": "tier",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 23,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Bronze / Silver / Gold tier within the plan category."
           }
         ],
         "constraints": [
@@ -31715,6 +31759,13 @@
           },
           {
             "constraint_name": "2200_45753_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_45753_21_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
@@ -31756,10 +31807,17 @@
             "constraint_comment": null
           },
           {
+            "constraint_name": "subscription_plans_tier_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((tier = ANY (ARRAY['Bronze'::text, 'Silver'::text, 'Gold'::text])))",
+            "constraint_comment": null
+          },
+          {
             "constraint_name": "subscription_plans_user_type_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text])))",
+            "definition": "CHECK ((user_type = ANY (ARRAY['buyer'::text, 'seller'::text, 'agent'::text, 'agency'::text, 'pg_owner'::text, 'builder'::text, 'property_owner'::text])))",
             "constraint_comment": null
           },
           {
@@ -31884,8 +31942,8 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 3,
-        "column_count": 19
+        "row_count": 22,
+        "column_count": 23
       }
     },
     {

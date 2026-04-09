@@ -1,17 +1,17 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-08T07:48:07.398Z
-> Schema Hash: `2d5cb0010028918d36c3a429e66cca32`
+> Generated: 2026-04-09T07:50:42.365Z
+> Schema Hash: `4b5325f25931d851e2fbef0a59909f46`
 
 ## 📊 Quick Stats
 - **Total Tables:** 110
 - **Total Views:** 19
 - **Total Materialized Views:** 2
-- **Total Columns:** 1626
+- **Total Columns:** 1630
 - **Total Relationships:** 180
-- **Total Size:** 80.27 MB
+- **Total Size:** 80.59 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 8/4/2026, 1:18:07 pm IST
+- **Last Updated:** 9/4/2026, 1:20:42 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~7,199 | 2.49 MB |  |
+| `admin_audit_logs` | 9 | ~8,075 | 2.76 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 17 | ~0 | 0.05 MB |  |
 | `admin_messages` | 6 | ~0 | 0.05 MB |  |
@@ -86,7 +86,7 @@
 | `pg_tenant` | 20 | ~0 | 0.04 MB |  |
 | `pg_vacancy_event` | 9 | ~0 | 0.03 MB |  |
 | `pincodes` | 10 | ~0 | 0.05 MB | "Indian postal codes with geogr..." |
-| `pricing_rules` | 14 | ~0 | 0.08 MB | "Dynamic pricing rules based on..." |
+| `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
 | `profiles` | 46 | ~617 | 0.47 MB |  |
 | `projects` | 39 | ~5 | 0.18 MB |  |
 | `promotional_campaigns` | 19 | ~0 | 0.09 MB | "Marketing campaigns with regio..." |
@@ -109,7 +109,7 @@
 | `referrals` | 12 | ~0 | 0.05 MB |  |
 | `refund_request` | 12 | ~45 | 0.05 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |
-| `role_permissions` | 2 | ~79 | 0.02 MB |  |
+| `role_permissions` | 2 | ~84 | 0.02 MB |  |
 | `role_platform_access` | 16 | ~125 | 0.13 MB |  |
 | `roles` | 7 | ~39 | 0.06 MB |  |
 | `saved_listings` | 4 | ~0 | 0.03 MB |  |
@@ -120,7 +120,7 @@
 | `states` | 7 | ~36 | 0.13 MB | "Indian states with LGD (Local ..." |
 | `sub_districts` | 7 | ~0 | 0.05 MB | "Sub-districts/Talukas for gran..." |
 | `subscription_enrollments` | 14 | ~0 | 0.05 MB |  |
-| `subscription_plans` | 19 | ~3 | 0.11 MB | "Recurring subscription plans w..." |
+| `subscription_plans` | 23 | ~22 | 0.14 MB | "Recurring subscription plans w..." |
 | `system_health_metrics` | 6 | ~2 | 0.05 MB |  |
 | `transactions` | 35 | ~150 | 0.40 MB | "All financial transactions wit..." |
 | `undervalued_properties` | 27 | ~0 | 0.06 MB | "Identifies properties with exc..." |

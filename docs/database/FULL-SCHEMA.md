@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-08T07:48:07.404Z
+> Auto-generated: 2026-04-09T07:50:42.372Z
 > Total Tables: 110
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~7,199
+- Rows: ~8,075
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -2907,7 +2907,7 @@
 > Dynamic pricing rules based on action, region, and user type
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~31
 - Columns: 14
 - Indexes: 4
 - Foreign Keys: 1
@@ -4347,7 +4347,7 @@
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~79
+- Rows: ~84
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -4772,8 +4772,8 @@
 > Recurring subscription plans with regional features
 
 **Statistics:**
-- Rows: ~3
-- Columns: 19
+- Rows: ~22
+- Columns: 23
 - Indexes: 6
 - Foreign Keys: 1
 
@@ -4800,6 +4800,10 @@
 | `display_order` | `integer` | YES | `0` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `updated_at` | `timestamp with time zone` | YES | `now()` |
+| `intro_price_inr` | `numeric` | YES | `—` |
+| `intro_price_active` | `boolean` | NO | `false` |
+| `plan_category` | `text` | YES | `—` |
+| `tier` | `text` | YES | `—` |
 
 ### Indexes
 

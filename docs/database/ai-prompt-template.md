@@ -106,7 +106,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - states (7 columns)
 - sub_districts (7 columns)
 - subscription_enrollments (14 columns)
-- subscription_plans (19 columns)
+- subscription_plans (23 columns)
 - system_health_metrics (6 columns)
 - transactions (35 columns)
 - undervalued_properties (27 columns)
