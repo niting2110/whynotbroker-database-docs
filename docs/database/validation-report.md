@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-04-09T07:50:42.385Z
-Total Issues: 100
+Generated: 2026-04-10T07:54:29.814Z
+Total Issues: 101
 Warnings: 33
-Recommendations: 67
+Recommendations: 68
 
 ## ⚠️ Warnings
 
@@ -109,6 +109,7 @@ Recommendations: 67
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
 | `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |
 | `system_health_metrics` | Table missing timestamp columns (created_at, updated_at) |
+| `team_messages` | Table missing timestamp columns (created_at, updated_at) |
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |
 | `user_regional_preferences` | Table missing timestamp columns (created_at, updated_at) |

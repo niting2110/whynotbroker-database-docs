@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-09T07:50:42.398Z
+// Generated: 2026-04-10T07:54:29.826Z
 
 export interface Database {
   admin_audit_logs: {
@@ -1969,6 +1969,12 @@ export interface Database {
       intro_price_active: boolean;
       plan_category?: string;
       tier?: string;
+      discount_percentage?: number;
+      per_listing_cost_inr?: number;
+      rera_bonus_inr?: number;
+      listing_validity_days?: number;
+      tier_a_price_inr?: number;
+      tier_b_price_inr?: number;
     };
   };
 
@@ -1980,6 +1986,19 @@ export interface Database {
       metric_unit?: string;
       context?: any;
       recorded_at?: string | Date;
+    };
+  };
+
+  team_messages: {
+    Row: {
+      id: string;
+      from_team: string;
+      to_team: string;
+      message: string;
+      response?: string;
+      responded_at?: string | Date;
+      status: string;
+      created_at: string | Date;
     };
   };
 

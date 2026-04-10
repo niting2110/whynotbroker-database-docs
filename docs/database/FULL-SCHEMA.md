@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-09T07:50:42.372Z
-> Total Tables: 110
+> Auto-generated: 2026-04-10T07:54:29.798Z
+> Total Tables: 111
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~8,075
+- Rows: ~8,615
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -264,7 +264,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~66
+- Rows: ~84
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -334,7 +334,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~165
+- Rows: ~195
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -919,7 +919,7 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~28
+- Rows: ~34
 - Columns: 15
 - Indexes: 4
 - Foreign Keys: 4
@@ -1175,7 +1175,7 @@
 ## `enquiries`
 
 **Statistics:**
-- Rows: ~83
+- Rows: ~98
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -2448,7 +2448,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~83
+- Rows: ~98
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2536,7 +2536,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~83
+- Rows: ~98
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -2952,7 +2952,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~617
+- Rows: ~725
 - Columns: 46
 - Indexes: 12
 - Foreign Keys: 0
@@ -4249,7 +4249,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~45
+- Rows: ~51
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4773,7 +4773,7 @@
 
 **Statistics:**
 - Rows: ~22
-- Columns: 23
+- Columns: 29
 - Indexes: 6
 - Foreign Keys: 1
 
@@ -4804,6 +4804,12 @@
 | `intro_price_active` | `boolean` | NO | `false` |
 | `plan_category` | `text` | YES | `—` |
 | `tier` | `text` | YES | `—` |
+| `discount_percentage` | `numeric` | YES | `NULL::numeric` |
+| `per_listing_cost_inr` | `numeric` | YES | `—` |
+| `rera_bonus_inr` | `numeric` | YES | `—` |
+| `listing_validity_days` | `integer` | YES | `—` |
+| `tier_a_price_inr` | `numeric` | YES | `—` |
+| `tier_b_price_inr` | `numeric` | YES | `—` |
 
 ### Indexes
 
@@ -4853,12 +4859,41 @@
 
 ---
 
+## `team_messages`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 8
+- Indexes: 1
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `from_team` | `text` | NO | `—` |
+| `to_team` | `text` | NO | `—` |
+| `message` | `text` | NO | `—` |
+| `response` | `text` | YES | `—` |
+| `responded_at` | `timestamp with time zone` | YES | `—` |
+| `status` | `text` | NO | `'pending'::text` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `team_messages_pkey` | btree | id | ✓ |
+
+---
+
 ## `transactions`
 
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~150
+- Rows: ~171
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5331,7 +5366,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~616
+- Rows: ~724
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

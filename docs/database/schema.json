@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-04-09T07:50:42.374Z",
+  "generated_at": "2026-04-10T07:54:29.802Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 110,
+    "tables": 111,
     "views": 19,
     "materialized_views": 2,
-    "columns": 1630,
-    "constraints": 1075,
-    "indexes": 512,
+    "columns": 1644,
+    "constraints": 1083,
+    "indexes": 513,
     "relationships": 180,
     "functions": 834,
     "extensions": 10
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 8075,
-      "size_bytes": 2891776,
+      "rows": 8615,
+      "size_bytes": 3063808,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 8075,
+        "row_count": 8615,
         "column_count": 9
       }
     },
@@ -1372,7 +1372,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 66,
+      "rows": 84,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -1510,7 +1510,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 66,
+        "row_count": 84,
         "column_count": 3
       }
     },
@@ -1701,8 +1701,8 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 165,
-      "size_bytes": 131072,
+      "rows": 195,
+      "size_bytes": 163840,
       "details": {
         "columns": [
           {
@@ -2084,7 +2084,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 165,
+        "row_count": 195,
         "column_count": 20
       }
     },
@@ -5793,7 +5793,7 @@
       "name": "commission_events",
       "comment": null,
       "columns": 15,
-      "rows": 28,
+      "rows": 34,
       "size_bytes": 73728,
       "details": {
         "columns": [
@@ -6188,7 +6188,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 28,
+        "row_count": 34,
         "column_count": 15
       }
     },
@@ -7467,7 +7467,7 @@
       "name": "enquiries",
       "comment": null,
       "columns": 12,
-      "rows": 83,
+      "rows": 98,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -7788,7 +7788,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 83,
+        "row_count": 98,
         "column_count": 12
       }
     },
@@ -15545,7 +15545,7 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 83,
+      "rows": 98,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -15949,7 +15949,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 83,
+        "row_count": 98,
         "column_count": 19
       }
     },
@@ -16168,7 +16168,7 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 83,
+      "rows": 98,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -16571,7 +16571,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 83,
+        "row_count": 98,
         "column_count": 18
       }
     },
@@ -18857,8 +18857,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 46,
-      "rows": 617,
-      "size_bytes": 491520,
+      "rows": 725,
+      "size_bytes": 532480,
       "details": {
         "columns": [
           {
@@ -19572,7 +19572,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 617,
+        "row_count": 725,
         "column_count": 46
       }
     },
@@ -28546,7 +28546,7 @@
       "name": "refund_request",
       "comment": null,
       "columns": 12,
-      "rows": 45,
+      "rows": 51,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -28854,7 +28854,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 45,
+        "row_count": 51,
         "column_count": 12
       }
     },
@@ -31490,9 +31490,9 @@
     {
       "name": "subscription_plans",
       "comment": "Recurring subscription plans with regional features",
-      "columns": 23,
+      "columns": 29,
       "rows": 22,
-      "size_bytes": 147456,
+      "size_bytes": 163840,
       "details": {
         "columns": [
           {
@@ -31747,6 +31747,72 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": "Bronze / Silver / Gold tier within the plan category."
+          },
+          {
+            "column_name": "discount_percentage",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": "NULL::numeric",
+            "ordinal_position": 24,
+            "character_maximum_length": null,
+            "numeric_precision": 5,
+            "numeric_scale": 2,
+            "column_comment": "Intro discount as a percentage (e.g. 20.00 = 20%). NULL for plans with no intro discount. Admin-editable. intro_price_inr should = ROUND(base_price * (1 - discount_percentage/100), 2) when intro_price_active=true."
+          },
+          {
+            "column_name": "per_listing_cost_inr",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 25,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": "Cost per additional listing beyond free allocation. Editable via Admin Portal M7-S6."
+          },
+          {
+            "column_name": "rera_bonus_inr",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 26,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": "RERA bonus credit amount in INR offered with this plan. Editable via Admin Portal M7-S6."
+          },
+          {
+            "column_name": "listing_validity_days",
+            "data_type": "integer",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 27,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": "Days each individual listing stays active within the plan period. Editable via Admin Portal M7-S6."
+          },
+          {
+            "column_name": "tier_a_price_inr",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 28,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": "Tier-A city price for E3 Builder Campaign plans (BLR/MUM/DEL/HYD/CHN/PNE). NULL for non-E3 plans."
+          },
+          {
+            "column_name": "tier_b_price_inr",
+            "data_type": "numeric",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 29,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": "Tier-B city price for E3 Builder Campaign plans (all other cities). NULL for non-E3 plans."
           }
         ],
         "constraints": [
@@ -31943,7 +32009,7 @@
           }
         ],
         "row_count": 22,
-        "column_count": 23
+        "column_count": 29
       }
     },
     {
@@ -32080,11 +32146,184 @@
       }
     },
     {
+      "name": "team_messages",
+      "comment": null,
+      "columns": 8,
+      "rows": 0,
+      "size_bytes": 16384,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "from_team",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "to_team",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "message",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "response",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "responded_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'pending'::text",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_152371_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152371_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152371_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152371_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152371_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152371_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "team_messages_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'responded'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "team_messages_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "team_messages_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX team_messages_pkey ON public.team_messages USING btree (id)"
+          }
+        ],
+        "foreign_keys": [],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 8
+      }
+    },
+    {
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 150,
-      "size_bytes": 417792,
+      "rows": 171,
+      "size_bytes": 442368,
       "details": {
         "columns": [
           {
@@ -32942,7 +33181,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 150,
+        "row_count": 171,
         "column_count": 35
       }
     },
@@ -35306,8 +35545,8 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 616,
-      "size_bytes": 286720,
+      "rows": 724,
+      "size_bytes": 327680,
       "details": {
         "columns": [
           {
@@ -35586,7 +35825,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 616,
+        "row_count": 724,
         "column_count": 11
       }
     }

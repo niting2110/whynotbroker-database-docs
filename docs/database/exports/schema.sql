@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-09T07:50:42.386Z
+-- Generated: 2026-04-10T07:54:29.814Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1968,7 +1968,13 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
   intro_price_inr numeric,
   intro_price_active boolean NOT NULL DEFAULT false,
   plan_category text,
-  tier text
+  tier text,
+  discount_percentage numeric DEFAULT NULL::numeric,
+  per_listing_cost_inr numeric,
+  rera_bonus_inr numeric,
+  listing_validity_days integer,
+  tier_a_price_inr numeric,
+  tier_b_price_inr numeric
   ,PRIMARY KEY (id)
 );
 
@@ -1980,6 +1986,19 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   metric_unit text,
   context jsonb,
   recorded_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: team_messages
+CREATE TABLE IF NOT EXISTS team_messages (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  from_team text NOT NULL,
+  to_team text NOT NULL,
+  message text NOT NULL,
+  response text,
+  responded_at timestamp with time zone,
+  status text NOT NULL DEFAULT 'pending'::text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-09T07:50:42.382Z
-Total Indexes: 512
+Generated: 2026-04-10T07:54:29.811Z
+Total Indexes: 513
 
 ## All Indexes
 
@@ -457,6 +457,7 @@ Total Indexes: 512
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
+| `team_messages` | `team_messages_pkey` | btree | id | ✓ |
 | `transactions` | `idx_transactions_approved_by` | btree | approved_by | — |
 | `transactions` | `idx_transactions_builder_id` | btree | builder_id | — |
 | `transactions` | `idx_transactions_coupon_id` | btree | coupon_id | — |
