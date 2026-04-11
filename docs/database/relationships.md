@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 180
-Generated: 2026-04-10T07:54:29.810Z
+Total Relationships: 181
+Generated: 2026-04-11T07:12:31.866Z
 
 ```
 admin_audit_logs:
@@ -433,6 +433,10 @@ refund_request:
 regions:
   └─→ regions (via: regions_parent_region_id_fkey)
       columns: parent_region_id
+
+registration_consent_log:
+  └─→ profiles (via: registration_consent_log_user_id_fkey)
+      columns: user_id
 
 role_permissions:
   └─→ permissions (via: role_permissions_permission_id_fkey)

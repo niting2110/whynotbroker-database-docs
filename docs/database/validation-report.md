@@ -1,9 +1,9 @@
 # Schema Validation Report
 
-Generated: 2026-04-10T07:54:29.814Z
-Total Issues: 101
-Warnings: 33
-Recommendations: 68
+Generated: 2026-04-11T07:12:31.870Z
+Total Issues: 104
+Warnings: 34
+Recommendations: 70
 
 ## ⚠️ Warnings
 
@@ -36,6 +36,7 @@ Recommendations: 68
 | MEDIUM | `property_visits` | Foreign key property_visits_property_id_fkey has no covering index |
 | MEDIUM | `refund_request` | Foreign key refund_request_requested_by_fkey has no covering index |
 | MEDIUM | `refund_request` | Foreign key refund_request_reviewed_by_fkey has no covering index |
+| MEDIUM | `registration_consent_log` | Foreign key registration_consent_log_user_id_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_permission_id_fkey has no covering index |
 | MEDIUM | `role_permissions` | Foreign key role_permissions_role_id_fkey has no covering index |
 | MEDIUM | `saved_searches` | Foreign key saved_searches_user_id_fkey has no covering index |
@@ -103,12 +104,14 @@ Recommendations: 68
 | `property_views` | Table missing timestamp columns (created_at, updated_at) |
 | `property_visits` | Table missing timestamp columns (created_at, updated_at) |
 | `referrals` | Table missing timestamp columns (created_at, updated_at) |
+| `registration_consent_log` | Table missing timestamp columns (created_at, updated_at) |
 | `role_permissions` | Table missing timestamp columns (created_at, updated_at) |
 | `saved_listings` | Table missing timestamp columns (created_at, updated_at) |
 | `search_history` | Table missing timestamp columns (created_at, updated_at) |
 | `security_flags` | Table missing timestamp columns (created_at, updated_at) |
 | `spatial_ref_sys` | Table missing timestamp columns (created_at, updated_at) |
 | `system_health_metrics` | Table missing timestamp columns (created_at, updated_at) |
+| `team_broadcasts` | Table missing timestamp columns (created_at, updated_at) |
 | `team_messages` | Table missing timestamp columns (created_at, updated_at) |
 | `undervalued_properties` | Table missing timestamp columns (created_at, updated_at) |
 | `user_favorites` | Table missing timestamp columns (created_at, updated_at) |

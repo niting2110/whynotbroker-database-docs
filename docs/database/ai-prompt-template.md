@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 111
+**Total Tables:** 114
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -12,7 +12,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - admin_chat (4 columns)
 - admin_leaves (17 columns)
 - admin_messages (6 columns)
-- admin_notices (5 columns)
+- admin_notices (7 columns)
 - admin_regions (6 columns)
 - admin_roles (3 columns)
 - admin_users (7 columns)
@@ -73,7 +73,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - pg_vacancy_event (9 columns)
 - pincodes (10 columns)
 - pricing_rules (14 columns)
-- profiles (46 columns)
+- profiles (48 columns)
 - projects (39 columns)
 - promotional_campaigns (19 columns)
 - properties (135 columns)
@@ -95,6 +95,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - referrals (12 columns)
 - refund_request (12 columns)
 - regions (15 columns)
+- registration_consent_log (7 columns)
 - role_permissions (2 columns)
 - role_platform_access (16 columns)
 - roles (7 columns)
@@ -108,7 +109,9 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - subscription_enrollments (14 columns)
 - subscription_plans (29 columns)
 - system_health_metrics (6 columns)
+- team_broadcasts (8 columns)
 - team_messages (8 columns)
+- team_registry (10 columns)
 - transactions (35 columns)
 - undervalued_properties (27 columns)
 - user_favorites (4 columns)

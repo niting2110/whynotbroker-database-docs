@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-10T07:54:29.811Z
-Total Indexes: 513
+Generated: 2026-04-11T07:12:31.867Z
+Total Indexes: 524
 
 ## All Indexes
 
@@ -411,6 +411,7 @@ Total Indexes: 513
 | `regions` | `idx_regions_type` | btree | type | — |
 | `regions` | `regions_code_key` | btree | code | ✓ |
 | `regions` | `regions_pkey` | btree | id | ✓ |
+| `registration_consent_log` | `registration_consent_log_pkey` | btree | id | ✓ |
 | `role_permissions` | `role_permissions_pkey` | btree | role_id, permission_id | ✓ |
 | `role_platform_access` | `idx_rpa_role_key_active` | btree | role_key, is_active | — |
 | `role_platform_access` | `role_platform_access_pkey` | btree | id | ✓ |
@@ -457,7 +458,17 @@ Total Indexes: 513
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
+| `team_broadcasts` | `idx_broadcasts_created` | btree | created_at | — |
+| `team_broadcasts` | `idx_broadcasts_priority` | btree | priority, created_at | — |
+| `team_broadcasts` | `team_broadcasts_pkey` | btree | id | ✓ |
+| `team_messages` | `idx_team_messages_from_team` | btree | from_team, created_at | — |
+| `team_messages` | `idx_team_messages_status` | btree | status | — |
+| `team_messages` | `idx_team_messages_to_status` | btree | to_team, status | — |
+| `team_messages` | `idx_team_messages_to_team` | btree | to_team, created_at | — |
 | `team_messages` | `team_messages_pkey` | btree | id | ✓ |
+| `team_registry` | `idx_team_registry_status` | btree | status | — |
+| `team_registry` | `team_registry_pkey` | btree | id | ✓ |
+| `team_registry` | `team_registry_team_id_key` | btree | team_id | ✓ |
 | `transactions` | `idx_transactions_approved_by` | btree | approved_by | — |
 | `transactions` | `idx_transactions_builder_id` | btree | builder_id | — |
 | `transactions` | `idx_transactions_coupon_id` | btree | coupon_id | — |

@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-10T07:54:29.814Z
+-- Generated: 2026-04-11T07:12:31.871Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -64,7 +64,9 @@ CREATE TABLE IF NOT EXISTS admin_notices (
   title text NOT NULL,
   content text NOT NULL,
   is_active boolean DEFAULT true,
-  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
+  priority text,
+  expires_at timestamp with time zone
   ,PRIMARY KEY (id)
 );
 
@@ -1214,7 +1216,9 @@ CREATE TABLE IF NOT EXISTS profiles (
   professional_type text,
   is_rera_registered boolean DEFAULT false,
   rera_registration_number text,
-  rera_validity_date date
+  rera_validity_date date,
+  terms_accepted_at timestamp with time zone,
+  privacy_consent_version text
   ,PRIMARY KEY (id)
 );
 
@@ -1799,6 +1803,18 @@ CREATE TABLE IF NOT EXISTS regions (
   ,PRIMARY KEY (id)
 );
 
+-- Table: registration_consent_log
+CREATE TABLE IF NOT EXISTS registration_consent_log (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  consent_given_at timestamp with time zone NOT NULL DEFAULT now(),
+  ip_address_hash text NOT NULL,
+  tc_version text NOT NULL,
+  purpose text NOT NULL DEFAULT 'data_processing_consent'::text,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: role_permissions
 CREATE TABLE IF NOT EXISTS role_permissions (
   role_id uuid NOT NULL,
@@ -1989,6 +2005,19 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   ,PRIMARY KEY (id)
 );
 
+-- Table: team_broadcasts
+CREATE TABLE IF NOT EXISTS team_broadcasts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  from_team text NOT NULL,
+  subject text NOT NULL,
+  body text NOT NULL,
+  priority text NOT NULL DEFAULT 'normal'::text,
+  target_teams ARRAY,
+  expires_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
 -- Table: team_messages
 CREATE TABLE IF NOT EXISTS team_messages (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -1999,6 +2028,21 @@ CREATE TABLE IF NOT EXISTS team_messages (
   responded_at timestamp with time zone,
   status text NOT NULL DEFAULT 'pending'::text,
   created_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: team_registry
+CREATE TABLE IF NOT EXISTS team_registry (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  team_id text NOT NULL,
+  team_name text NOT NULL,
+  role text NOT NULL,
+  capabilities ARRAY,
+  status text NOT NULL DEFAULT 'active'::text,
+  last_seen_at timestamp with time zone,
+  notes text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

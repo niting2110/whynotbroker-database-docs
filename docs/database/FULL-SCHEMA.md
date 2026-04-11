@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-10T07:54:29.798Z
-> Total Tables: 111
+> Auto-generated: 2026-04-11T07:12:31.855Z
+> Total Tables: 114
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~8,615
+- Rows: ~10,481
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -191,7 +191,7 @@
 
 **Statistics:**
 - Rows: ~0
-- Columns: 5
+- Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
 
@@ -204,6 +204,8 @@
 | `content` | `text` | NO | `—` |
 | `is_active` | `boolean` | YES | `true` |
 | `created_at` | `timestamp with time zone` | YES | `timezone('utc'::text, now())` |
+| `priority` | `text` | YES | `—` |
+| `expires_at` | `timestamp with time zone` | YES | `—` |
 
 ### Indexes
 
@@ -264,7 +266,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~84
+- Rows: ~230
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -334,7 +336,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~195
+- Rows: ~439
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -919,7 +921,7 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~34
+- Rows: ~82
 - Columns: 15
 - Indexes: 4
 - Foreign Keys: 4
@@ -1175,7 +1177,7 @@
 ## `enquiries`
 
 **Statistics:**
-- Rows: ~98
+- Rows: ~218
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -1395,7 +1397,7 @@
 ## `lending_partners`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~2
 - Columns: 13
 - Indexes: 1
 - Foreign Keys: 0
@@ -2448,7 +2450,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~98
+- Rows: ~218
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2536,7 +2538,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~98
+- Rows: ~218
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -2952,8 +2954,8 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~725
-- Columns: 46
+- Rows: ~1,619
+- Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
 
@@ -3007,6 +3009,8 @@
 | `is_rera_registered` | `boolean` | YES | `false` |
 | `rera_registration_number` | `text` | YES | `—` |
 | `rera_validity_date` | `date` | YES | `—` |
+| `terms_accepted_at` | `timestamp with time zone` | YES | `—` |
+| `privacy_consent_version` | `text` | YES | `—` |
 
 ### Indexes
 
@@ -4249,7 +4253,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~51
+- Rows: ~135
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4341,6 +4345,43 @@
   - Columns: `parent_region_id` → `regions(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: NO ACTION
+
+---
+
+## `registration_consent_log`
+
+> DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.
+
+**Statistics:**
+- Rows: ~0
+- Columns: 7
+- Indexes: 1
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `user_id` | `uuid` | NO | `—` |
+| `consent_given_at` | `timestamp with time zone` | NO | `now()` |
+| `ip_address_hash` | `text` | NO | `—` |
+| `tc_version` | `text` | NO | `—` |
+| `purpose` | `text` | NO | `'data_processing_consent'::text` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `registration_consent_log_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `registration_consent_log_user_id_fkey`:
+  - Columns: `user_id` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
 
 ---
 
@@ -4859,12 +4900,43 @@
 
 ---
 
+## `team_broadcasts`
+
+**Statistics:**
+- Rows: ~1
+- Columns: 8
+- Indexes: 3
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `from_team` | `text` | NO | `—` |
+| `subject` | `text` | NO | `—` |
+| `body` | `text` | NO | `—` |
+| `priority` | `text` | NO | `'normal'::text` |
+| `target_teams` | `ARRAY` | YES | `—` |
+| `expires_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_broadcasts_created` | btree | created_at | — |
+| `idx_broadcasts_priority` | btree | priority, created_at | — |
+| `team_broadcasts_pkey` | btree | id | ✓ |
+
+---
+
 ## `team_messages`
 
 **Statistics:**
 - Rows: ~0
 - Columns: 8
-- Indexes: 1
+- Indexes: 5
 - Foreign Keys: 0
 
 ### Columns
@@ -4884,7 +4956,44 @@
 
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
+| `idx_team_messages_from_team` | btree | from_team, created_at | — |
+| `idx_team_messages_status` | btree | status | — |
+| `idx_team_messages_to_status` | btree | to_team, status | — |
+| `idx_team_messages_to_team` | btree | to_team, created_at | — |
 | `team_messages_pkey` | btree | id | ✓ |
+
+---
+
+## `team_registry`
+
+**Statistics:**
+- Rows: ~1
+- Columns: 10
+- Indexes: 3
+- Foreign Keys: 0
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `team_id` | `text` | NO | `—` |
+| `team_name` | `text` | NO | `—` |
+| `role` | `text` | NO | `—` |
+| `capabilities` | `ARRAY` | YES | `—` |
+| `status` | `text` | NO | `'active'::text` |
+| `last_seen_at` | `timestamp with time zone` | YES | `—` |
+| `notes` | `text` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_team_registry_status` | btree | status | — |
+| `team_registry_pkey` | btree | id | ✓ |
+| `team_registry_team_id_key` | btree | team_id | ✓ |
 
 ---
 
@@ -4893,7 +5002,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~171
+- Rows: ~367
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5366,7 +5475,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~724
+- Rows: ~1,618
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

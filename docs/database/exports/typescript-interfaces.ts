@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-10T07:54:29.826Z
+// Generated: 2026-04-11T07:12:31.982Z
 
 export interface Database {
   admin_audit_logs: {
@@ -65,6 +65,8 @@ export interface Database {
       content: string;
       is_active?: boolean;
       created_at?: string | Date;
+      priority?: string;
+      expires_at?: string | Date;
     };
   };
 
@@ -1215,6 +1217,8 @@ export interface Database {
       is_rera_registered?: boolean;
       rera_registration_number?: string;
       rera_validity_date?: string | Date;
+      terms_accepted_at?: string | Date;
+      privacy_consent_version?: string;
     };
   };
 
@@ -1799,6 +1803,18 @@ export interface Database {
     };
   };
 
+  registration_consent_log: {
+    Row: {
+      id: string;
+      user_id: string;
+      consent_given_at: string | Date;
+      ip_address_hash: string;
+      tc_version: string;
+      purpose: string;
+      created_at: string | Date;
+    };
+  };
+
   role_permissions: {
     Row: {
       role_id: string;
@@ -1989,6 +2005,19 @@ export interface Database {
     };
   };
 
+  team_broadcasts: {
+    Row: {
+      id: string;
+      from_team: string;
+      subject: string;
+      body: string;
+      priority: string;
+      target_teams?: any;
+      expires_at?: string | Date;
+      created_at: string | Date;
+    };
+  };
+
   team_messages: {
     Row: {
       id: string;
@@ -1999,6 +2028,21 @@ export interface Database {
       responded_at?: string | Date;
       status: string;
       created_at: string | Date;
+    };
+  };
+
+  team_registry: {
+    Row: {
+      id: string;
+      team_id: string;
+      team_name: string;
+      role: string;
+      capabilities?: any;
+      status: string;
+      last_seen_at?: string | Date;
+      notes?: string;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 

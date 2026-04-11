@@ -583,5 +583,20 @@
       "functions": 834,
       "extensions": 10
     }
+  },
+  {
+    "timestamp": "2026-04-11T07:12:32.049Z",
+    "schema_hash": "30a4f029728a5e186e091e943c555b41",
+    "statistics": {
+      "tables": 114,
+      "views": 26,
+      "materialized_views": 2,
+      "columns": 1673,
+      "constraints": 1111,
+      "indexes": 524,
+      "relationships": 181,
+      "functions": 834,
+      "extensions": 10
+    }
   }
 ]
