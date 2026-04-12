@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-11T07:12:31.867Z
-Total Indexes: 524
+Generated: 2026-04-12T07:26:01.707Z
+Total Indexes: 530
 
 ## All Indexes
 
@@ -128,6 +128,9 @@ Total Indexes: 524
 | `leave_balances` | `leave_balances_pkey` | btree | id | ✓ |
 | `leave_types` | `leave_types_pkey` | btree | id | ✓ |
 | `lending_partners` | `lending_partners_pkey` | btree | id | ✓ |
+| `listing_boosts` | `idx_listing_boosts_listing_id` | btree | listing_id | — |
+| `listing_boosts` | `idx_listing_boosts_status` | btree | status | — |
+| `listing_boosts` | `listing_boosts_pkey` | btree | id | ✓ |
 | `loan_calculations` | `idx_loan_calculations_property_id` | btree | property_id | — |
 | `loan_calculations` | `idx_loan_calculations_user` | btree | user_id | — |
 | `loan_calculations` | `loan_calculations_pkey` | btree | id | ✓ |
@@ -284,6 +287,7 @@ Total Indexes: 524
 | `properties` | `idx_properties_agent_id` | btree | agent_id | — |
 | `properties` | `idx_properties_area` | btree | built_up_area | — |
 | `properties` | `idx_properties_bedrooms` | btree | bedrooms | — |
+| `properties` | `idx_properties_boost_active` | btree | boost_active | — |
 | `properties` | `idx_properties_builder` | btree | builder_id | — |
 | `properties` | `idx_properties_city_active_created` | btree | created_at, city_id | — |
 | `properties` | `idx_properties_city_locality` | btree | city, locality | — |
@@ -458,6 +462,8 @@ Total Indexes: 524
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
+| `system_settings` | `system_settings_key_key` | btree | key | ✓ |
+| `system_settings` | `system_settings_pkey` | btree | id | ✓ |
 | `team_broadcasts` | `idx_broadcasts_created` | btree | created_at | — |
 | `team_broadcasts` | `idx_broadcasts_priority` | btree | priority, created_at | — |
 | `team_broadcasts` | `team_broadcasts_pkey` | btree | id | ✓ |

@@ -30,6 +30,7 @@ RETURNING *;
 - `idx_properties_agent_id`: agent_id
 - `idx_properties_area`: built_up_area
 - `idx_properties_bedrooms`: bedrooms
+- `idx_properties_boost_active`: boost_active
 - `idx_properties_builder`: builder_id
 - `idx_properties_city_active_created`: created_at, city_id
 - `idx_properties_city_locality`: city, locality

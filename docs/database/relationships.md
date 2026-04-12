@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 181
-Generated: 2026-04-11T07:12:31.866Z
+Total Relationships: 184
+Generated: 2026-04-12T07:26:01.707Z
 
 ```
 admin_audit_logs:
@@ -135,6 +135,12 @@ leave_balances:
       columns: admin_id
   └─→ leave_types (via: leave_balances_leave_type_id_fkey)
       columns: leave_type_id
+
+listing_boosts:
+  └─→ properties (via: listing_boosts_listing_id_fkey)
+      columns: listing_id
+  └─→ profiles (via: listing_boosts_purchased_by_fkey)
+      columns: purchased_by
 
 loan_calculations:
   └─→ properties (via: loan_calculations_property_id_fkey)
@@ -479,6 +485,10 @@ subscription_enrollments:
 subscription_plans:
   └─→ regions (via: subscription_plans_region_id_fkey)
       columns: region_id
+
+system_settings:
+  └─→ admins (via: system_settings_updated_by_fkey)
+      columns: updated_by
 
 transactions:
   └─→ profiles (via: transactions_approved_by_fkey)

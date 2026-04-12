@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2026-04-11T07:12:31.870Z
-Total Issues: 104
-Warnings: 34
+Generated: 2026-04-12T07:26:01.710Z
+Total Issues: 106
+Warnings: 36
 Recommendations: 70
 
 ## ⚠️ Warnings
@@ -18,6 +18,7 @@ Recommendations: 70
 | MEDIUM | `home_loan_consent_log` | Foreign key home_loan_consent_log_user_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_admin_id_fkey has no covering index |
 | MEDIUM | `leave_balances` | Foreign key leave_balances_leave_type_id_fkey has no covering index |
+| MEDIUM | `listing_boosts` | Foreign key listing_boosts_purchased_by_fkey has no covering index |
 | MEDIUM | `locality_amenities` | Foreign key locality_amenities_locality_id_fkey has no covering index |
 | MEDIUM | `market_trends` | Foreign key market_trends_locality_id_fkey has no covering index |
 | MEDIUM | `market_trends` | Foreign key market_trends_region_id_fkey has no covering index |
@@ -41,6 +42,7 @@ Recommendations: 70
 | MEDIUM | `role_permissions` | Foreign key role_permissions_role_id_fkey has no covering index |
 | MEDIUM | `saved_searches` | Foreign key saved_searches_user_id_fkey has no covering index |
 | MEDIUM | `subscription_enrollments` | Foreign key subscription_enrollments_user_id_fkey has no covering index |
+| MEDIUM | `system_settings` | Foreign key system_settings_updated_by_fkey has no covering index |
 | MEDIUM | `transactions` | Foreign key transactions_region_id_fkey has no covering index |
 | MEDIUM | `user_ratings` | Foreign key user_ratings_rating_user_id_fkey has no covering index |
 

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-04-11T07:12:31.858Z",
+  "generated_at": "2026-04-12T07:26:01.698Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 114,
+    "tables": 116,
     "views": 26,
     "materialized_views": 2,
-    "columns": 1673,
-    "constraints": 1111,
-    "indexes": 524,
-    "relationships": 181,
+    "columns": 1696,
+    "constraints": 1136,
+    "indexes": 530,
+    "relationships": 184,
     "functions": 834,
     "extensions": 10
   },
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 10481,
-      "size_bytes": 3883008,
+      "rows": 12026,
+      "size_bytes": 4423680,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 10481,
+        "row_count": 12026,
         "column_count": 9
       }
     },
@@ -2550,8 +2550,8 @@
       "name": "blog_posts",
       "comment": null,
       "columns": 17,
-      "rows": 100,
-      "size_bytes": 122880,
+      "rows": 116,
+      "size_bytes": 311296,
       "details": {
         "columns": [
           {
@@ -2880,7 +2880,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 100,
+        "row_count": 116,
         "column_count": 17
       }
     },
@@ -5191,9 +5191,9 @@
     {
       "name": "cities",
       "comment": "Normalized city master with geo coordinates",
-      "columns": 14,
+      "columns": 15,
       "rows": 52,
-      "size_bytes": 212992,
+      "size_bytes": 229376,
       "details": {
         "columns": [
           {
@@ -5349,6 +5349,17 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": null
+          },
+          {
+            "column_name": "city_tier",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": "'B'::text",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
           }
         ],
         "constraints": [
@@ -5378,6 +5389,13 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "cities_city_tier_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((city_tier = ANY (ARRAY['A'::text, 'B'::text])))",
             "constraint_comment": null
           },
           {
@@ -5550,7 +5568,7 @@
           }
         ],
         "row_count": 52,
-        "column_count": 14
+        "column_count": 15
       }
     },
     {
@@ -9043,6 +9061,305 @@
         "triggers": [],
         "row_count": 2,
         "column_count": 13
+      }
+    },
+    {
+      "name": "listing_boosts",
+      "comment": null,
+      "columns": 12,
+      "rows": 0,
+      "size_bytes": 32768,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "listing_id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "purchased_by",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "boost_type",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'pending_payment'::text",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "amount_paid",
+            "data_type": "numeric",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": 10,
+            "numeric_scale": 2,
+            "column_comment": null
+          },
+          {
+            "column_name": "razorpay_order_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "razorpay_payment_id",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "boost_expires_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "activated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_152534_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_12_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152534_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_boost_type_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((boost_type = ANY (ARRAY['top_of_search'::text, 'refresh'::text, 'photo_gallery'::text, 'verified_badge'::text, 'whatsapp_first'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['pending_payment'::text, 'active'::text, 'expired'::text, 'cancelled'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_listing_id_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "listing_id",
+            "definition": "FOREIGN KEY (listing_id) REFERENCES properties(id) ON DELETE CASCADE",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_purchased_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "purchased_by",
+            "definition": "FOREIGN KEY (purchased_by) REFERENCES profiles(id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_listing_boosts_listing_id",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{listing_id}",
+            "index_definition": "CREATE INDEX idx_listing_boosts_listing_id ON public.listing_boosts USING btree (listing_id)"
+          },
+          {
+            "index_name": "idx_listing_boosts_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_listing_boosts_status ON public.listing_boosts USING btree (status) WHERE (status = 'active'::text)"
+          },
+          {
+            "index_name": "listing_boosts_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX listing_boosts_pkey ON public.listing_boosts USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "listing_boosts_listing_id_fkey",
+            "foreign_table_name": "properties",
+            "columns": [
+              "listing_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "CASCADE",
+            "comment": null
+          },
+          {
+            "constraint_name": "listing_boosts_purchased_by_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "purchased_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "NO ACTION",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 0,
+        "column_count": 12
       }
     },
     {
@@ -13859,7 +14176,7 @@
       "name": "permissions",
       "comment": null,
       "columns": 6,
-      "rows": 63,
+      "rows": 62,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -14060,7 +14377,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 63,
+        "row_count": 62,
         "column_count": 6
       }
     },
@@ -15898,7 +16215,7 @@
             "constraint_name": "pg_posting_posting_pack_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((posting_pack = ANY (ARRAY['free'::text, 'basic'::text, 'featured'::text])))",
+            "definition": "CHECK (((posting_pack IS NULL) OR (posting_pack = ANY (ARRAY['free'::text, 'starter'::text, 'standard'::text, 'premium'::text, 'pro'::text]))))",
             "constraint_comment": null
           },
           {
@@ -15912,7 +16229,7 @@
             "constraint_name": "pg_posting_status_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'pending_review'::text, 'active'::text, 'rejected'::text, 'expired'::text, 'archived'::text])))",
+            "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'pending_review'::text, 'active'::text, 'rejected'::text, 'expired'::text, 'archived'::text, 'paused'::text, 'filled'::text])))",
             "constraint_comment": null
           },
           {
@@ -16198,7 +16515,7 @@
       "comment": null,
       "columns": 18,
       "rows": 218,
-      "size_bytes": 139264,
+      "size_bytes": 229376,
       "details": {
         "columns": [
           {
@@ -17881,7 +18198,7 @@
             "constraint_name": "pg_tenant_payment_status_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((payment_status = ANY (ARRAY['pending'::text, 'paid'::text, 'overdue'::text, 'partial'::text])))",
+            "definition": "CHECK ((payment_status = ANY (ARRAY['pending'::text, 'paid'::text, 'overdue'::text, 'partial'::text, 'waived'::text])))",
             "constraint_comment": null
           },
           {
@@ -20672,9 +20989,9 @@
     {
       "name": "properties",
       "comment": null,
-      "columns": 135,
+      "columns": 137,
       "rows": 5,
-      "size_bytes": 11681792,
+      "size_bytes": 11689984,
       "details": {
         "columns": [
           {
@@ -22161,11 +22478,47 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": "Karnataka-specific: A=clear title, B=revenue records pending, E=exempted category"
+          },
+          {
+            "column_name": "boost_active",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "false",
+            "ordinal_position": 136,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "featured_rank",
+            "data_type": "integer",
+            "is_nullable": "NO",
+            "column_default": "0",
+            "ordinal_position": 137,
+            "character_maximum_length": null,
+            "numeric_precision": 32,
+            "numeric_scale": 0,
+            "column_comment": null
           }
         ],
         "constraints": [
           {
             "constraint_name": "2200_18738_10_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_18738_136_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_18738_137_not_null",
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": null,
@@ -22600,6 +22953,16 @@
             "is_immediate": true,
             "columns": "{bedrooms}",
             "index_definition": "CREATE INDEX idx_properties_bedrooms ON public.properties USING btree (bedrooms)"
+          },
+          {
+            "index_name": "idx_properties_boost_active",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{boost_active}",
+            "index_definition": "CREATE INDEX idx_properties_boost_active ON public.properties USING btree (boost_active) WHERE (boost_active = true)"
           },
           {
             "index_name": "idx_properties_builder",
@@ -23265,7 +23628,7 @@
           }
         ],
         "row_count": 5,
-        "column_count": 135
+        "column_count": 137
       }
     },
     {
@@ -29407,7 +29770,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 84,
+      "rows": 90,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -29519,7 +29882,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 84,
+        "row_count": 90,
         "column_count": 2
       }
     },
@@ -32377,6 +32740,203 @@
         "triggers": [],
         "row_count": 2,
         "column_count": 6
+      }
+    },
+    {
+      "name": "system_settings",
+      "comment": "Platform-wide configuration key-value store. Writable only via Go API (admin_super). Never exposes infra or credential keys.",
+      "columns": 8,
+      "rows": 6,
+      "size_bytes": 49152,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "key",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Unique config key (e.g. maintenance_mode). Allowlist enforced at Go API layer (§38.7)."
+          },
+          {
+            "column_name": "value",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "description",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "is_active",
+            "data_type": "boolean",
+            "is_nullable": "NO",
+            "column_default": "true",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_152561_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152561_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152561_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152561_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_152561_8_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "system_settings_updated_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "updated_by",
+            "definition": "FOREIGN KEY (updated_by) REFERENCES admins(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "system_settings_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "system_settings_key_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "key",
+            "definition": "UNIQUE (key)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "system_settings_key_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{key}",
+            "index_definition": "CREATE UNIQUE INDEX system_settings_key_key ON public.system_settings USING btree (key)"
+          },
+          {
+            "index_name": "system_settings_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX system_settings_pkey ON public.system_settings USING btree (id)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "system_settings_updated_by_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "updated_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [],
+        "row_count": 6,
+        "column_count": 8
       }
     },
     {
@@ -35992,6 +36552,13 @@
             "constraint_type": "CHECK",
             "column_name": null,
             "definition": "CHECK ((id_type = ANY (ARRAY['passport'::text, 'national_id'::text, 'drivers_license'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "verification_kyc_id_type_no_aadhaar",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((id_type <> ALL (ARRAY['aadhaar'::text, 'uid'::text, 'uidai'::text])))",
             "constraint_comment": null
           },
           {
@@ -42053,6 +42620,22 @@
       ]
     },
     {
+      "fromTable": "listing_boosts",
+      "toTable": "properties",
+      "constraint_name": "listing_boosts_listing_id_fkey",
+      "columns": [
+        "listing_id"
+      ]
+    },
+    {
+      "fromTable": "listing_boosts",
+      "toTable": "profiles",
+      "constraint_name": "listing_boosts_purchased_by_fkey",
+      "columns": [
+        "purchased_by"
+      ]
+    },
+    {
       "fromTable": "loan_calculations",
       "toTable": "properties",
       "constraint_name": "loan_calculations_property_id_fkey",
@@ -42978,6 +43561,14 @@
       "constraint_name": "subscription_plans_region_id_fkey",
       "columns": [
         "region_id"
+      ]
+    },
+    {
+      "fromTable": "system_settings",
+      "toTable": "admins",
+      "constraint_name": "system_settings_updated_by_fkey",
+      "columns": [
+        "updated_by"
       ]
     },
     {

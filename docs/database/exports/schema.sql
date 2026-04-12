@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-11T07:12:31.871Z
+-- Generated: 2026-04-12T07:26:01.710Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -350,7 +350,8 @@ CREATE TABLE IF NOT EXISTS cities (
   is_metro boolean DEFAULT false,
   is_active boolean DEFAULT true,
   created_at timestamp with time zone DEFAULT now(),
-  updated_at timestamp with time zone DEFAULT now()
+  updated_at timestamp with time zone DEFAULT now(),
+  city_tier text DEFAULT 'B'::text
   ,PRIMARY KEY (id)
 );
 
@@ -563,6 +564,23 @@ CREATE TABLE IF NOT EXISTS lending_partners (
   escalation_contact_email text,
   commission_rate_percent numeric,
   data_processing_agreement_date date,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: listing_boosts
+CREATE TABLE IF NOT EXISTS listing_boosts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  listing_id uuid NOT NULL,
+  purchased_by uuid NOT NULL,
+  boost_type text NOT NULL,
+  status text NOT NULL DEFAULT 'pending_payment'::text,
+  amount_paid numeric NOT NULL,
+  razorpay_order_id text,
+  razorpay_payment_id text,
+  boost_expires_at timestamp with time zone,
+  activated_at timestamp with time zone,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
@@ -1426,7 +1444,9 @@ CREATE TABLE IF NOT EXISTS properties (
   loan_noc_available boolean DEFAULT false,
   property_tax_paid_till date,
   encumbrance_certificate_available boolean DEFAULT false,
-  khata_type text
+  khata_type text,
+  boost_active boolean NOT NULL DEFAULT false,
+  featured_rank integer NOT NULL DEFAULT 0
   ,PRIMARY KEY (id)
 );
 
@@ -2002,6 +2022,19 @@ CREATE TABLE IF NOT EXISTS system_health_metrics (
   metric_unit text,
   context jsonb,
   recorded_at timestamp with time zone DEFAULT now()
+  ,PRIMARY KEY (id)
+);
+
+-- Table: system_settings
+CREATE TABLE IF NOT EXISTS system_settings (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  key text NOT NULL,
+  value text,
+  description text,
+  is_active boolean NOT NULL DEFAULT true,
+  updated_by uuid,
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  created_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-11T07:12:31.855Z
-> Total Tables: 114
+> Auto-generated: 2026-04-12T07:26:01.695Z
+> Total Tables: 116
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~10,481
+- Rows: ~12,026
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -454,7 +454,7 @@
 ## `blog_posts`
 
 **Statistics:**
-- Rows: ~100
+- Rows: ~116
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 1
@@ -836,7 +836,7 @@
 
 **Statistics:**
 - Rows: ~52
-- Columns: 14
+- Columns: 15
 - Indexes: 8
 - Foreign Keys: 2
 
@@ -858,6 +858,7 @@
 | `is_active` | `boolean` | YES | `true` |
 | `created_at` | `timestamp with time zone` | YES | `now()` |
 | `updated_at` | `timestamp with time zone` | YES | `now()` |
+| `city_tier` | `text` | YES | `'B'::text` |
 
 ### Indexes
 
@@ -1425,6 +1426,52 @@
 | Name | Type | Columns | Unique |
 |------|------|---------|--------|
 | `lending_partners_pkey` | btree | id | ✓ |
+
+---
+
+## `listing_boosts`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 12
+- Indexes: 3
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `listing_id` | `uuid` | NO | `—` |
+| `purchased_by` | `uuid` | NO | `—` |
+| `boost_type` | `text` | NO | `—` |
+| `status` | `text` | NO | `'pending_payment'::text` |
+| `amount_paid` | `numeric` | NO | `—` |
+| `razorpay_order_id` | `text` | YES | `—` |
+| `razorpay_payment_id` | `text` | YES | `—` |
+| `boost_expires_at` | `timestamp with time zone` | YES | `—` |
+| `activated_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_listing_boosts_listing_id` | btree | listing_id | — |
+| `idx_listing_boosts_status` | btree | status | — |
+| `listing_boosts_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `listing_boosts_listing_id_fkey`:
+  - Columns: `listing_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: CASCADE
+- `listing_boosts_purchased_by_fkey`:
+  - Columns: `purchased_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: NO ACTION
 
 ---
 
@@ -2169,7 +2216,7 @@
 ## `permissions`
 
 **Statistics:**
-- Rows: ~63
+- Rows: ~62
 - Columns: 6
 - Indexes: 4
 - Foreign Keys: 0
@@ -3171,8 +3218,8 @@
 
 **Statistics:**
 - Rows: ~5
-- Columns: 135
-- Indexes: 46
+- Columns: 137
+- Indexes: 47
 - Foreign Keys: 11
 
 ### Columns
@@ -3314,6 +3361,8 @@
 | `property_tax_paid_till` | `date` | YES | `—` |
 | `encumbrance_certificate_available` | `boolean` | YES | `false` |
 | `khata_type` | `text` | YES | `—` |
+| `boost_active` | `boolean` | NO | `false` |
+| `featured_rank` | `integer` | NO | `0` |
 
 ### Indexes
 
@@ -3324,6 +3373,7 @@
 | `idx_properties_agent_id` | btree | agent_id | — |
 | `idx_properties_area` | btree | built_up_area | — |
 | `idx_properties_bedrooms` | btree | bedrooms | — |
+| `idx_properties_boost_active` | btree | boost_active | — |
 | `idx_properties_builder` | btree | builder_id | — |
 | `idx_properties_city_active_created` | btree | created_at, city_id | — |
 | `idx_properties_city_locality` | btree | city, locality | — |
@@ -4388,7 +4438,7 @@
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~84
+- Rows: ~90
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -4897,6 +4947,45 @@
 |------|------|---------|--------|
 | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics_pkey` | btree | id | ✓ |
+
+---
+
+## `system_settings`
+
+> Platform-wide configuration key-value store. Writable only via Go API (admin_super). Never exposes infra or credential keys.
+
+**Statistics:**
+- Rows: ~6
+- Columns: 8
+- Indexes: 2
+- Foreign Keys: 1
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `key` | `text` | NO | `—` |
+| `value` | `text` | YES | `—` |
+| `description` | `text` | YES | `—` |
+| `is_active` | `boolean` | NO | `true` |
+| `updated_by` | `uuid` | YES | `—` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `system_settings_key_key` | btree | key | ✓ |
+| `system_settings_pkey` | btree | id | ✓ |
+
+### Foreign Keys
+
+- `system_settings_updated_by_fkey`:
+  - Columns: `updated_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 
 ---
 

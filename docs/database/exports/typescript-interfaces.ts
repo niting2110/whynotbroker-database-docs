@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-11T07:12:31.982Z
+// Generated: 2026-04-12T07:26:01.723Z
 
 export interface Database {
   admin_audit_logs: {
@@ -351,6 +351,7 @@ export interface Database {
       is_active?: boolean;
       created_at?: string | Date;
       updated_at?: string | Date;
+      city_tier?: string;
     };
   };
 
@@ -563,6 +564,23 @@ export interface Database {
       escalation_contact_email?: string;
       commission_rate_percent?: number;
       data_processing_agreement_date?: string | Date;
+      created_at: string | Date;
+      updated_at: string | Date;
+    };
+  };
+
+  listing_boosts: {
+    Row: {
+      id: string;
+      listing_id: string;
+      purchased_by: string;
+      boost_type: string;
+      status: string;
+      amount_paid: number;
+      razorpay_order_id?: string;
+      razorpay_payment_id?: string;
+      boost_expires_at?: string | Date;
+      activated_at?: string | Date;
       created_at: string | Date;
       updated_at: string | Date;
     };
@@ -1427,6 +1445,8 @@ export interface Database {
       property_tax_paid_till?: string | Date;
       encumbrance_certificate_available?: boolean;
       khata_type?: string;
+      boost_active: boolean;
+      featured_rank: number;
     };
   };
 
@@ -2002,6 +2022,19 @@ export interface Database {
       metric_unit?: string;
       context?: any;
       recorded_at?: string | Date;
+    };
+  };
+
+  system_settings: {
+    Row: {
+      id: string;
+      key: string;
+      value?: string;
+      description?: string;
+      is_active: boolean;
+      updated_by?: string;
+      updated_at: string | Date;
+      created_at: string | Date;
     };
   };
 
