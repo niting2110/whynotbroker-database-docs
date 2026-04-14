@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-13T08:17:32.409Z
-> Schema Hash: `c4d3e40869a05f8958d9f43f8d01a105`
+> Generated: 2026-04-14T07:59:25.550Z
+> Schema Hash: `83ce06ed475019cae5ea1fcadf1eca2b`
 
 ## 📊 Quick Stats
 - **Total Tables:** 116
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1696
 - **Total Relationships:** 184
-- **Total Size:** 84.16 MB
+- **Total Size:** 84.88 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 13/4/2026, 1:47:32 pm IST
+- **Last Updated:** 14/4/2026, 1:29:25 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~12,458 | 4.38 MB |  |
+| `admin_audit_logs` | 9 | ~13,019 | 4.56 MB |  |
 | `admin_chat` | 4 | ~0 | 0.02 MB |  |
 | `admin_leaves` | 17 | ~0 | 0.05 MB |  |
 | `admin_messages` | 6 | ~0 | 0.05 MB |  |
@@ -71,42 +71,42 @@
 | `notifications` | 10 | ~16 | 0.05 MB |  |
 | `overtime_records` | 8 | ~0 | 0.03 MB |  |
 | `permissions` | 6 | ~62 | 0.08 MB |  |
-| `pg_bed` | 8 | ~0 | 0.02 MB |  |
-| `pg_occupancy` | 8 | ~0 | 0.03 MB |  |
-| `pg_occupancy_snapshot` | 7 | ~0 | 0.02 MB |  |
-| `pg_owner_pnl` | 10 | ~0 | 0.02 MB |  |
-| `pg_payment_record` | 16 | ~0 | 0.03 MB |  |
-| `pg_police_verification` | 8 | ~0 | 0.03 MB |  |
+| `pg_bed` | 8 | ~10 | 0.05 MB |  |
+| `pg_occupancy` | 8 | ~5 | 0.07 MB |  |
+| `pg_occupancy_snapshot` | 7 | ~5 | 0.04 MB |  |
+| `pg_owner_pnl` | 10 | ~5 | 0.04 MB |  |
+| `pg_payment_record` | 16 | ~7 | 0.06 MB |  |
+| `pg_police_verification` | 8 | ~5 | 0.06 MB |  |
 | `pg_posting` | 19 | ~218 | 0.11 MB |  |
-| `pg_posting_packs` | 8 | ~0 | 0.02 MB | "E13 posting credit balance for..." |
+| `pg_posting_packs` | 8 | ~5 | 0.05 MB | "E13 posting credit balance for..." |
 | `pg_property` | 18 | ~218 | 0.22 MB |  |
-| `pg_receipt` | 11 | ~0 | 0.03 MB |  |
-| `pg_rent_agreement` | 13 | ~0 | 0.03 MB |  |
-| `pg_room` | 9 | ~0 | 0.02 MB |  |
-| `pg_seeker_preferences` | 8 | ~0 | 0.02 MB |  |
-| `pg_tenant` | 20 | ~0 | 0.04 MB |  |
-| `pg_vacancy_event` | 9 | ~0 | 0.03 MB |  |
+| `pg_receipt` | 11 | ~7 | 0.06 MB |  |
+| `pg_rent_agreement` | 13 | ~5 | 0.06 MB |  |
+| `pg_room` | 9 | ~7 | 0.05 MB |  |
+| `pg_seeker_preferences` | 8 | ~5 | 0.03 MB |  |
+| `pg_tenant` | 20 | ~5 | 0.08 MB |  |
+| `pg_vacancy_event` | 9 | ~5 | 0.06 MB |  |
 | `pincodes` | 10 | ~0 | 0.05 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
 | `profiles` | 48 | ~1,619 | 1.02 MB |  |
 | `projects` | 39 | ~5 | 0.18 MB |  |
 | `promotional_campaigns` | 19 | ~0 | 0.09 MB | "Marketing campaigns with regio..." |
 | `properties` | 137 | ~5 | 11.15 MB |  |
-| `property_amenities` | 7 | ~0 | 0.10 MB |  |
+| `property_amenities` | 7 | ~12 | 0.11 MB |  |
 | `property_assignments` | 8 | ~5 | 1.41 MB |  |
-| `property_comparisons` | 6 | ~0 | 0.02 MB |  |
+| `property_comparisons` | 6 | ~5 | 0.05 MB |  |
 | `property_documents` | 12 | ~12 | 0.08 MB |  |
 | `property_images` | 15 | ~8 | 0.11 MB |  |
 | `property_intelligence_scores` | 41 | ~0 | 0.07 MB | "AI-powered property scoring sy..." |
 | `property_leads` | 22 | ~5 | 0.09 MB |  |
 | `property_price_history` | 7 | ~5 | 0.06 MB |  |
 | `property_ranking_criteria` | 37 | ~0 | 0.06 MB |  |
-| `property_reports` | 11 | ~0 | 0.05 MB |  |
+| `property_reports` | 11 | ~7 | 0.09 MB |  |
 | `property_shares` | 6 | ~0 | 0.03 MB |  |
 | `property_valuations` | 37 | ~3 | 0.11 MB | "Automated and manual property ..." |
 | `property_verifications` | 14 | ~0 | 0.04 MB |  |
 | `property_views` | 10 | ~11 | 0.14 MB |  |
-| `property_visits` | 11 | ~0 | 0.04 MB |  |
+| `property_visits` | 11 | ~0 | 0.08 MB |  |
 | `referrals` | 12 | ~0 | 0.05 MB |  |
 | `refund_request` | 12 | ~135 | 0.09 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |
@@ -121,7 +121,7 @@
 | `spatial_ref_sys` | 5 | ~8,500 | 6.98 MB |  |
 | `states` | 7 | ~36 | 0.13 MB | "Indian states with LGD (Local ..." |
 | `sub_districts` | 7 | ~0 | 0.05 MB | "Sub-districts/Talukas for gran..." |
-| `subscription_enrollments` | 14 | ~0 | 0.05 MB |  |
+| `subscription_enrollments` | 14 | ~8 | 0.09 MB |  |
 | `subscription_plans` | 29 | ~22 | 0.16 MB | "Recurring subscription plans w..." |
 | `system_health_metrics` | 6 | ~2 | 0.05 MB |  |
 | `system_settings` | 8 | ~6 | 0.05 MB | "Platform-wide configuration ke..." |

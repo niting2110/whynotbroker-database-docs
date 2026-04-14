@@ -628,5 +628,20 @@
       "functions": 834,
       "extensions": 10
     }
+  },
+  {
+    "timestamp": "2026-04-14T07:59:25.587Z",
+    "schema_hash": "83ce06ed475019cae5ea1fcadf1eca2b",
+    "statistics": {
+      "tables": 116,
+      "views": 26,
+      "materialized_views": 2,
+      "columns": 1696,
+      "constraints": 1136,
+      "indexes": 530,
+      "relationships": 184,
+      "functions": 834,
+      "extensions": 10
+    }
   }
 ]

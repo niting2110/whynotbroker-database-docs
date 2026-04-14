@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-13T08:17:32.417Z
+> Auto-generated: 2026-04-14T07:59:25.556Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~12,458
+- Rows: ~13,019
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -2246,7 +2246,7 @@
 ## `pg_bed`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~10
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
@@ -2283,7 +2283,7 @@
 ## `pg_occupancy`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 4
 - Foreign Keys: 3
@@ -2330,7 +2330,7 @@
 ## `pg_occupancy_snapshot`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 7
 - Indexes: 2
 - Foreign Keys: 1
@@ -2366,7 +2366,7 @@
 ## `pg_owner_pnl`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 10
 - Indexes: 2
 - Foreign Keys: 1
@@ -2405,7 +2405,7 @@
 ## `pg_payment_record`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 16
 - Indexes: 3
 - Foreign Keys: 2
@@ -2455,7 +2455,7 @@
 ## `pg_police_verification`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 2
@@ -2548,7 +2548,7 @@
 > E13 posting credit balance for PG owners. One row per profile. postings_remaining decremented atomically on pg_posting creation.
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
@@ -2634,7 +2634,7 @@
 ## `pg_receipt`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 11
 - Indexes: 3
 - Foreign Keys: 1
@@ -2675,7 +2675,7 @@
 ## `pg_rent_agreement`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 13
 - Indexes: 3
 - Foreign Keys: 2
@@ -2722,7 +2722,7 @@
 ## `pg_room`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 9
 - Indexes: 2
 - Foreign Keys: 1
@@ -2760,7 +2760,7 @@
 ## `pg_seeker_preferences`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 1
 - Foreign Keys: 1
@@ -2796,7 +2796,7 @@
 ## `pg_tenant`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 3
@@ -2855,7 +2855,7 @@
 ## `pg_vacancy_event`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 9
 - Indexes: 3
 - Foreign Keys: 3
@@ -3468,7 +3468,7 @@
 ## `property_amenities`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~12
 - Columns: 7
 - Indexes: 5
 - Foreign Keys: 1
@@ -3550,7 +3550,7 @@
 ## `property_comparisons`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 1
@@ -3940,7 +3940,7 @@
 ## `property_reports`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 3
@@ -4807,7 +4807,7 @@
 ## `subscription_enrollments`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~8
 - Columns: 14
 - Indexes: 5
 - Foreign Keys: 3

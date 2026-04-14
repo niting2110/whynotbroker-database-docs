@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-13T08:17:32.419Z",
+  "generated_at": "2026-04-14T07:59:25.559Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 12458,
-      "size_bytes": 4587520,
+      "rows": 13019,
+      "size_bytes": 4784128,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 12458,
+        "row_count": 13019,
         "column_count": 9
       }
     },
@@ -14385,8 +14385,8 @@
       "name": "pg_bed",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 10,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -14588,7 +14588,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 10,
         "column_count": 8
       }
     },
@@ -14596,8 +14596,8 @@
       "name": "pg_occupancy",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 73728,
       "details": {
         "columns": [
           {
@@ -14845,7 +14845,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -14853,8 +14853,8 @@
       "name": "pg_occupancy_snapshot",
       "comment": null,
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -15052,7 +15052,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 7
       }
     },
@@ -15060,8 +15060,8 @@
       "name": "pg_owner_pnl",
       "comment": null,
       "columns": 10,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -15299,7 +15299,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 10
       }
     },
@@ -15307,8 +15307,8 @@
       "name": "pg_payment_record",
       "comment": null,
       "columns": 16,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 7,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -15656,7 +15656,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 16
       }
     },
@@ -15664,8 +15664,8 @@
       "name": "pg_police_verification",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -15883,7 +15883,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -16303,8 +16303,8 @@
       "name": "pg_posting_packs",
       "comment": "E13 posting credit balance for PG owners. One row per profile. postings_remaining decremented atomically on pg_posting creation.",
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -16506,7 +16506,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -16925,8 +16925,8 @@
       "name": "pg_receipt",
       "comment": null,
       "columns": 11,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 7,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -17164,7 +17164,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 11
       }
     },
@@ -17172,8 +17172,8 @@
       "name": "pg_rent_agreement",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -17481,7 +17481,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -17489,8 +17489,8 @@
       "name": "pg_room",
       "comment": null,
       "columns": 9,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 7,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -17710,7 +17710,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 9
       }
     },
@@ -17718,8 +17718,8 @@
       "name": "pg_seeker_preferences",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -17890,7 +17890,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -17898,8 +17898,8 @@
       "name": "pg_tenant",
       "comment": null,
       "columns": 20,
-      "rows": 0,
-      "size_bytes": 40960,
+      "rows": 5,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -18335,7 +18335,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 20
       }
     },
@@ -18343,8 +18343,8 @@
       "name": "pg_vacancy_event",
       "comment": null,
       "columns": 9,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -18600,7 +18600,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 9
       }
     },
@@ -23635,8 +23635,8 @@
       "name": "property_amenities",
       "comment": null,
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 106496,
+      "rows": 12,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -23850,7 +23850,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 12,
         "column_count": 7
       }
     },
@@ -24116,8 +24116,8 @@
       "name": "property_comparisons",
       "comment": null,
       "columns": 6,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -24255,7 +24255,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -26709,8 +26709,8 @@
       "name": "property_reports",
       "comment": null,
       "columns": 11,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 7,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -27001,7 +27001,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 11
       }
     },
@@ -28380,7 +28380,7 @@
       "comment": null,
       "columns": 11,
       "rows": 0,
-      "size_bytes": 40960,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -31733,8 +31733,8 @@
       "name": "subscription_enrollments",
       "comment": null,
       "columns": 14,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 8,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -32080,7 +32080,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 8,
         "column_count": 14
       }
     },
