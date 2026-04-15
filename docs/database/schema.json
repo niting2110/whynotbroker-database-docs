@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-14T07:59:25.559Z",
+  "generated_at": "2026-04-15T08:00:22.700Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 13019,
-      "size_bytes": 4784128,
+      "rows": 14268,
+      "size_bytes": 5218304,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 13019,
+        "row_count": 14268,
         "column_count": 9
       }
     },
@@ -418,8 +418,8 @@
       "name": "admin_leaves",
       "comment": null,
       "columns": 17,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -789,7 +789,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 17
       }
     },
@@ -797,8 +797,8 @@
       "name": "admin_messages",
       "comment": null,
       "columns": 6,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -980,7 +980,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -988,8 +988,8 @@
       "name": "admin_notices",
       "comment": null,
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -1141,7 +1141,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 7
       }
     },
@@ -4023,7 +4023,7 @@
       "comment": null,
       "columns": 14,
       "rows": 0,
-      "size_bytes": 32768,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -4923,8 +4923,8 @@
       "name": "campaign_participants",
       "comment": "Track user participation in campaigns",
       "columns": 9,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 5,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -5184,7 +5184,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 9
       }
     },
@@ -5575,8 +5575,8 @@
       "name": "comm_deferred",
       "comment": null,
       "columns": 11,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -5832,7 +5832,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 11
       }
     },
@@ -6243,8 +6243,8 @@
       "name": "coupon_usage",
       "comment": "Track coupon redemptions by users",
       "columns": 9,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 106496,
       "details": {
         "columns": [
           {
@@ -6532,7 +6532,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 9
       }
     },
@@ -6540,8 +6540,8 @@
       "name": "coupons",
       "comment": "Discount coupons with regional targeting",
       "columns": 23,
-      "rows": 0,
-      "size_bytes": 131072,
+      "rows": 5,
+      "size_bytes": 139264,
       "details": {
         "columns": [
           {
@@ -6966,7 +6966,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 23
       }
     },
@@ -6974,7 +6974,7 @@
       "name": "credit_packages",
       "comment": "Pre-paid credit packages with regional pricing variations",
       "columns": 17,
-      "rows": 1,
+      "rows": 5,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -7280,7 +7280,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1,
+        "row_count": 5,
         "column_count": 17
       }
     },
@@ -7843,8 +7843,8 @@
       "name": "home_loan_consent_log",
       "comment": null,
       "columns": 10,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -8113,7 +8113,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 10
       }
     },
@@ -8521,8 +8521,8 @@
       "name": "leave_balances",
       "comment": null,
       "columns": 6,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -8701,7 +8701,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -8709,7 +8709,7 @@
       "name": "leave_types",
       "comment": null,
       "columns": 6,
-      "rows": 3,
+      "rows": 5,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -8824,7 +8824,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 3,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -9366,8 +9366,8 @@
       "name": "loan_calculations",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -9647,7 +9647,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -13544,8 +13544,8 @@
       "name": "notification_preferences",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 8192,
+      "rows": 5,
+      "size_bytes": 24576,
       "details": {
         "columns": [
           {
@@ -13743,7 +13743,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -13970,8 +13970,8 @@
       "name": "overtime_records",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -14168,7 +14168,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -20672,7 +20672,7 @@
       "name": "promotional_campaigns",
       "comment": "Marketing campaigns with regional focus",
       "columns": 19,
-      "rows": 0,
+      "rows": 5,
       "size_bytes": 90112,
       "details": {
         "columns": [
@@ -20982,7 +20982,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 19
       }
     },
@@ -24906,8 +24906,8 @@
       "name": "property_intelligence_scores",
       "comment": "AI-powered property scoring system for ranking and recommendation",
       "columns": 41,
-      "rows": 0,
-      "size_bytes": 73728,
+      "rows": 5,
+      "size_bytes": 147456,
       "details": {
         "columns": [
           {
@@ -25518,7 +25518,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 41
       }
     },
@@ -26150,8 +26150,8 @@
       "name": "property_ranking_criteria",
       "comment": null,
       "columns": 37,
-      "rows": 0,
-      "size_bytes": 65536,
+      "rows": 5,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -26701,7 +26701,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 37
       }
     },
@@ -27009,8 +27009,8 @@
       "name": "property_shares",
       "comment": null,
       "columns": 6,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 7,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -27192,7 +27192,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 6
       }
     },
@@ -27790,8 +27790,8 @@
       "name": "property_verifications",
       "comment": null,
       "columns": 14,
-      "rows": 0,
-      "size_bytes": 40960,
+      "rows": 6,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -28086,7 +28086,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 6,
         "column_count": 14
       }
     },
@@ -28379,7 +28379,7 @@
       "name": "property_visits",
       "comment": null,
       "columns": 11,
-      "rows": 0,
+      "rows": 6,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -28661,7 +28661,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 6,
         "column_count": 11
       }
     },
@@ -28669,8 +28669,8 @@
       "name": "referrals",
       "comment": null,
       "columns": 12,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -28952,7 +28952,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 12
       }
     },
@@ -29587,8 +29587,8 @@
       "name": "registration_consent_log",
       "comment": "DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.",
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 32768,
       "details": {
         "columns": [
           {
@@ -29762,7 +29762,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 7
       }
     },
@@ -30354,8 +30354,8 @@
       "name": "saved_listings",
       "comment": null,
       "columns": 4,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 73728,
       "details": {
         "columns": [
           {
@@ -30539,7 +30539,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 4
       }
     },
@@ -30547,8 +30547,8 @@
       "name": "saved_searches",
       "comment": null,
       "columns": 11,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -30762,7 +30762,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 11
       }
     },
@@ -30770,8 +30770,8 @@
       "name": "search_history",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -30931,7 +30931,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -30939,8 +30939,8 @@
       "name": "security_flags",
       "comment": "Tracks flagged admin activities for security review",
       "columns": 9,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 5,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -31206,7 +31206,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 9
       }
     },
@@ -34957,7 +34957,7 @@
       "name": "user_favorites",
       "comment": null,
       "columns": 4,
-      "rows": 0,
+      "rows": 5,
       "size_bytes": 90112,
       "details": {
         "columns": [
@@ -35145,7 +35145,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 4
       }
     },
@@ -36667,8 +36667,8 @@
       "name": "waitlist_entries",
       "comment": null,
       "columns": 4,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -36808,7 +36808,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 4
       }
     },

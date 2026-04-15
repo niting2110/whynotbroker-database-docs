@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-14T07:59:25.556Z
+> Auto-generated: 2026-04-15T08:00:22.697Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~13,019
+- Rows: ~14,268
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -89,7 +89,7 @@
 ## `admin_leaves`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 17
 - Indexes: 5
 - Foreign Keys: 4
@@ -150,7 +150,7 @@
 ## `admin_messages`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 6
 - Indexes: 3
 - Foreign Keys: 2
@@ -190,7 +190,7 @@
 ## `admin_notices`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -787,7 +787,7 @@
 > Track user participation in campaigns
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -889,7 +889,7 @@
 ## `comm_deferred`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 11
 - Indexes: 2
 - Foreign Keys: 0
@@ -982,7 +982,7 @@
 > Track coupon redemptions by users
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -1030,7 +1030,7 @@
 > Discount coupons with regional targeting
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 23
 - Indexes: 7
 - Foreign Keys: 1
@@ -1089,7 +1089,7 @@
 > Pre-paid credit packages with regional pricing variations
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~5
 - Columns: 17
 - Indexes: 3
 - Foreign Keys: 1
@@ -1229,7 +1229,7 @@
 ## `home_loan_consent_log`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 10
 - Indexes: 3
 - Foreign Keys: 2
@@ -1332,7 +1332,7 @@
 ## `leave_balances`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 2
@@ -1371,7 +1371,7 @@
 ## `leave_types`
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~5
 - Columns: 6
 - Indexes: 1
 - Foreign Keys: 0
@@ -1478,7 +1478,7 @@
 ## `loan_calculations`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 13
 - Indexes: 3
 - Foreign Keys: 2
@@ -2094,7 +2094,7 @@
 ## `notification_preferences`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 13
 - Indexes: 1
 - Foreign Keys: 1
@@ -2174,7 +2174,7 @@
 ## `overtime_records`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 2
@@ -3174,7 +3174,7 @@
 > Marketing campaigns with regional focus
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 19
 - Indexes: 4
 - Foreign Keys: 0
@@ -3690,7 +3690,7 @@
 > AI-powered property scoring system for ranking and recommendation
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 41
 - Indexes: 8
 - Foreign Keys: 1
@@ -3869,7 +3869,7 @@
 ## `property_ranking_criteria`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 37
 - Indexes: 7
 - Foreign Keys: 1
@@ -3991,7 +3991,7 @@
 ## `property_shares`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 6
 - Indexes: 3
 - Foreign Keys: 2
@@ -4107,7 +4107,7 @@
 ## `property_verifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~6
 - Columns: 14
 - Indexes: 4
 - Foreign Keys: 2
@@ -4205,7 +4205,7 @@
 ## `property_visits`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~6
 - Columns: 11
 - Indexes: 4
 - Foreign Keys: 3
@@ -4255,7 +4255,7 @@
 ## `referrals`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 12
 - Indexes: 5
 - Foreign Keys: 2
@@ -4403,7 +4403,7 @@
 > DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -4541,7 +4541,7 @@
 ## `saved_listings`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 4
 - Indexes: 4
 - Foreign Keys: 2
@@ -4580,7 +4580,7 @@
 ## `saved_searches`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 11
 - Indexes: 2
 - Foreign Keys: 1
@@ -4620,7 +4620,7 @@
 ## `search_history`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
@@ -4659,7 +4659,7 @@
 > Tracks flagged admin activities for security review
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -5271,7 +5271,7 @@
 ## `user_favorites`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 4
 - Indexes: 5
 - Foreign Keys: 2
@@ -5535,7 +5535,7 @@
 ## `waitlist_entries`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 4
 - Indexes: 3
 - Foreign Keys: 0

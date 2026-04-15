@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-14T07:59:25.583Z
+// Generated: 2026-04-15T08:00:22.727Z
 
 export interface Database {
   admin_audit_logs: {
