@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-15T08:00:22.697Z
+> Auto-generated: 2026-04-16T08:00:11.160Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,268
+- Rows: ~14,340
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -56,7 +56,7 @@
 ## `admin_chat`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 4
 - Indexes: 2
 - Foreign Keys: 1
@@ -190,7 +190,7 @@
 ## `admin_notices`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~6
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -220,7 +220,7 @@
 ## `admin_regions`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~5
 - Columns: 6
 - Indexes: 5
 - Foreign Keys: 3
@@ -266,7 +266,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~230
+- Rows: ~251
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -301,7 +301,7 @@
 ## `admin_users`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~21
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -336,7 +336,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~439
+- Rows: ~455
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -454,7 +454,7 @@
 ## `blog_posts`
 
 **Statistics:**
-- Rows: ~116
+- Rows: ~119
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 1
@@ -537,7 +537,7 @@
 ## `broker_gps_tracking`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 15
 - Indexes: 4
 - Foreign Keys: 0
@@ -576,7 +576,7 @@
 ## `broker_gst_verifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 16
 - Indexes: 2
 - Foreign Keys: 0
@@ -614,7 +614,7 @@
 ## `broker_kyc_documents`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 18
 - Indexes: 3
 - Foreign Keys: 1
@@ -662,7 +662,7 @@
 ## `broker_kyc_verifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~6
 - Columns: 14
 - Indexes: 3
 - Foreign Keys: 0
@@ -699,7 +699,7 @@
 ## `broker_pan_verifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 11
 - Indexes: 2
 - Foreign Keys: 0
@@ -1138,7 +1138,7 @@
 > Indian districts linked to LGD state codes
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 7
 - Indexes: 6
 - Foreign Keys: 1
@@ -1275,7 +1275,7 @@
 > Real-time tracking of trending properties with high demand signals
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~5
 - Columns: 25
 - Indexes: 5
 - Foreign Keys: 1
@@ -1332,7 +1332,7 @@
 ## `leave_balances`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~53
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 2
@@ -1398,7 +1398,7 @@
 ## `lending_partners`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~5
 - Columns: 13
 - Indexes: 1
 - Foreign Keys: 0
@@ -1432,7 +1432,7 @@
 ## `listing_boosts`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~6
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 2
@@ -1786,7 +1786,7 @@
 > Scope-aware alias mappings preventing cross-city conflicts
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~10
 - Columns: 19
 - Indexes: 8
 - Foreign Keys: 0
@@ -1835,7 +1835,7 @@
 > Complete audit trail for MDM operations
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~13
 - Columns: 13
 - Indexes: 4
 - Foreign Keys: 0
@@ -1874,7 +1874,7 @@
 > MDM curation request queue with SLA tracking
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~6
 - Columns: 40
 - Indexes: 6
 - Foreign Keys: 0
@@ -1942,7 +1942,7 @@
 > Merge operation history with reversal tracking
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 0
@@ -2046,7 +2046,7 @@
 ## `moderation_history`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 11
 - Indexes: 6
 - Foreign Keys: 2
@@ -2904,7 +2904,7 @@
 > Indian postal codes with geographic links
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~8
 - Columns: 10
 - Indexes: 5
 - Foreign Keys: 3
@@ -3001,7 +3001,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~1,619
+- Rows: ~1,635
 - Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
@@ -4033,7 +4033,7 @@
 > Automated and manual property valuation tracking
 
 **Statistics:**
-- Rows: ~3
+- Rows: ~5
 - Columns: 37
 - Indexes: 6
 - Foreign Keys: 2
@@ -4303,7 +4303,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~135
+- Rows: ~136
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4403,7 +4403,7 @@
 > DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~6
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -4768,7 +4768,7 @@
 > Sub-districts/Talukas for granular location hierarchy
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~7
 - Columns: 7
 - Indexes: 5
 - Foreign Keys: 1
@@ -5206,7 +5206,7 @@
 > Identifies properties with excellent value - priced below market estimates
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 27
 - Indexes: 7
 - Foreign Keys: 2
@@ -5311,7 +5311,7 @@
 ## `user_ratings`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~6
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 3
@@ -5367,7 +5367,7 @@
 ## `user_regional_preferences`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~5
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 2
@@ -5409,7 +5409,7 @@
 ## `verification_documents`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~8
 - Columns: 15
 - Indexes: 6
 - Foreign Keys: 1
@@ -5457,7 +5457,7 @@
 ## `verification_gps_tracking`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 13
 - Indexes: 5
 - Foreign Keys: 0
@@ -5495,7 +5495,7 @@
 ## `verification_kyc`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 15
 - Indexes: 5
 - Foreign Keys: 0
@@ -5564,7 +5564,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~1,618
+- Rows: ~1,634
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

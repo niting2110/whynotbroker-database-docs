@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-15T08:00:22.700Z",
+  "generated_at": "2026-04-16T08:00:11.162Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 14268,
-      "size_bytes": 5218304,
+      "rows": 14340,
+      "size_bytes": 5226496,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 14268,
+        "row_count": 14340,
         "column_count": 9
       }
     },
@@ -293,8 +293,8 @@
       "name": "admin_chat",
       "comment": null,
       "columns": 4,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -410,7 +410,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 4
       }
     },
@@ -988,7 +988,7 @@
       "name": "admin_notices",
       "comment": null,
       "columns": 7,
-      "rows": 5,
+      "rows": 6,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -1141,7 +1141,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 6,
         "column_count": 7
       }
     },
@@ -1149,7 +1149,7 @@
       "name": "admin_regions",
       "comment": null,
       "columns": 6,
-      "rows": 2,
+      "rows": 5,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -1393,7 +1393,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 2,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -1401,8 +1401,8 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 230,
-      "size_bytes": 90112,
+      "rows": 251,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -1539,7 +1539,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 230,
+        "row_count": 251,
         "column_count": 3
       }
     },
@@ -1547,7 +1547,7 @@
       "name": "admin_users",
       "comment": null,
       "columns": 7,
-      "rows": 5,
+      "rows": 21,
       "size_bytes": 761856,
       "details": {
         "columns": [
@@ -1722,7 +1722,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 21,
         "column_count": 7
       }
     },
@@ -1730,8 +1730,8 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 439,
-      "size_bytes": 270336,
+      "rows": 455,
+      "size_bytes": 286720,
       "details": {
         "columns": [
           {
@@ -2113,7 +2113,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 439,
+        "row_count": 455,
         "column_count": 20
       }
     },
@@ -2550,7 +2550,7 @@
       "name": "blog_posts",
       "comment": null,
       "columns": 17,
-      "rows": 116,
+      "rows": 119,
       "size_bytes": 311296,
       "details": {
         "columns": [
@@ -2880,7 +2880,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 116,
+        "row_count": 119,
         "column_count": 17
       }
     },
@@ -3119,8 +3119,8 @@
       "name": "broker_gps_tracking",
       "comment": null,
       "columns": 15,
-      "rows": 0,
-      "size_bytes": 40960,
+      "rows": 5,
+      "size_bytes": 73728,
       "details": {
         "columns": [
           {
@@ -3391,7 +3391,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 15
       }
     },
@@ -3399,8 +3399,8 @@
       "name": "broker_gst_verifications",
       "comment": null,
       "columns": 16,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -3662,7 +3662,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 16
       }
     },
@@ -3670,8 +3670,8 @@
       "name": "broker_kyc_documents",
       "comment": null,
       "columns": 18,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 7,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -4014,7 +4014,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 18
       }
     },
@@ -4022,7 +4022,7 @@
       "name": "broker_kyc_verifications",
       "comment": null,
       "columns": 14,
-      "rows": 0,
+      "rows": 6,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -4294,7 +4294,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 6,
         "column_count": 14
       }
     },
@@ -4302,8 +4302,8 @@
       "name": "broker_pan_verifications",
       "comment": null,
       "columns": 11,
-      "rows": 0,
-      "size_bytes": 16384,
+      "rows": 5,
+      "size_bytes": 40960,
       "details": {
         "columns": [
           {
@@ -4510,7 +4510,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 11
       }
     },
@@ -7288,8 +7288,8 @@
       "name": "districts",
       "comment": "Indian districts linked to LGD state codes",
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 65536,
+      "rows": 7,
+      "size_bytes": 122880,
       "details": {
         "columns": [
           {
@@ -7506,7 +7506,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 7
       }
     },
@@ -8121,7 +8121,7 @@
       "name": "hot_properties",
       "comment": "Real-time tracking of trending properties with high demand signals",
       "columns": 25,
-      "rows": 3,
+      "rows": 5,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -8513,7 +8513,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 3,
+        "row_count": 5,
         "column_count": 25
       }
     },
@@ -8521,8 +8521,8 @@
       "name": "leave_balances",
       "comment": null,
       "columns": 6,
-      "rows": 5,
-      "size_bytes": 40960,
+      "rows": 53,
+      "size_bytes": 73728,
       "details": {
         "columns": [
           {
@@ -8701,7 +8701,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 53,
         "column_count": 6
       }
     },
@@ -8832,7 +8832,7 @@
       "name": "lending_partners",
       "comment": null,
       "columns": 13,
-      "rows": 2,
+      "rows": 5,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -9059,7 +9059,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 2,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -9067,8 +9067,8 @@
       "name": "listing_boosts",
       "comment": null,
       "columns": 12,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 6,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -9358,7 +9358,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 6,
         "column_count": 12
       }
     },
@@ -11338,8 +11338,8 @@
       "name": "mdm_aliases",
       "comment": "Scope-aware alias mappings preventing cross-city conflicts",
       "columns": 19,
-      "rows": 0,
-      "size_bytes": 81920,
+      "rows": 10,
+      "size_bytes": 147456,
       "details": {
         "columns": [
           {
@@ -11716,7 +11716,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 10,
         "column_count": 19
       }
     },
@@ -11724,8 +11724,8 @@
       "name": "mdm_audit_logs",
       "comment": "Complete audit trail for MDM operations",
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 40960,
+      "rows": 13,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -11946,7 +11946,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 13,
         "column_count": 13
       }
     },
@@ -11954,8 +11954,8 @@
       "name": "mdm_curation_requests",
       "comment": "MDM curation request queue with SLA tracking",
       "columns": 40,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 6,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -12543,7 +12543,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 6,
         "column_count": 40
       }
     },
@@ -12551,8 +12551,8 @@
       "name": "mdm_merge_history",
       "comment": "Merge operation history with reversal tracking",
       "columns": 12,
-      "rows": 0,
-      "size_bytes": 32768,
+      "rows": 5,
+      "size_bytes": 65536,
       "details": {
         "columns": [
           {
@@ -12780,7 +12780,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 12
       }
     },
@@ -13246,7 +13246,7 @@
       "name": "moderation_history",
       "comment": null,
       "columns": 11,
-      "rows": 5,
+      "rows": 12,
       "size_bytes": 466944,
       "details": {
         "columns": [
@@ -13536,7 +13536,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 11
       }
     },
@@ -18608,8 +18608,8 @@
       "name": "pincodes",
       "comment": "Indian postal codes with geographic links",
       "columns": 10,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 8,
+      "size_bytes": 90112,
       "details": {
         "columns": [
           {
@@ -18904,7 +18904,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 8,
         "column_count": 10
       }
     },
@@ -19203,8 +19203,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 48,
-      "rows": 1619,
-      "size_bytes": 1064960,
+      "rows": 1635,
+      "size_bytes": 1073152,
       "details": {
         "columns": [
           {
@@ -19940,7 +19940,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1619,
+        "row_count": 1635,
         "column_count": 48
       }
     },
@@ -27200,7 +27200,7 @@
       "name": "property_valuations",
       "comment": "Automated and manual property valuation tracking",
       "columns": 37,
-      "rows": 3,
+      "rows": 5,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -27782,7 +27782,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 3,
+        "row_count": 5,
         "column_count": 37
       }
     },
@@ -28960,7 +28960,7 @@
       "name": "refund_request",
       "comment": null,
       "columns": 12,
-      "rows": 135,
+      "rows": 136,
       "size_bytes": 90112,
       "details": {
         "columns": [
@@ -29268,7 +29268,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 135,
+        "row_count": 136,
         "column_count": 12
       }
     },
@@ -29587,7 +29587,7 @@
       "name": "registration_consent_log",
       "comment": "DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.",
       "columns": 7,
-      "rows": 5,
+      "rows": 6,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -29762,7 +29762,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 6,
         "column_count": 7
       }
     },
@@ -31531,8 +31531,8 @@
       "name": "sub_districts",
       "comment": "Sub-districts/Talukas for granular location hierarchy",
       "columns": 7,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 7,
+      "size_bytes": 106496,
       "details": {
         "columns": [
           {
@@ -31725,7 +31725,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 7,
         "column_count": 7
       }
     },
@@ -34453,8 +34453,8 @@
       "name": "undervalued_properties",
       "comment": "Identifies properties with excellent value - priced below market estimates",
       "columns": 27,
-      "rows": 0,
-      "size_bytes": 65536,
+      "rows": 5,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -34949,7 +34949,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 27
       }
     },
@@ -35153,7 +35153,7 @@
       "name": "user_ratings",
       "comment": null,
       "columns": 17,
-      "rows": 1,
+      "rows": 6,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -35544,7 +35544,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1,
+        "row_count": 6,
         "column_count": 17
       }
     },
@@ -35552,7 +35552,7 @@
       "name": "user_regional_preferences",
       "comment": null,
       "columns": 8,
-      "rows": 1,
+      "rows": 5,
       "size_bytes": 73728,
       "details": {
         "columns": [
@@ -35736,7 +35736,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 1,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -35744,8 +35744,8 @@
       "name": "verification_documents",
       "comment": null,
       "columns": 15,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 8,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -36072,7 +36072,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 8,
         "column_count": 15
       }
     },
@@ -36080,8 +36080,8 @@
       "name": "verification_gps_tracking",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -36347,7 +36347,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -36355,8 +36355,8 @@
       "name": "verification_kyc",
       "comment": null,
       "columns": 15,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -36659,7 +36659,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 15
       }
     },
@@ -36816,7 +36816,7 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 1618,
+      "rows": 1634,
       "size_bytes": 548864,
       "details": {
         "columns": [
@@ -37096,7 +37096,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1618,
+        "row_count": 1634,
         "column_count": 11
       }
     }
