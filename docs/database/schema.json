@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-16T08:00:11.162Z",
+  "generated_at": "2026-04-18T07:21:31.569Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 14340,
-      "size_bytes": 5226496,
+      "rows": 14348,
+      "size_bytes": 5234688,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 14340,
+        "row_count": 14348,
         "column_count": 9
       }
     },
@@ -1731,7 +1731,7 @@
       "comment": null,
       "columns": 20,
       "rows": 455,
-      "size_bytes": 286720,
+      "size_bytes": 294912,
       "details": {
         "columns": [
           {
@@ -2121,7 +2121,7 @@
       "name": "appointments",
       "comment": null,
       "columns": 18,
-      "rows": 6,
+      "rows": 18,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -2542,7 +2542,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 18,
         "column_count": 18
       }
     },
@@ -2551,7 +2551,7 @@
       "comment": null,
       "columns": 17,
       "rows": 119,
-      "size_bytes": 311296,
+      "size_bytes": 466944,
       "details": {
         "columns": [
           {
@@ -4022,7 +4022,7 @@
       "name": "broker_kyc_verifications",
       "comment": null,
       "columns": 14,
-      "rows": 6,
+      "rows": 16,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -4294,7 +4294,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 6,
+        "row_count": 16,
         "column_count": 14
       }
     },
@@ -4519,7 +4519,7 @@
       "comment": null,
       "columns": 28,
       "rows": 50,
-      "size_bytes": 131072,
+      "size_bytes": 196608,
       "details": {
         "columns": [
           {
@@ -7515,7 +7515,7 @@
       "comment": null,
       "columns": 12,
       "rows": 218,
-      "size_bytes": 131072,
+      "size_bytes": 344064,
       "details": {
         "columns": [
           {
@@ -14385,7 +14385,7 @@
       "name": "pg_bed",
       "comment": null,
       "columns": 8,
-      "rows": 10,
+      "rows": 69,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -14588,7 +14588,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 10,
+        "row_count": 69,
         "column_count": 8
       }
     },
@@ -15892,7 +15892,7 @@
       "comment": null,
       "columns": 19,
       "rows": 218,
-      "size_bytes": 114688,
+      "size_bytes": 270336,
       "details": {
         "columns": [
           {
@@ -16515,7 +16515,7 @@
       "comment": null,
       "columns": 18,
       "rows": 218,
-      "size_bytes": 229376,
+      "size_bytes": 327680,
       "details": {
         "columns": [
           {
@@ -17489,7 +17489,7 @@
       "name": "pg_room",
       "comment": null,
       "columns": 9,
-      "rows": 7,
+      "rows": 32,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -17710,7 +17710,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7,
+        "row_count": 32,
         "column_count": 9
       }
     },
@@ -19203,8 +19203,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 48,
-      "rows": 1635,
-      "size_bytes": 1073152,
+      "rows": 1650,
+      "size_bytes": 1130496,
       "details": {
         "columns": [
           {
@@ -19940,7 +19940,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1635,
+        "row_count": 1650,
         "column_count": 48
       }
     },
@@ -20990,8 +20990,8 @@
       "name": "properties",
       "comment": null,
       "columns": 137,
-      "rows": 5,
-      "size_bytes": 11689984,
+      "rows": 35,
+      "size_bytes": 11698176,
       "details": {
         "columns": [
           {
@@ -23627,7 +23627,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 35,
         "column_count": 137
       }
     },
@@ -23635,7 +23635,7 @@
       "name": "property_amenities",
       "comment": null,
       "columns": 7,
-      "rows": 12,
+      "rows": 72,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -23850,7 +23850,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 12,
+        "row_count": 72,
         "column_count": 7
       }
     },
@@ -24564,8 +24564,8 @@
       "name": "property_images",
       "comment": null,
       "columns": 15,
-      "rows": 8,
-      "size_bytes": 114688,
+      "rows": 53,
+      "size_bytes": 155648,
       "details": {
         "columns": [
           {
@@ -24898,7 +24898,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 8,
+        "row_count": 53,
         "column_count": 15
       }
     },
@@ -28961,7 +28961,7 @@
       "comment": null,
       "columns": 12,
       "rows": 136,
-      "size_bytes": 90112,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -31733,7 +31733,7 @@
       "name": "subscription_enrollments",
       "comment": null,
       "columns": 14,
-      "rows": 8,
+      "rows": 20,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -32080,7 +32080,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 8,
+        "row_count": 20,
         "column_count": 14
       }
     },
@@ -33587,7 +33587,7 @@
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
       "rows": 367,
-      "size_bytes": 679936,
+      "size_bytes": 909312,
       "details": {
         "columns": [
           {
@@ -36816,7 +36816,7 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 1634,
+      "rows": 1649,
       "size_bytes": 548864,
       "details": {
         "columns": [
@@ -37096,7 +37096,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1634,
+        "row_count": 1649,
         "column_count": 11
       }
     }

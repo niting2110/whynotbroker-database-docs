@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-16T08:00:11.160Z
+> Auto-generated: 2026-04-18T07:21:31.565Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,340
+- Rows: ~14,348
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -391,7 +391,7 @@
 ## `appointments`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~18
 - Columns: 18
 - Indexes: 6
 - Foreign Keys: 4
@@ -662,7 +662,7 @@
 ## `broker_kyc_verifications`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~16
 - Columns: 14
 - Indexes: 3
 - Foreign Keys: 0
@@ -2246,7 +2246,7 @@
 ## `pg_bed`
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~69
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
@@ -2722,7 +2722,7 @@
 ## `pg_room`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~32
 - Columns: 9
 - Indexes: 2
 - Foreign Keys: 1
@@ -3001,7 +3001,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~1,635
+- Rows: ~1,650
 - Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
@@ -3217,7 +3217,7 @@
 ## `properties`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~35
 - Columns: 137
 - Indexes: 47
 - Foreign Keys: 11
@@ -3468,7 +3468,7 @@
 ## `property_amenities`
 
 **Statistics:**
-- Rows: ~12
+- Rows: ~72
 - Columns: 7
 - Indexes: 5
 - Foreign Keys: 1
@@ -3636,7 +3636,7 @@
 ## `property_images`
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~53
 - Columns: 15
 - Indexes: 6
 - Foreign Keys: 2
@@ -4807,7 +4807,7 @@
 ## `subscription_enrollments`
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~20
 - Columns: 14
 - Indexes: 5
 - Foreign Keys: 3
@@ -5564,7 +5564,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~1,634
+- Rows: ~1,649
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2
