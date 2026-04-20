@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-18T07:21:31.565Z
+> Auto-generated: 2026-04-20T08:22:43.397Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,348
+- Rows: ~14,349
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -1786,7 +1786,7 @@
 > Scope-aware alias mappings preventing cross-city conflicts
 
 **Statistics:**
-- Rows: ~10
+- Rows: ~62
 - Columns: 19
 - Indexes: 8
 - Foreign Keys: 0
@@ -1835,7 +1835,7 @@
 > Complete audit trail for MDM operations
 
 **Statistics:**
-- Rows: ~13
+- Rows: ~26
 - Columns: 13
 - Indexes: 4
 - Foreign Keys: 0
@@ -1874,7 +1874,7 @@
 > MDM curation request queue with SLA tracking
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~16
 - Columns: 40
 - Indexes: 6
 - Foreign Keys: 0
@@ -1942,7 +1942,7 @@
 > Merge operation history with reversal tracking
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 0
@@ -2497,7 +2497,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~218
+- Rows: ~225
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2585,7 +2585,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~218
+- Rows: ~223
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -3001,7 +3001,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~1,650
+- Rows: ~1,652
 - Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
@@ -3217,7 +3217,7 @@
 ## `properties`
 
 **Statistics:**
-- Rows: ~35
+- Rows: ~53
 - Columns: 137
 - Indexes: 47
 - Foreign Keys: 11
@@ -5564,7 +5564,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~1,649
+- Rows: ~1,651
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

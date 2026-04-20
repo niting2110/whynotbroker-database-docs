@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-18T07:21:31.558Z
-> Schema Hash: `45d0372c37fec69116aec1a7dc476099`
+> Generated: 2026-04-20T08:22:43.391Z
+> Schema Hash: `69543dd6e444bd96a99da21ea59b8467`
 
 ## 📊 Quick Stats
 - **Total Tables:** 116
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1696
 - **Total Relationships:** 184
-- **Total Size:** 87.92 MB
+- **Total Size:** 88.09 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 18/4/2026, 12:51:31 pm IST
+- **Last Updated:** 20/4/2026, 1:52:43 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~14,348 | 4.99 MB |  |
+| `admin_audit_logs` | 9 | ~14,349 | 4.99 MB |  |
 | `admin_chat` | 4 | ~5 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~5 | 0.09 MB |  |
 | `admin_messages` | 6 | ~5 | 0.06 MB |  |
@@ -61,10 +61,10 @@
 | `location_boundaries` | 10 | ~0 | 0.05 MB | "Polygon boundaries for map hig..." |
 | `location_canonical_map` | 10 | ~8 | 0.15 MB | "Maps user input variations to ..." |
 | `market_trends` | 16 | ~80,000 | 43.20 MB |  |
-| `mdm_aliases` | 19 | ~10 | 0.14 MB | "Scope-aware alias mappings pre..." |
-| `mdm_audit_logs` | 13 | ~13 | 0.08 MB | "Complete audit trail for MDM o..." |
-| `mdm_curation_requests` | 40 | ~6 | 0.11 MB | "MDM curation request queue wit..." |
-| `mdm_merge_history` | 12 | ~5 | 0.06 MB | "Merge operation history with r..." |
+| `mdm_aliases` | 19 | ~62 | 0.23 MB | "Scope-aware alias mappings pre..." |
+| `mdm_audit_logs` | 13 | ~26 | 0.11 MB | "Complete audit trail for MDM o..." |
+| `mdm_curation_requests` | 40 | ~16 | 0.11 MB | "MDM curation request queue wit..." |
+| `mdm_merge_history` | 12 | ~12 | 0.06 MB | "Merge operation history with r..." |
 | `messages` | 21 | ~5 | 0.09 MB |  |
 | `moderation_history` | 11 | ~12 | 0.45 MB |  |
 | `notification_preferences` | 13 | ~5 | 0.02 MB |  |
@@ -77,9 +77,9 @@
 | `pg_owner_pnl` | 10 | ~5 | 0.04 MB |  |
 | `pg_payment_record` | 16 | ~7 | 0.06 MB |  |
 | `pg_police_verification` | 8 | ~5 | 0.06 MB |  |
-| `pg_posting` | 19 | ~218 | 0.26 MB |  |
+| `pg_posting` | 19 | ~225 | 0.26 MB |  |
 | `pg_posting_packs` | 8 | ~5 | 0.05 MB | "E13 posting credit balance for..." |
-| `pg_property` | 18 | ~218 | 0.31 MB |  |
+| `pg_property` | 18 | ~223 | 0.31 MB |  |
 | `pg_receipt` | 11 | ~7 | 0.06 MB |  |
 | `pg_rent_agreement` | 13 | ~5 | 0.06 MB |  |
 | `pg_room` | 9 | ~32 | 0.05 MB |  |
@@ -88,10 +88,10 @@
 | `pg_vacancy_event` | 9 | ~5 | 0.06 MB |  |
 | `pincodes` | 10 | ~8 | 0.09 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 48 | ~1,650 | 1.08 MB |  |
+| `profiles` | 48 | ~1,652 | 1.08 MB |  |
 | `projects` | 39 | ~5 | 0.18 MB |  |
 | `promotional_campaigns` | 19 | ~5 | 0.09 MB | "Marketing campaigns with regio..." |
-| `properties` | 137 | ~35 | 11.16 MB |  |
+| `properties` | 137 | ~53 | 11.20 MB |  |
 | `property_amenities` | 7 | ~72 | 0.11 MB |  |
 | `property_assignments` | 8 | ~5 | 1.41 MB |  |
 | `property_comparisons` | 6 | ~5 | 0.05 MB |  |
@@ -137,7 +137,7 @@
 | `verification_gps_tracking` | 13 | ~5 | 0.09 MB |  |
 | `verification_kyc` | 15 | ~5 | 0.09 MB |  |
 | `waitlist_entries` | 4 | ~5 | 0.06 MB |  |
-| `wallets` | 11 | ~1,649 | 0.52 MB | "User credit wallets with regio..." |
+| `wallets` | 11 | ~1,651 | 0.52 MB | "User credit wallets with regio..." |
 
 ## 🔌 Extensions
 - `pg_cron` (v1.6.4)

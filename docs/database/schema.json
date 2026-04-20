@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-18T07:21:31.569Z",
+  "generated_at": "2026-04-20T08:22:43.400Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,7 +19,7 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 14348,
+      "rows": 14349,
       "size_bytes": 5234688,
       "details": {
         "columns": [
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 14348,
+        "row_count": 14349,
         "column_count": 9
       }
     },
@@ -11338,8 +11338,8 @@
       "name": "mdm_aliases",
       "comment": "Scope-aware alias mappings preventing cross-city conflicts",
       "columns": 19,
-      "rows": 10,
-      "size_bytes": 147456,
+      "rows": 62,
+      "size_bytes": 237568,
       "details": {
         "columns": [
           {
@@ -11716,7 +11716,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 10,
+        "row_count": 62,
         "column_count": 19
       }
     },
@@ -11724,8 +11724,8 @@
       "name": "mdm_audit_logs",
       "comment": "Complete audit trail for MDM operations",
       "columns": 13,
-      "rows": 13,
-      "size_bytes": 81920,
+      "rows": 26,
+      "size_bytes": 114688,
       "details": {
         "columns": [
           {
@@ -11946,7 +11946,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 13,
+        "row_count": 26,
         "column_count": 13
       }
     },
@@ -11954,7 +11954,7 @@
       "name": "mdm_curation_requests",
       "comment": "MDM curation request queue with SLA tracking",
       "columns": 40,
-      "rows": 6,
+      "rows": 16,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -12543,7 +12543,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 16,
         "column_count": 40
       }
     },
@@ -12551,7 +12551,7 @@
       "name": "mdm_merge_history",
       "comment": "Merge operation history with reversal tracking",
       "columns": 12,
-      "rows": 5,
+      "rows": 12,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -12780,7 +12780,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 12
       }
     },
@@ -15891,7 +15891,7 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 218,
+      "rows": 225,
       "size_bytes": 270336,
       "details": {
         "columns": [
@@ -16295,7 +16295,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 218,
+        "row_count": 225,
         "column_count": 19
       }
     },
@@ -16514,7 +16514,7 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 218,
+      "rows": 223,
       "size_bytes": 327680,
       "details": {
         "columns": [
@@ -16917,7 +16917,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 218,
+        "row_count": 223,
         "column_count": 18
       }
     },
@@ -19203,7 +19203,7 @@
       "name": "profiles",
       "comment": null,
       "columns": 48,
-      "rows": 1650,
+      "rows": 1652,
       "size_bytes": 1130496,
       "details": {
         "columns": [
@@ -19940,7 +19940,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1650,
+        "row_count": 1652,
         "column_count": 48
       }
     },
@@ -20990,8 +20990,8 @@
       "name": "properties",
       "comment": null,
       "columns": 137,
-      "rows": 35,
-      "size_bytes": 11698176,
+      "rows": 53,
+      "size_bytes": 11747328,
       "details": {
         "columns": [
           {
@@ -23627,7 +23627,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 35,
+        "row_count": 53,
         "column_count": 137
       }
     },
@@ -36816,7 +36816,7 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 1649,
+      "rows": 1651,
       "size_bytes": 548864,
       "details": {
         "columns": [
@@ -37096,7 +37096,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1649,
+        "row_count": 1651,
         "column_count": 11
       }
     }
