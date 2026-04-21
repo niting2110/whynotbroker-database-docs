@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-20T08:22:43.400Z",
+  "generated_at": "2026-04-21T08:05:01.558Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -7,10 +7,10 @@
     "tables": 116,
     "views": 26,
     "materialized_views": 2,
-    "columns": 1696,
-    "constraints": 1136,
-    "indexes": 530,
-    "relationships": 184,
+    "columns": 1700,
+    "constraints": 1138,
+    "indexes": 532,
+    "relationships": 186,
     "functions": 834,
     "extensions": 10
   },
@@ -5839,9 +5839,9 @@
     {
       "name": "commission_events",
       "comment": null,
-      "columns": 15,
+      "columns": 19,
       "rows": 82,
-      "size_bytes": 106496,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -6008,6 +6008,50 @@
             "numeric_precision": null,
             "numeric_scale": null,
             "column_comment": "Date of loan disbursal as reported by lending partner webhook."
+          },
+          {
+            "column_name": "reviewed_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 16,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Admin who updated status. NULL for webhook-created events (SoD not applicable)."
+          },
+          {
+            "column_name": "reviewed_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 17,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Timestamp of status update action."
+          },
+          {
+            "column_name": "review_note",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 18,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Mandatory justification text (min 10 chars enforced at API layer, not DB)."
+          },
+          {
+            "column_name": "created_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 19,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": "Admin who manually created this event. NULL for bank webhook events. SoD: reviewed_by != created_by when both non-NULL."
           }
         ],
         "constraints": [
@@ -6078,7 +6122,7 @@
             "constraint_name": "ce_status_check",
             "constraint_type": "CHECK",
             "column_name": null,
-            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'confirmed'::text, 'reversed'::text])))",
+            "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'confirmed'::text, 'reversed'::text, 'paid'::text, 'disputed'::text, 'voided'::text])))",
             "constraint_comment": null
           },
           {
@@ -6103,6 +6147,13 @@
             "constraint_comment": null
           },
           {
+            "constraint_name": "commission_events_created_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "created_by",
+            "definition": "FOREIGN KEY (created_by) REFERENCES admins(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
             "constraint_name": "commission_events_partner_id_fkey",
             "constraint_type": "FOREIGN KEY",
             "column_name": "partner_id",
@@ -6114,6 +6165,13 @@
             "constraint_type": "FOREIGN KEY",
             "column_name": "property_id",
             "definition": "FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "commission_events_reviewed_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "reviewed_by",
+            "definition": "FOREIGN KEY (reviewed_by) REFERENCES admins(id) ON DELETE SET NULL",
             "constraint_comment": null
           },
           {
@@ -6178,9 +6236,42 @@
             "is_immediate": true,
             "columns": "{loan_application_id}",
             "index_definition": "CREATE UNIQUE INDEX idx_commission_events_loan_application_id ON public.commission_events USING btree (loan_application_id) WHERE (loan_application_id IS NOT NULL)"
+          },
+          {
+            "index_name": "idx_commission_events_reviewed_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{reviewed_by}",
+            "index_definition": "CREATE INDEX idx_commission_events_reviewed_by ON public.commission_events USING btree (reviewed_by) WHERE (reviewed_by IS NOT NULL)"
+          },
+          {
+            "index_name": "idx_commission_events_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_commission_events_status ON public.commission_events USING btree (status)"
           }
         ],
         "foreign_keys": [
+          {
+            "constraint_name": "commission_events_created_by_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "created_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          },
           {
             "constraint_name": "commission_events_partner_id_fkey",
             "foreign_table_name": "lending_partners",
@@ -6199,6 +6290,19 @@
             "foreign_table_name": "properties",
             "columns": [
               "property_id"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          },
+          {
+            "constraint_name": "commission_events_reviewed_by_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "reviewed_by"
             ],
             "foreign_columns": [
               "id"
@@ -6236,7 +6340,7 @@
         ],
         "triggers": [],
         "row_count": 82,
-        "column_count": 15
+        "column_count": 19
       }
     },
     {
@@ -15307,7 +15411,7 @@
       "name": "pg_payment_record",
       "comment": null,
       "columns": 16,
-      "rows": 7,
+      "rows": 9,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -15656,7 +15760,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7,
+        "row_count": 9,
         "column_count": 16
       }
     },
@@ -20991,7 +21095,7 @@
       "comment": null,
       "columns": 137,
       "rows": 53,
-      "size_bytes": 11747328,
+      "size_bytes": 11755520,
       "details": {
         "columns": [
           {
@@ -24263,7 +24367,7 @@
       "name": "property_documents",
       "comment": null,
       "columns": 12,
-      "rows": 12,
+      "rows": 15,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -24556,7 +24660,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 12,
+        "row_count": 15,
         "column_count": 12
       }
     },
@@ -25526,7 +25630,7 @@
       "name": "property_leads",
       "comment": null,
       "columns": 22,
-      "rows": 5,
+      "rows": 6,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -25954,7 +26058,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 6,
         "column_count": 22
       }
     },
@@ -26709,7 +26813,7 @@
       "name": "property_reports",
       "comment": null,
       "columns": 11,
-      "rows": 7,
+      "rows": 8,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -27001,7 +27105,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7,
+        "row_count": 8,
         "column_count": 11
       }
     },
@@ -27200,7 +27304,7 @@
       "name": "property_valuations",
       "comment": "Automated and manual property valuation tracking",
       "columns": 37,
-      "rows": 5,
+      "rows": 8,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -27782,7 +27886,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 8,
         "column_count": 37
       }
     },
@@ -27790,7 +27894,7 @@
       "name": "property_verifications",
       "comment": null,
       "columns": 14,
-      "rows": 6,
+      "rows": 9,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -28086,7 +28190,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 9,
         "column_count": 14
       }
     },
@@ -33586,7 +33690,7 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 367,
+      "rows": 381,
       "size_bytes": 909312,
       "details": {
         "columns": [
@@ -34445,7 +34549,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 367,
+        "row_count": 381,
         "column_count": 35
       }
     },
@@ -35153,7 +35257,7 @@
       "name": "user_ratings",
       "comment": null,
       "columns": 17,
-      "rows": 6,
+      "rows": 7,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -35544,7 +35648,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 7,
         "column_count": 17
       }
     },
@@ -42485,6 +42589,14 @@
     },
     {
       "fromTable": "commission_events",
+      "toTable": "admins",
+      "constraint_name": "commission_events_created_by_fkey",
+      "columns": [
+        "created_by"
+      ]
+    },
+    {
+      "fromTable": "commission_events",
       "toTable": "lending_partners",
       "constraint_name": "commission_events_partner_id_fkey",
       "columns": [
@@ -42497,6 +42609,14 @@
       "constraint_name": "commission_events_property_id_fkey",
       "columns": [
         "property_id"
+      ]
+    },
+    {
+      "fromTable": "commission_events",
+      "toTable": "admins",
+      "constraint_name": "commission_events_reviewed_by_fkey",
+      "columns": [
+        "reviewed_by"
       ]
     },
     {

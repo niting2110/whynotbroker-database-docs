@@ -703,5 +703,20 @@
       "functions": 834,
       "extensions": 10
     }
+  },
+  {
+    "timestamp": "2026-04-21T08:05:01.586Z",
+    "schema_hash": "ac0fa1d03c4d4c63cb7dfaf827cac5cb",
+    "statistics": {
+      "tables": 116,
+      "views": 26,
+      "materialized_views": 2,
+      "columns": 1700,
+      "constraints": 1138,
+      "indexes": 532,
+      "relationships": 186,
+      "functions": 834,
+      "extensions": 10
+    }
   }
 ]

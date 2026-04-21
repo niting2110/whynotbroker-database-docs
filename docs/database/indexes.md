@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-20T08:22:43.409Z
-Total Indexes: 530
+Generated: 2026-04-21T08:05:01.567Z
+Total Indexes: 532
 
 ## All Indexes
 
@@ -90,6 +90,8 @@ Total Indexes: 530
 | `commission_events` | `commission_events_pkey` | btree | id | ✓ |
 | `commission_events` | `commission_events_transaction_idx` | btree | transaction_id | — |
 | `commission_events` | `idx_commission_events_loan_application_id` | btree | loan_application_id | ✓ |
+| `commission_events` | `idx_commission_events_reviewed_by` | btree | reviewed_by | — |
+| `commission_events` | `idx_commission_events_status` | btree | status | — |
 | `coupon_usage` | `coupon_usage_coupon_id_user_id_transaction_id_key` | btree | coupon_id, user_id, transaction_id | ✓ |
 | `coupon_usage` | `coupon_usage_pkey` | btree | id | ✓ |
 | `coupon_usage` | `idx_coupon_usage_coupon` | btree | coupon_id | — |

@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-20T08:22:43.397Z
+> Auto-generated: 2026-04-21T08:05:01.556Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -923,9 +923,9 @@
 
 **Statistics:**
 - Rows: ~82
-- Columns: 15
-- Indexes: 4
-- Foreign Keys: 4
+- Columns: 19
+- Indexes: 6
+- Foreign Keys: 6
 
 ### Columns
 
@@ -946,6 +946,10 @@
 | `updated_at` | `timestamp with time zone` | NO | `now()` |
 | `loan_application_id` | `text` | YES | `—` |
 | `disbursal_date` | `date` | YES | `—` |
+| `reviewed_by` | `uuid` | YES | `—` |
+| `reviewed_at` | `timestamp with time zone` | YES | `—` |
+| `review_note` | `text` | YES | `—` |
+| `created_by` | `uuid` | YES | `—` |
 
 ### Indexes
 
@@ -955,15 +959,25 @@
 | `commission_events_pkey` | btree | id | ✓ |
 | `commission_events_transaction_idx` | btree | transaction_id | — |
 | `idx_commission_events_loan_application_id` | btree | loan_application_id | ✓ |
+| `idx_commission_events_reviewed_by` | btree | reviewed_by | — |
+| `idx_commission_events_status` | btree | status | — |
 
 ### Foreign Keys
 
+- `commission_events_created_by_fkey`:
+  - Columns: `created_by` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
 - `commission_events_partner_id_fkey`:
   - Columns: `partner_id` → `lending_partners(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
 - `commission_events_property_id_fkey`:
   - Columns: `property_id` → `properties(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `commission_events_reviewed_by_fkey`:
+  - Columns: `reviewed_by` → `admins(id)`
   - ON UPDATE: NO ACTION
   - ON DELETE: SET NULL
 - `commission_events_transaction_id_fkey`:
@@ -2405,7 +2419,7 @@
 ## `pg_payment_record`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~9
 - Columns: 16
 - Indexes: 3
 - Foreign Keys: 2
@@ -3585,7 +3599,7 @@
 ## `property_documents`
 
 **Statistics:**
-- Rows: ~12
+- Rows: ~15
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -3766,7 +3780,7 @@
 ## `property_leads`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~6
 - Columns: 22
 - Indexes: 5
 - Foreign Keys: 3
@@ -3940,7 +3954,7 @@
 ## `property_reports`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~8
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 3
@@ -4033,7 +4047,7 @@
 > Automated and manual property valuation tracking
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~8
 - Columns: 37
 - Indexes: 6
 - Foreign Keys: 2
@@ -4107,7 +4121,7 @@
 ## `property_verifications`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~9
 - Columns: 14
 - Indexes: 4
 - Foreign Keys: 2
@@ -5091,7 +5105,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~367
+- Rows: ~381
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5311,7 +5325,7 @@
 ## `user_ratings`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~7
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 3

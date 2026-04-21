@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 184
-Generated: 2026-04-20T08:22:43.409Z
+Total Relationships: 186
+Generated: 2026-04-21T08:05:01.567Z
 
 ```
 admin_audit_logs:
@@ -85,10 +85,14 @@ cities:
       columns: state_id
 
 commission_events:
+  └─→ admins (via: commission_events_created_by_fkey)
+      columns: created_by
   └─→ lending_partners (via: commission_events_partner_id_fkey)
       columns: partner_id
   └─→ properties (via: commission_events_property_id_fkey)
       columns: property_id
+  └─→ admins (via: commission_events_reviewed_by_fkey)
+      columns: reviewed_by
   └─→ transactions (via: commission_events_transaction_id_fkey)
       columns: transaction_id
   └─→ profiles (via: commission_events_user_id_fkey)

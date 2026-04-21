@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-20T08:22:43.412Z
+-- Generated: 2026-04-21T08:05:01.570Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -387,7 +387,11 @@ CREATE TABLE IF NOT EXISTS commission_events (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
   loan_application_id text,
-  disbursal_date date
+  disbursal_date date,
+  reviewed_by uuid,
+  reviewed_at timestamp with time zone,
+  review_note text,
+  created_by uuid
   ,PRIMARY KEY (id)
 );
 

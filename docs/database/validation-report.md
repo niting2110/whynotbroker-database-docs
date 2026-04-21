@@ -1,8 +1,8 @@
 # Schema Validation Report
 
-Generated: 2026-04-20T08:22:43.412Z
-Total Issues: 106
-Warnings: 36
+Generated: 2026-04-21T08:05:01.570Z
+Total Issues: 107
+Warnings: 37
 Recommendations: 70
 
 ## ⚠️ Warnings
@@ -11,6 +11,7 @@ Recommendations: 70
 |----------|-------|-------|
 | MEDIUM | `admin_roles` | Foreign key admin_roles_admin_id_fkey has no covering index |
 | MEDIUM | `admin_roles` | Foreign key admin_roles_role_id_fkey has no covering index |
+| MEDIUM | `commission_events` | Foreign key commission_events_created_by_fkey has no covering index |
 | MEDIUM | `commission_events` | Foreign key commission_events_property_id_fkey has no covering index |
 | MEDIUM | `commission_events` | Foreign key commission_events_user_id_fkey has no covering index |
 | MEDIUM | `enquiries` | Foreign key enquiries_status_updated_by_fk has no covering index |

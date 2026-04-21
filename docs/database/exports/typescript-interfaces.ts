@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-20T08:22:43.424Z
+// Generated: 2026-04-21T08:05:01.582Z
 
 export interface Database {
   admin_audit_logs: {
@@ -388,6 +388,10 @@ export interface Database {
       updated_at: string | Date;
       loan_application_id?: string;
       disbursal_date?: string | Date;
+      reviewed_by?: string;
+      reviewed_at?: string | Date;
+      review_note?: string;
+      created_by?: string;
     };
   };
 
