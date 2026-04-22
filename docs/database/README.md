@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-21T08:05:01.549Z
-> Schema Hash: `ac0fa1d03c4d4c63cb7dfaf827cac5cb`
+> Generated: 2026-04-22T08:01:42.990Z
+> Schema Hash: `3276ea0fc3a4f322d3541f44e20d9a0b`
 
 ## 📊 Quick Stats
 - **Total Tables:** 116
@@ -11,7 +11,7 @@
 - **Total Relationships:** 186
 - **Total Size:** 88.12 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 21/4/2026, 1:35:01 pm IST
+- **Last Updated:** 22/4/2026, 1:31:43 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -75,7 +75,7 @@
 | `pg_occupancy` | 8 | ~5 | 0.07 MB |  |
 | `pg_occupancy_snapshot` | 7 | ~5 | 0.04 MB |  |
 | `pg_owner_pnl` | 10 | ~5 | 0.04 MB |  |
-| `pg_payment_record` | 16 | ~9 | 0.06 MB |  |
+| `pg_payment_record` | 16 | ~34 | 0.06 MB |  |
 | `pg_police_verification` | 8 | ~5 | 0.06 MB |  |
 | `pg_posting` | 19 | ~225 | 0.26 MB |  |
 | `pg_posting_packs` | 8 | ~5 | 0.05 MB | "E13 posting credit balance for..." |
@@ -84,7 +84,7 @@
 | `pg_rent_agreement` | 13 | ~5 | 0.06 MB |  |
 | `pg_room` | 9 | ~32 | 0.05 MB |  |
 | `pg_seeker_preferences` | 8 | ~5 | 0.03 MB |  |
-| `pg_tenant` | 20 | ~5 | 0.08 MB |  |
+| `pg_tenant` | 20 | ~25 | 0.08 MB |  |
 | `pg_vacancy_event` | 9 | ~5 | 0.06 MB |  |
 | `pincodes` | 10 | ~8 | 0.09 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
@@ -168,8 +168,8 @@
 - `_st_bestsrid(geography, geography)` → integer
 - `_st_contains(geom1 geometry, geom2 geometry)` → boolean
 - `_st_containsproperly(geom1 geometry, geom2 geometry)` → boolean
-- `_st_coveredby(geom1 geometry, geom2 geometry)` → boolean
 - `_st_coveredby(geog1 geography, geog2 geography)` → boolean
+- `_st_coveredby(geom1 geometry, geom2 geometry)` → boolean
 - `_st_covers(geog1 geography, geog2 geography)` → boolean
 - `_st_covers(geom1 geometry, geom2 geometry)` → boolean
 - `_st_crosses(geom1 geometry, geom2 geometry)` → boolean
@@ -181,8 +181,8 @@
 - `_st_distanceuncached(geography, geography, double precision, boolean)` → double precision
 - `_st_dwithin(geog1 geography, geog2 geography, tolerance double precision, use_spheroid boolean DEFAULT true)` → boolean
 - `_st_dwithin(geom1 geometry, geom2 geometry, double precision)` → boolean
-- `_st_dwithinuncached(geography, geography, double precision)` → boolean
 - `_st_dwithinuncached(geography, geography, double precision, boolean)` → boolean
+- `_st_dwithinuncached(geography, geography, double precision)` → boolean
 - `_st_equals(geom1 geometry, geom2 geometry)` → boolean
 - `_st_expand(geography, double precision)` → geography
 - `_st_geomfromgml(text, integer)` → geometry
@@ -199,9 +199,9 @@
 - `_st_within(geom1 geometry, geom2 geometry)` → boolean
 - `add_credits_to_wallet(p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid)` → boolean
 - `addauth(text)` → boolean
-- `addgeometrycolumn(table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `addgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `addgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
+- `addgeometrycolumn(table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true)` → text
 - `admin_has_permission(p_permission text)` → boolean
 - `assign_property_to_admin(p_property_id uuid)` → uuid
 - `audit_admin_role_changes()` → trigger
@@ -215,8 +215,8 @@
 - `box2d_out(box2d)` → cstring
 - `box2df_in(cstring)` → box2df
 - `box2df_out(box2df)` → cstring
-- `box3d(box2d)` → box3d
 - `box3d(geometry)` → box3d
+- `box3d(box2d)` → box3d
 - `box3d_in(cstring)` → box3d
 - `box3d_out(box3d)` → cstring
 - `box3dtobox(box3d)` → box
@@ -243,11 +243,11 @@
 - `decay_property_freshness()` → integer
 - `deduct_credits_from_wallet(p_user_id uuid, p_credits integer, p_transaction_id uuid DEFAULT NULL::uuid)` → boolean
 - `disablelongtransactions()` → text
+- `dropgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying)` → text
 - `dropgeometrycolumn(table_name character varying, column_name character varying)` → text
-- `dropgeometrycolumn(schema_name character varying, table_name character varying, column_name character varying)` → text
-- `dropgeometrytable(schema_name character varying, table_name character varying)` → text
 - `dropgeometrytable(catalog_name character varying, schema_name character varying, table_name character varying)` → text
+- `dropgeometrytable(schema_name character varying, table_name character varying)` → text
 - `dropgeometrytable(table_name character varying)` → text
 - `enablelongtransactions()` → text
 - `enforce_hlcl_immutable_fields()` → trigger
@@ -263,9 +263,9 @@
 - `generate_property_description(prop_num integer)` → text
 - `generate_property_title(prop_num integer)` → text
 - `geog_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
+- `geography(bytea)` → geography
 - `geography(geography, integer, boolean)` → geography
 - `geography(geometry)` → geography
-- `geography(bytea)` → geography
 - `geography_analyze(internal)` → boolean
 - `geography_cmp(geography, geography)` → integer
 - `geography_distance_knn(geography, geography)` → double precision
@@ -298,15 +298,15 @@
 - `geom2d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom3d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
 - `geom4d_brin_inclusion_add_value(internal, internal, internal, internal)` → boolean
-- `geometry(bytea)` → geometry
 - `geometry(polygon)` → geometry
-- `geometry(path)` → geometry
-- `geometry(geography)` → geometry
-- `geometry(point)` → geometry
-- `geometry(geometry, integer, boolean)` → geometry
-- `geometry(box2d)` → geometry
-- `geometry(box3d)` → geometry
+- `geometry(bytea)` → geometry
 - `geometry(text)` → geometry
+- `geometry(box3d)` → geometry
+- `geometry(box2d)` → geometry
+- `geometry(geography)` → geometry
+- `geometry(geometry, integer, boolean)` → geometry
+- `geometry(point)` → geometry
+- `geometry(path)` → geometry
 - `geometry_above(geom1 geometry, geom2 geometry)` → boolean
 - `geometry_analyze(internal)` → boolean
 - `geometry_below(geom1 geometry, geom2 geometry)` → boolean
@@ -381,12 +381,13 @@
 - `geometry_typmod_out(integer)` → cstring
 - `geometry_within(geom1 geometry, geom2 geometry)` → boolean
 - `geometry_within_nd(geometry, geometry)` → boolean
-- `geometrytype(geography)` → text
 - `geometrytype(geometry)` → text
+- `geometrytype(geography)` → text
 - `geomfromewkb(bytea)` → geometry
 - `geomfromewkt(text)` → geometry
 - `get_admin_context(p_user_id uuid)` → TABLE(admin_id uuid, email text, roles text[], permissions text[], permissions_version integer)
 - `get_admin_region_filter(p_admin_id uuid)` → TABLE(state_id uuid, city_id uuid, locality_id uuid)
+- `get_api_secrets()` → TABLE(name text, decrypted_secret text)
 - `get_applicable_coupons(p_user_id uuid, p_region_id uuid)` → TABLE(code text, discount_type text, discount_value numeric, description text, max_discount_amount numeric, min_purchase_amount numeric)
 - `get_auth_uid()` → uuid
 - `get_current_admin_id()` → uuid
@@ -398,6 +399,7 @@
 - `get_property_city(prop_num integer)` → text
 - `get_property_stats(p_property_pid text)` → TABLE(total_views bigint, unique_session_views bigint, total_favorites bigint, unique_user_favorites bigint, last_viewed timestamp with time zone, first_listed timestamp with time zone)
 - `get_property_type(prop_num integer)` → text
+- `get_test_secrets()` → TABLE(name text, decrypted_secret text)
 - `gettransactionid()` → xid
 - `gidx_in(cstring)` → gidx
 - `gidx_out(gidx)` → cstring
@@ -430,8 +432,8 @@
 - `increment_view_count(p_property_id uuid, p_session_id text DEFAULT NULL::text)` → void
 - `increment_view_count_simple(property_id uuid, session_id text)` → void
 - `is_admin()` → boolean
-- `is_contained_2d(geometry, box2df)` → boolean
 - `is_contained_2d(box2df, box2df)` → boolean
+- `is_contained_2d(geometry, box2df)` → boolean
 - `is_contained_2d(box2df, geometry)` → boolean
 - `is_risk_analyst()` → boolean
 - `is_sql_editor()` → boolean
@@ -447,19 +449,19 @@
 - `log_price_change()` → trigger
 - `longtransactionsenabled()` → boolean
 - `overlaps_2d(box2df, geometry)` → boolean
-- `overlaps_2d(geometry, box2df)` → boolean
 - `overlaps_2d(box2df, box2df)` → boolean
+- `overlaps_2d(geometry, box2df)` → boolean
 - `overlaps_geog(geography, gidx)` → boolean
-- `overlaps_geog(gidx, gidx)` → boolean
 - `overlaps_geog(gidx, geography)` → boolean
-- `overlaps_nd(gidx, geometry)` → boolean
-- `overlaps_nd(gidx, gidx)` → boolean
+- `overlaps_geog(gidx, gidx)` → boolean
 - `overlaps_nd(geometry, gidx)` → boolean
+- `overlaps_nd(gidx, gidx)` → boolean
+- `overlaps_nd(gidx, geometry)` → boolean
 - `path(geometry)` → path
 - `pgis_asflatgeobuf_finalfn(internal)` → bytea
+- `pgis_asflatgeobuf_transfn(internal, anyelement)` → internal
 - `pgis_asflatgeobuf_transfn(internal, anyelement, boolean, text)` → internal
 - `pgis_asflatgeobuf_transfn(internal, anyelement, boolean)` → internal
-- `pgis_asflatgeobuf_transfn(internal, anyelement)` → internal
 - `pgis_asgeobuf_finalfn(internal)` → bytea
 - `pgis_asgeobuf_transfn(internal, anyelement, text)` → internal
 - `pgis_asgeobuf_transfn(internal, anyelement)` → internal
@@ -467,14 +469,14 @@
 - `pgis_asmvt_deserialfn(bytea, internal)` → internal
 - `pgis_asmvt_finalfn(internal)` → bytea
 - `pgis_asmvt_serialfn(internal)` → bytea
-- `pgis_asmvt_transfn(internal, anyelement, text)` → internal
-- `pgis_asmvt_transfn(internal, anyelement, text, integer)` → internal
 - `pgis_asmvt_transfn(internal, anyelement, text, integer, text)` → internal
+- `pgis_asmvt_transfn(internal, anyelement, text)` → internal
 - `pgis_asmvt_transfn(internal, anyelement)` → internal
 - `pgis_asmvt_transfn(internal, anyelement, text, integer, text, text)` → internal
-- `pgis_geometry_accum_transfn(internal, geometry, double precision)` → internal
-- `pgis_geometry_accum_transfn(internal, geometry)` → internal
+- `pgis_asmvt_transfn(internal, anyelement, text, integer)` → internal
 - `pgis_geometry_accum_transfn(internal, geometry, double precision, integer)` → internal
+- `pgis_geometry_accum_transfn(internal, geometry)` → internal
+- `pgis_geometry_accum_transfn(internal, geometry, double precision)` → internal
 - `pgis_geometry_clusterintersecting_finalfn(internal)` → geometry[]
 - `pgis_geometry_clusterwithin_finalfn(internal)` → geometry[]
 - `pgis_geometry_collect_finalfn(internal)` → geometry
@@ -484,8 +486,8 @@
 - `pgis_geometry_union_parallel_deserialfn(bytea, internal)` → internal
 - `pgis_geometry_union_parallel_finalfn(internal)` → geometry
 - `pgis_geometry_union_parallel_serialfn(internal)` → bytea
-- `pgis_geometry_union_parallel_transfn(internal, geometry, double precision)` → internal
 - `pgis_geometry_union_parallel_transfn(internal, geometry)` → internal
+- `pgis_geometry_union_parallel_transfn(internal, geometry, double precision)` → internal
 - `point(geometry)` → point
 - `polygon(geometry)` → polygon
 - `populate_geometry_columns(use_typmod boolean DEFAULT true)` → text

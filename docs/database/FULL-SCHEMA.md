@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-21T08:05:01.556Z
+> Auto-generated: 2026-04-22T08:01:42.997Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -2419,7 +2419,7 @@
 ## `pg_payment_record`
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~34
 - Columns: 16
 - Indexes: 3
 - Foreign Keys: 2
@@ -2810,7 +2810,7 @@
 ## `pg_tenant`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~25
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 3
