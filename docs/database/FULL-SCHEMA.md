@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-22T08:01:42.997Z
+> Auto-generated: 2026-04-23T08:06:56.016Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -2149,7 +2149,7 @@
 ## `notifications`
 
 **Statistics:**
-- Rows: ~16
+- Rows: ~41
 - Columns: 10
 - Indexes: 2
 - Foreign Keys: 1
@@ -2648,7 +2648,7 @@
 ## `pg_receipt`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~25
 - Columns: 11
 - Indexes: 3
 - Foreign Keys: 1
@@ -2869,7 +2869,7 @@
 ## `pg_vacancy_event`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~20
 - Columns: 9
 - Indexes: 3
 - Foreign Keys: 3
@@ -3780,7 +3780,7 @@
 ## `property_leads`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~26
 - Columns: 22
 - Indexes: 5
 - Foreign Keys: 3
@@ -3842,7 +3842,7 @@
 ## `property_price_history`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~25
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 2
@@ -4170,7 +4170,7 @@
 ## `property_views`
 
 **Statistics:**
-- Rows: ~11
+- Rows: ~51
 - Columns: 10
 - Indexes: 8
 - Foreign Keys: 2
@@ -4555,7 +4555,7 @@
 ## `saved_listings`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~20
 - Columns: 4
 - Indexes: 4
 - Foreign Keys: 2
@@ -4594,7 +4594,7 @@
 ## `saved_searches`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 11
 - Indexes: 2
 - Foreign Keys: 1
@@ -4634,7 +4634,7 @@
 ## `search_history`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~20
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1

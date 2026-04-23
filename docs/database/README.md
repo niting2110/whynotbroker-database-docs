@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-22T08:01:42.990Z
-> Schema Hash: `3276ea0fc3a4f322d3541f44e20d9a0b`
+> Generated: 2026-04-23T08:06:56.011Z
+> Schema Hash: `b42c0cfac83d78d3488b1e6e174ed9f9`
 
 ## 📊 Quick Stats
 - **Total Tables:** 116
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1700
 - **Total Relationships:** 186
-- **Total Size:** 88.12 MB
+- **Total Size:** 88.18 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 22/4/2026, 1:31:43 pm IST
+- **Last Updated:** 23/4/2026, 1:36:56 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -68,7 +68,7 @@
 | `messages` | 21 | ~5 | 0.09 MB |  |
 | `moderation_history` | 11 | ~12 | 0.45 MB |  |
 | `notification_preferences` | 13 | ~5 | 0.02 MB |  |
-| `notifications` | 10 | ~16 | 0.05 MB |  |
+| `notifications` | 10 | ~41 | 0.08 MB |  |
 | `overtime_records` | 8 | ~5 | 0.06 MB |  |
 | `permissions` | 6 | ~62 | 0.08 MB |  |
 | `pg_bed` | 8 | ~69 | 0.05 MB |  |
@@ -80,12 +80,12 @@
 | `pg_posting` | 19 | ~225 | 0.26 MB |  |
 | `pg_posting_packs` | 8 | ~5 | 0.05 MB | "E13 posting credit balance for..." |
 | `pg_property` | 18 | ~223 | 0.31 MB |  |
-| `pg_receipt` | 11 | ~7 | 0.06 MB |  |
+| `pg_receipt` | 11 | ~25 | 0.06 MB |  |
 | `pg_rent_agreement` | 13 | ~5 | 0.06 MB |  |
 | `pg_room` | 9 | ~32 | 0.05 MB |  |
 | `pg_seeker_preferences` | 8 | ~5 | 0.03 MB |  |
 | `pg_tenant` | 20 | ~25 | 0.08 MB |  |
-| `pg_vacancy_event` | 9 | ~5 | 0.06 MB |  |
+| `pg_vacancy_event` | 9 | ~20 | 0.06 MB |  |
 | `pincodes` | 10 | ~8 | 0.09 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
 | `profiles` | 48 | ~1,652 | 1.08 MB |  |
@@ -98,14 +98,14 @@
 | `property_documents` | 12 | ~15 | 0.08 MB |  |
 | `property_images` | 15 | ~53 | 0.15 MB |  |
 | `property_intelligence_scores` | 41 | ~5 | 0.14 MB | "AI-powered property scoring sy..." |
-| `property_leads` | 22 | ~6 | 0.09 MB |  |
-| `property_price_history` | 7 | ~5 | 0.06 MB |  |
+| `property_leads` | 22 | ~26 | 0.09 MB |  |
+| `property_price_history` | 7 | ~25 | 0.06 MB |  |
 | `property_ranking_criteria` | 37 | ~5 | 0.13 MB |  |
 | `property_reports` | 11 | ~8 | 0.09 MB |  |
 | `property_shares` | 6 | ~7 | 0.06 MB |  |
 | `property_valuations` | 37 | ~8 | 0.11 MB | "Automated and manual property ..." |
 | `property_verifications` | 14 | ~9 | 0.08 MB |  |
-| `property_views` | 10 | ~11 | 0.14 MB |  |
+| `property_views` | 10 | ~51 | 0.17 MB |  |
 | `property_visits` | 11 | ~6 | 0.08 MB |  |
 | `referrals` | 12 | ~5 | 0.09 MB |  |
 | `refund_request` | 12 | ~136 | 0.13 MB |  |
@@ -114,9 +114,9 @@
 | `role_permissions` | 2 | ~90 | 0.02 MB |  |
 | `role_platform_access` | 16 | ~125 | 0.13 MB |  |
 | `roles` | 7 | ~39 | 0.06 MB |  |
-| `saved_listings` | 4 | ~5 | 0.07 MB |  |
-| `saved_searches` | 11 | ~5 | 0.05 MB |  |
-| `search_history` | 8 | ~5 | 0.05 MB |  |
+| `saved_listings` | 4 | ~20 | 0.07 MB |  |
+| `saved_searches` | 11 | ~15 | 0.05 MB |  |
+| `search_history` | 8 | ~20 | 0.05 MB |  |
 | `security_flags` | 9 | ~5 | 0.11 MB | "Tracks flagged admin activitie..." |
 | `spatial_ref_sys` | 5 | ~8,500 | 6.98 MB |  |
 | `states` | 7 | ~36 | 0.13 MB | "Indian states with LGD (Local ..." |

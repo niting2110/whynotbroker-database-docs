@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T08:01:42.999Z",
+  "generated_at": "2026-04-23T08:06:56.020Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -13855,8 +13855,8 @@
       "name": "notifications",
       "comment": null,
       "columns": 10,
-      "rows": 16,
-      "size_bytes": 49152,
+      "rows": 41,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -14066,7 +14066,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 16,
+        "row_count": 41,
         "column_count": 10
       }
     },
@@ -17029,7 +17029,7 @@
       "name": "pg_receipt",
       "comment": null,
       "columns": 11,
-      "rows": 7,
+      "rows": 25,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -17268,7 +17268,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7,
+        "row_count": 25,
         "column_count": 11
       }
     },
@@ -18447,7 +18447,7 @@
       "name": "pg_vacancy_event",
       "comment": null,
       "columns": 9,
-      "rows": 5,
+      "rows": 20,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -18704,7 +18704,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 20,
         "column_count": 9
       }
     },
@@ -25630,7 +25630,7 @@
       "name": "property_leads",
       "comment": null,
       "columns": 22,
-      "rows": 6,
+      "rows": 26,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -26058,7 +26058,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 6,
+        "row_count": 26,
         "column_count": 22
       }
     },
@@ -26066,7 +26066,7 @@
       "name": "property_price_history",
       "comment": null,
       "columns": 7,
-      "rows": 5,
+      "rows": 25,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -26246,7 +26246,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 25,
         "column_count": 7
       }
     },
@@ -28198,8 +28198,8 @@
       "name": "property_views",
       "comment": null,
       "columns": 10,
-      "rows": 11,
-      "size_bytes": 147456,
+      "rows": 51,
+      "size_bytes": 180224,
       "details": {
         "columns": [
           {
@@ -28475,7 +28475,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 11,
+        "row_count": 51,
         "column_count": 10
       }
     },
@@ -30458,7 +30458,7 @@
       "name": "saved_listings",
       "comment": null,
       "columns": 4,
-      "rows": 5,
+      "rows": 20,
       "size_bytes": 73728,
       "details": {
         "columns": [
@@ -30643,7 +30643,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 20,
         "column_count": 4
       }
     },
@@ -30651,7 +30651,7 @@
       "name": "saved_searches",
       "comment": null,
       "columns": 11,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -30866,7 +30866,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 11
       }
     },
@@ -30874,7 +30874,7 @@
       "name": "search_history",
       "comment": null,
       "columns": 8,
-      "rows": 5,
+      "rows": 20,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -31035,7 +31035,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 20,
         "column_count": 8
       }
     },
