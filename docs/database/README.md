@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-23T08:06:56.011Z
-> Schema Hash: `b42c0cfac83d78d3488b1e6e174ed9f9`
+> Generated: 2026-04-26T07:49:49.042Z
+> Schema Hash: `eed34aec4ef77e7eb6197ca7a320f0f7`
 
 ## 📊 Quick Stats
 - **Total Tables:** 116
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1700
 - **Total Relationships:** 186
-- **Total Size:** 88.18 MB
+- **Total Size:** 88.35 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 23/4/2026, 1:36:56 pm IST
+- **Last Updated:** 26/4/2026, 1:19:49 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,18 +22,18 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~14,349 | 4.99 MB |  |
+| `admin_audit_logs` | 9 | ~14,490 | 5.05 MB |  |
 | `admin_chat` | 4 | ~5 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~5 | 0.09 MB |  |
 | `admin_messages` | 6 | ~5 | 0.06 MB |  |
 | `admin_notices` | 7 | ~6 | 0.06 MB |  |
 | `admin_regions` | 6 | ~5 | 0.09 MB |  |
-| `admin_roles` | 3 | ~251 | 0.09 MB |  |
+| `admin_roles` | 3 | ~254 | 0.09 MB |  |
 | `admin_users` | 7 | ~21 | 0.73 MB |  |
 | `admins` | 20 | ~455 | 0.28 MB |  |
 | `appointments` | 18 | ~18 | 0.11 MB |  |
 | `blog_posts` | 17 | ~119 | 0.45 MB |  |
-| `broker_aadhaar_verifications` | 13 | ~0 | 0.02 MB |  |
+| `broker_aadhaar_verifications` | 13 | ~5 | 0.05 MB |  |
 | `broker_gps_tracking` | 15 | ~5 | 0.07 MB |  |
 | `broker_gst_verifications` | 16 | ~5 | 0.05 MB |  |
 | `broker_kyc_documents` | 18 | ~7 | 0.06 MB |  |
@@ -58,7 +58,7 @@
 | `loan_calculations` | 13 | ~5 | 0.06 MB |  |
 | `localities` | 28 | ~115 | 0.26 MB | "Micro-locations within cities ..." |
 | `locality_amenities` | 10 | ~20,013 | 6.53 MB |  |
-| `location_boundaries` | 10 | ~0 | 0.05 MB | "Polygon boundaries for map hig..." |
+| `location_boundaries` | 10 | ~5 | 0.10 MB | "Polygon boundaries for map hig..." |
 | `location_canonical_map` | 10 | ~8 | 0.15 MB | "Maps user input variations to ..." |
 | `market_trends` | 16 | ~80,000 | 43.20 MB |  |
 | `mdm_aliases` | 19 | ~62 | 0.23 MB | "Scope-aware alias mappings pre..." |
@@ -70,7 +70,7 @@
 | `notification_preferences` | 13 | ~5 | 0.02 MB |  |
 | `notifications` | 10 | ~41 | 0.08 MB |  |
 | `overtime_records` | 8 | ~5 | 0.06 MB |  |
-| `permissions` | 6 | ~62 | 0.08 MB |  |
+| `permissions` | 6 | ~72 | 0.08 MB |  |
 | `pg_bed` | 8 | ~69 | 0.05 MB |  |
 | `pg_occupancy` | 8 | ~5 | 0.07 MB |  |
 | `pg_occupancy_snapshot` | 7 | ~5 | 0.04 MB |  |
@@ -123,11 +123,11 @@
 | `sub_districts` | 7 | ~7 | 0.10 MB | "Sub-districts/Talukas for gran..." |
 | `subscription_enrollments` | 14 | ~20 | 0.09 MB |  |
 | `subscription_plans` | 29 | ~22 | 0.16 MB | "Recurring subscription plans w..." |
-| `system_health_metrics` | 6 | ~2 | 0.05 MB |  |
+| `system_health_metrics` | 6 | ~5 | 0.05 MB |  |
 | `system_settings` | 8 | ~6 | 0.05 MB | "Platform-wide configuration ke..." |
-| `team_broadcasts` | 8 | ~1 | 0.06 MB |  |
-| `team_messages` | 8 | ~0 | 0.05 MB |  |
-| `team_registry` | 10 | ~1 | 0.06 MB |  |
+| `team_broadcasts` | 8 | ~5 | 0.06 MB |  |
+| `team_messages` | 8 | ~5 | 0.09 MB |  |
+| `team_registry` | 10 | ~5 | 0.06 MB |  |
 | `transactions` | 35 | ~381 | 0.87 MB | "All financial transactions wit..." |
 | `undervalued_properties` | 27 | ~5 | 0.13 MB | "Identifies properties with exc..." |
 | `user_favorites` | 4 | ~5 | 0.09 MB |  |

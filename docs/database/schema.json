@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-23T08:06:56.020Z",
+  "generated_at": "2026-04-26T07:49:49.051Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 14349,
-      "size_bytes": 5234688,
+      "rows": 14490,
+      "size_bytes": 5292032,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 14349,
+        "row_count": 14490,
         "column_count": 9
       }
     },
@@ -1401,7 +1401,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 251,
+      "rows": 254,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -1539,7 +1539,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 251,
+        "row_count": 254,
         "column_count": 3
       }
     },
@@ -2888,8 +2888,8 @@
       "name": "broker_aadhaar_verifications",
       "comment": null,
       "columns": 13,
-      "rows": 0,
-      "size_bytes": 24576,
+      "rows": 5,
+      "size_bytes": 49152,
       "details": {
         "columns": [
           {
@@ -3111,7 +3111,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 13
       }
     },
@@ -10552,8 +10552,8 @@
       "name": "location_boundaries",
       "comment": "Polygon boundaries for map highlighting",
       "columns": 10,
-      "rows": 0,
-      "size_bytes": 57344,
+      "rows": 5,
+      "size_bytes": 106496,
       "details": {
         "columns": [
           {
@@ -10796,7 +10796,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 10
       }
     },
@@ -14280,7 +14280,7 @@
       "name": "permissions",
       "comment": null,
       "columns": 6,
-      "rows": 62,
+      "rows": 72,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -14481,7 +14481,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 62,
+        "row_count": 72,
         "column_count": 6
       }
     },
@@ -32717,7 +32717,7 @@
       "name": "system_health_metrics",
       "comment": null,
       "columns": 6,
-      "rows": 2,
+      "rows": 5,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -32842,7 +32842,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 2,
+        "row_count": 5,
         "column_count": 6
       }
     },
@@ -33047,7 +33047,7 @@
       "name": "team_broadcasts",
       "comment": null,
       "columns": 8,
-      "rows": 1,
+      "rows": 5,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -33232,7 +33232,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 1,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -33240,8 +33240,8 @@
       "name": "team_messages",
       "comment": null,
       "columns": 8,
-      "rows": 0,
-      "size_bytes": 49152,
+      "rows": 5,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -33445,7 +33445,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 0,
+        "row_count": 5,
         "column_count": 8
       }
     },
@@ -33453,7 +33453,7 @@
       "name": "team_registry",
       "comment": null,
       "columns": 10,
-      "rows": 1,
+      "rows": 5,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -33682,7 +33682,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1,
+        "row_count": 5,
         "column_count": 10
       }
     },

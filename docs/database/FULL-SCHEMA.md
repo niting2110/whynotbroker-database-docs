@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-23T08:06:56.016Z
+> Auto-generated: 2026-04-26T07:49:49.048Z
 > Total Tables: 116
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,349
+- Rows: ~14,490
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -266,7 +266,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~251
+- Rows: ~254
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -502,7 +502,7 @@
 ## `broker_aadhaar_verifications`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 13
 - Indexes: 2
 - Foreign Keys: 0
@@ -1660,7 +1660,7 @@
 > Polygon boundaries for map highlighting
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 10
 - Indexes: 6
 - Foreign Keys: 0
@@ -2230,7 +2230,7 @@
 ## `permissions`
 
 **Statistics:**
-- Rows: ~62
+- Rows: ~72
 - Columns: 6
 - Indexes: 4
 - Foreign Keys: 0
@@ -4939,7 +4939,7 @@
 ## `system_health_metrics`
 
 **Statistics:**
-- Rows: ~2
+- Rows: ~5
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 0
@@ -5006,7 +5006,7 @@
 ## `team_broadcasts`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~5
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 0
@@ -5037,7 +5037,7 @@
 ## `team_messages`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~5
 - Columns: 8
 - Indexes: 5
 - Foreign Keys: 0
@@ -5070,7 +5070,7 @@
 ## `team_registry`
 
 **Statistics:**
-- Rows: ~1
+- Rows: ~5
 - Columns: 10
 - Indexes: 3
 - Foreign Keys: 0
