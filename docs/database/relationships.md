@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
-Total Relationships: 186
-Generated: 2026-04-26T07:49:49.059Z
+Total Relationships: 188
+Generated: 2026-04-27T08:38:46.562Z
 
 ```
 admin_audit_logs:
@@ -489,6 +489,12 @@ subscription_enrollments:
 subscription_plans:
   └─→ regions (via: subscription_plans_region_id_fkey)
       columns: region_id
+
+support_tickets:
+  └─→ admins (via: support_tickets_assigned_to_fkey)
+      columns: assigned_to
+  └─→ profiles (via: support_tickets_created_by_fkey)
+      columns: created_by
 
 system_settings:
   └─→ admins (via: system_settings_updated_by_fkey)

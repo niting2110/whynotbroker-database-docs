@@ -4,7 +4,7 @@
 Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 
 ## Database Schema Summary
-**Total Tables:** 116
+**Total Tables:** 117
 **PostgreSQL Version:** 17.6
 
 ## Available Tables
@@ -109,6 +109,7 @@ Expert PostgreSQL/Supabase developer working with WHYNOTBROKER database.
 - sub_districts (7 columns)
 - subscription_enrollments (14 columns)
 - subscription_plans (29 columns)
+- support_tickets (15 columns)
 - system_health_metrics (6 columns)
 - system_settings (8 columns)
 - team_broadcasts (8 columns)

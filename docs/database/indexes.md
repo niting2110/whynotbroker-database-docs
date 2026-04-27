@@ -1,7 +1,7 @@
 # Index Performance Report
 
-Generated: 2026-04-26T07:49:49.060Z
-Total Indexes: 532
+Generated: 2026-04-27T08:38:46.563Z
+Total Indexes: 539
 
 ## All Indexes
 
@@ -462,6 +462,13 @@ Total Indexes: 532
 | `subscription_plans` | `idx_subscription_plans_user_type` | btree | user_type | — |
 | `subscription_plans` | `subscription_plans_pkey` | btree | id | ✓ |
 | `subscription_plans` | `subscription_plans_plan_code_key` | btree | plan_code | ✓ |
+| `support_tickets` | `idx_support_tickets_assigned_to` | btree | assigned_to | — |
+| `support_tickets` | `idx_support_tickets_created_at` | btree | created_at | — |
+| `support_tickets` | `idx_support_tickets_created_by` | btree | created_by | — |
+| `support_tickets` | `idx_support_tickets_priority` | btree | priority | — |
+| `support_tickets` | `idx_support_tickets_status` | btree | status | — |
+| `support_tickets` | `support_tickets_pkey` | btree | id | ✓ |
+| `support_tickets` | `support_tickets_ticket_ref_key` | btree | ticket_ref | ✓ |
 | `system_health_metrics` | `idx_health_metrics_name` | btree | metric_name, recorded_at | — |
 | `system_health_metrics` | `system_health_metrics_pkey` | btree | id | ✓ |
 | `system_settings` | `system_settings_key_key` | btree | key | ✓ |

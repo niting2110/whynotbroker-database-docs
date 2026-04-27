@@ -1,6 +1,6 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-26T07:49:49.048Z
-> Total Tables: 116
+> Auto-generated: 2026-04-27T08:38:46.552Z
+> Total Tables: 117
 > PostgreSQL: 17.6
 
 ---
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,490
+- Rows: ~14,806
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -266,7 +266,7 @@
 ## `admin_roles`
 
 **Statistics:**
-- Rows: ~254
+- Rows: ~290
 - Columns: 3
 - Indexes: 1
 - Foreign Keys: 2
@@ -336,7 +336,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~455
+- Rows: ~515
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -922,7 +922,7 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~82
+- Rows: ~94
 - Columns: 19
 - Indexes: 6
 - Foreign Keys: 6
@@ -1192,7 +1192,7 @@
 ## `enquiries`
 
 **Statistics:**
-- Rows: ~218
+- Rows: ~248
 - Columns: 12
 - Indexes: 4
 - Foreign Keys: 3
@@ -2511,7 +2511,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~225
+- Rows: ~255
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2599,7 +2599,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~223
+- Rows: ~253
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -3015,7 +3015,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~1,652
+- Rows: ~1,880
 - Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
@@ -4317,7 +4317,7 @@
 ## `refund_request`
 
 **Statistics:**
-- Rows: ~136
+- Rows: ~160
 - Columns: 12
 - Indexes: 2
 - Foreign Keys: 3
@@ -4936,6 +4936,59 @@
 
 ---
 
+## `support_tickets`
+
+**Statistics:**
+- Rows: ~0
+- Columns: 15
+- Indexes: 7
+- Foreign Keys: 2
+
+### Columns
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|--------|
+| `id` | `uuid` | NO | `gen_random_uuid()` |
+| `ticket_ref` | `text` | NO | `—` |
+| `subject` | `text` | NO | `—` |
+| `body` | `text` | NO | `—` |
+| `status` | `text` | NO | `'open'::text` |
+| `priority` | `text` | NO | `'normal'::text` |
+| `category` | `text` | NO | `'general'::text` |
+| `created_by` | `uuid` | YES | `—` |
+| `assigned_to` | `uuid` | YES | `—` |
+| `resolution_note` | `text` | YES | `—` |
+| `change_log` | `jsonb` | NO | `'[]'::jsonb` |
+| `resolved_at` | `timestamp with time zone` | YES | `—` |
+| `first_response_at` | `timestamp with time zone` | YES | `—` |
+| `created_at` | `timestamp with time zone` | NO | `now()` |
+| `updated_at` | `timestamp with time zone` | NO | `now()` |
+
+### Indexes
+
+| Name | Type | Columns | Unique |
+|------|------|---------|--------|
+| `idx_support_tickets_assigned_to` | btree | assigned_to | — |
+| `idx_support_tickets_created_at` | btree | created_at | — |
+| `idx_support_tickets_created_by` | btree | created_by | — |
+| `idx_support_tickets_priority` | btree | priority | — |
+| `idx_support_tickets_status` | btree | status | — |
+| `support_tickets_pkey` | btree | id | ✓ |
+| `support_tickets_ticket_ref_key` | btree | ticket_ref | ✓ |
+
+### Foreign Keys
+
+- `support_tickets_assigned_to_fkey`:
+  - Columns: `assigned_to` → `admins(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+- `support_tickets_created_by_fkey`:
+  - Columns: `created_by` → `profiles(id)`
+  - ON UPDATE: NO ACTION
+  - ON DELETE: SET NULL
+
+---
+
 ## `system_health_metrics`
 
 **Statistics:**
@@ -5105,7 +5158,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~381
+- Rows: ~435
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5578,7 +5631,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~1,651
+- Rows: ~1,879
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2

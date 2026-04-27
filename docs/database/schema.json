@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-04-26T07:49:49.051Z",
+  "generated_at": "2026-04-27T08:38:46.554Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
   "statistics": {
-    "tables": 116,
+    "tables": 117,
     "views": 26,
     "materialized_views": 2,
-    "columns": 1700,
-    "constraints": 1138,
-    "indexes": 532,
-    "relationships": 186,
-    "functions": 836,
+    "columns": 1715,
+    "constraints": 1155,
+    "indexes": 539,
+    "relationships": 188,
+    "functions": 838,
     "extensions": 10
   },
   "tables": [
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 14490,
-      "size_bytes": 5292032,
+      "rows": 14806,
+      "size_bytes": 5570560,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 14490,
+        "row_count": 14806,
         "column_count": 9
       }
     },
@@ -1401,7 +1401,7 @@
       "name": "admin_roles",
       "comment": null,
       "columns": 3,
-      "rows": 254,
+      "rows": 290,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -1539,7 +1539,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 254,
+        "row_count": 290,
         "column_count": 3
       }
     },
@@ -1730,7 +1730,7 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 455,
+      "rows": 515,
       "size_bytes": 294912,
       "details": {
         "columns": [
@@ -2113,7 +2113,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 455,
+        "row_count": 515,
         "column_count": 20
       }
     },
@@ -5840,7 +5840,7 @@
       "name": "commission_events",
       "comment": null,
       "columns": 19,
-      "rows": 82,
+      "rows": 94,
       "size_bytes": 131072,
       "details": {
         "columns": [
@@ -6339,7 +6339,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 82,
+        "row_count": 94,
         "column_count": 19
       }
     },
@@ -7618,7 +7618,7 @@
       "name": "enquiries",
       "comment": null,
       "columns": 12,
-      "rows": 218,
+      "rows": 248,
       "size_bytes": 344064,
       "details": {
         "columns": [
@@ -7939,7 +7939,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 218,
+        "row_count": 248,
         "column_count": 12
       }
     },
@@ -15995,7 +15995,7 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 225,
+      "rows": 255,
       "size_bytes": 270336,
       "details": {
         "columns": [
@@ -16399,7 +16399,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 225,
+        "row_count": 255,
         "column_count": 19
       }
     },
@@ -16618,7 +16618,7 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 223,
+      "rows": 253,
       "size_bytes": 327680,
       "details": {
         "columns": [
@@ -17021,7 +17021,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 223,
+        "row_count": 253,
         "column_count": 18
       }
     },
@@ -19307,8 +19307,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 48,
-      "rows": 1652,
-      "size_bytes": 1130496,
+      "rows": 1880,
+      "size_bytes": 1228800,
       "details": {
         "columns": [
           {
@@ -20044,7 +20044,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1652,
+        "row_count": 1880,
         "column_count": 48
       }
     },
@@ -29064,7 +29064,7 @@
       "name": "refund_request",
       "comment": null,
       "columns": 12,
-      "rows": 136,
+      "rows": 160,
       "size_bytes": 131072,
       "details": {
         "columns": [
@@ -29372,7 +29372,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 136,
+        "row_count": 160,
         "column_count": 12
       }
     },
@@ -32714,6 +32714,421 @@
       }
     },
     {
+      "name": "support_tickets",
+      "comment": null,
+      "columns": 15,
+      "rows": 0,
+      "size_bytes": 65536,
+      "details": {
+        "columns": [
+          {
+            "column_name": "id",
+            "data_type": "uuid",
+            "is_nullable": "NO",
+            "column_default": "gen_random_uuid()",
+            "ordinal_position": 1,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "ticket_ref",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 2,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "subject",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 3,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "body",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": null,
+            "ordinal_position": 4,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "status",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'open'::text",
+            "ordinal_position": 5,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "priority",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'normal'::text",
+            "ordinal_position": 6,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "category",
+            "data_type": "text",
+            "is_nullable": "NO",
+            "column_default": "'general'::text",
+            "ordinal_position": 7,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_by",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 8,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "assigned_to",
+            "data_type": "uuid",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 9,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolution_note",
+            "data_type": "text",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 10,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "change_log",
+            "data_type": "jsonb",
+            "is_nullable": "NO",
+            "column_default": "'[]'::jsonb",
+            "ordinal_position": 11,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "resolved_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 12,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "first_response_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "YES",
+            "column_default": null,
+            "ordinal_position": 13,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "created_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 14,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          },
+          {
+            "column_name": "updated_at",
+            "data_type": "timestamp with time zone",
+            "is_nullable": "NO",
+            "column_default": "now()",
+            "ordinal_position": 15,
+            "character_maximum_length": null,
+            "numeric_precision": null,
+            "numeric_scale": null,
+            "column_comment": null
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_name": "2200_157331_11_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_14_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_15_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_1_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_2_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_3_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_4_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_5_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_6_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "2200_157331_7_not_null",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": null,
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_category_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((category = ANY (ARRAY['general'::text, 'payment'::text, 'listing'::text, 'account'::text, 'fraud'::text, 'compliance'::text, 'other'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_priority_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((priority = ANY (ARRAY['low'::text, 'normal'::text, 'high'::text, 'urgent'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_status_check",
+            "constraint_type": "CHECK",
+            "column_name": null,
+            "definition": "CHECK ((status = ANY (ARRAY['open'::text, 'in_progress'::text, 'pending_user'::text, 'resolved'::text, 'closed'::text, 'spam'::text])))",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_assigned_to_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "assigned_to",
+            "definition": "FOREIGN KEY (assigned_to) REFERENCES admins(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_created_by_fkey",
+            "constraint_type": "FOREIGN KEY",
+            "column_name": "created_by",
+            "definition": "FOREIGN KEY (created_by) REFERENCES profiles(id) ON DELETE SET NULL",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_pkey",
+            "constraint_type": "PRIMARY KEY",
+            "column_name": "id",
+            "definition": "PRIMARY KEY (id)",
+            "constraint_comment": null
+          },
+          {
+            "constraint_name": "support_tickets_ticket_ref_key",
+            "constraint_type": "UNIQUE",
+            "column_name": "ticket_ref",
+            "definition": "UNIQUE (ticket_ref)",
+            "constraint_comment": null
+          }
+        ],
+        "indexes": [
+          {
+            "index_name": "idx_support_tickets_assigned_to",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{assigned_to}",
+            "index_definition": "CREATE INDEX idx_support_tickets_assigned_to ON public.support_tickets USING btree (assigned_to)"
+          },
+          {
+            "index_name": "idx_support_tickets_created_at",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_at}",
+            "index_definition": "CREATE INDEX idx_support_tickets_created_at ON public.support_tickets USING btree (created_at DESC)"
+          },
+          {
+            "index_name": "idx_support_tickets_created_by",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{created_by}",
+            "index_definition": "CREATE INDEX idx_support_tickets_created_by ON public.support_tickets USING btree (created_by)"
+          },
+          {
+            "index_name": "idx_support_tickets_priority",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{priority}",
+            "index_definition": "CREATE INDEX idx_support_tickets_priority ON public.support_tickets USING btree (priority)"
+          },
+          {
+            "index_name": "idx_support_tickets_status",
+            "index_type": "btree",
+            "is_unique": false,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{status}",
+            "index_definition": "CREATE INDEX idx_support_tickets_status ON public.support_tickets USING btree (status)"
+          },
+          {
+            "index_name": "support_tickets_pkey",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": true,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{id}",
+            "index_definition": "CREATE UNIQUE INDEX support_tickets_pkey ON public.support_tickets USING btree (id)"
+          },
+          {
+            "index_name": "support_tickets_ticket_ref_key",
+            "index_type": "btree",
+            "is_unique": true,
+            "is_primary": false,
+            "is_exclusion": false,
+            "is_immediate": true,
+            "columns": "{ticket_ref}",
+            "index_definition": "CREATE UNIQUE INDEX support_tickets_ticket_ref_key ON public.support_tickets USING btree (ticket_ref)"
+          }
+        ],
+        "foreign_keys": [
+          {
+            "constraint_name": "support_tickets_assigned_to_fkey",
+            "foreign_table_name": "admins",
+            "columns": [
+              "assigned_to"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          },
+          {
+            "constraint_name": "support_tickets_created_by_fkey",
+            "foreign_table_name": "profiles",
+            "columns": [
+              "created_by"
+            ],
+            "foreign_columns": [
+              "id"
+            ],
+            "update_rule": "NO ACTION",
+            "delete_rule": "SET NULL",
+            "comment": null
+          }
+        ],
+        "triggers": [
+          {
+            "trigger_name": "set_ticket_ref",
+            "event_manipulation": "INSERT",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION generate_ticket_ref()",
+            "trigger_comment": null
+          },
+          {
+            "trigger_name": "update_support_tickets_updated_at",
+            "event_manipulation": "UPDATE",
+            "action_timing": "BEFORE",
+            "action_statement": "EXECUTE FUNCTION update_support_ticket_timestamp()",
+            "trigger_comment": null
+          }
+        ],
+        "row_count": 0,
+        "column_count": 15
+      }
+    },
+    {
       "name": "system_health_metrics",
       "comment": null,
       "columns": 6,
@@ -33690,7 +34105,7 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 381,
+      "rows": 435,
       "size_bytes": 909312,
       "details": {
         "columns": [
@@ -34549,7 +34964,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 381,
+        "row_count": 435,
         "column_count": 35
       }
     },
@@ -36920,8 +37335,8 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 1651,
-      "size_bytes": 548864,
+      "rows": 1879,
+      "size_bytes": 581632,
       "details": {
         "columns": [
           {
@@ -37200,7 +37615,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1651,
+        "row_count": 1879,
         "column_count": 11
       }
     }
@@ -37321,7 +37736,11 @@
       "view_comment": null
     }
   ],
-  "sequences": [],
+  "sequences": [
+    {
+      "sequence_name": "support_ticket_seq"
+    }
+  ],
   "extensions": [
     {
       "extname": "pg_cron",
@@ -37649,15 +38068,15 @@
     },
     {
       "function_name": "addgeometrycolumn",
-      "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
-    },
-    {
-      "function_name": "addgeometrycolumn",
       "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
+    },
+    {
+      "function_name": "addgeometrycolumn",
+      "arguments": "schema_name character varying, table_name character varying, column_name character varying, new_srid integer, new_type character varying, new_dim integer, use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: schema_name, table_name, column_name, srid, type, dimension, use_typmod=true - Adds a geometry column to an existing table."
     },
     {
       "function_name": "addgeometrycolumn",
@@ -37841,15 +38260,15 @@
     },
     {
       "function_name": "checkauth",
-      "arguments": "text, text, text",
-      "return_type": "integer",
-      "function_comment": "args: a_schema_name, a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
-    },
-    {
-      "function_name": "checkauth",
       "arguments": "text, text",
       "return_type": "integer",
       "function_comment": "args: a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
+    },
+    {
+      "function_name": "checkauth",
+      "arguments": "text, text, text",
+      "return_type": "integer",
+      "function_comment": "args: a_schema_name, a_table_name, a_key_column_name - Creates a trigger on a table to prevent/allow updates and deletes of rows based on authorization token."
     },
     {
       "function_name": "checkauthtrigger",
@@ -37859,7 +38278,7 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "box2df, geometry",
+      "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -37871,7 +38290,7 @@
     },
     {
       "function_name": "contains_2d",
-      "arguments": "geometry, box2df",
+      "arguments": "box2df, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -37919,21 +38338,21 @@
     },
     {
       "function_name": "dropgeometrycolumn",
-      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying",
-      "return_type": "text",
-      "function_comment": "args: catalog_name, schema_name, table_name, column_name - Removes a geometry column from a spatial table."
-    },
-    {
-      "function_name": "dropgeometrycolumn",
       "arguments": "table_name character varying, column_name character varying",
       "return_type": "text",
       "function_comment": "args: table_name, column_name - Removes a geometry column from a spatial table."
     },
     {
-      "function_name": "dropgeometrytable",
-      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying",
+      "function_name": "dropgeometrycolumn",
+      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying, column_name character varying",
       "return_type": "text",
-      "function_comment": "args: catalog_name, schema_name, table_name - Drops a table and all its references in geometry_columns."
+      "function_comment": "args: catalog_name, schema_name, table_name, column_name - Removes a geometry column from a spatial table."
+    },
+    {
+      "function_name": "dropgeometrytable",
+      "arguments": "table_name character varying",
+      "return_type": "text",
+      "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
     },
     {
       "function_name": "dropgeometrytable",
@@ -37943,9 +38362,9 @@
     },
     {
       "function_name": "dropgeometrytable",
-      "arguments": "table_name character varying",
+      "arguments": "catalog_name character varying, schema_name character varying, table_name character varying",
       "return_type": "text",
-      "function_comment": "args: table_name - Drops a table and all its references in geometry_columns."
+      "function_comment": "args: catalog_name, schema_name, table_name - Drops a table and all its references in geometry_columns."
     },
     {
       "function_name": "enablelongtransactions",
@@ -38026,9 +38445,21 @@
       "function_comment": null
     },
     {
+      "function_name": "generate_ticket_ref",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "geog_brin_inclusion_add_value",
       "arguments": "internal, internal, internal, internal",
       "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "geography",
+      "arguments": "geometry",
+      "return_type": "geography",
       "function_comment": null
     },
     {
@@ -38040,12 +38471,6 @@
     {
       "function_name": "geography",
       "arguments": "geography, integer, boolean",
-      "return_type": "geography",
-      "function_comment": null
-    },
-    {
-      "function_name": "geography",
-      "arguments": "geometry",
       "return_type": "geography",
       "function_comment": null
     },
@@ -38243,37 +38668,7 @@
     },
     {
       "function_name": "geometry",
-      "arguments": "polygon",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "bytea",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
       "arguments": "box3d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "box2d",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "geometry",
-      "arguments": "geography",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -38291,7 +38686,37 @@
     },
     {
       "function_name": "geometry",
+      "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
       "arguments": "path",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "polygon",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "box2d",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "geography",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "geometry",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -38741,15 +39166,15 @@
     },
     {
       "function_name": "geometrytype",
-      "arguments": "geometry",
-      "return_type": "text",
-      "function_comment": "args: geomA - Returns the type of a geometry as text."
-    },
-    {
-      "function_name": "geometrytype",
       "arguments": "geography",
       "return_type": "text",
       "function_comment": null
+    },
+    {
+      "function_name": "geometrytype",
+      "arguments": "geometry",
+      "return_type": "text",
+      "function_comment": "args: geomA - Returns the type of a geometry as text."
     },
     {
       "function_name": "geomfromewkb",
@@ -39047,12 +39472,6 @@
     },
     {
       "function_name": "is_contained_2d",
-      "arguments": "box2df, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "is_contained_2d",
       "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
@@ -39060,6 +39479,12 @@
     {
       "function_name": "is_contained_2d",
       "arguments": "box2df, geometry",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "is_contained_2d",
+      "arguments": "box2df, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -39149,19 +39574,19 @@
     },
     {
       "function_name": "overlaps_2d",
-      "arguments": "box2df, box2df",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "overlaps_2d",
       "arguments": "geometry, box2df",
       "return_type": "boolean",
       "function_comment": null
     },
     {
+      "function_name": "overlaps_2d",
+      "arguments": "box2df, box2df",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
       "function_name": "overlaps_geog",
-      "arguments": "geography, gidx",
+      "arguments": "gidx, gidx",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -39173,7 +39598,13 @@
     },
     {
       "function_name": "overlaps_geog",
-      "arguments": "gidx, gidx",
+      "arguments": "geography, gidx",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "overlaps_nd",
+      "arguments": "gidx, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -39186,12 +39617,6 @@
     {
       "function_name": "overlaps_nd",
       "arguments": "gidx, gidx",
-      "return_type": "boolean",
-      "function_comment": null
-    },
-    {
-      "function_name": "overlaps_nd",
-      "arguments": "gidx, geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -39209,12 +39634,6 @@
     },
     {
       "function_name": "pgis_asflatgeobuf_transfn",
-      "arguments": "internal, anyelement",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asflatgeobuf_transfn",
       "arguments": "internal, anyelement, boolean, text",
       "return_type": "internal",
       "function_comment": null
@@ -39222,6 +39641,12 @@
     {
       "function_name": "pgis_asflatgeobuf_transfn",
       "arguments": "internal, anyelement, boolean",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asflatgeobuf_transfn",
+      "arguments": "internal, anyelement",
       "return_type": "internal",
       "function_comment": null
     },
@@ -39269,13 +39694,7 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer, text",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text",
+      "arguments": "internal, anyelement, text, integer, text, text",
       "return_type": "internal",
       "function_comment": null
     },
@@ -39287,13 +39706,25 @@
     },
     {
       "function_name": "pgis_asmvt_transfn",
-      "arguments": "internal, anyelement, text, integer, text, text",
+      "arguments": "internal, anyelement, text",
       "return_type": "internal",
       "function_comment": null
     },
     {
       "function_name": "pgis_asmvt_transfn",
       "arguments": "internal, anyelement, text, integer",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_asmvt_transfn",
+      "arguments": "internal, anyelement, text, integer, text",
+      "return_type": "internal",
+      "function_comment": null
+    },
+    {
+      "function_name": "pgis_geometry_accum_transfn",
+      "arguments": "internal, geometry, double precision",
       "return_type": "internal",
       "function_comment": null
     },
@@ -39306,12 +39737,6 @@
     {
       "function_name": "pgis_geometry_accum_transfn",
       "arguments": "internal, geometry",
-      "return_type": "internal",
-      "function_comment": null
-    },
-    {
-      "function_name": "pgis_geometry_accum_transfn",
-      "arguments": "internal, geometry, double precision",
       "return_type": "internal",
       "function_comment": null
     },
@@ -39395,15 +39820,15 @@
     },
     {
       "function_name": "populate_geometry_columns",
-      "arguments": "use_typmod boolean DEFAULT true",
-      "return_type": "text",
-      "function_comment": "args: use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
-    },
-    {
-      "function_name": "populate_geometry_columns",
       "arguments": "tbl_oid oid, use_typmod boolean DEFAULT true",
       "return_type": "integer",
       "function_comment": "args: relation_oid, use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
+    },
+    {
+      "function_name": "populate_geometry_columns",
+      "arguments": "use_typmod boolean DEFAULT true",
+      "return_type": "text",
+      "function_comment": "args: use_typmod=true - Ensures geometry columns are defined with type modifiers or have appropriate spatial constraints."
     },
     {
       "function_name": "postgis_addbbox",
@@ -39827,15 +40252,15 @@
     },
     {
       "function_name": "st_angle",
-      "arguments": "line1 geometry, line2 geometry",
-      "return_type": "double precision",
-      "function_comment": "args: line1, line2 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
-    },
-    {
-      "function_name": "st_angle",
       "arguments": "pt1 geometry, pt2 geometry, pt3 geometry, pt4 geometry DEFAULT '0101000000000000000000F87F000000000000F87F'::geometry",
       "return_type": "double precision",
       "function_comment": "args: point1, point2, point3, point4 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
+    },
+    {
+      "function_name": "st_angle",
+      "arguments": "line1 geometry, line2 geometry",
+      "return_type": "double precision",
+      "function_comment": "args: line1, line2 - Returns the angle between two vectors defined by 3 or 4 points, or 2 lines."
     },
     {
       "function_name": "st_area",
@@ -39863,13 +40288,13 @@
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geography, text",
+      "arguments": "geometry",
       "return_type": "bytea",
       "function_comment": null
     },
     {
       "function_name": "st_asbinary",
-      "arguments": "geometry",
+      "arguments": "geography, text",
       "return_type": "bytea",
       "function_comment": null
     },
@@ -39905,7 +40330,19 @@
     },
     {
       "function_name": "st_asewkt",
+      "arguments": "geometry",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asewkt",
       "arguments": "geography",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asewkt",
+      "arguments": "geography, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -39917,31 +40354,7 @@
     },
     {
       "function_name": "st_asewkt",
-      "arguments": "geometry",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkt",
       "arguments": "text",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asewkt",
-      "arguments": "geography, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgeojson",
-      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_asgeojson",
-      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
       "return_type": "text",
       "function_comment": null
     },
@@ -39958,14 +40371,20 @@
       "function_comment": null
     },
     {
-      "function_name": "st_asgml",
-      "arguments": "version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
+      "function_name": "st_asgeojson",
+      "arguments": "r record, geom_column text DEFAULT ''::text, maxdecimaldigits integer DEFAULT 9, pretty_bool boolean DEFAULT false",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgeojson",
+      "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 9, options integer DEFAULT 8",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgml",
-      "arguments": "text",
+      "arguments": "version integer, geog geography, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT 'gml'::text, id text DEFAULT ''::text",
       "return_type": "text",
       "function_comment": null
     },
@@ -39977,13 +40396,19 @@
     },
     {
       "function_name": "st_asgml",
+      "arguments": "version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_asgml",
       "arguments": "geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_asgml",
-      "arguments": "version integer, geom geometry, maxdecimaldigits integer DEFAULT 15, options integer DEFAULT 0, nprefix text DEFAULT NULL::text, id text DEFAULT NULL::text",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
@@ -40043,13 +40468,13 @@
     },
     {
       "function_name": "st_assvg",
-      "arguments": "geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_assvg",
-      "arguments": "text",
+      "arguments": "geom geometry, rel integer DEFAULT 0, maxdecimaldigits integer DEFAULT 15",
       "return_type": "text",
       "function_comment": null
     },
@@ -40061,13 +40486,13 @@
     },
     {
       "function_name": "st_astext",
-      "arguments": "geography, integer",
+      "arguments": "text",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_astext",
-      "arguments": "text",
+      "arguments": "geography, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -40103,13 +40528,13 @@
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geog1 geography, geog2 geography",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
     {
       "function_name": "st_azimuth",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geog1 geography, geog2 geography",
       "return_type": "double precision",
       "function_comment": "args: origin, target - Returns the north-based azimuth of a line between two points."
     },
@@ -40151,20 +40576,8 @@
     },
     {
       "function_name": "st_buffer",
-      "arguments": "text, double precision, text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "text, double precision, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_buffer",
-      "arguments": "text, double precision",
-      "return_type": "geometry",
+      "arguments": "geography, double precision",
+      "return_type": "geography",
       "function_comment": null
     },
     {
@@ -40175,21 +40588,33 @@
     },
     {
       "function_name": "st_buffer",
+      "arguments": "text, double precision, text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_buffer",
       "arguments": "geom geometry, radius double precision, quadsegs integer",
       "return_type": "geometry",
       "function_comment": "args: g1, radius_of_buffer, num_seg_quarter_circle - Computes a geometry covering all points within a given distance from a geometry."
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geography, double precision",
-      "return_type": "geography",
+      "arguments": "geom geometry, radius double precision, options text DEFAULT ''::text",
+      "return_type": "geometry",
+      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters = ' - Computes a geometry covering all points within a given distance from a geometry."
+    },
+    {
+      "function_name": "st_buffer",
+      "arguments": "text, double precision",
+      "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_buffer",
-      "arguments": "geom geometry, radius double precision, options text DEFAULT ''::text",
+      "arguments": "text, double precision, integer",
       "return_type": "geometry",
-      "function_comment": "args: g1, radius_of_buffer, buffer_style_parameters = ' - Computes a geometry covering all points within a given distance from a geometry."
+      "function_comment": null
     },
     {
       "function_name": "st_buildarea",
@@ -40199,15 +40624,15 @@
     },
     {
       "function_name": "st_centroid",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: g1 - Returns the geometric center of a geometry."
-    },
-    {
-      "function_name": "st_centroid",
       "arguments": "geography, use_spheroid boolean DEFAULT true",
       "return_type": "geography",
       "function_comment": "args: g1, use_spheroid=true - Returns the geometric center of a geometry."
+    },
+    {
+      "function_name": "st_centroid",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: g1 - Returns the geometric center of a geometry."
     },
     {
       "function_name": "st_centroid",
@@ -40271,15 +40696,15 @@
     },
     {
       "function_name": "st_collectionextract",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: collection - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
-    },
-    {
-      "function_name": "st_collectionextract",
       "arguments": "geometry, integer",
       "return_type": "geometry",
       "function_comment": "args: collection, type - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
+    },
+    {
+      "function_name": "st_collectionextract",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: collection - Given a geometry collection, returns a multi-geometry containing only elements of a specified type."
     },
     {
       "function_name": "st_collectionhomogenize",
@@ -40289,7 +40714,7 @@
     },
     {
       "function_name": "st_combinebbox",
-      "arguments": "box3d, box3d",
+      "arguments": "box3d, geometry",
       "return_type": "box3d",
       "function_comment": null
     },
@@ -40301,7 +40726,7 @@
     },
     {
       "function_name": "st_combinebbox",
-      "arguments": "box3d, geometry",
+      "arguments": "box3d, box3d",
       "return_type": "box3d",
       "function_comment": null
     },
@@ -40343,13 +40768,13 @@
     },
     {
       "function_name": "st_coveredby",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "st_coveredby",
-      "arguments": "text, text",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -40421,15 +40846,15 @@
     },
     {
       "function_name": "st_distance",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "double precision",
-      "function_comment": "args: g1, g2 - Returns the distance between two geometry or geography values."
-    },
-    {
-      "function_name": "st_distance",
       "arguments": "text, text",
       "return_type": "double precision",
       "function_comment": null
+    },
+    {
+      "function_name": "st_distance",
+      "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "double precision",
+      "function_comment": "args: g1, g2 - Returns the distance between two geometry or geography values."
     },
     {
       "function_name": "st_distance",
@@ -40445,15 +40870,15 @@
     },
     {
       "function_name": "st_distancesphere",
-      "arguments": "geom1 geometry, geom2 geometry, radius double precision",
-      "return_type": "double precision",
-      "function_comment": "args: geomlonlatA, geomlonlatB, radius=6371008 - Returns minimum distance in meters between two lon/lat geometries using a spherical earth model."
-    },
-    {
-      "function_name": "st_distancesphere",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "double precision",
       "function_comment": null
+    },
+    {
+      "function_name": "st_distancesphere",
+      "arguments": "geom1 geometry, geom2 geometry, radius double precision",
+      "return_type": "double precision",
+      "function_comment": "args: geomlonlatA, geomlonlatB, radius=6371008 - Returns minimum distance in meters between two lon/lat geometries using a spherical earth model."
     },
     {
       "function_name": "st_distancespheroid",
@@ -40499,13 +40924,13 @@
     },
     {
       "function_name": "st_dwithin",
-      "arguments": "text, text, double precision",
+      "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
     {
       "function_name": "st_dwithin",
-      "arguments": "geom1 geometry, geom2 geometry, double precision",
+      "arguments": "text, text, double precision",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -40529,15 +40954,15 @@
     },
     {
       "function_name": "st_estimatedextent",
-      "arguments": "text, text, text, boolean",
-      "return_type": "box2d",
-      "function_comment": "args: schema_name, table_name, geocolumn_name, parent_only - Returns the estimated extent of a spatial table."
-    },
-    {
-      "function_name": "st_estimatedextent",
       "arguments": "text, text",
       "return_type": "box2d",
       "function_comment": "args: table_name, geocolumn_name - Returns the estimated extent of a spatial table."
+    },
+    {
+      "function_name": "st_estimatedextent",
+      "arguments": "text, text, text, boolean",
+      "return_type": "box2d",
+      "function_comment": "args: schema_name, table_name, geocolumn_name, parent_only - Returns the estimated extent of a spatial table."
     },
     {
       "function_name": "st_estimatedextent",
@@ -40547,9 +40972,9 @@
     },
     {
       "function_name": "st_expand",
-      "arguments": "box box2d, dx double precision, dy double precision",
-      "return_type": "box2d",
-      "function_comment": "args: box, dx, dy - Returns a bounding box expanded from another bounding box or a geometry."
+      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
+      "return_type": "box3d",
+      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_expand",
@@ -40565,20 +40990,20 @@
     },
     {
       "function_name": "st_expand",
-      "arguments": "box box3d, dx double precision, dy double precision, dz double precision DEFAULT 0",
-      "return_type": "box3d",
-      "function_comment": "args: box, dx, dy, dz=0 - Returns a bounding box expanded from another bounding box or a geometry."
-    },
-    {
-      "function_name": "st_expand",
-      "arguments": "box2d, double precision",
+      "arguments": "box box2d, dx double precision, dy double precision",
       "return_type": "box2d",
-      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+      "function_comment": "args: box, dx, dy - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
       "function_name": "st_expand",
       "arguments": "box3d, double precision",
       "return_type": "box3d",
+      "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
+    },
+    {
+      "function_name": "st_expand",
+      "arguments": "box2d, double precision",
+      "return_type": "box2d",
       "function_comment": "args: box, units_to_expand - Returns a bounding box expanded from another bounding box or a geometry."
     },
     {
@@ -40733,13 +41158,13 @@
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geom geometry, maxchars integer DEFAULT 0",
+      "arguments": "geog geography, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
     {
       "function_name": "st_geohash",
-      "arguments": "geog geography, maxchars integer DEFAULT 0",
+      "arguments": "geom geometry, maxchars integer DEFAULT 0",
       "return_type": "text",
       "function_comment": null
     },
@@ -40817,6 +41242,12 @@
     },
     {
       "function_name": "st_geomfromgeojson",
+      "arguments": "json",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_geomfromgeojson",
       "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
@@ -40824,12 +41255,6 @@
     {
       "function_name": "st_geomfromgeojson",
       "arguments": "jsonb",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromgeojson",
-      "arguments": "json",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -40877,25 +41302,25 @@
     },
     {
       "function_name": "st_geomfromwkb",
-      "arguments": "bytea, integer",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_geomfromwkb",
       "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_gmltosql",
-      "arguments": "text, integer",
+      "function_name": "st_geomfromwkb",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_gmltosql",
       "arguments": "text",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_gmltosql",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -40907,15 +41332,15 @@
     },
     {
       "function_name": "st_hausdorffdistance",
-      "arguments": "geom1 geometry, geom2 geometry",
-      "return_type": "double precision",
-      "function_comment": "args: g1, g2 - Returns the Hausdorff distance between two geometries."
-    },
-    {
-      "function_name": "st_hausdorffdistance",
       "arguments": "geom1 geometry, geom2 geometry, double precision",
       "return_type": "double precision",
       "function_comment": "args: g1, g2, densifyFrac - Returns the Hausdorff distance between two geometries."
+    },
+    {
+      "function_name": "st_hausdorffdistance",
+      "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "double precision",
+      "function_comment": "args: g1, g2 - Returns the Hausdorff distance between two geometries."
     },
     {
       "function_name": "st_hexagon",
@@ -40943,9 +41368,9 @@
     },
     {
       "function_name": "st_intersection",
-      "arguments": "geom1 geometry, geom2 geometry, gridsize double precision DEFAULT '-1'::integer",
+      "arguments": "text, text",
       "return_type": "geometry",
-      "function_comment": "args: geomA, geomB, gridSize = -1 - Computes a geometry representing the shared portion of geometries A and B."
+      "function_comment": null
     },
     {
       "function_name": "st_intersection",
@@ -40955,15 +41380,9 @@
     },
     {
       "function_name": "st_intersection",
-      "arguments": "text, text",
+      "arguments": "geom1 geometry, geom2 geometry, gridsize double precision DEFAULT '-1'::integer",
       "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_intersects",
-      "arguments": "text, text",
-      "return_type": "boolean",
-      "function_comment": null
+      "function_comment": "args: geomA, geomB, gridSize = -1 - Computes a geometry representing the shared portion of geometries A and B."
     },
     {
       "function_name": "st_intersects",
@@ -40974,6 +41393,12 @@
     {
       "function_name": "st_intersects",
       "arguments": "geog1 geography, geog2 geography",
+      "return_type": "boolean",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_intersects",
+      "arguments": "text, text",
       "return_type": "boolean",
       "function_comment": null
     },
@@ -41021,15 +41446,15 @@
     },
     {
       "function_name": "st_isvalid",
-      "arguments": "geometry, integer",
-      "return_type": "boolean",
-      "function_comment": "args: g, flags - Tests if a geometry is well-formed in 2D."
-    },
-    {
-      "function_name": "st_isvalid",
       "arguments": "geometry",
       "return_type": "boolean",
       "function_comment": "args: g - Tests if a geometry is well-formed in 2D."
+    },
+    {
+      "function_name": "st_isvalid",
+      "arguments": "geometry, integer",
+      "return_type": "boolean",
+      "function_comment": "args: g, flags - Tests if a geometry is well-formed in 2D."
     },
     {
       "function_name": "st_isvaliddetail",
@@ -41057,15 +41482,15 @@
     },
     {
       "function_name": "st_length",
-      "arguments": "text",
-      "return_type": "double precision",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_length",
       "arguments": "geometry",
       "return_type": "double precision",
       "function_comment": "args: a_2dlinestring - Returns the 2D length of a linear geometry."
+    },
+    {
+      "function_name": "st_length",
+      "arguments": "text",
+      "return_type": "double precision",
+      "function_comment": null
     },
     {
       "function_name": "st_length",
@@ -41171,13 +41596,13 @@
     },
     {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_linestringfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41237,21 +41662,15 @@
     },
     {
       "function_name": "st_makeline",
-      "arguments": "geometry[]",
-      "return_type": "geometry",
-      "function_comment": "args: geoms_array - Creates a LineString from Point, MultiPoint, or LineString geometries."
-    },
-    {
-      "function_name": "st_makeline",
       "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
       "function_comment": "args: geom1, geom2 - Creates a LineString from Point, MultiPoint, or LineString geometries."
     },
     {
-      "function_name": "st_makepoint",
-      "arguments": "double precision, double precision, double precision",
+      "function_name": "st_makeline",
+      "arguments": "geometry[]",
       "return_type": "geometry",
-      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
+      "function_comment": "args: geoms_array - Creates a LineString from Point, MultiPoint, or LineString geometries."
     },
     {
       "function_name": "st_makepoint",
@@ -41266,16 +41685,16 @@
       "function_comment": "args: x, y, z, m - Creates a 2D, 3DZ or 4D Point."
     },
     {
+      "function_name": "st_makepoint",
+      "arguments": "double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: x, y, z - Creates a 2D, 3DZ or 4D Point."
+    },
+    {
       "function_name": "st_makepointm",
       "arguments": "double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: x, y, m - Creates a Point from X, Y and M values."
-    },
-    {
-      "function_name": "st_makepolygon",
-      "arguments": "geometry",
-      "return_type": "geometry",
-      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
     },
     {
       "function_name": "st_makepolygon",
@@ -41284,16 +41703,22 @@
       "function_comment": "args: outerlinestring, interiorlinestrings - Creates a Polygon from a shell and optional list of holes."
     },
     {
-      "function_name": "st_makevalid",
+      "function_name": "st_makepolygon",
       "arguments": "geometry",
       "return_type": "geometry",
-      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
+      "function_comment": "args: linestring - Creates a Polygon from a shell and optional list of holes."
     },
     {
       "function_name": "st_makevalid",
       "arguments": "geom geometry, params text",
       "return_type": "geometry",
       "function_comment": "args: input, params - Attempts to make an invalid geometry valid without losing vertices."
+    },
+    {
+      "function_name": "st_makevalid",
+      "arguments": "geometry",
+      "return_type": "geometry",
+      "function_comment": "args: input - Attempts to make an invalid geometry valid without losing vertices."
     },
     {
       "function_name": "st_maxdistance",
@@ -41351,13 +41776,13 @@
     },
     {
       "function_name": "st_mlinefromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mlinefromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41375,19 +41800,13 @@
     },
     {
       "function_name": "st_mpointfromwkb",
-      "arguments": "bytea",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_mpointfromwkb",
       "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_mpolyfromtext",
-      "arguments": "text",
+      "function_name": "st_mpointfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41398,14 +41817,20 @@
       "function_comment": null
     },
     {
-      "function_name": "st_mpolyfromwkb",
-      "arguments": "bytea",
+      "function_name": "st_mpolyfromtext",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_mpolyfromwkb",
       "arguments": "bytea, integer",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_mpolyfromwkb",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41441,13 +41866,13 @@
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_multipointfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41585,15 +42010,15 @@
     },
     {
       "function_name": "st_point",
-      "arguments": "double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: x, y - Creates a Point with X, Y and SRID values."
-    },
-    {
-      "function_name": "st_point",
       "arguments": "double precision, double precision, srid integer",
       "return_type": "geometry",
       "function_comment": "args: x, y, srid=unknown - Creates a Point with X, Y and SRID values."
+    },
+    {
+      "function_name": "st_point",
+      "arguments": "double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: x, y - Creates a Point with X, Y and SRID values."
     },
     {
       "function_name": "st_pointfromgeohash",
@@ -41615,13 +42040,13 @@
     },
     {
       "function_name": "st_pointfromwkb",
-      "arguments": "bytea",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_pointfromwkb",
-      "arguments": "bytea, integer",
+      "arguments": "bytea",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41669,13 +42094,13 @@
     },
     {
       "function_name": "st_polyfromtext",
-      "arguments": "text, integer",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polyfromtext",
-      "arguments": "text",
+      "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41699,25 +42124,25 @@
     },
     {
       "function_name": "st_polygonfromtext",
-      "arguments": "text",
-      "return_type": "geometry",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_polygonfromtext",
       "arguments": "text, integer",
       "return_type": "geometry",
       "function_comment": null
     },
     {
-      "function_name": "st_polygonfromwkb",
-      "arguments": "bytea, integer",
+      "function_name": "st_polygonfromtext",
+      "arguments": "text",
       "return_type": "geometry",
       "function_comment": null
     },
     {
       "function_name": "st_polygonfromwkb",
       "arguments": "bytea",
+      "return_type": "geometry",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_polygonfromwkb",
+      "arguments": "bytea, integer",
       "return_type": "geometry",
       "function_comment": null
     },
@@ -41747,12 +42172,6 @@
     },
     {
       "function_name": "st_relate",
-      "arguments": "geom1 geometry, geom2 geometry, integer",
-      "return_type": "text",
-      "function_comment": null
-    },
-    {
-      "function_name": "st_relate",
       "arguments": "geom1 geometry, geom2 geometry, text",
       "return_type": "boolean",
       "function_comment": null
@@ -41760,6 +42179,12 @@
     {
       "function_name": "st_relate",
       "arguments": "geom1 geometry, geom2 geometry",
+      "return_type": "text",
+      "function_comment": null
+    },
+    {
+      "function_name": "st_relate",
+      "arguments": "geom1 geometry, geom2 geometry, integer",
       "return_type": "text",
       "function_comment": null
     },
@@ -41795,15 +42220,15 @@
     },
     {
       "function_name": "st_rotate",
-      "arguments": "geometry, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
-    },
-    {
-      "function_name": "st_rotate",
       "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, rotRadians, x0, y0 - Rotates a geometry about an origin point."
+    },
+    {
+      "function_name": "st_rotate",
+      "arguments": "geometry, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, rotRadians - Rotates a geometry about an origin point."
     },
     {
       "function_name": "st_rotatex",
@@ -41825,27 +42250,27 @@
     },
     {
       "function_name": "st_scale",
-      "arguments": "geometry, geometry",
-      "return_type": "geometry",
-      "function_comment": "args: geom, factor - Scales a geometry by given factors."
-    },
-    {
-      "function_name": "st_scale",
-      "arguments": "geometry, double precision, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, XFactor, YFactor, ZFactor - Scales a geometry by given factors."
-    },
-    {
-      "function_name": "st_scale",
       "arguments": "geometry, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, XFactor, YFactor - Scales a geometry by given factors."
     },
     {
       "function_name": "st_scale",
+      "arguments": "geometry, geometry",
+      "return_type": "geometry",
+      "function_comment": "args: geom, factor - Scales a geometry by given factors."
+    },
+    {
+      "function_name": "st_scale",
       "arguments": "geometry, geometry, origin geometry",
       "return_type": "geometry",
       "function_comment": "args: geom, factor, origin - Scales a geometry by given factors."
+    },
+    {
+      "function_name": "st_scale",
+      "arguments": "geometry, double precision, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, XFactor, YFactor, ZFactor - Scales a geometry by given factors."
     },
     {
       "function_name": "st_scroll",
@@ -41945,18 +42370,6 @@
     },
     {
       "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
-    },
-    {
-      "function_name": "st_snaptogrid",
-      "arguments": "geometry, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: geomA, size - Snap all points of the input geometry to a regular grid."
-    },
-    {
-      "function_name": "st_snaptogrid",
       "arguments": "geom1 geometry, geom2 geometry, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, pointOrigin, sizeX, sizeY, sizeZ, sizeM - Snap all points of the input geometry to a regular grid."
@@ -41966,6 +42379,18 @@
       "arguments": "geometry, double precision, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: geomA, originX, originY, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+    },
+    {
+      "function_name": "st_snaptogrid",
+      "arguments": "geometry, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, sizeX, sizeY - Snap all points of the input geometry to a regular grid."
+    },
+    {
+      "function_name": "st_snaptogrid",
+      "arguments": "geometry, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: geomA, size - Snap all points of the input geometry to a regular grid."
     },
     {
       "function_name": "st_split",
@@ -41987,15 +42412,15 @@
     },
     {
       "function_name": "st_srid",
-      "arguments": "geom geometry",
-      "return_type": "integer",
-      "function_comment": "args: g1 - Returns the spatial reference identifier for a geometry."
-    },
-    {
-      "function_name": "st_srid",
       "arguments": "geog geography",
       "return_type": "integer",
       "function_comment": null
+    },
+    {
+      "function_name": "st_srid",
+      "arguments": "geom geometry",
+      "return_type": "integer",
+      "function_comment": "args: g1 - Returns the spatial reference identifier for a geometry."
     },
     {
       "function_name": "st_startpoint",
@@ -42059,15 +42484,15 @@
     },
     {
       "function_name": "st_transform",
-      "arguments": "geom geometry, to_proj text",
-      "return_type": "geometry",
-      "function_comment": "args: geom, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
-    },
-    {
-      "function_name": "st_transform",
       "arguments": "geom geometry, from_proj text, to_proj text",
       "return_type": "geometry",
       "function_comment": "args: geom, from_proj, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
+    },
+    {
+      "function_name": "st_transform",
+      "arguments": "geom geometry, to_proj text",
+      "return_type": "geometry",
+      "function_comment": "args: geom, to_proj - Return a new geometry with coordinates transformed to a different spatial reference system."
     },
     {
       "function_name": "st_transform",
@@ -42077,15 +42502,15 @@
     },
     {
       "function_name": "st_translate",
-      "arguments": "geometry, double precision, double precision",
-      "return_type": "geometry",
-      "function_comment": "args: g1, deltax, deltay - Translates a geometry by given offsets."
-    },
-    {
-      "function_name": "st_translate",
       "arguments": "geometry, double precision, double precision, double precision",
       "return_type": "geometry",
       "function_comment": "args: g1, deltax, deltay, deltaz - Translates a geometry by given offsets."
+    },
+    {
+      "function_name": "st_translate",
+      "arguments": "geometry, double precision, double precision",
+      "return_type": "geometry",
+      "function_comment": "args: g1, deltax, deltay - Translates a geometry by given offsets."
     },
     {
       "function_name": "st_transscale",
@@ -42107,9 +42532,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geom1 geometry, geom2 geometry",
+      "arguments": "geometry[]",
       "return_type": "geometry",
-      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1_array - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_union",
@@ -42119,9 +42544,9 @@
     },
     {
       "function_name": "st_union",
-      "arguments": "geometry[]",
+      "arguments": "geom1 geometry, geom2 geometry",
       "return_type": "geometry",
-      "function_comment": "args: g1_array - Computes a geometry representing the point-set union of the input geometries."
+      "function_comment": "args: g1, g2 - Computes a geometry representing the point-set union of the input geometries."
     },
     {
       "function_name": "st_voronoilines",
@@ -42304,6 +42729,12 @@
       "function_comment": null
     },
     {
+      "function_name": "update_support_ticket_timestamp",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_comment": null
+    },
+    {
       "function_name": "update_updated_at",
       "arguments": "",
       "return_type": "trigger",
@@ -42323,6 +42754,12 @@
     },
     {
       "function_name": "updategeometrysrid",
+      "arguments": "character varying, character varying, integer",
+      "return_type": "text",
+      "function_comment": "args: table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
+    },
+    {
+      "function_name": "updategeometrysrid",
       "arguments": "catalogn_name character varying, schema_name character varying, table_name character varying, column_name character varying, new_srid_in integer",
       "return_type": "text",
       "function_comment": "args: catalog_name, schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
@@ -42332,12 +42769,6 @@
       "arguments": "character varying, character varying, character varying, integer",
       "return_type": "text",
       "function_comment": "args: schema_name, table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
-    },
-    {
-      "function_name": "updategeometrysrid",
-      "arguments": "character varying, character varying, integer",
-      "return_type": "text",
-      "function_comment": "args: table_name, column_name, srid - Updates the SRID of all features in a geometry column, and the table metadata."
     },
     {
       "function_name": "validate_coupon",
@@ -43693,6 +44124,22 @@
       "constraint_name": "subscription_plans_region_id_fkey",
       "columns": [
         "region_id"
+      ]
+    },
+    {
+      "fromTable": "support_tickets",
+      "toTable": "admins",
+      "constraint_name": "support_tickets_assigned_to_fkey",
+      "columns": [
+        "assigned_to"
+      ]
+    },
+    {
+      "fromTable": "support_tickets",
+      "toTable": "profiles",
+      "constraint_name": "support_tickets_created_by_fkey",
+      "columns": [
+        "created_by"
       ]
     },
     {

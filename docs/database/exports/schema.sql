@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-04-26T07:49:49.063Z
+-- Generated: 2026-04-27T08:38:46.565Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -2015,6 +2015,26 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
   listing_validity_days integer,
   tier_a_price_inr numeric,
   tier_b_price_inr numeric
+  ,PRIMARY KEY (id)
+);
+
+-- Table: support_tickets
+CREATE TABLE IF NOT EXISTS support_tickets (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  ticket_ref text NOT NULL,
+  subject text NOT NULL,
+  body text NOT NULL,
+  status text NOT NULL DEFAULT 'open'::text,
+  priority text NOT NULL DEFAULT 'normal'::text,
+  category text NOT NULL DEFAULT 'general'::text,
+  created_by uuid,
+  assigned_to uuid,
+  resolution_note text,
+  change_log jsonb NOT NULL DEFAULT '[]'::jsonb,
+  resolved_at timestamp with time zone,
+  first_response_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now()
   ,PRIMARY KEY (id)
 );
 

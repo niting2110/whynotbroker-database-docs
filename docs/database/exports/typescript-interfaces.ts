@@ -1,5 +1,5 @@
 // WHYNOTBROKER Database Types
-// Generated: 2026-04-26T07:49:49.074Z
+// Generated: 2026-04-27T08:38:46.575Z
 
 export interface Database {
   admin_audit_logs: {
@@ -2015,6 +2015,26 @@ export interface Database {
       listing_validity_days?: number;
       tier_a_price_inr?: number;
       tier_b_price_inr?: number;
+    };
+  };
+
+  support_tickets: {
+    Row: {
+      id: string;
+      ticket_ref: string;
+      subject: string;
+      body: string;
+      status: string;
+      priority: string;
+      category: string;
+      created_by?: string;
+      assigned_to?: string;
+      resolution_note?: string;
+      change_log: any;
+      resolved_at?: string | Date;
+      first_response_at?: string | Date;
+      created_at: string | Date;
+      updated_at: string | Date;
     };
   };
 
