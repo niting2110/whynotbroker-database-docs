@@ -1,6 +1,6 @@
 # Schema Validation Report
 
-Generated: 2026-04-27T08:38:46.565Z
+Generated: 2026-04-28T08:36:53.304Z
 Total Issues: 107
 Warnings: 37
 Recommendations: 70

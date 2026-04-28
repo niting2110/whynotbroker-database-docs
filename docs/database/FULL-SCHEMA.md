@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-27T08:38:46.552Z
+> Auto-generated: 2026-04-28T08:36:53.289Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~14,806
+- Rows: ~15,156
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
