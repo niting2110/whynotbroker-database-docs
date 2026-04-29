@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-28T08:36:53.283Z
-> Schema Hash: `d715eb0c8fe9aca604c816ee76b4a89d`
+> Generated: 2026-04-29T08:29:48.448Z
+> Schema Hash: `06cca272a436f250f95253b5d861a9e5`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 88.97 MB
+- **Total Size:** 88.99 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 28/4/2026, 2:06:53 pm IST
+- **Last Updated:** 29/4/2026, 1:59:48 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~15,156 | 5.48 MB |  |
+| `admin_audit_logs` | 9 | ~15,203 | 5.50 MB |  |
 | `admin_chat` | 4 | ~5 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~5 | 0.09 MB |  |
 | `admin_messages` | 6 | ~5 | 0.06 MB |  |
