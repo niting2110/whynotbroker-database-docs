@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-04-29T08:29:48.448Z
-> Schema Hash: `06cca272a436f250f95253b5d861a9e5`
+> Generated: 2026-04-30T08:33:03.817Z
+> Schema Hash: `bd3deb195414c23c0880e02d5eae54f8`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 88.99 MB
+- **Total Size:** 89.40 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 29/4/2026, 1:59:48 pm IST
+- **Last Updated:** 30/4/2026, 2:03:03 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~15,203 | 5.50 MB |  |
+| `admin_audit_logs` | 9 | ~15,885 | 5.84 MB |  |
 | `admin_chat` | 4 | ~5 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~5 | 0.09 MB |  |
 | `admin_messages` | 6 | ~5 | 0.06 MB |  |
@@ -101,7 +101,7 @@
 | `property_leads` | 22 | ~26 | 0.09 MB |  |
 | `property_price_history` | 7 | ~25 | 0.06 MB |  |
 | `property_ranking_criteria` | 37 | ~5 | 0.13 MB |  |
-| `property_reports` | 11 | ~8 | 0.09 MB |  |
+| `property_reports` | 11 | ~20 | 0.09 MB |  |
 | `property_shares` | 6 | ~7 | 0.06 MB |  |
 | `property_valuations` | 37 | ~8 | 0.11 MB | "Automated and manual property ..." |
 | `property_verifications` | 14 | ~9 | 0.08 MB |  |
@@ -117,13 +117,13 @@
 | `saved_listings` | 4 | ~20 | 0.07 MB |  |
 | `saved_searches` | 11 | ~15 | 0.05 MB |  |
 | `search_history` | 8 | ~20 | 0.05 MB |  |
-| `security_flags` | 9 | ~5 | 0.11 MB | "Tracks flagged admin activitie..." |
+| `security_flags` | 9 | ~15 | 0.11 MB | "Tracks flagged admin activitie..." |
 | `spatial_ref_sys` | 5 | ~8,500 | 6.98 MB |  |
 | `states` | 7 | ~36 | 0.13 MB | "Indian states with LGD (Local ..." |
 | `sub_districts` | 7 | ~7 | 0.10 MB | "Sub-districts/Talukas for gran..." |
 | `subscription_enrollments` | 14 | ~20 | 0.09 MB |  |
 | `subscription_plans` | 29 | ~22 | 0.16 MB | "Recurring subscription plans w..." |
-| `support_tickets` | 15 | ~0 | 0.06 MB |  |
+| `support_tickets` | 15 | ~15 | 0.13 MB |  |
 | `system_health_metrics` | 6 | ~5 | 0.05 MB |  |
 | `system_settings` | 8 | ~6 | 0.05 MB | "Platform-wide configuration ke..." |
 | `team_broadcasts` | 8 | ~5 | 0.06 MB |  |

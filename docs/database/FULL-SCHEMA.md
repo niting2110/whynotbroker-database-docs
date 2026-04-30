@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-29T08:29:48.454Z
+> Auto-generated: 2026-04-30T08:33:03.823Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~15,203
+- Rows: ~15,885
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -3954,7 +3954,7 @@
 ## `property_reports`
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~20
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 3
@@ -4673,7 +4673,7 @@
 > Tracks flagged admin activities for security review
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -4939,7 +4939,7 @@
 ## `support_tickets`
 
 **Statistics:**
-- Rows: ~0
+- Rows: ~15
 - Columns: 15
 - Indexes: 7
 - Foreign Keys: 2
