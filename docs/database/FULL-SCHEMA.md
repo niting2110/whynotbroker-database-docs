@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-04-30T08:33:03.823Z
+> Auto-generated: 2026-05-01T08:22:31.703Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~15,885
+- Rows: ~15,914
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -220,7 +220,7 @@
 ## `admin_regions`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~41
 - Columns: 6
 - Indexes: 5
 - Foreign Keys: 3
@@ -787,7 +787,7 @@
 > Track user participation in campaigns
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -996,7 +996,7 @@
 > Track coupon redemptions by users
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 9
 - Indexes: 6
 - Foreign Keys: 2
@@ -1044,7 +1044,7 @@
 > Discount coupons with regional targeting
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~14
 - Columns: 23
 - Indexes: 7
 - Foreign Keys: 1
@@ -1412,7 +1412,7 @@
 ## `lending_partners`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 13
 - Indexes: 1
 - Foreign Keys: 0
@@ -1446,7 +1446,7 @@
 ## `listing_boosts`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~18
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 2
@@ -2060,7 +2060,7 @@
 ## `moderation_history`
 
 **Statistics:**
-- Rows: ~12
+- Rows: ~24
 - Columns: 11
 - Indexes: 6
 - Foreign Keys: 2
@@ -3188,7 +3188,7 @@
 > Marketing campaigns with regional focus
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 19
 - Indexes: 4
 - Foreign Keys: 0
@@ -4452,7 +4452,7 @@
 ## `role_permissions`
 
 **Statistics:**
-- Rows: ~90
+- Rows: ~91
 - Columns: 2
 - Indexes: 1
 - Foreign Keys: 2
@@ -4821,7 +4821,7 @@
 ## `subscription_enrollments`
 
 **Statistics:**
-- Rows: ~20
+- Rows: ~32
 - Columns: 14
 - Indexes: 5
 - Foreign Keys: 3
@@ -5562,7 +5562,7 @@
 ## `verification_kyc`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~21
 - Columns: 15
 - Indexes: 5
 - Foreign Keys: 0

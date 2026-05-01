@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-30T08:33:03.827Z",
+  "generated_at": "2026-05-01T08:22:31.705Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 15885,
-      "size_bytes": 6127616,
+      "rows": 15914,
+      "size_bytes": 6135808,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 15885,
+        "row_count": 15914,
         "column_count": 9
       }
     },
@@ -1149,7 +1149,7 @@
       "name": "admin_regions",
       "comment": null,
       "columns": 6,
-      "rows": 5,
+      "rows": 41,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -1393,7 +1393,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 41,
         "column_count": 6
       }
     },
@@ -4923,7 +4923,7 @@
       "name": "campaign_participants",
       "comment": "Track user participation in campaigns",
       "columns": 9,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -5184,7 +5184,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 9
       }
     },
@@ -6347,7 +6347,7 @@
       "name": "coupon_usage",
       "comment": "Track coupon redemptions by users",
       "columns": 9,
-      "rows": 5,
+      "rows": 17,
       "size_bytes": 106496,
       "details": {
         "columns": [
@@ -6636,7 +6636,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 9
       }
     },
@@ -6644,7 +6644,7 @@
       "name": "coupons",
       "comment": "Discount coupons with regional targeting",
       "columns": 23,
-      "rows": 5,
+      "rows": 14,
       "size_bytes": 139264,
       "details": {
         "columns": [
@@ -7070,7 +7070,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 14,
         "column_count": 23
       }
     },
@@ -8936,7 +8936,7 @@
       "name": "lending_partners",
       "comment": null,
       "columns": 13,
-      "rows": 5,
+      "rows": 12,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -9163,7 +9163,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 13
       }
     },
@@ -9171,7 +9171,7 @@
       "name": "listing_boosts",
       "comment": null,
       "columns": 12,
-      "rows": 6,
+      "rows": 18,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -9462,7 +9462,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6,
+        "row_count": 18,
         "column_count": 12
       }
     },
@@ -13350,8 +13350,8 @@
       "name": "moderation_history",
       "comment": null,
       "columns": 11,
-      "rows": 12,
-      "size_bytes": 466944,
+      "rows": 24,
+      "size_bytes": 483328,
       "details": {
         "columns": [
           {
@@ -13640,7 +13640,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 12,
+        "row_count": 24,
         "column_count": 11
       }
     },
@@ -20776,7 +20776,7 @@
       "name": "promotional_campaigns",
       "comment": "Marketing campaigns with regional focus",
       "columns": 19,
-      "rows": 5,
+      "rows": 12,
       "size_bytes": 90112,
       "details": {
         "columns": [
@@ -21086,7 +21086,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 19
       }
     },
@@ -29874,7 +29874,7 @@
       "name": "role_permissions",
       "comment": null,
       "columns": 2,
-      "rows": 90,
+      "rows": 91,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -29986,7 +29986,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 90,
+        "row_count": 91,
         "column_count": 2
       }
     },
@@ -31837,8 +31837,8 @@
       "name": "subscription_enrollments",
       "comment": null,
       "columns": 14,
-      "rows": 20,
-      "size_bytes": 98304,
+      "rows": 32,
+      "size_bytes": 155648,
       "details": {
         "columns": [
           {
@@ -32184,7 +32184,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 20,
+        "row_count": 32,
         "column_count": 14
       }
     },
@@ -36874,7 +36874,7 @@
       "name": "verification_kyc",
       "comment": null,
       "columns": 15,
-      "rows": 5,
+      "rows": 21,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -37178,7 +37178,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 21,
         "column_count": 15
       }
     },
