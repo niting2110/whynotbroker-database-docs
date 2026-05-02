@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-05-01T08:22:31.696Z
-> Schema Hash: `8b9fbb840b2fe4b3d03aa98d871cf6c6`
+> Generated: 2026-05-02T07:55:21.153Z
+> Schema Hash: `de02d1fb4006618d35b0ff79f37251b0`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 89.48 MB
+- **Total Size:** 89.77 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 1/5/2026, 1:52:31 pm IST
+- **Last Updated:** 2/5/2026, 1:25:21 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,22 +22,22 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~15,914 | 5.85 MB |  |
-| `admin_chat` | 4 | ~5 | 0.05 MB |  |
-| `admin_leaves` | 17 | ~5 | 0.09 MB |  |
+| `admin_audit_logs` | 9 | ~16,420 | 6.11 MB |  |
+| `admin_chat` | 4 | ~17 | 0.05 MB |  |
+| `admin_leaves` | 17 | ~15 | 0.09 MB |  |
 | `admin_messages` | 6 | ~5 | 0.06 MB |  |
-| `admin_notices` | 7 | ~6 | 0.06 MB |  |
+| `admin_notices` | 7 | ~16 | 0.06 MB |  |
 | `admin_regions` | 6 | ~41 | 0.09 MB |  |
 | `admin_roles` | 3 | ~290 | 0.09 MB |  |
-| `admin_users` | 7 | ~21 | 0.73 MB |  |
+| `admin_users` | 7 | ~25 | 0.73 MB |  |
 | `admins` | 20 | ~515 | 0.28 MB |  |
-| `appointments` | 18 | ~18 | 0.11 MB |  |
+| `appointments` | 18 | ~30 | 0.11 MB |  |
 | `blog_posts` | 17 | ~119 | 0.45 MB |  |
 | `broker_aadhaar_verifications` | 13 | ~5 | 0.05 MB |  |
 | `broker_gps_tracking` | 15 | ~5 | 0.07 MB |  |
 | `broker_gst_verifications` | 16 | ~5 | 0.05 MB |  |
-| `broker_kyc_documents` | 18 | ~7 | 0.06 MB |  |
-| `broker_kyc_verifications` | 14 | ~16 | 0.06 MB |  |
+| `broker_kyc_documents` | 18 | ~14 | 0.06 MB |  |
+| `broker_kyc_verifications` | 14 | ~26 | 0.06 MB |  |
 | `broker_pan_verifications` | 11 | ~5 | 0.04 MB |  |
 | `builders` | 28 | ~50 | 0.19 MB |  |
 | `campaign_participants` | 9 | ~15 | 0.11 MB | "Track user participation in ca..." |
@@ -50,7 +50,7 @@
 | `districts` | 7 | ~7 | 0.12 MB | "Indian districts linked to LGD..." |
 | `enquiries` | 12 | ~248 | 0.33 MB |  |
 | `home_loan_consent_log` | 10 | ~5 | 0.06 MB |  |
-| `hot_properties` | 25 | ~5 | 0.09 MB | "Real-time tracking of trending..." |
+| `hot_properties` | 25 | ~15 | 0.09 MB | "Real-time tracking of trending..." |
 | `leave_balances` | 6 | ~53 | 0.07 MB |  |
 | `leave_types` | 6 | ~5 | 0.03 MB |  |
 | `lending_partners` | 13 | ~12 | 0.03 MB |  |
@@ -104,7 +104,7 @@
 | `property_reports` | 11 | ~20 | 0.09 MB |  |
 | `property_shares` | 6 | ~7 | 0.06 MB |  |
 | `property_valuations` | 37 | ~8 | 0.11 MB | "Automated and manual property ..." |
-| `property_verifications` | 14 | ~9 | 0.08 MB |  |
+| `property_verifications` | 14 | ~19 | 0.11 MB |  |
 | `property_views` | 10 | ~51 | 0.17 MB |  |
 | `property_visits` | 11 | ~6 | 0.08 MB |  |
 | `referrals` | 12 | ~5 | 0.09 MB |  |
@@ -124,7 +124,7 @@
 | `subscription_enrollments` | 14 | ~32 | 0.15 MB |  |
 | `subscription_plans` | 29 | ~22 | 0.16 MB | "Recurring subscription plans w..." |
 | `support_tickets` | 15 | ~15 | 0.13 MB |  |
-| `system_health_metrics` | 6 | ~5 | 0.05 MB |  |
+| `system_health_metrics` | 6 | ~25 | 0.05 MB |  |
 | `system_settings` | 8 | ~6 | 0.05 MB | "Platform-wide configuration ke..." |
 | `team_broadcasts` | 8 | ~5 | 0.06 MB |  |
 | `team_messages` | 8 | ~5 | 0.09 MB |  |

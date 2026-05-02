@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-05-01T08:22:31.703Z
+> Auto-generated: 2026-05-02T07:55:21.160Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~15,914
+- Rows: ~16,420
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -56,7 +56,7 @@
 ## `admin_chat`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 4
 - Indexes: 2
 - Foreign Keys: 1
@@ -89,7 +89,7 @@
 ## `admin_leaves`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 17
 - Indexes: 5
 - Foreign Keys: 4
@@ -190,7 +190,7 @@
 ## `admin_notices`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~16
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -301,7 +301,7 @@
 ## `admin_users`
 
 **Statistics:**
-- Rows: ~21
+- Rows: ~25
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -391,7 +391,7 @@
 ## `appointments`
 
 **Statistics:**
-- Rows: ~18
+- Rows: ~30
 - Columns: 18
 - Indexes: 6
 - Foreign Keys: 4
@@ -614,7 +614,7 @@
 ## `broker_kyc_documents`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~14
 - Columns: 18
 - Indexes: 3
 - Foreign Keys: 1
@@ -662,7 +662,7 @@
 ## `broker_kyc_verifications`
 
 **Statistics:**
-- Rows: ~16
+- Rows: ~26
 - Columns: 14
 - Indexes: 3
 - Foreign Keys: 0
@@ -1289,7 +1289,7 @@
 > Real-time tracking of trending properties with high demand signals
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 25
 - Indexes: 5
 - Foreign Keys: 1
@@ -4121,7 +4121,7 @@
 ## `property_verifications`
 
 **Statistics:**
-- Rows: ~9
+- Rows: ~19
 - Columns: 14
 - Indexes: 4
 - Foreign Keys: 2
@@ -4992,7 +4992,7 @@
 ## `system_health_metrics`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~25
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 0
