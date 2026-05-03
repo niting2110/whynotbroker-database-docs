@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T07:55:21.163Z",
+  "generated_at": "2026-05-03T08:10:09.320Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 16420,
-      "size_bytes": 6406144,
+      "rows": 17300,
+      "size_bytes": 6709248,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 16420,
+        "row_count": 17300,
         "column_count": 9
       }
     },
@@ -797,7 +797,7 @@
       "name": "admin_messages",
       "comment": null,
       "columns": 6,
-      "rows": 5,
+      "rows": 13,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -980,7 +980,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 13,
         "column_count": 6
       }
     },
@@ -2888,8 +2888,8 @@
       "name": "broker_aadhaar_verifications",
       "comment": null,
       "columns": 13,
-      "rows": 5,
-      "size_bytes": 49152,
+      "rows": 144,
+      "size_bytes": 90112,
       "details": {
         "columns": [
           {
@@ -3111,7 +3111,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 144,
         "column_count": 13
       }
     },
@@ -3399,8 +3399,8 @@
       "name": "broker_gst_verifications",
       "comment": null,
       "columns": 16,
-      "rows": 5,
-      "size_bytes": 49152,
+      "rows": 100,
+      "size_bytes": 90112,
       "details": {
         "columns": [
           {
@@ -3662,7 +3662,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 100,
         "column_count": 16
       }
     },
@@ -4302,8 +4302,8 @@
       "name": "broker_pan_verifications",
       "comment": null,
       "columns": 11,
-      "rows": 5,
-      "size_bytes": 40960,
+      "rows": 144,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -4510,7 +4510,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 144,
         "column_count": 11
       }
     },
@@ -7078,8 +7078,8 @@
       "name": "credit_packages",
       "comment": "Pre-paid credit packages with regional pricing variations",
       "columns": 17,
-      "rows": 5,
-      "size_bytes": 65536,
+      "rows": 17,
+      "size_bytes": 98304,
       "details": {
         "columns": [
           {
@@ -7384,7 +7384,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 17
       }
     },
@@ -9470,7 +9470,7 @@
       "name": "loan_calculations",
       "comment": null,
       "columns": 13,
-      "rows": 5,
+      "rows": 17,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -9751,7 +9751,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 13
       }
     },
@@ -13648,7 +13648,7 @@
       "name": "notification_preferences",
       "comment": null,
       "columns": 13,
-      "rows": 5,
+      "rows": 8,
       "size_bytes": 24576,
       "details": {
         "columns": [
@@ -13847,7 +13847,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 8,
         "column_count": 13
       }
     },
@@ -25010,7 +25010,7 @@
       "name": "property_intelligence_scores",
       "comment": "AI-powered property scoring system for ranking and recommendation",
       "columns": 41,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 147456,
       "details": {
         "columns": [
@@ -25622,7 +25622,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 41
       }
     },
@@ -26254,7 +26254,7 @@
       "name": "property_ranking_criteria",
       "comment": null,
       "columns": 37,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 131072,
       "details": {
         "columns": [
@@ -26805,7 +26805,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 37
       }
     },
@@ -28773,7 +28773,7 @@
       "name": "referrals",
       "comment": null,
       "columns": 12,
-      "rows": 5,
+      "rows": 17,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -29056,7 +29056,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 12
       }
     },
@@ -34972,7 +34972,7 @@
       "name": "undervalued_properties",
       "comment": "Identifies properties with excellent value - priced below market estimates",
       "columns": 27,
-      "rows": 5,
+      "rows": 12,
       "size_bytes": 131072,
       "details": {
         "columns": [
@@ -35468,7 +35468,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 27
       }
     },
@@ -35476,7 +35476,7 @@
       "name": "user_favorites",
       "comment": null,
       "columns": 4,
-      "rows": 5,
+      "rows": 17,
       "size_bytes": 90112,
       "details": {
         "columns": [
@@ -35664,7 +35664,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 17,
         "column_count": 4
       }
     },

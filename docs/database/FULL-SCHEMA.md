@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-05-02T07:55:21.160Z
+> Auto-generated: 2026-05-03T08:10:09.317Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~16,420
+- Rows: ~17,300
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -150,7 +150,7 @@
 ## `admin_messages`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~13
 - Columns: 6
 - Indexes: 3
 - Foreign Keys: 2
@@ -502,7 +502,7 @@
 ## `broker_aadhaar_verifications`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~144
 - Columns: 13
 - Indexes: 2
 - Foreign Keys: 0
@@ -576,7 +576,7 @@
 ## `broker_gst_verifications`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~100
 - Columns: 16
 - Indexes: 2
 - Foreign Keys: 0
@@ -699,7 +699,7 @@
 ## `broker_pan_verifications`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~144
 - Columns: 11
 - Indexes: 2
 - Foreign Keys: 0
@@ -1103,7 +1103,7 @@
 > Pre-paid credit packages with regional pricing variations
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 17
 - Indexes: 3
 - Foreign Keys: 1
@@ -1492,7 +1492,7 @@
 ## `loan_calculations`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 13
 - Indexes: 3
 - Foreign Keys: 2
@@ -2108,7 +2108,7 @@
 ## `notification_preferences`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~8
 - Columns: 13
 - Indexes: 1
 - Foreign Keys: 1
@@ -3704,7 +3704,7 @@
 > AI-powered property scoring system for ranking and recommendation
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 41
 - Indexes: 8
 - Foreign Keys: 1
@@ -3883,7 +3883,7 @@
 ## `property_ranking_criteria`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 37
 - Indexes: 7
 - Foreign Keys: 1
@@ -4269,7 +4269,7 @@
 ## `referrals`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 12
 - Indexes: 5
 - Foreign Keys: 2
@@ -5273,7 +5273,7 @@
 > Identifies properties with excellent value - priced below market estimates
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 27
 - Indexes: 7
 - Foreign Keys: 2
@@ -5338,7 +5338,7 @@
 ## `user_favorites`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~17
 - Columns: 4
 - Indexes: 5
 - Foreign Keys: 2
