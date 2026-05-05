@@ -1,20 +1,5 @@
 [
   {
-    "timestamp": "2026-01-16T07:28:03.246Z",
-    "schema_hash": "e51e634b06b315499b4ddb28b0aa82d5",
-    "statistics": {
-      "tables": 80,
-      "views": 19,
-      "materialized_views": 2,
-      "columns": 1299,
-      "constraints": 713,
-      "indexes": 369,
-      "relationships": 142,
-      "functions": 826,
-      "extensions": 11
-    }
-  },
-  {
     "timestamp": "2026-01-22T07:23:09.944Z",
     "schema_hash": "99376feee3e71bcd2382b8a8345467d8",
     "statistics": {
@@ -737,6 +722,21 @@
   {
     "timestamp": "2026-05-04T08:40:20.588Z",
     "schema_hash": "b53cefebc71dbdb6751c55aefb6f4f48",
+    "statistics": {
+      "tables": 117,
+      "views": 26,
+      "materialized_views": 2,
+      "columns": 1715,
+      "constraints": 1155,
+      "indexes": 539,
+      "relationships": 188,
+      "functions": 838,
+      "extensions": 10
+    }
+  },
+  {
+    "timestamp": "2026-05-05T08:22:17.132Z",
+    "schema_hash": "1a34f82ad566857bc1cee7148cbd9056",
     "statistics": {
       "tables": 117,
       "views": 26,
