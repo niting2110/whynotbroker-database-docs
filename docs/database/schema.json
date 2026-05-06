@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T08:22:17.100Z",
+  "generated_at": "2026-05-06T08:38:29.399Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 18241,
-      "size_bytes": 6930432,
+      "rows": 18516,
+      "size_bytes": 6987776,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 18241,
+        "row_count": 18516,
         "column_count": 9
       }
     },
@@ -1730,7 +1730,7 @@
       "name": "admins",
       "comment": null,
       "columns": 20,
-      "rows": 515,
+      "rows": 517,
       "size_bytes": 294912,
       "details": {
         "columns": [
@@ -2113,7 +2113,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 515,
+        "row_count": 517,
         "column_count": 20
       }
     },
@@ -2550,7 +2550,7 @@
       "name": "blog_posts",
       "comment": null,
       "columns": 17,
-      "rows": 119,
+      "rows": 126,
       "size_bytes": 466944,
       "details": {
         "columns": [
@@ -2880,7 +2880,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 119,
+        "row_count": 126,
         "column_count": 17
       }
     },
@@ -3119,8 +3119,8 @@
       "name": "broker_gps_tracking",
       "comment": null,
       "columns": 15,
-      "rows": 5,
-      "size_bytes": 73728,
+      "rows": 12,
+      "size_bytes": 81920,
       "details": {
         "columns": [
           {
@@ -3391,7 +3391,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 12,
         "column_count": 15
       }
     },
@@ -4518,7 +4518,7 @@
       "name": "builders",
       "comment": null,
       "columns": 28,
-      "rows": 50,
+      "rows": 55,
       "size_bytes": 196608,
       "details": {
         "columns": [
@@ -4915,7 +4915,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 50,
+        "row_count": 55,
         "column_count": 28
       }
     },
@@ -7947,7 +7947,7 @@
       "name": "home_loan_consent_log",
       "comment": null,
       "columns": 10,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -8217,7 +8217,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 10
       }
     },
@@ -8225,7 +8225,7 @@
       "name": "hot_properties",
       "comment": "Real-time tracking of trending properties with high demand signals",
       "columns": 25,
-      "rows": 15,
+      "rows": 23,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -8617,7 +8617,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 15,
+        "row_count": 23,
         "column_count": 25
       }
     },
@@ -15995,7 +15995,7 @@
       "name": "pg_posting",
       "comment": null,
       "columns": 19,
-      "rows": 255,
+      "rows": 256,
       "size_bytes": 270336,
       "details": {
         "columns": [
@@ -16399,7 +16399,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 255,
+        "row_count": 256,
         "column_count": 19
       }
     },
@@ -16618,7 +16618,7 @@
       "name": "pg_property",
       "comment": null,
       "columns": 18,
-      "rows": 253,
+      "rows": 254,
       "size_bytes": 327680,
       "details": {
         "columns": [
@@ -17021,7 +17021,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 253,
+        "row_count": 254,
         "column_count": 18
       }
     },
@@ -19307,8 +19307,8 @@
       "name": "profiles",
       "comment": null,
       "columns": 48,
-      "rows": 1880,
-      "size_bytes": 1228800,
+      "rows": 1885,
+      "size_bytes": 1236992,
       "details": {
         "columns": [
           {
@@ -20044,7 +20044,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1880,
+        "row_count": 1885,
         "column_count": 48
       }
     },
@@ -20052,8 +20052,8 @@
       "name": "projects",
       "comment": null,
       "columns": 39,
-      "rows": 5,
-      "size_bytes": 188416,
+      "rows": 25,
+      "size_bytes": 204800,
       "details": {
         "columns": [
           {
@@ -20768,7 +20768,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 25,
         "column_count": 39
       }
     },
@@ -21094,7 +21094,7 @@
       "name": "properties",
       "comment": null,
       "columns": 137,
-      "rows": 53,
+      "rows": 58,
       "size_bytes": 11755520,
       "details": {
         "columns": [
@@ -23731,7 +23731,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 53,
+        "row_count": 58,
         "column_count": 137
       }
     },
@@ -23962,7 +23962,7 @@
       "name": "property_assignments",
       "comment": null,
       "columns": 8,
-      "rows": 5,
+      "rows": 14,
       "size_bytes": 1474560,
       "details": {
         "columns": [
@@ -24212,7 +24212,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 14,
         "column_count": 8
       }
     },
@@ -24668,8 +24668,8 @@
       "name": "property_images",
       "comment": null,
       "columns": 15,
-      "rows": 53,
-      "size_bytes": 155648,
+      "rows": 183,
+      "size_bytes": 212992,
       "details": {
         "columns": [
           {
@@ -25002,7 +25002,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 53,
+        "row_count": 183,
         "column_count": 15
       }
     },
@@ -28483,7 +28483,7 @@
       "name": "property_visits",
       "comment": null,
       "columns": 11,
-      "rows": 6,
+      "rows": 20,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -28765,7 +28765,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6,
+        "row_count": 20,
         "column_count": 11
       }
     },
@@ -31837,7 +31837,7 @@
       "name": "subscription_enrollments",
       "comment": null,
       "columns": 14,
-      "rows": 32,
+      "rows": 36,
       "size_bytes": 155648,
       "details": {
         "columns": [
@@ -32184,7 +32184,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 32,
+        "row_count": 36,
         "column_count": 14
       }
     },
@@ -36599,7 +36599,7 @@
       "name": "verification_gps_tracking",
       "comment": null,
       "columns": 13,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -36866,7 +36866,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 13
       }
     },
@@ -37335,7 +37335,7 @@
       "name": "wallets",
       "comment": "User credit wallets with regional tracking",
       "columns": 11,
-      "rows": 1879,
+      "rows": 1884,
       "size_bytes": 581632,
       "details": {
         "columns": [
@@ -37615,7 +37615,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 1879,
+        "row_count": 1884,
         "column_count": 11
       }
     }

@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-05-05T08:22:17.091Z
-> Schema Hash: `1a34f82ad566857bc1cee7148cbd9056`
+> Generated: 2026-05-06T08:38:29.390Z
+> Schema Hash: `b6a12d94502978f9ed1101e39877e979`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 90.41 MB
+- **Total Size:** 90.55 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 5/5/2026, 1:52:17 pm IST
+- **Last Updated:** 6/5/2026, 2:08:29 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~18,241 | 6.61 MB |  |
+| `admin_audit_logs` | 9 | ~18,516 | 6.66 MB |  |
 | `admin_chat` | 4 | ~17 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~15 | 0.09 MB |  |
 | `admin_messages` | 6 | ~13 | 0.06 MB |  |
@@ -30,16 +30,16 @@
 | `admin_regions` | 6 | ~41 | 0.09 MB |  |
 | `admin_roles` | 3 | ~290 | 0.09 MB |  |
 | `admin_users` | 7 | ~25 | 0.73 MB |  |
-| `admins` | 20 | ~515 | 0.28 MB |  |
+| `admins` | 20 | ~517 | 0.28 MB |  |
 | `appointments` | 18 | ~30 | 0.11 MB |  |
-| `blog_posts` | 17 | ~119 | 0.45 MB |  |
+| `blog_posts` | 17 | ~126 | 0.45 MB |  |
 | `broker_aadhaar_verifications` | 13 | ~144 | 0.09 MB |  |
-| `broker_gps_tracking` | 15 | ~5 | 0.07 MB |  |
+| `broker_gps_tracking` | 15 | ~12 | 0.08 MB |  |
 | `broker_gst_verifications` | 16 | ~100 | 0.09 MB |  |
 | `broker_kyc_documents` | 18 | ~14 | 0.06 MB |  |
 | `broker_kyc_verifications` | 14 | ~26 | 0.06 MB |  |
 | `broker_pan_verifications` | 11 | ~144 | 0.08 MB |  |
-| `builders` | 28 | ~50 | 0.19 MB |  |
+| `builders` | 28 | ~55 | 0.19 MB |  |
 | `campaign_participants` | 9 | ~15 | 0.11 MB | "Track user participation in ca..." |
 | `cities` | 15 | ~52 | 0.22 MB | "Normalized city master with ge..." |
 | `comm_deferred` | 11 | ~5 | 0.05 MB |  |
@@ -49,8 +49,8 @@
 | `credit_packages` | 17 | ~17 | 0.09 MB | "Pre-paid credit packages with ..." |
 | `districts` | 7 | ~7 | 0.12 MB | "Indian districts linked to LGD..." |
 | `enquiries` | 12 | ~248 | 0.33 MB |  |
-| `home_loan_consent_log` | 10 | ~5 | 0.06 MB |  |
-| `hot_properties` | 25 | ~15 | 0.09 MB | "Real-time tracking of trending..." |
+| `home_loan_consent_log` | 10 | ~15 | 0.06 MB |  |
+| `hot_properties` | 25 | ~23 | 0.09 MB | "Real-time tracking of trending..." |
 | `leave_balances` | 6 | ~53 | 0.07 MB |  |
 | `leave_types` | 6 | ~5 | 0.03 MB |  |
 | `lending_partners` | 13 | ~12 | 0.03 MB |  |
@@ -77,9 +77,9 @@
 | `pg_owner_pnl` | 10 | ~5 | 0.04 MB |  |
 | `pg_payment_record` | 16 | ~34 | 0.06 MB |  |
 | `pg_police_verification` | 8 | ~5 | 0.06 MB |  |
-| `pg_posting` | 19 | ~255 | 0.26 MB |  |
+| `pg_posting` | 19 | ~256 | 0.26 MB |  |
 | `pg_posting_packs` | 8 | ~5 | 0.05 MB | "E13 posting credit balance for..." |
-| `pg_property` | 18 | ~253 | 0.31 MB |  |
+| `pg_property` | 18 | ~254 | 0.31 MB |  |
 | `pg_receipt` | 11 | ~25 | 0.06 MB |  |
 | `pg_rent_agreement` | 13 | ~5 | 0.06 MB |  |
 | `pg_room` | 9 | ~32 | 0.05 MB |  |
@@ -88,15 +88,15 @@
 | `pg_vacancy_event` | 9 | ~20 | 0.06 MB |  |
 | `pincodes` | 10 | ~8 | 0.09 MB | "Indian postal codes with geogr..." |
 | `pricing_rules` | 14 | ~31 | 0.11 MB | "Dynamic pricing rules based on..." |
-| `profiles` | 48 | ~1,880 | 1.17 MB |  |
-| `projects` | 39 | ~5 | 0.18 MB |  |
+| `profiles` | 48 | ~1,885 | 1.18 MB |  |
+| `projects` | 39 | ~25 | 0.20 MB |  |
 | `promotional_campaigns` | 19 | ~12 | 0.09 MB | "Marketing campaigns with regio..." |
-| `properties` | 137 | ~53 | 11.21 MB |  |
+| `properties` | 137 | ~58 | 11.21 MB |  |
 | `property_amenities` | 7 | ~72 | 0.11 MB |  |
-| `property_assignments` | 8 | ~5 | 1.41 MB |  |
+| `property_assignments` | 8 | ~14 | 1.41 MB |  |
 | `property_comparisons` | 6 | ~5 | 0.05 MB |  |
 | `property_documents` | 12 | ~15 | 0.08 MB |  |
-| `property_images` | 15 | ~53 | 0.15 MB |  |
+| `property_images` | 15 | ~183 | 0.20 MB |  |
 | `property_intelligence_scores` | 41 | ~15 | 0.14 MB | "AI-powered property scoring sy..." |
 | `property_leads` | 22 | ~26 | 0.09 MB |  |
 | `property_price_history` | 7 | ~25 | 0.06 MB |  |
@@ -106,7 +106,7 @@
 | `property_valuations` | 37 | ~8 | 0.11 MB | "Automated and manual property ..." |
 | `property_verifications` | 14 | ~19 | 0.11 MB |  |
 | `property_views` | 10 | ~51 | 0.17 MB |  |
-| `property_visits` | 11 | ~6 | 0.08 MB |  |
+| `property_visits` | 11 | ~20 | 0.08 MB |  |
 | `referrals` | 12 | ~17 | 0.09 MB |  |
 | `refund_request` | 12 | ~160 | 0.13 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |
@@ -121,7 +121,7 @@
 | `spatial_ref_sys` | 5 | ~8,500 | 6.98 MB |  |
 | `states` | 7 | ~36 | 0.13 MB | "Indian states with LGD (Local ..." |
 | `sub_districts` | 7 | ~7 | 0.10 MB | "Sub-districts/Talukas for gran..." |
-| `subscription_enrollments` | 14 | ~32 | 0.15 MB |  |
+| `subscription_enrollments` | 14 | ~36 | 0.15 MB |  |
 | `subscription_plans` | 29 | ~22 | 0.16 MB | "Recurring subscription plans w..." |
 | `support_tickets` | 15 | ~15 | 0.13 MB |  |
 | `system_health_metrics` | 6 | ~25 | 0.05 MB |  |
@@ -135,10 +135,10 @@
 | `user_ratings` | 17 | ~7 | 0.08 MB |  |
 | `user_regional_preferences` | 8 | ~5 | 0.07 MB |  |
 | `verification_documents` | 15 | ~8 | 0.11 MB |  |
-| `verification_gps_tracking` | 13 | ~5 | 0.09 MB |  |
+| `verification_gps_tracking` | 13 | ~15 | 0.09 MB |  |
 | `verification_kyc` | 15 | ~21 | 0.09 MB |  |
 | `waitlist_entries` | 4 | ~5 | 0.06 MB |  |
-| `wallets` | 11 | ~1,879 | 0.55 MB | "User credit wallets with regio..." |
+| `wallets` | 11 | ~1,884 | 0.55 MB | "User credit wallets with regio..." |
 
 ## 🔌 Extensions
 - `pg_cron` (v1.6.4)

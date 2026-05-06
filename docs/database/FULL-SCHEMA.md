@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-05-05T08:22:17.098Z
+> Auto-generated: 2026-05-06T08:38:29.397Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~18,241
+- Rows: ~18,516
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -336,7 +336,7 @@
 ## `admins`
 
 **Statistics:**
-- Rows: ~515
+- Rows: ~517
 - Columns: 20
 - Indexes: 4
 - Foreign Keys: 2
@@ -454,7 +454,7 @@
 ## `blog_posts`
 
 **Statistics:**
-- Rows: ~119
+- Rows: ~126
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 1
@@ -537,7 +537,7 @@
 ## `broker_gps_tracking`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~12
 - Columns: 15
 - Indexes: 4
 - Foreign Keys: 0
@@ -732,7 +732,7 @@
 ## `builders`
 
 **Statistics:**
-- Rows: ~50
+- Rows: ~55
 - Columns: 28
 - Indexes: 5
 - Foreign Keys: 0
@@ -1243,7 +1243,7 @@
 ## `home_loan_consent_log`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 10
 - Indexes: 3
 - Foreign Keys: 2
@@ -1289,7 +1289,7 @@
 > Real-time tracking of trending properties with high demand signals
 
 **Statistics:**
-- Rows: ~15
+- Rows: ~23
 - Columns: 25
 - Indexes: 5
 - Foreign Keys: 1
@@ -2511,7 +2511,7 @@
 ## `pg_posting`
 
 **Statistics:**
-- Rows: ~255
+- Rows: ~256
 - Columns: 19
 - Indexes: 3
 - Foreign Keys: 1
@@ -2599,7 +2599,7 @@
 ## `pg_property`
 
 **Statistics:**
-- Rows: ~253
+- Rows: ~254
 - Columns: 18
 - Indexes: 4
 - Foreign Keys: 1
@@ -3015,7 +3015,7 @@
 ## `profiles`
 
 **Statistics:**
-- Rows: ~1,880
+- Rows: ~1,885
 - Columns: 48
 - Indexes: 12
 - Foreign Keys: 0
@@ -3095,7 +3095,7 @@
 ## `projects`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~25
 - Columns: 39
 - Indexes: 9
 - Foreign Keys: 5
@@ -3231,7 +3231,7 @@
 ## `properties`
 
 **Statistics:**
-- Rows: ~53
+- Rows: ~58
 - Columns: 137
 - Indexes: 47
 - Foreign Keys: 11
@@ -3521,7 +3521,7 @@
 ## `property_assignments`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~14
 - Columns: 8
 - Indexes: 4
 - Foreign Keys: 2
@@ -3650,7 +3650,7 @@
 ## `property_images`
 
 **Statistics:**
-- Rows: ~53
+- Rows: ~183
 - Columns: 15
 - Indexes: 6
 - Foreign Keys: 2
@@ -4219,7 +4219,7 @@
 ## `property_visits`
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~20
 - Columns: 11
 - Indexes: 4
 - Foreign Keys: 3
@@ -4821,7 +4821,7 @@
 ## `subscription_enrollments`
 
 **Statistics:**
-- Rows: ~32
+- Rows: ~36
 - Columns: 14
 - Indexes: 5
 - Foreign Keys: 3
@@ -5524,7 +5524,7 @@
 ## `verification_gps_tracking`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 13
 - Indexes: 5
 - Foreign Keys: 0
@@ -5631,7 +5631,7 @@
 > User credit wallets with regional tracking
 
 **Statistics:**
-- Rows: ~1,879
+- Rows: ~1,884
 - Columns: 11
 - Indexes: 5
 - Foreign Keys: 2
