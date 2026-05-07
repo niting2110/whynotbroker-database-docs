@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-05-06T08:38:29.397Z
+> Auto-generated: 2026-05-07T08:45:08.730Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~18,516
+- Rows: ~19,036
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -89,7 +89,7 @@
 ## `admin_leaves`
 
 **Statistics:**
-- Rows: ~15
+- Rows: ~40
 - Columns: 17
 - Indexes: 5
 - Foreign Keys: 4
@@ -190,7 +190,7 @@
 ## `admin_notices`
 
 **Statistics:**
-- Rows: ~16
+- Rows: ~19
 - Columns: 7
 - Indexes: 3
 - Foreign Keys: 0
@@ -454,7 +454,7 @@
 ## `blog_posts`
 
 **Statistics:**
-- Rows: ~126
+- Rows: ~138
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 1
@@ -922,7 +922,7 @@
 ## `commission_events`
 
 **Statistics:**
-- Rows: ~94
+- Rows: ~109
 - Columns: 19
 - Indexes: 6
 - Foreign Keys: 6
@@ -1044,7 +1044,7 @@
 > Discount coupons with regional targeting
 
 **Statistics:**
-- Rows: ~14
+- Rows: ~22
 - Columns: 23
 - Indexes: 7
 - Foreign Keys: 1
@@ -1289,7 +1289,7 @@
 > Real-time tracking of trending properties with high demand signals
 
 **Statistics:**
-- Rows: ~23
+- Rows: ~30
 - Columns: 25
 - Indexes: 5
 - Foreign Keys: 1
@@ -1446,7 +1446,7 @@
 ## `listing_boosts`
 
 **Statistics:**
-- Rows: ~18
+- Rows: ~26
 - Columns: 12
 - Indexes: 3
 - Foreign Keys: 2
@@ -1991,7 +1991,7 @@
 ## `messages`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~25
 - Columns: 21
 - Indexes: 5
 - Foreign Keys: 5
@@ -3231,7 +3231,7 @@
 ## `properties`
 
 **Statistics:**
-- Rows: ~58
+- Rows: ~77
 - Columns: 137
 - Indexes: 47
 - Foreign Keys: 11
@@ -3564,7 +3564,7 @@
 ## `property_comparisons`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~15
 - Columns: 6
 - Indexes: 2
 - Foreign Keys: 1
@@ -3780,7 +3780,7 @@
 ## `property_leads`
 
 **Statistics:**
-- Rows: ~26
+- Rows: ~44
 - Columns: 22
 - Indexes: 5
 - Foreign Keys: 3
@@ -4005,7 +4005,7 @@
 ## `property_shares`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~20
 - Columns: 6
 - Indexes: 3
 - Foreign Keys: 2
@@ -4047,7 +4047,7 @@
 > Automated and manual property valuation tracking
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~16
 - Columns: 37
 - Indexes: 6
 - Foreign Keys: 2
@@ -4417,7 +4417,7 @@
 > DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~16
 - Columns: 7
 - Indexes: 1
 - Foreign Keys: 1
@@ -4821,7 +4821,7 @@
 ## `subscription_enrollments`
 
 **Statistics:**
-- Rows: ~36
+- Rows: ~44
 - Columns: 14
 - Indexes: 5
 - Foreign Keys: 3
@@ -4939,7 +4939,7 @@
 ## `support_tickets`
 
 **Statistics:**
-- Rows: ~15
+- Rows: ~48
 - Columns: 15
 - Indexes: 7
 - Foreign Keys: 2
@@ -5022,7 +5022,7 @@
 > Platform-wide configuration key-value store. Writable only via Go API (admin_super). Never exposes infra or credential keys.
 
 **Statistics:**
-- Rows: ~6
+- Rows: ~24
 - Columns: 8
 - Indexes: 2
 - Foreign Keys: 1
@@ -5158,7 +5158,7 @@
 > All financial transactions with regional GST tracking
 
 **Statistics:**
-- Rows: ~435
+- Rows: ~466
 - Columns: 35
 - Indexes: 19
 - Foreign Keys: 9
@@ -5378,7 +5378,7 @@
 ## `user_ratings`
 
 **Statistics:**
-- Rows: ~7
+- Rows: ~19
 - Columns: 17
 - Indexes: 4
 - Foreign Keys: 3
@@ -5434,7 +5434,7 @@
 ## `user_regional_preferences`
 
 **Statistics:**
-- Rows: ~5
+- Rows: ~13
 - Columns: 8
 - Indexes: 3
 - Foreign Keys: 2
@@ -5476,7 +5476,7 @@
 ## `verification_documents`
 
 **Statistics:**
-- Rows: ~8
+- Rows: ~19
 - Columns: 15
 - Indexes: 6
 - Foreign Keys: 1

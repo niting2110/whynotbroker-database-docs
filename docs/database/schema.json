@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-06T08:38:29.399Z",
+  "generated_at": "2026-05-07T08:45:08.734Z",
   "database": "WHYNOTBROKER",
   "postgresql_version": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 13.2.0, 64-bit",
   "version": "1.0",
@@ -19,8 +19,8 @@
       "name": "admin_audit_logs",
       "comment": null,
       "columns": 9,
-      "rows": 18516,
-      "size_bytes": 6987776,
+      "rows": 19036,
+      "size_bytes": 7135232,
       "details": {
         "columns": [
           {
@@ -285,7 +285,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 18516,
+        "row_count": 19036,
         "column_count": 9
       }
     },
@@ -418,8 +418,8 @@
       "name": "admin_leaves",
       "comment": null,
       "columns": 17,
-      "rows": 15,
-      "size_bytes": 98304,
+      "rows": 40,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -789,7 +789,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 15,
+        "row_count": 40,
         "column_count": 17
       }
     },
@@ -988,7 +988,7 @@
       "name": "admin_notices",
       "comment": null,
       "columns": 7,
-      "rows": 16,
+      "rows": 19,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -1141,7 +1141,7 @@
         ],
         "foreign_keys": [],
         "triggers": [],
-        "row_count": 16,
+        "row_count": 19,
         "column_count": 7
       }
     },
@@ -2550,7 +2550,7 @@
       "name": "blog_posts",
       "comment": null,
       "columns": 17,
-      "rows": 126,
+      "rows": 138,
       "size_bytes": 466944,
       "details": {
         "columns": [
@@ -2880,7 +2880,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 126,
+        "row_count": 138,
         "column_count": 17
       }
     },
@@ -5840,8 +5840,8 @@
       "name": "commission_events",
       "comment": null,
       "columns": 19,
-      "rows": 94,
-      "size_bytes": 131072,
+      "rows": 109,
+      "size_bytes": 147456,
       "details": {
         "columns": [
           {
@@ -6339,7 +6339,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 94,
+        "row_count": 109,
         "column_count": 19
       }
     },
@@ -6644,7 +6644,7 @@
       "name": "coupons",
       "comment": "Discount coupons with regional targeting",
       "columns": 23,
-      "rows": 14,
+      "rows": 22,
       "size_bytes": 139264,
       "details": {
         "columns": [
@@ -7070,7 +7070,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 14,
+        "row_count": 22,
         "column_count": 23
       }
     },
@@ -8225,7 +8225,7 @@
       "name": "hot_properties",
       "comment": "Real-time tracking of trending properties with high demand signals",
       "columns": 25,
-      "rows": 23,
+      "rows": 30,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -8617,7 +8617,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 23,
+        "row_count": 30,
         "column_count": 25
       }
     },
@@ -9171,7 +9171,7 @@
       "name": "listing_boosts",
       "comment": null,
       "columns": 12,
-      "rows": 18,
+      "rows": 26,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -9462,7 +9462,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 18,
+        "row_count": 26,
         "column_count": 12
       }
     },
@@ -12892,7 +12892,7 @@
       "name": "messages",
       "comment": null,
       "columns": 21,
-      "rows": 5,
+      "rows": 25,
       "size_bytes": 98304,
       "details": {
         "columns": [
@@ -13342,7 +13342,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 5,
+        "row_count": 25,
         "column_count": 21
       }
     },
@@ -21094,8 +21094,8 @@
       "name": "properties",
       "comment": null,
       "columns": 137,
-      "rows": 58,
-      "size_bytes": 11755520,
+      "rows": 77,
+      "size_bytes": 11780096,
       "details": {
         "columns": [
           {
@@ -23731,7 +23731,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 58,
+        "row_count": 77,
         "column_count": 137
       }
     },
@@ -24220,7 +24220,7 @@
       "name": "property_comparisons",
       "comment": null,
       "columns": 6,
-      "rows": 5,
+      "rows": 15,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -24359,7 +24359,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 15,
         "column_count": 6
       }
     },
@@ -25630,8 +25630,8 @@
       "name": "property_leads",
       "comment": null,
       "columns": 22,
-      "rows": 26,
-      "size_bytes": 98304,
+      "rows": 44,
+      "size_bytes": 131072,
       "details": {
         "columns": [
           {
@@ -26058,7 +26058,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 26,
+        "row_count": 44,
         "column_count": 22
       }
     },
@@ -27113,7 +27113,7 @@
       "name": "property_shares",
       "comment": null,
       "columns": 6,
-      "rows": 7,
+      "rows": 20,
       "size_bytes": 65536,
       "details": {
         "columns": [
@@ -27296,7 +27296,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 7,
+        "row_count": 20,
         "column_count": 6
       }
     },
@@ -27304,7 +27304,7 @@
       "name": "property_valuations",
       "comment": "Automated and manual property valuation tracking",
       "columns": 37,
-      "rows": 8,
+      "rows": 16,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -27886,7 +27886,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 8,
+        "row_count": 16,
         "column_count": 37
       }
     },
@@ -29691,7 +29691,7 @@
       "name": "registration_consent_log",
       "comment": "DPDPA Section 7 immutable consent log. One row per registration consent event. Never DELETE or UPDATE rows — append-only per legal requirement.",
       "columns": 7,
-      "rows": 6,
+      "rows": 16,
       "size_bytes": 32768,
       "details": {
         "columns": [
@@ -29866,7 +29866,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6,
+        "row_count": 16,
         "column_count": 7
       }
     },
@@ -31837,7 +31837,7 @@
       "name": "subscription_enrollments",
       "comment": null,
       "columns": 14,
-      "rows": 36,
+      "rows": 44,
       "size_bytes": 155648,
       "details": {
         "columns": [
@@ -32184,7 +32184,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 36,
+        "row_count": 44,
         "column_count": 14
       }
     },
@@ -32717,8 +32717,8 @@
       "name": "support_tickets",
       "comment": null,
       "columns": 15,
-      "rows": 15,
-      "size_bytes": 131072,
+      "rows": 48,
+      "size_bytes": 172032,
       "details": {
         "columns": [
           {
@@ -33124,7 +33124,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 15,
+        "row_count": 48,
         "column_count": 15
       }
     },
@@ -33265,7 +33265,7 @@
       "name": "system_settings",
       "comment": "Platform-wide configuration key-value store. Writable only via Go API (admin_super). Never exposes infra or credential keys.",
       "columns": 8,
-      "rows": 6,
+      "rows": 24,
       "size_bytes": 49152,
       "details": {
         "columns": [
@@ -33454,7 +33454,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 6,
+        "row_count": 24,
         "column_count": 8
       }
     },
@@ -34105,8 +34105,8 @@
       "name": "transactions",
       "comment": "All financial transactions with regional GST tracking",
       "columns": 35,
-      "rows": 435,
-      "size_bytes": 909312,
+      "rows": 466,
+      "size_bytes": 917504,
       "details": {
         "columns": [
           {
@@ -34964,7 +34964,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 435,
+        "row_count": 466,
         "column_count": 35
       }
     },
@@ -35672,7 +35672,7 @@
       "name": "user_ratings",
       "comment": null,
       "columns": 17,
-      "rows": 7,
+      "rows": 19,
       "size_bytes": 81920,
       "details": {
         "columns": [
@@ -36063,7 +36063,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 7,
+        "row_count": 19,
         "column_count": 17
       }
     },
@@ -36071,7 +36071,7 @@
       "name": "user_regional_preferences",
       "comment": null,
       "columns": 8,
-      "rows": 5,
+      "rows": 13,
       "size_bytes": 73728,
       "details": {
         "columns": [
@@ -36255,7 +36255,7 @@
           }
         ],
         "triggers": [],
-        "row_count": 5,
+        "row_count": 13,
         "column_count": 8
       }
     },
@@ -36263,7 +36263,7 @@
       "name": "verification_documents",
       "comment": null,
       "columns": 15,
-      "rows": 8,
+      "rows": 19,
       "size_bytes": 114688,
       "details": {
         "columns": [
@@ -36591,7 +36591,7 @@
             "trigger_comment": null
           }
         ],
-        "row_count": 8,
+        "row_count": 19,
         "column_count": 15
       }
     },
