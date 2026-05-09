@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-05-08T07:51:39.972Z
-> Schema Hash: `72b69c7b904992a77f0f51d7a5dc19fe`
+> Generated: 2026-05-09T08:05:16.713Z
+> Schema Hash: `bdf80aa6072c119ead792cbe5616f6ae`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 91.11 MB
+- **Total Size:** 92.14 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 8/5/2026, 1:21:39 pm IST
+- **Last Updated:** 9/5/2026, 1:35:16 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~20,059 | 7.07 MB |  |
+| `admin_audit_logs` | 9 | ~22,118 | 8.07 MB |  |
 | `admin_chat` | 4 | ~17 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~40 | 0.13 MB |  |
 | `admin_messages` | 6 | ~13 | 0.06 MB |  |
@@ -111,7 +111,7 @@
 | `refund_request` | 12 | ~160 | 0.13 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |
 | `registration_consent_log` | 7 | ~16 | 0.03 MB | "DPDPA Section 7 immutable cons..." |
-| `role_permissions` | 2 | ~91 | 0.02 MB |  |
+| `role_permissions` | 2 | ~150 | 0.05 MB |  |
 | `role_platform_access` | 16 | ~125 | 0.13 MB |  |
 | `roles` | 7 | ~39 | 0.06 MB |  |
 | `saved_listings` | 4 | ~20 | 0.07 MB |  |
