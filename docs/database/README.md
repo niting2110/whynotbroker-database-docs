@@ -1,7 +1,7 @@
 # 🏠 WHYNOTBROKER Database Documentation
 > **Live, auto-updated database reference**
-> Generated: 2026-05-09T08:05:16.713Z
-> Schema Hash: `bdf80aa6072c119ead792cbe5616f6ae`
+> Generated: 2026-05-10T08:19:32.801Z
+> Schema Hash: `5dc2506230d9a9758f1d68602284b36e`
 
 ## 📊 Quick Stats
 - **Total Tables:** 117
@@ -9,9 +9,9 @@
 - **Total Materialized Views:** 2
 - **Total Columns:** 1715
 - **Total Relationships:** 188
-- **Total Size:** 92.14 MB
+- **Total Size:** 92.16 MB
 - **PostgreSQL Version:** 17.6
-- **Last Updated:** 9/5/2026, 1:35:16 pm IST
+- **Last Updated:** 10/5/2026, 1:49:32 pm IST
 
 ## 🚀 Getting Started
 1. **New Developer?** → Read [QUICK-START.md](./QUICK-START.md)
@@ -22,7 +22,7 @@
 ## 📋 Table Summary
 | Table | Columns | Rows | Size | Comment |
 |-------|---------|------|------|---------|
-| `admin_audit_logs` | 9 | ~22,118 | 8.07 MB |  |
+| `admin_audit_logs` | 9 | ~22,162 | 8.08 MB |  |
 | `admin_chat` | 4 | ~17 | 0.05 MB |  |
 | `admin_leaves` | 17 | ~40 | 0.13 MB |  |
 | `admin_messages` | 6 | ~13 | 0.06 MB |  |
@@ -108,7 +108,7 @@
 | `property_views` | 10 | ~51 | 0.17 MB |  |
 | `property_visits` | 11 | ~20 | 0.08 MB |  |
 | `referrals` | 12 | ~17 | 0.09 MB |  |
-| `refund_request` | 12 | ~160 | 0.13 MB |  |
+| `refund_request` | 12 | ~160 | 0.14 MB |  |
 | `regions` | 15 | ~132 | 0.14 MB | "Master table for regional conf..." |
 | `registration_consent_log` | 7 | ~16 | 0.03 MB | "DPDPA Section 7 immutable cons..." |
 | `role_permissions` | 2 | ~150 | 0.05 MB |  |

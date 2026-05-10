@@ -1,5 +1,5 @@
 -- WHYNOTBROKER Database Schema
--- Generated: 2026-05-09T08:05:16.734Z
+-- Generated: 2026-05-10T08:19:32.822Z
 -- PostgreSQL: 17.6
 
 -- Table: admin_audit_logs
@@ -1797,7 +1797,7 @@ CREATE TABLE IF NOT EXISTS refund_request (
   requested_by uuid NOT NULL,
   amount numeric NOT NULL,
   reason text NOT NULL,
-  status text NOT NULL DEFAULT 'pending_approval'::text,
+  status text NOT NULL DEFAULT 'pending_reversal'::text,
   reviewed_by uuid,
   reviewed_at timestamp with time zone,
   review_note text,

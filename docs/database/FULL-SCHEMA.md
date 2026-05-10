@@ -1,5 +1,5 @@
 # WHYNOTBROKER - Full Database Schema
-> Auto-generated: 2026-05-09T08:05:16.720Z
+> Auto-generated: 2026-05-10T08:19:32.808Z
 > Total Tables: 117
 > PostgreSQL: 17.6
 
@@ -8,7 +8,7 @@
 ## `admin_audit_logs`
 
 **Statistics:**
-- Rows: ~22,118
+- Rows: ~22,162
 - Columns: 9
 - Indexes: 8
 - Foreign Keys: 2
@@ -4331,7 +4331,7 @@
 | `requested_by` | `uuid` | NO | `—` |
 | `amount` | `numeric` | NO | `—` |
 | `reason` | `text` | NO | `—` |
-| `status` | `text` | NO | `'pending_approval'::text` |
+| `status` | `text` | NO | `'pending_reversal'::text` |
 | `reviewed_by` | `uuid` | YES | `—` |
 | `reviewed_at` | `timestamp with time zone` | YES | `—` |
 | `review_note` | `text` | YES | `—` |
