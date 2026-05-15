@@ -1,7 +1,7 @@
 # Database Relationships (ER Diagram - Text)
 
 Total Relationships: 188
-Generated: 2026-05-12T08:50:34.408Z
+Generated: 2026-05-15T09:20:40.051Z
 
 ```
 admin_audit_logs:
